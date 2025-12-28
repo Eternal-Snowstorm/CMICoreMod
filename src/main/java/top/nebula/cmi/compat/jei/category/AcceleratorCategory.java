@@ -42,8 +42,11 @@ public class AcceleratorCategory implements IRecipeCategory<AcceleratorRecipe> {
 		return BuiltInRegistries.ITEM.get(ResourceLocation.parse("create:precision_mechanism"));
 	});
 	public static final ResourceLocation UID = Cmi.loadResource("accelerator");
-	public static final RecipeType<AcceleratorRecipe> ACCELERATOR_TYPE =
-			RecipeType.create(Cmi.MODID, "accelerator", AcceleratorRecipe.class);
+	public static final RecipeType<AcceleratorRecipe> ACCELERATOR_TYPE = RecipeType.create(
+			Cmi.MODID,
+			"accelerator",
+			AcceleratorRecipe.class
+	);
 
 	public AcceleratorCategory(IGuiHelper helper) {
 		this.background = helper.createBlankDrawable(0, 0);
