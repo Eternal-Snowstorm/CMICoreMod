@@ -1,6 +1,5 @@
 package top.nebula.cmi.common.block.custom;
 
-import com.github.alexmodguy.alexscaves.server.block.ACBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -10,6 +9,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.nebula.cmi.common.register.ModBlockEntityTypes;
@@ -28,7 +29,11 @@ public class MercuryGeothermalVentBlock extends BaseEntityBlock {
 	public static final BooleanProperty SPAWNING_PARTICLES = BooleanProperty.create("spawning_particles");
 
 	public MercuryGeothermalVentBlock() {
-		super(Properties.copy(ACBlockRegistry.GEOTHERMAL_VENT.get()));
+		super(Properties.of()
+				.mapColor(MapColor.STONE)
+				.requiresCorrectToolForDrops()
+				.strength(2.0F, 5.0F)
+				.sound(SoundType.TUFF));
 		this.registerDefaultState(this.stateDefinition.any()
 				.setValue(SMOKE_TYPE, Integer.valueOf(0))
 				.setValue(SPAWNING_PARTICLES, true));
