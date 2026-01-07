@@ -26,7 +26,7 @@ public class Frenzy extends Modifier {
 
 		boolean hasModifier = SimpleTCon.hasModifier(
 				player.getItemInHand(InteractionHand.MAIN_HAND),
-				Cmi.loadString("frenzy")
+				Cmi.loadResource("frenzy").toString()
 		);
 
 		if (!player.hasEffect(MobEffects.MOVEMENT_SPEED) || !hasModifier) {

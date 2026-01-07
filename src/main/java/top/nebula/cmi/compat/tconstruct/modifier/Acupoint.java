@@ -38,7 +38,7 @@ public class Acupoint extends Modifier {
 
 		boolean hasModifier = SimpleTCon.hasModifier(
 				player.getItemInHand(InteractionHand.MAIN_HAND),
-				Cmi.loadString("acupoint")
+				Cmi.loadResource("acupoint").toString()
 		);
 		boolean isBoss = entity.getType().is(Tags.EntityTypes.BOSSES);
 		MutableComponent tranKey = Component.translatable("message.cmi.modifier.acupoint")
@@ -70,6 +70,7 @@ public class Acupoint extends Modifier {
 
 	/**
 	 * 触发音爆效果
+	 *
 	 * @param entity
 	 */
 	private static void spawnSonicBoom(LivingEntity entity) {
