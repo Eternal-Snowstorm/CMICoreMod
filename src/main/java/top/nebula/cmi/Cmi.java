@@ -33,16 +33,21 @@ public class Cmi {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
 
+	public static String loadString(String path) {
+		return String.format("cmi:%s", path);
+	}
+
 	public Cmi(FMLJavaModLoadingContext context) {
-		IEventBus event = context.getModEventBus();
+		IEventBus bus = context.getModEventBus();
 
-		ModBlocks.register(event);
-		ModBlockEntityTypes.register(event);
-		ModItems.register(event);
-		ModRecipeType.register(event);
-		ModRecipeSerializer.register(event);
+		ModBlocks.register(bus);
+		ModBlockEntityTypes.register(bus);
+		ModItems.register(bus);
+		ModRecipeType.register(bus);
+		ModRecipeSerializer.register(bus);
+		ModModifier.MODIFIERS.register(bus);
 
-		event.addListener(this::commonSetup);
+		bus.addListener(this::commonSetup);
 	}
 
 	private void commonSetup(FMLCommonSetupEvent event) {
