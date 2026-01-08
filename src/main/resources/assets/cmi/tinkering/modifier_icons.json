@@ -1,5 +1,11 @@
 {
 	"cmi:acupoint": [
 		"cmi:gui/modifiers/acupoint"
+	],
+	"cmi:causal_truncation": [
+		"cmi:gui/modifiers/causal_truncation"
+	],
+	"cmi:frenzy": [
+		"cmi:gui/modifiers/frenzy"
 	]
 }
