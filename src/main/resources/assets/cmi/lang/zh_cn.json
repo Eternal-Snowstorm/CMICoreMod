@@ -16,5 +16,6 @@
 	"jei.category.cmi.water_pump_sea_water": "多方块水井",
 	"jei.catalyst.cmi.water_pump.complete": "结构完整",
 	"jei.catalyst.cmi.water_pump.ocean": "处于海洋群系",
-	"jei.catalyst.cmi.water_pump.pos": "核心方块处于坐标Y = 62"
+	"jei.catalyst.cmi.water_pump.pos": "核心方块处于坐标Y = 62",
+	"modifier.cmi.acupoint.description": "敌人血量低于阈值时攻击有概率直接击杀! "
 }

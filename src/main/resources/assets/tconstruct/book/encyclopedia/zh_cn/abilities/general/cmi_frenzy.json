@@ -1,0 +1,17 @@
+{
+	"modifier_id": "cmi:frenzy",
+	"text": [
+		{
+			"text": "当敌人生命值低于25%时, 攻击有25%概率直接击杀! "
+		},
+		{
+			"text": "对BOSS生效阈值减半(12.5%)",
+			"paragraph": true
+		}
+	],
+	"more_text_space": true,
+	"effects": [
+		"最高1级",
+		"需要1个能力槽"
+	]
+}

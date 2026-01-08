@@ -16,5 +16,6 @@
 	"jei.category.cmi.water_pump_sea_water": "Multiblock Water Pump",
 	"jei.catalyst.cmi.water_pump.complete": "Structural Complete",
 	"jei.catalyst.cmi.water_pump.ocean": "In the ocean biome",
-	"jei.catalyst.cmi.water_pump.pos": "Core block at coordinate Y = 62"
+	"jei.catalyst.cmi.water_pump.pos": "Core block at coordinate Y = 62",
+	"modifier.cmi.acupoint.description": "When the enemy's HP is lower than the threshold, the attack has the possibility to kill directly!"
 }
