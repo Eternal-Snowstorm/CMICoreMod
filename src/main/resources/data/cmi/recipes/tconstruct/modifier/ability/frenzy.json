@@ -4,13 +4,13 @@
 	"check_trait_level": true,
 	"inputs": [
 		{
-			"item": "cmi:blackstone_source_alpha"
+			"tag": "forge:dusts/quartz"
 		},
 		{
-			"item": "cmi:blackstone_source_beta"
+			"tag": "create:mechanisms/cobalt"
 		},
 		{
-			"item": "cmi:blackstone_source_gamma"
+			"tag": "forge:dusts/quartz"
 		},
 		{
 			"tag": "forge:gems/charged_amethyst"
@@ -20,11 +20,11 @@
 		}
 	],
 	"level": 1,
-	"result": "cmi:acupoint",
+	"result": "cmi:frenzy",
 	"slots": {
 		"abilities": 1
 	},
 	"tools": {
-		"tag": "cmi:modifiable/acupoint"
+		"tag": "cmi:modifiable/frenzy"
 	}
 }

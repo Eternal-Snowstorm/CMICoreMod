@@ -1,0 +1,30 @@
+{
+	"type": "tconstruct:modifier",
+	"allow_crystal": true,
+	"check_trait_level": true,
+	"inputs": [
+		{
+			"tag": "forge:plates/uranium"
+		},
+		{
+			"tag": "create:mechanisms/nether"
+		},
+		{
+			"tag": "forge:plates/uranium"
+		},
+		{
+			"tag": "forge:slimeball/blood"
+		},
+		{
+			"tag": "forge:slimeball/blood"
+		}
+	],
+	"level": 1,
+	"result": "cmi:causal_truncation",
+	"slots": {
+		"abilities": 1
+	},
+	"tools": {
+		"tag": "cmi:modifiable/causal_truncation"
+	}
+}
