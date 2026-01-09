@@ -18,7 +18,7 @@
 	"jei.catalyst.cmi.water_pump.ocean": "处于海洋群系",
 	"jei.catalyst.cmi.water_pump.pos": "核心方块处于坐标Y = 62",
 	"modifier.cmi.acupoint.flavor": "你进入斩杀线了！",
-	"modifier.cmi.acupoint.description": "怪物血量低于25%有概率直接斩杀\nBoss生物的斩杀线降低至12.5%",
+	"modifier.cmi.acupoint.description": "怪物血量低于25%有概率直接斩杀 (Boss生物的斩杀线降低至12.5%)",
 	"modifier.cmi.frenzy.flavor": "我的速度，也是我的续航",
 	"modifier.cmi.frenzy.description": "当玩家处于加速状态下攻击怪物将会回复血量",
 	"modifier.cmi.causal_truncation.flavor": "斩断因果，方得大道",

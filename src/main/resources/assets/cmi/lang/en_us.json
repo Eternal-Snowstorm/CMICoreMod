@@ -19,7 +19,7 @@
 	"jei.catalyst.cmi.water_pump.pos": "Core block at coordinate Y = 62",
 	"modifier.cmi.acupoint": "Deadly Acupoint",
 	"modifier.cmi.acupoint.flavor": "You are below the Killing Line!",
-	"modifier.cmi.acupoint.description": "Have chance to kill monsters below 25% health directly\nactivate on Bosses below 12.5% health",
+	"modifier.cmi.acupoint.description": "Have chance to kill monsters below 25% health directly (activate on Bosses below 12.5% health)",
 	"modifier.cmi.frenzy": "Frenzy",
 	"modifier.cmi.frenzy.flavor": "Speed is also my battery",
 	"modifier.cmi.frenzy.description": "Player will gain health when attacking with a Speed buff",
