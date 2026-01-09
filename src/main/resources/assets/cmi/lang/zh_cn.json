@@ -1,5 +1,4 @@
 {
-	"message.cmi.modifier.acupoint": "技能<死穴>的效果已发动",
 	"item.cmi.nuclear_mechanism": "核构件",
 	"block.cmi.water_pump": "水井",
 	"block.cmi.mars_geothermal_vent": "阿瑞斯地热通口",
@@ -16,11 +15,5 @@
 	"jei.category.cmi.water_pump_sea_water": "多方块水井",
 	"jei.catalyst.cmi.water_pump.complete": "结构完整",
 	"jei.catalyst.cmi.water_pump.ocean": "处于海洋群系",
-	"jei.catalyst.cmi.water_pump.pos": "核心方块处于坐标Y = 62",
-	"modifier.cmi.acupoint.flavor": "你进入斩杀线了！",
-	"modifier.cmi.acupoint.description": "怪物血量低于25%有概率直接斩杀 (Boss生物的斩杀线降低至12.5%)",
-	"modifier.cmi.frenzy.flavor": "我的速度，也是我的续航",
-	"modifier.cmi.frenzy.description": "当玩家处于加速状态下攻击怪物将会回复血量",
-	"modifier.cmi.causal_truncation.flavor": "斩断因果，方得大道",
-	"modifier.cmi.causal_truncation.description": "攻击怪物有概率直接造成33%血量的伤害"
+	"jei.catalyst.cmi.water_pump.pos": "核心方块处于坐标Y = 62"
 }

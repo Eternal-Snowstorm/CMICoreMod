@@ -41,7 +41,6 @@ public class Cmi {
 		ModItems.register(bus);
 		ModRecipeType.register(bus);
 		ModRecipeSerializer.register(bus);
-		ModModifier.MODIFIERS.register(bus);
 
 		bus.addListener(this::commonSetup);
 	}
