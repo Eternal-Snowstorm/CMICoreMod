@@ -1,6 +1,5 @@
 package top.nebula.cmi.compat.tconstruct.modifier;
 
-import com.xiaoyue.tconstruct_js.utils.SimpleTCon;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -18,6 +17,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import top.nebula.cmi.Cmi;
+import top.nebula.utils.compat.tconstruct.util.SimpleTConUtils;
 
 @SuppressWarnings("ALL")
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -36,7 +36,7 @@ public class Acupoint extends Modifier {
 			return;
 		}
 
-		boolean hasModifier = SimpleTCon.hasModifier(
+		boolean hasModifier = SimpleTConUtils.hasModifier(
 				player.getItemInHand(InteractionHand.MAIN_HAND),
 				Cmi.loadResource("acupoint").toString()
 		);

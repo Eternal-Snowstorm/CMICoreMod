@@ -1,6 +1,5 @@
 package top.nebula.cmi.compat.tconstruct.modifier;
 
-import com.xiaoyue.tconstruct_js.utils.SimpleTCon;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
@@ -11,6 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import top.nebula.cmi.Cmi;
+import top.nebula.utils.compat.tconstruct.util.SimpleTConUtils;
 
 @SuppressWarnings("ALL")
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -24,7 +24,7 @@ public class Frenzy extends Modifier {
 			return;
 		}
 
-		boolean hasModifier = SimpleTCon.hasModifier(
+		boolean hasModifier = SimpleTConUtils.hasModifier(
 				player.getItemInHand(InteractionHand.MAIN_HAND),
 				Cmi.loadResource("frenzy").toString()
 		);
