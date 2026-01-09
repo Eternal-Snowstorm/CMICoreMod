@@ -121,12 +121,10 @@ dependencies {
     compileOnly fg.deobf("com.jozufozu.flywheel:flywheel-forge-1.20.1:0.6.11-13")
     // TCon
     implementation fg.deobf("curse.maven:tinkers-construct-74072:6266282")
-    // TConJS
-    implementation fg.deobf("curse.maven:tconstructjs-1210790:7303421")
+    // Mantle
+    implementation fg.deobf("curse.maven:mantle-74924:7414488")
     // IE
     implementation fg.deobf("curse.maven:immersive-engineering-231951:6206989")
-    // Mantle
-    implementation fg.deobf("curse.maven:mantle-74924:6642332")
     // Botarium
     implementation fg.deobf("curse.maven:botarium-704113:5486070")
     // Resourceful Lib
