@@ -30,7 +30,7 @@ public abstract class AnimatedBlazeBurnerMixin extends AnimatedKinetics {
 			matrixStack.mulPose(Axis.YP.rotationDegrees(22.5F));
 			int scale = 23;
 
-			Block block = TagAnimatedBlock.get(ModBlockTags.HEAT_SOURCES, 20f);
+			Block block = TagAnimatedBlock.get(ModBlockTags.GRILL_SOURCES, 20f);
 			blockElement(block.defaultBlockState())
 					.atLocal(0.0F, 1.65, 0.0F)
 					.scale(scale)

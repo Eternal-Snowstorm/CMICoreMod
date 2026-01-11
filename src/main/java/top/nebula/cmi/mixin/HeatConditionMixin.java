@@ -2,6 +2,7 @@ package top.nebula.cmi.mixin;
 
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
+import net.minecraft.util.StringRepresentable;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,14 +13,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @Mixin(value = HeatCondition.class, remap = false)
-public abstract class HeatConditionMixin {
+public abstract class HeatConditionMixin implements StringRepresentable {
 	@Shadow
 	@Final
 	@Mutable
 	private static HeatCondition[] $VALUES;
 
+	@Shadow
+	public abstract String getTranslationKey();
+
 	@Unique
-	private static final HeatCondition cmi$PLAIN = cmi$addVariant("GRILLED", 16747520);
+	private static final HeatCondition GRILLED = cmi$addVariant("GRILLED", 16747520);
 
 	@Invoker("<init>")
 	public static HeatCondition cmi$invokeInit(String name, int id, int color) {
@@ -28,7 +32,7 @@ public abstract class HeatConditionMixin {
 
 	@Unique
 	private static HeatCondition cmi$addVariant(String name, int color) {
-		ArrayList<HeatCondition> variants = null;
+		ArrayList<HeatCondition> variants = new ArrayList<>(Arrays.asList(HeatConditionMixin.$VALUES));
 		if ($VALUES != null) {
 			variants = new ArrayList<>(Arrays.asList($VALUES));
 		}
@@ -40,14 +44,25 @@ public abstract class HeatConditionMixin {
 
 	@Inject(method = "testBlazeBurner", at = @At("HEAD"), remap = false, cancellable = true)
 	public void testBlazeBurner(BlazeBurnerBlock.HeatLevel level, CallbackInfoReturnable<Boolean> cir) {
-		if ((HeatCondition) (Object) this == cmi$PLAIN) {
-			cir.setReturnValue(level != BlazeBurnerBlock.HeatLevel.NONE && level != BlazeBurnerBlock.HeatLevel.SMOULDERING);
+		if (this.equals(HeatCondition.SUPERHEATED)) {
+			cir.setReturnValue(level == BlazeBurnerBlock.HeatLevel.SEETHING);
+			return;
+		}
+
+		if (this.equals(HeatCondition.HEATED)) {
+			cir.setReturnValue(level == BlazeBurnerBlock.HeatLevel.FADING || level == BlazeBurnerBlock.HeatLevel.KINDLED || level == BlazeBurnerBlock.HeatLevel.SEETHING);
+			return;
+		}
+
+		if (this.equals(GRILLED)) {
+			cir.setReturnValue(level == BlazeBurnerBlock.HeatLevel.valueOf("GRILLED") || level == BlazeBurnerBlock.HeatLevel.FADING ||
+					level == BlazeBurnerBlock.HeatLevel.KINDLED || level == BlazeBurnerBlock.HeatLevel.SEETHING);
 		}
 	}
 
 	@Inject(method = "visualizeAsBlazeBurner", at = @At("HEAD"), remap = false, cancellable = true)
 	public void visualizeAsBlazeBurner(CallbackInfoReturnable<BlazeBurnerBlock.HeatLevel> cir) {
-		if ((HeatCondition) (Object) this == cmi$PLAIN) {
+		if ((HeatCondition) (Object) this == GRILLED) {
 			cir.setReturnValue(BlazeBurnerBlock.HeatLevel.valueOf("GRILLED"));
 		}
 	}

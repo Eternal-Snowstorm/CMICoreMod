@@ -16,9 +16,9 @@ public class ModBlockTags {
 		return BlockTags.create(Cmi.loadResource(name));
 	}
 
-	public static TagKey<Block> HEAT_SOURCES;
+	public static TagKey<Block> GRILL_SOURCES;
 
 	static {
-		HEAT_SOURCES = createTag("heat_sources");
+		GRILL_SOURCES = createTag("grill_sources");
 	}
 }

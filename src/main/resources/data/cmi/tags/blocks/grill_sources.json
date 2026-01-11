@@ -1,0 +1,12 @@
+{
+	"values": [
+		"minecraft:fire",
+		"minecraft:campfire",
+		"minecraft:magma_block",
+		"minecraft:lava",
+		"create:lit_blaze_burner",
+		"kaleidoscope_cookery:stove",
+		"farmersdelight:stove",
+		"mynethersdelight:nether_stove"
+	]
+}

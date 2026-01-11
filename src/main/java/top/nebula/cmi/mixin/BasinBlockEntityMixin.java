@@ -13,7 +13,7 @@ import top.nebula.cmi.common.tag.ModBlockTags;
 public abstract class BasinBlockEntityMixin {
 	@Inject(method = "getHeatLevelOf", at = @At("HEAD"), remap = false, cancellable = true)
 	private static void getHeatLevelOf(BlockState state, CallbackInfoReturnable<BlazeBurnerBlock.HeatLevel> cir) {
-		if (state.is(ModBlockTags.HEAT_SOURCES)) {
+		if (state.is(ModBlockTags.GRILL_SOURCES)) {
 			cir.setReturnValue(BlazeBurnerBlock.HeatLevel.valueOf("GRILLED"));
 		}
 	}
