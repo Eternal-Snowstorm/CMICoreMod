@@ -42,7 +42,6 @@ public abstract class HeatConditionMixin implements StringRepresentable {
 		return heatCondition;
 	}
 
-	// TODO 需要修复一下热量检测, 现在的热量检测被我们mixin爆了
 	@Inject(method = "testBlazeBurner", at = @At("HEAD"), remap = false, cancellable = true)
 	public void testBlazeBurner(BlazeBurnerBlock.HeatLevel level, CallbackInfoReturnable<Boolean> cir) {
 		if (this.equals(HeatCondition.SUPERHEATED)) {
