@@ -23,7 +23,7 @@ public abstract class HeatConditionMixin implements StringRepresentable {
 	public abstract String getTranslationKey();
 
 	@Unique
-	private static final HeatCondition GRILLED = cmi$addVariant("GRILLED", 16747520);
+	private static final HeatCondition CMI$GRILLED = cmi$addVariant("GRILLED", 16747520);
 
 	@Invoker("<init>")
 	public static HeatCondition cmi$invokeInit(String name, int id, int color) {
@@ -55,7 +55,7 @@ public abstract class HeatConditionMixin implements StringRepresentable {
 			return;
 		}
 
-		if (this.equals(GRILLED)) {
+		if (this.equals(CMI$GRILLED)) {
 			cir.setReturnValue(level == BlazeBurnerBlock.HeatLevel.valueOf("GRILLED") || level == BlazeBurnerBlock.HeatLevel.FADING ||
 					level == BlazeBurnerBlock.HeatLevel.KINDLED || level == BlazeBurnerBlock.HeatLevel.SEETHING);
 		}
@@ -63,7 +63,7 @@ public abstract class HeatConditionMixin implements StringRepresentable {
 
 	@Inject(method = "visualizeAsBlazeBurner", at = @At("HEAD"), remap = false, cancellable = true)
 	public void visualizeAsBlazeBurner(CallbackInfoReturnable<BlazeBurnerBlock.HeatLevel> cir) {
-		if ((HeatCondition) (Object) this == GRILLED) {
+		if ((HeatCondition) (Object) this == CMI$GRILLED) {
 			cir.setReturnValue(BlazeBurnerBlock.HeatLevel.valueOf("GRILLED"));
 		}
 	}
