@@ -15,8 +15,8 @@ public class PlayerDrownInNether {
 			return;
 		}
 		if (pPlayer.level().dimension() == Level.NETHER) {
-			event.setCanBreathe(false);
-			event.setCanRefillAir(false);
+			// event.setCanBreathe(false);
+			// event.setCanRefillAir(false);
 		}
 	}
 }
