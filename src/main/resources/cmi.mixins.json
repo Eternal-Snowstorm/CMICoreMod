@@ -12,9 +12,7 @@
 		"HeatConditionMixin",
 		"HeatLevelMixin",
 		"ClassFilterMixin",
-		"CryoFreezingCategoryMixin",
-		"OxygenApiMixin",
-		"DivingHelmetItemMixin"
+		"CryoFreezingCategoryMixin"
 	],
 	"client": [
 	],
