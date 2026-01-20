@@ -4,5 +4,9 @@ import slimeknights.tconstruct.library.recipe.partbuilder.Pattern;
 import top.nebula.cmi.Cmi;
 
 public class CastPattern {
-	Pattern mechanism = new Pattern(Cmi.MODID, "mechanism");
+	Pattern mechanism = register("mechanism");
+
+	private static Pattern register(String name) {
+		return new Pattern(Cmi.MODID, name);
+	}
 }
