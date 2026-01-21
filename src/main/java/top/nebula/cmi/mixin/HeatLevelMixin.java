@@ -15,7 +15,7 @@ public abstract class HeatLevelMixin {
 	private static BlazeBurnerBlock.HeatLevel[] $VALUES;
 
 	@Unique
-	private static final BlazeBurnerBlock.HeatLevel GRILLED = cmi$addVariant("GRILLED");
+	private static final BlazeBurnerBlock.HeatLevel CMI$GRILLED = cmi$addVariant("GRILLED");
 
 	@Invoker("<init>")
 	public static BlazeBurnerBlock.HeatLevel cmi$invokeInit(String name, int id) {

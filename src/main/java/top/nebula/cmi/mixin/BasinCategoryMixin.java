@@ -3,12 +3,8 @@ package top.nebula.cmi.mixin;
 import com.simibubi.create.compat.jei.category.BasinCategory;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
-import com.simibubi.create.foundation.utility.Lang;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,12 +19,16 @@ public abstract class BasinCategoryMixin {
 		if (recipe.getRequiredHeat() == HeatCondition.valueOf("GRILLED"))
 			info.cancel();
 	}
-
-	@Inject(method = "draw(Lcom/simibubi/create/content/processing/basin/BasinRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;Lnet/minecraft/client/gui/GuiGraphics;DD)V",
-			at = @At("HEAD"), remap = false)
+	/*
+	@Inject(
+			method = "draw(Lcom/simibubi/create/content/processing/basin/BasinRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;Lnet/minecraft/client/gui/GuiGraphics;DD)V",
+			at = @At("HEAD"),
+			remap = false
+	)
 	public void draw(BasinRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY, CallbackInfo info) {
 		if (recipe.getRequiredHeat() == HeatCondition.valueOf("GRILLED")) {
 			graphics.drawString(Minecraft.getInstance().font, Lang.translateDirect("cmi.recipe.tip.fire"), 9, 2, recipe.getRequiredHeat().getColor(), false);
 		}
 	}
+	 */
 }

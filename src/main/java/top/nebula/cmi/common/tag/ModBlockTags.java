@@ -10,7 +10,7 @@ public class ModBlockTags {
 
 	static {
 		GRILL_SOURCES = TagsBuilder.block("grill_sources")
-				.namespace(Cmi.MODID)
+				.custom(Cmi.MODID)
 				.build();
 	}
 }
