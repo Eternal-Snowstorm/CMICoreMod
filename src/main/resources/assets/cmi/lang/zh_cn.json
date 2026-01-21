@@ -8,6 +8,7 @@
 	"cmi.tooltip.water_pump.non_functional": "水井关键结构缺失",
 	"multiblock.building.cmi.water_pump": "多方块水井搭建",
 	"biome.cmi.andesite_cave": "安山岩洞窟",
+	"pattern.cmi.mechanism": "构件",
 	"jei.category.cmi.accelerator": "构件催生",
 	"jei.catalyst.cmi.accelerator.1": "对着催生器使用构件",
 	"jei.catalyst.cmi.accelerator.2": "需要周围5x5范围内至少24个可触发方块",
