@@ -49,8 +49,8 @@ public class WaterPumpBlock extends Block implements IBE<WaterPumpBlockEntity> {
 			return;
 		}
 
-		boolean isBlockAndItem = state.is(ModBlocks.WATER_PUMP.get()) &&
-				item.is(AllTags.AllItemTags.WRENCH.tag);
+		boolean isBlockAndItem = state.is(ModBlocks.WATER_PUMP.get())
+				&& item.is(AllTags.AllItemTags.WRENCH.tag);
 
 		if (isBlockAndItem && hand == InteractionHand.MAIN_HAND && !player.isShiftKeyDown()) {
 			WaterPumpBlockEntity entity = (WaterPumpBlockEntity) level.getBlockEntity(pos);

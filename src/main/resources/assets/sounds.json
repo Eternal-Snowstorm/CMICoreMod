@@ -1,0 +1,18 @@
+{
+	"record.mechanism": {
+		"sounds": [
+			{
+				"name": "cmi:music/record/mechanism",
+				"stream": true
+			}
+		]
+	},
+	"record.togni_leets": {
+		"sounds": [
+			{
+				"name": "cmi:music/record/togni_leets",
+				"stream": true
+			}
+		]
+	}
+}

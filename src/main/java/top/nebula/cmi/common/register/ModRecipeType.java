@@ -22,7 +22,7 @@ public class ModRecipeType {
 	}
 
 	public static void register(IEventBus event) {
-		Cmi.LOGGER.info("CMI Core RecipeTypes Registered!");
 		RECIPE_TYPES.register(event);
+		Cmi.LOGGER.info("CMI Core RecipeTypes Registered!");
 	}
 }

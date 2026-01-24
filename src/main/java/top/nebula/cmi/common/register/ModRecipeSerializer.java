@@ -22,7 +22,7 @@ public class ModRecipeSerializer {
 	}
 
 	public static void register(IEventBus event) {
-		Cmi.LOGGER.info("CMI Core RecipeSerializers Registered!");
 		SERIALIZERS.register(event);
+		Cmi.LOGGER.info("CMI Core RecipeSerializers Registered!");
 	}
 }
