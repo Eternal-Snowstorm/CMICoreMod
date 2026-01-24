@@ -19,7 +19,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.nebula.cmi.Cmi;
-import top.nebula.utils.NebulaUtils;
+import top.nebula.libs.NebulaLibs;
 
 @SuppressWarnings("ALL")
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -97,7 +97,7 @@ public class ParchmentRightClick {
 						0
 				);
 				// 调用动画
-				NebulaUtils.useTotemAnimation(PARCHMEMT.get().getDefaultInstance());
+				NebulaLibs.useTotemAnimation(PARCHMEMT.get().getDefaultInstance());
 				// 挥手
 				player.swing(event.getHand());
 				// 消耗物品

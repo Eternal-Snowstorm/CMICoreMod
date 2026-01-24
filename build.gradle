@@ -111,9 +111,9 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     // Nebula Utils
-    implementation files("libs/Nebula-Utils-1.5.0.jar")
-    implementation name: 'Nebula-Utils-1.5.0'
-    jarJar(group: "top.nebula", name: "Nebula-Utils", version: "[1.5.0,)")
+    implementation files("libs/Nebula Libs-1.5.0.jar")
+    implementation name: 'Nebula Libs-1.5.0'
+    jarJar(group: "top.nebula", name: "Nebula Libs", version: "[1.5.0,)")
     // Registrate
     implementation fg.deobf("com.tterrag.registrate:Registrate:MC1.20-1.3.3")
     // Mekanism

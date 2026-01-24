@@ -30,8 +30,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.nebula.utils.multiblock.MultiblockStructureBuilder;
-import top.nebula.utils.multiblock.PropertyImmutableMap;
+import top.nebula.libs.multiblock.MultiblockStructureBuilder;
+import top.nebula.libs.multiblock.PropertyImmutableMap;
 import vazkii.patchouli.api.IMultiblock;
 import vazkii.patchouli.api.PatchouliAPI;
 

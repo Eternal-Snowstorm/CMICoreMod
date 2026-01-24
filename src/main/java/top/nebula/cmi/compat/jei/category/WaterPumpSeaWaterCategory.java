@@ -23,7 +23,7 @@ import top.nebula.cmi.common.recipe.waterpump.WaterPumpSeaWaterRecipe;
 import top.nebula.cmi.common.register.ModBlocks;
 import top.nebula.cmi.compat.jei.CmiGuiTextures;
 import top.nebula.cmi.compat.jei.category.multiblock.WaterPumpMultiblock;
-import top.nebula.utils.client.ClientRenderUtils;
+import top.nebula.libs.client.ClientRenderUtils;
 
 import java.util.Collections;
 import java.util.List;
