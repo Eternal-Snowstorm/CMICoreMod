@@ -16,7 +16,6 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +23,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.util.Lazy;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.recipe.accelerator.AcceleratorRecipe;
@@ -33,13 +33,13 @@ public class AcceleratorCategory implements IRecipeCategory<AcceleratorRecipe> {
 	private final IDrawable icon;
 
 	public static final Lazy<Item> ACCELERATOR_ITEM = Lazy.of(() -> {
-		return BuiltInRegistries.ITEM.get(Cmi.loadResource("accelerator"));
+		return ForgeRegistries.ITEMS.getValue(Cmi.loadResource("accelerator"));
 	});
 	public static final Lazy<Block> ACCELERATOR_BLOCK = Lazy.of(() -> {
-		return BuiltInRegistries.BLOCK.get(Cmi.loadResource("accelerator"));
+		return ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("accelerator"));
 	});
 	private static final Lazy<Item> PRECISION_MECHANISM = Lazy.of(() -> {
-		return BuiltInRegistries.ITEM.get(ResourceLocation.parse("create:precision_mechanism"));
+		return ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("create:precision_mechanism"));
 	});
 	public static final ResourceLocation UID = Cmi.loadResource("accelerator");
 	public static final RecipeType<AcceleratorRecipe> ACCELERATOR_TYPE = RecipeType.create(
