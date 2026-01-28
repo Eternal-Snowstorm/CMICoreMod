@@ -2,6 +2,7 @@
 	"values": [
 		"cmi:water_pump",
 		"cmi:mars_geothermal_vent",
-		"cmi:mercury_geothermal_vent"
+		"cmi:mercury_geothermal_vent",
+		"cmi:hydraulic_press"
 	]
 }

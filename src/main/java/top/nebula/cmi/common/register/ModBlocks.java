@@ -1,7 +1,6 @@
 package top.nebula.cmi.common.register;
 
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
-import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.ModelGen;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -14,6 +13,7 @@ import top.nebula.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;
 import top.nebula.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
 import top.nebula.cmi.common.block.test_gravel.TestGravelBlock;
 import top.nebula.cmi.common.block.water_pump.WaterPumpBlock;
+import top.nebula.cmi.common.item.HydraulicPressItem;
 
 public class ModBlocks {
 	public static final BlockEntry<GoldenSaplingBlock> GOLD_SAPLING;
@@ -49,7 +49,7 @@ public class ModBlocks {
 				.properties(BlockBehaviour.Properties::noOcclusion)
 				.blockstate(BlockStateGen.horizontalBlockProvider(true))
 				.transform(BlockStressDefaults.setImpact(24.0))
-				.item(AssemblyOperatorBlockItem::new)
+				.item(HydraulicPressItem::new)
 				.transform(ModelGen.customItemModel())
 				.register();
 	}

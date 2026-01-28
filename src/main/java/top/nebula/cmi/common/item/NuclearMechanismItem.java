@@ -14,8 +14,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
-public class NuclearMechanism extends Item {
-	public NuclearMechanism(Item.Properties properties) {
+public class NuclearMechanismItem extends Item {
+	public NuclearMechanismItem(Item.Properties properties) {
 		super(properties);
 	}
 

@@ -1,5 +1,6 @@
 package top.nebula.cmi.compat.jei;
 
+import com.simibubi.create.Create;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -7,7 +8,6 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.Cmi;
@@ -51,16 +51,24 @@ public class ModJeiPlugin implements IModPlugin {
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
 		registration.addRecipeCatalyst(
-				new ItemStack(AcceleratorCategory.ACCELERATOR_ITEM.get()),
+				AcceleratorCategory.ACCELERATOR_ITEM.get().getDefaultInstance(),
 				AcceleratorCategory.ACCELERATOR_TYPE
 		);
 		registration.addRecipeCatalyst(
-				new ItemStack(ModBlocks.WATER_PUMP.get().asItem()),
+				ModBlocks.WATER_PUMP.asStack(),
 				WaterPumpCategory.WATER_PUMP_TYPE
 		);
 		registration.addRecipeCatalyst(
-				new ItemStack(ModBlocks.WATER_PUMP.get().asItem()),
+				ModBlocks.WATER_PUMP.asStack(),
 				WaterPumpSeaWaterCategory.WATER_PUMP_SEA_WATER_TYPE
 		);
+		registration.getJeiHelpers().getRecipeType(Create.asResource("pressing"))
+				.ifPresent((type) -> {
+					registration.addRecipeCatalyst(ModBlocks.HYDRAULIC_PRESS.asStack(), type);
+				});
+		registration.getJeiHelpers().getRecipeType(Create.asResource("packing"))
+				.ifPresent((type) -> {
+					registration.addRecipeCatalyst(ModBlocks.HYDRAULIC_PRESS.asStack(), type);
+				});
 	}
 }
