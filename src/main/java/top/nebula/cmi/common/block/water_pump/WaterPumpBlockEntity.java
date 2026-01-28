@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.entity;
+package top.nebula.cmi.common.block.water_pump;
 
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles;
 import blusunrize.immersiveengineering.common.register.IEBlocks;

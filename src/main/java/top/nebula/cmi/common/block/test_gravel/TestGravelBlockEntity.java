@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.entity;
+package top.nebula.cmi.common.block.test_gravel;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.Cmi;
-import top.nebula.cmi.common.block.custom.TestGravelBlock;
 import top.nebula.cmi.common.register.ModItems;
 
 public class TestGravelBlockEntity extends BrushableBlockEntity {

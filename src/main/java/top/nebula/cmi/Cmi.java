@@ -1,11 +1,15 @@
 package top.nebula.cmi;
 
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.Registrate;
-import dev.latvian.mods.kubejs.typings.Info;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import top.nebula.cmi.client.CmiClient;
+import top.nebula.cmi.client.block.resource.CmiBlockPartialModel;
 import top.nebula.cmi.common.register.*;
 import top.nebula.cmi.worldgen.region.ModOverworldRegion;
 import top.nebula.cmi.worldgen.surfacerule.ModSurfaceRuleData;
@@ -21,16 +25,8 @@ public class Cmi {
 	public static final String NAME = "CMI";
 	public static final Logger LOGGER = LogManager.getLogger(NAME);
 	public static final Registrate REGISTRATE = Registrate.create(MODID);
+	public static final CreateRegistrate CREATE_REGISTRATE = CreateRegistrate.create(MODID);
 
-	/**
-	 * 加载ResourceLocation资源
-	 *
-	 * @param path 命名空间下的资源路径
-	 *             <p>
-	 *             Resource path under namespace
-	 * @return
-	 */
-	@Info("加载\"cmi\"命名空间下的资源\n\nLoad resource under namespace \"cmi\"")
 	public static ResourceLocation loadResource(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
@@ -38,16 +34,22 @@ public class Cmi {
 	public Cmi(FMLJavaModLoadingContext context) {
 		IEventBus bus = context.getModEventBus();
 
+		CREATE_REGISTRATE.registerEventListeners(bus);
+
 		ModBlocks.register();
 		ModBlockEntityTypes.register();
 		ModItems.register();
 		ModRecipeType.register(bus);
 		ModRecipeSerializer.register(bus);
 
-		bus.addListener(this::commonSetup);
+		CmiBlockPartialModel.init();
+
+		bus.addListener(this::onCommonSetup);
+
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> CmiClient.onCtorClient(bus));
 	}
 
-	private void commonSetup(FMLCommonSetupEvent event) {
+	private void onCommonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
 			Regions.register(new ModOverworldRegion(5));
 

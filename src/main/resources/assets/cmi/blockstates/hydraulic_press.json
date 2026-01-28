@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "cmi:block/hydraulic_press/block"
+		},
+		"facing=south": {
+			"model": "cmi:block/hydraulic_press/block",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "cmi:block/hydraulic_press/block",
+			"y": 270
+		},
+		"facing=east": {
+			"model": "cmi:block/hydraulic_press/block",
+			"y": 90
+		}
+	}
+}

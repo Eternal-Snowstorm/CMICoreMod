@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.custom;
+package top.nebula.cmi.common.block.water_pump;
 
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.block.IBE;
@@ -15,7 +15,6 @@ import net.minecraftforge.fml.common.Mod;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.register.ModBlockEntityTypes;
 import top.nebula.cmi.common.register.ModBlocks;
-import top.nebula.cmi.common.block.entity.WaterPumpBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 

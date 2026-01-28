@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.custom;
+package top.nebula.cmi.common.block.golden_sapling;
 
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;

@@ -2,13 +2,20 @@ package top.nebula.cmi.common.register;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import top.nebula.cmi.Cmi;
-import top.nebula.cmi.common.block.entity.*;
+import top.nebula.cmi.common.block.hydraulic_press.HydraulicPressBlockEntity;
+import top.nebula.cmi.common.block.hydraulic_press.HydraulicPressInstance;
+import top.nebula.cmi.common.block.hydraulic_press.HydraulicPressRenderer;
+import top.nebula.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlockEntity;
+import top.nebula.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlockEntity;
+import top.nebula.cmi.common.block.test_gravel.TestGravelBlockEntity;
+import top.nebula.cmi.common.block.water_pump.WaterPumpBlockEntity;
 
 public class ModBlockEntityTypes {
 	public static final BlockEntityEntry<TestGravelBlockEntity> TEST_GRAVEL;
 	public static final BlockEntityEntry<MarsGeothermalVentBlockEntity> MARS_GEO;
 	public static final BlockEntityEntry<MercuryGeothermalVentBlockEntity> MERCURY_GEO;
 	public static final BlockEntityEntry<WaterPumpBlockEntity> WATER_PUMP;
+	public static final BlockEntityEntry<HydraulicPressBlockEntity> HYDRAULIC_PRESS;
 
 	static {
 		TEST_GRAVEL = Cmi.REGISTRATE.blockEntity("test_gravel", TestGravelBlockEntity::new)
@@ -22,6 +29,11 @@ public class ModBlockEntityTypes {
 				.register();
 		WATER_PUMP = Cmi.REGISTRATE.blockEntity("water_pump", WaterPumpBlockEntity::new)
 				.validBlock(ModBlocks.WATER_PUMP)
+				.register();
+		HYDRAULIC_PRESS = Cmi.CREATE_REGISTRATE.blockEntity("hydraulic_press", HydraulicPressBlockEntity::new)
+				.instance(() -> HydraulicPressInstance::new)
+				.renderer(() -> HydraulicPressRenderer::new)
+				.validBlock(ModBlocks.HYDRAULIC_PRESS)
 				.register();
 	}
 

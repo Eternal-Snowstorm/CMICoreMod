@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.custom;
+package top.nebula.cmi.common.block.mercury_geothermal_vent;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,13 +22,12 @@ import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.nebula.cmi.common.register.ModBlockEntityTypes;
-import top.nebula.cmi.common.block.entity.MarsGeothermalVentBlockEntity;
 
-public class MarsGeothermalVentBlock extends BaseEntityBlock {
+public class MercuryGeothermalVentBlock extends BaseEntityBlock {
 	public static final IntegerProperty SMOKE_TYPE = IntegerProperty.create("smoke_type", 0, 3);
 	public static final BooleanProperty SPAWNING_PARTICLES = BooleanProperty.create("spawning_particles");
 
-	public MarsGeothermalVentBlock(Properties properties) {
+	public MercuryGeothermalVentBlock(Properties properties) {
 		super(Properties.of()
 				.mapColor(MapColor.STONE)
 				.requiresCorrectToolForDrops()
@@ -58,7 +57,7 @@ public class MarsGeothermalVentBlock extends BaseEntityBlock {
 
 	public int getSmokeType(LevelAccessor level, BlockPos pos) {
 		BlockState state = level.getBlockState(pos.below());
-		if (state.getBlock() instanceof MarsGeothermalVentBlock) {
+		if (state.getBlock() instanceof MercuryGeothermalVentBlock) {
 			return state.getValue(SMOKE_TYPE);
 		}
 		if (state.getFluidState().getFluidType() == Fluids.LAVA.getFluidType()) {
@@ -78,10 +77,10 @@ public class MarsGeothermalVentBlock extends BaseEntityBlock {
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-		if (level.isClientSide()) {
+		if (level.isClientSide) {
 			return state.getValue(SMOKE_TYPE) > 0 && state.getValue(SPAWNING_PARTICLES) ?
-					createTickerHelper(type, ModBlockEntityTypes.MARS_GEO.get(),
-							MarsGeothermalVentBlockEntity::particleTick) : null;
+					createTickerHelper(type, ModBlockEntityTypes.MERCURY_GEO.get(),
+							MercuryGeothermalVentBlockEntity::particleTick) : null;
 		} else {
 			return null;
 		}
@@ -94,6 +93,6 @@ public class MarsGeothermalVentBlock extends BaseEntityBlock {
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-		return new MarsGeothermalVentBlockEntity(ModBlockEntityTypes.MARS_GEO.get(), pos, state);
+		return new MercuryGeothermalVentBlockEntity(ModBlockEntityTypes.MERCURY_GEO.get(), pos, state);
 	}
 }

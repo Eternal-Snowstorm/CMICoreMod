@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.entity;
+package top.nebula.cmi.common.block.mars_geothermal_vent;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.client.particle.ACParticleRegistry;
@@ -10,23 +10,22 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import top.nebula.cmi.common.block.custom.MercuryGeothermalVentBlock;
 
-public class MercuryGeothermalVentBlockEntity extends BlockEntity {
+public class MarsGeothermalVentBlockEntity extends BlockEntity {
 	private static final double PARTICLE_DIST = 120 * 120;
 
 	private int soundTime = 0;
 
-	public MercuryGeothermalVentBlockEntity(BlockEntityType<? extends MercuryGeothermalVentBlockEntity> type, BlockPos pos, BlockState state) {
+	public MarsGeothermalVentBlockEntity(BlockEntityType<? extends MarsGeothermalVentBlockEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 
-	public static void particleTick(Level level, BlockPos pos, BlockState state, MercuryGeothermalVentBlockEntity entity) {
+	public static void particleTick(Level level, BlockPos pos, BlockState state, MarsGeothermalVentBlockEntity entity) {
 		Player player = AlexsCaves.PROXY.getClientSidePlayer();
 		if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) > PARTICLE_DIST || level.random.nextBoolean()) {
 			return;
 		}
-		int smokeType = state.getValue(MercuryGeothermalVentBlock.SMOKE_TYPE);
+		int smokeType = state.getValue(MarsGeothermalVentBlock.SMOKE_TYPE);
 		ParticleOptions particle = ParticleTypes.SMOKE;
 		switch (smokeType) {
 			case 1:
