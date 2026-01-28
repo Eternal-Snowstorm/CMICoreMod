@@ -1,7 +1,10 @@
 package top.nebula.cmi.common.register;
 
+import com.simibubi.create.content.kinetics.base.HalfShaftInstance;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import top.nebula.cmi.Cmi;
+import top.nebula.cmi.common.block.accelerator_motor.AcceleratorMotorBlockEntity;
+import top.nebula.cmi.common.block.accelerator_motor.AcceleratorMotorRenderer;
 import top.nebula.cmi.common.block.hydraulic_press.HydraulicPressBlockEntity;
 import top.nebula.cmi.common.block.hydraulic_press.HydraulicPressInstance;
 import top.nebula.cmi.common.block.hydraulic_press.HydraulicPressRenderer;
@@ -16,6 +19,7 @@ public class ModBlockEntityTypes {
 	public static final BlockEntityEntry<MercuryGeothermalVentBlockEntity> MERCURY_GEO;
 	public static final BlockEntityEntry<WaterPumpBlockEntity> WATER_PUMP;
 	public static final BlockEntityEntry<HydraulicPressBlockEntity> HYDRAULIC_PRESS;
+	public static final BlockEntityEntry<AcceleratorMotorBlockEntity> AC_MOTOR;
 
 	static {
 		TEST_GRAVEL = Cmi.REGISTRATE.blockEntity("test_gravel", TestGravelBlockEntity::new)
@@ -34,6 +38,11 @@ public class ModBlockEntityTypes {
 				.instance(() -> HydraulicPressInstance::new)
 				.renderer(() -> HydraulicPressRenderer::new)
 				.validBlock(ModBlocks.HYDRAULIC_PRESS)
+				.register();
+		AC_MOTOR = Cmi.CREATE_REGISTRATE.blockEntity("accelerator_motor", AcceleratorMotorBlockEntity::new)
+				.instance(() -> HalfShaftInstance::new, false)
+				.validBlocks(ModBlocks.ACCELERATOR_MOTOR)
+				.renderer(() -> AcceleratorMotorRenderer::new)
 				.register();
 	}
 
