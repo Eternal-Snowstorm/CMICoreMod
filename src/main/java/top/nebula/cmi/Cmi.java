@@ -2,15 +2,19 @@ package top.nebula.cmi;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.Registrate;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.config.ModConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.nebula.cmi.client.CmiClient;
 import top.nebula.cmi.client.block.resource.CmiBlockPartialModel;
 import top.nebula.cmi.common.register.*;
+import top.nebula.cmi.config.CommonConfig;
 import top.nebula.cmi.worldgen.region.ModOverworldRegion;
 import top.nebula.cmi.worldgen.surfacerule.ModSurfaceRuleData;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +22,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import terrablender.api.Regions;
 import terrablender.api.SurfaceRuleManager;
+
+import java.util.Objects;
 
 @Mod(Cmi.MODID)
 public class Cmi {
@@ -29,6 +35,10 @@ public class Cmi {
 
 	public static ResourceLocation loadResource(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
+	}
+
+	public static void setCreativeTab(ResourceKey<CreativeModeTab> tab) {
+		REGISTRATE.defaultCreativeTab(Objects.requireNonNull(tab));
 	}
 
 	public Cmi(FMLJavaModLoadingContext context) {
@@ -45,6 +55,8 @@ public class Cmi {
 		CmiBlockPartialModel.init();
 
 		bus.addListener(this::onCommonSetup);
+
+		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/cmi/common.toml");
 
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> CmiClient.onCtorClient(bus));
 	}

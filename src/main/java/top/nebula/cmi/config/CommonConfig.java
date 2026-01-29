@@ -1,0 +1,24 @@
+package top.nebula.cmi.config;
+
+import net.minecraftforge.common.ForgeConfigSpec;
+
+public class CommonConfig {
+	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+
+	public static final ForgeConfigSpec.IntValue HYDRAULIC_PRESS_STEAM_CONSUMPTION;
+
+	static {
+		BUILDER.comment("All settings below will only take effect after restarting the server or client.")
+				.push("general");
+
+		HYDRAULIC_PRESS_STEAM_CONSUMPTION = BUILDER
+				.comment("Steam consumption per run of hydraulic press (mB)")
+				.defineInRange("steam_consumption", 1000, 0, 10000);
+	}
+
+	public static final ForgeConfigSpec SPEC = BUILDER.build();
+
+	private static boolean validateString(Object obj) {
+		return obj instanceof String;
+	}
+}

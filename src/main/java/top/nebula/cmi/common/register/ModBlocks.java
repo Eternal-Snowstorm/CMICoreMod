@@ -5,6 +5,9 @@ import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.block.accelerator_motor.AcceleratorMotorBlock;
 import top.nebula.cmi.common.block.golden_sapling.GoldenSaplingBlock;
@@ -25,6 +28,11 @@ public class ModBlocks {
 	public static final BlockEntry<AcceleratorMotorBlock> ACCELERATOR_MOTOR;
 
 	static {
+		Cmi.setCreativeTab(ResourceKey.create(
+				Registries.CREATIVE_MODE_TAB,
+				ResourceLocation.parse("kubejs:tab")
+		));
+
 		TEST_GRAVEL = Cmi.REGISTRATE.block("test_gravel", TestGravelBlock::new)
 				.item()
 				.build()

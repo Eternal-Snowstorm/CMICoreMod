@@ -9,7 +9,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,19 +19,20 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import top.nebula.cmi.config.CommonConfig;
 import top.nebula.cmi.common.tag.ModFluidTags;
 
 import java.util.Optional;
 
 public class HydraulicPressBlockEntity extends MechanicalPressBlockEntity {
 	private static final int STEAM_CAPACITY = 10000;
-	public static final int STEAM_COST = 1000;
 
 	public HydraulicPressBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 
 	private FluidStack steam = FluidStack.EMPTY;
+
 	private final IFluidHandler fluidHandler = new IFluidHandler() {
 		@Override
 		public int getTanks() {
@@ -94,12 +94,12 @@ public class HydraulicPressBlockEntity extends MechanicalPressBlockEntity {
 	};
 
 	private boolean hasEnoughSteam() {
-		return !steam.isEmpty() && steam.getAmount() >= STEAM_COST;
+		return !steam.isEmpty() && steam.getAmount() >= CommonConfig.HYDRAULIC_PRESS_STEAM_CONSUMPTION.get();
 	}
 
 	private void consumeSteam() {
 		if (!steam.isEmpty()) {
-			steam.shrink(STEAM_COST);
+			steam.shrink(CommonConfig.HYDRAULIC_PRESS_STEAM_CONSUMPTION.get());
 			if (steam.isEmpty()) {
 				steam = FluidStack.EMPTY;
 			}
@@ -130,16 +130,14 @@ public class HydraulicPressBlockEntity extends MechanicalPressBlockEntity {
 		if (!(recipe instanceof CraftingRecipe)) {
 			return false;
 		}
-		NonNullList<Ingredient> ingredients = recipe.getIngredients();
+		NonNullList ingredients = recipe.getIngredients();
 		return (ingredients.size() == 4 || ingredients.size() == 9) && ItemHelper.matchAllIngredients(ingredients);
 	}
 
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
 		if (capability == ForgeCapabilities.FLUID_HANDLER) {
-			return LazyOptional.of(() -> {
-				return fluidHandler;
-			}).cast();
+			return LazyOptional.of(() -> fluidHandler).cast();
 		}
 		return super.getCapability(capability, side);
 	}
