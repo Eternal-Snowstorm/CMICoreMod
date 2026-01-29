@@ -2,6 +2,7 @@ package top.nebula.cmi;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.Registrate;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -35,10 +36,6 @@ public class Cmi {
 
 	public static ResourceLocation loadResource(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
-	}
-
-	public static void setCreativeTab(ResourceKey<CreativeModeTab> tab) {
-		REGISTRATE.defaultCreativeTab(Objects.requireNonNull(tab));
 	}
 
 	public Cmi(FMLJavaModLoadingContext context) {
