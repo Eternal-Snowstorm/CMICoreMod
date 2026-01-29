@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
@@ -19,7 +20,9 @@ import top.nebula.cmi.common.register.ModBlockEntityTypes;
 
 public class AcceleratorMotorBlock extends DirectionalKineticBlock implements IBE<AcceleratorMotorBlockEntity> {
 	public AcceleratorMotorBlock(Properties properties) {
-		super(properties.mapColor(MapColor.DIRT));
+		super(properties.mapColor(MapColor.DIRT)
+				.strength(5.0F, 6.0F)
+				.sound(SoundType.STONE));
 	}
 
 	@Override
