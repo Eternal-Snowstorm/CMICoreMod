@@ -2,12 +2,9 @@ package top.nebula.cmi.common.register;
 
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.BlockStateGen;
-import com.simibubi.create.foundation.data.ModelGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.block.accelerator_motor.AcceleratorMotorBlock;
 import top.nebula.cmi.common.block.golden_sapling.GoldenSaplingBlock;
@@ -16,9 +13,7 @@ import top.nebula.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;
 import top.nebula.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
 import top.nebula.cmi.common.block.test_gravel.TestGravelBlock;
 import top.nebula.cmi.common.block.water_pump.WaterPumpBlock;
-import top.nebula.cmi.common.item.HydraulicPressItem;
-
-import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+import top.nebula.cmi.common.block.hydraulic_press.HydraulicPressItem;
 
 public class ModBlocks {
 	public static final BlockEntry<GoldenSaplingBlock> GOLD_SAPLING;
@@ -52,16 +47,13 @@ public class ModBlocks {
 				.register();
 		HYDRAULIC_PRESS = Cmi.REGISTRATE.block("hydraulic_press", HydraulicPressBlock::new)
 				.initialProperties(SharedProperties::stone)
-				.properties(BlockBehaviour.Properties::noOcclusion)
 				.blockstate(BlockStateGen.horizontalBlockProvider(true))
-				.transform(BlockStressDefaults.setImpact(24.0))
+				.transform(BlockStressDefaults.setImpact(32.0))
 				.item(HydraulicPressItem::new)
-				.transform(ModelGen.customItemModel())
+				.build()
 				.register();
 		ACCELERATOR_MOTOR = Cmi.REGISTRATE.block("accelerator_motor", AcceleratorMotorBlock::new)
 				.initialProperties(SharedProperties::stone)
-				.properties(p -> p.mapColor(MapColor.DIRT))
-				.transform(pickaxeOnly())
 				.transform(BlockStressDefaults.setCapacity(0))
 				.transform(BlockStressDefaults.setGeneratorSpeed(() -> Couple.create(0, 256)))
 				.simpleItem()

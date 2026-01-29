@@ -1,5 +1,6 @@
 package top.nebula.cmi.common.block.hydraulic_press;
 
+import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.foundation.item.ItemHelper;
@@ -25,8 +26,8 @@ import top.nebula.cmi.common.tag.ModFluidTags;
 import java.util.Optional;
 
 public class HydraulicPressBlockEntity extends MechanicalPressBlockEntity {
-	private static final int STEAM_CAPACITY = 10_000;
-	public static final int STEAM_COST = 1_000;
+	private static final int STEAM_CAPACITY = 10000;
+	public static final int STEAM_COST = 1000;
 
 	public HydraulicPressBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -125,7 +126,6 @@ public class HydraulicPressBlockEntity extends MechanicalPressBlockEntity {
 		}
 		return super.getRecipe(item);
 	}
-
 
 	public static <C extends Container> boolean canCompress(Recipe<C> recipe) {
 		if (!(recipe instanceof CraftingRecipe)) {

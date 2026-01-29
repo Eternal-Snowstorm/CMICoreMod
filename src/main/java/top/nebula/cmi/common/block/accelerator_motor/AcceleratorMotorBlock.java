@@ -10,34 +10,36 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.common.register.ModBlockEntityTypes;
 
 public class AcceleratorMotorBlock extends DirectionalKineticBlock implements IBE<AcceleratorMotorBlockEntity> {
 	public AcceleratorMotorBlock(Properties properties) {
-		super(properties);
+		super(properties.mapColor(MapColor.DIRT));
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext context) {
 		return AllShapes.MOTOR_BLOCK.get(state.getValue(FACING));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		Direction preferred = getPreferredFacing(context);
-		if ((context.getPlayer() != null && context.getPlayer()
-				.isShiftKeyDown()) || preferred == null)
+		if ((context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) || preferred == null) {
 			return super.getStateForPlacement(context);
+		}
 		return defaultBlockState().setValue(FACING, preferred);
 	}
 
 
 	@Override
-	public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-		return face == state.getValue(FACING);
+	public boolean hasShaftTowards(LevelReader level, BlockPos pos, BlockState state, Direction direction) {
+		return direction == state.getValue(FACING);
 	}
 
 	@Override
@@ -46,14 +48,13 @@ public class AcceleratorMotorBlock extends DirectionalKineticBlock implements IB
 	}
 
 	@Override
-	public boolean isPathfindable(BlockState state, BlockGetter reader, BlockPos pos, PathComputationType type) {
+	public boolean isPathfindable(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull PathComputationType type) {
 		return false;
 	}
 
 	@Override
 	public Direction.Axis getRotationAxis(BlockState state) {
-		return state.getValue(FACING)
-				.getAxis();
+		return state.getValue(FACING).getAxis();
 	}
 
 	@Override
@@ -63,7 +64,6 @@ public class AcceleratorMotorBlock extends DirectionalKineticBlock implements IB
 
 	@Override
 	public BlockEntityType<? extends AcceleratorMotorBlockEntity> getBlockEntityType() {
-		return ModBlockEntityTypes.AC_MOTOR.get();
+		return ModBlockEntityTypes.ACCELERATOR_MOTOR.get();
 	}
-
 }

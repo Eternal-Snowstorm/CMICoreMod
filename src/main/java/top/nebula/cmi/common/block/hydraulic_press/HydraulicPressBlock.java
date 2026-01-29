@@ -16,7 +16,8 @@ import top.nebula.cmi.common.register.ModBlockEntityTypes;
 public class HydraulicPressBlock extends MechanicalPressBlock {
 	public HydraulicPressBlock(Properties properties) {
 		super(properties.mapColor(MapColor.PODZOL)
-				.sound(SoundType.COPPER));
+				.sound(SoundType.COPPER)
+				.noOcclusion());
 	}
 
 	@Override

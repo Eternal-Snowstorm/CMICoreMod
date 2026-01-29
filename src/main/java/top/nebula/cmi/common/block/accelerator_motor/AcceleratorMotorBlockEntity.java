@@ -19,7 +19,6 @@ import top.nebula.cmi.common.register.ModBlocks;
 import java.util.List;
 
 public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
-
 	public static final int DEFAULT_SPEED = 16;
 	public static final int MAX_SPEED = 256;
 
@@ -33,31 +32,33 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 		super.addBehaviours(behaviours);
 		int max = MAX_SPEED;
-		generatedSpeed = new AcceleratorMotorScrollValueBehaviour(Lang.translateDirect("kinetics.creative_motor.rotation_speed"),
-				this, new MotorValueBox());
+		generatedSpeed = new AcceleratorMotorScrollValueBehaviour(Lang.translateDirect("kinetics.creative_motor.rotation_speed"), this, new MotorValueBox());
 		generatedSpeed.between(-max, max);
 		generatedSpeed.value = DEFAULT_SPEED;
-		generatedSpeed.withCallback(i -> this.updateGeneratedRotation());
+		generatedSpeed.withCallback((integer) -> {
+			this.updateGeneratedRotation();
+		});
 		behaviours.add(generatedSpeed);
 	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		if (!hasSource() || getGeneratedSpeed() > getTheoreticalSpeed())
+		if (!hasSource() || getGeneratedSpeed() > getTheoreticalSpeed()) {
 			updateGeneratedRotation();
+		}
 	}
 
 	@Override
 	public float getGeneratedSpeed() {
-		if (!ModBlocks.ACCELERATOR_MOTOR.has(getBlockState()))
+		if (!ModBlocks.ACCELERATOR_MOTOR.has(getBlockState())) {
 			return 0;
+		}
 		return convertToDirection(generatedSpeed.getValue(), getBlockState().getValue(AcceleratorMotorBlock.FACING));
 	}
 
 
 	static class MotorValueBox extends ValueBoxTransform.Sided {
-
 		@Override
 		protected Vec3 getSouthLocation() {
 			return VecHelper.voxelSpace(8, 8, 12.5);
@@ -74,22 +75,22 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 		public void rotate(BlockState state, PoseStack ms) {
 			super.rotate(state, ms);
 			Direction facing = state.getValue(AcceleratorMotorBlock.FACING);
-			if (facing.getAxis() == Direction.Axis.Y)
+			if (facing.getAxis() == Direction.Axis.Y) {
 				return;
-			if (getSide() != Direction.UP)
+			}
+			if (getSide() != Direction.UP) {
 				return;
-			TransformStack.cast(ms)
-					.rotateZ(-AngleHelper.horizontalAngle(facing) + 180);
+			}
+			TransformStack.cast(ms).rotateZ(-AngleHelper.horizontalAngle(facing) + 180);
 		}
 
 		@Override
 		protected boolean isSideActive(BlockState state, Direction direction) {
 			Direction facing = state.getValue(AcceleratorMotorBlock.FACING);
-			if (facing.getAxis() != Direction.Axis.Y && direction == Direction.DOWN)
+			if (facing.getAxis() != Direction.Axis.Y && direction == Direction.DOWN) {
 				return false;
+			}
 			return direction.getAxis() != facing.getAxis();
 		}
-
 	}
-
 }

@@ -4,6 +4,7 @@
 	"block.cmi.mars_geothermal_vent": "Ares Gerthermal Vent",
 	"block.cmi.mercury_geothermal_vent": "Hermes Geothermal Vent",
 	"block.cmi.hydraulic_press": "Hydraulic Press",
+	"block.cmi.accelerator_motor": "Accelerator Motor",
 	"curios.identifier.mechanisms": "Mechanisms",
 	"cmi.tooltip.water_pump.functional": "Water Pump Functional",
 	"cmi.tooltip.water_pump.non_functional": "Water Pump Not Functional",

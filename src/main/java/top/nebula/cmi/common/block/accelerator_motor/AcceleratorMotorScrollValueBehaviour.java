@@ -13,17 +13,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class AcceleratorMotorScrollValueBehaviour extends KineticScrollValueBehaviour {
-    public AcceleratorMotorScrollValueBehaviour(Component label, SmartBlockEntity be, ValueBoxTransform slot) {
-        super(label, be, slot);
-    }
+	public AcceleratorMotorScrollValueBehaviour(Component label, SmartBlockEntity be, ValueBoxTransform slot) {
+		super(label, be, slot);
+	}
 
-    @Override
-    public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
-        ImmutableList<Component> rows = ImmutableList.of(Components.literal("\u27f3")
-                        .withStyle(ChatFormatting.BOLD),
-                Components.literal("\u27f2")
-                        .withStyle(ChatFormatting.BOLD));
-        ValueSettingsFormatter formatter = new ValueSettingsFormatter(this::formatSettings);
-        return new ValueSettingsBoard(label, 256, 16, rows, formatter);
-    }
+	@Override
+	public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
+		ImmutableList<Component> rows = ImmutableList.of(
+				Components.literal("⟳").withStyle(ChatFormatting.BOLD),
+				Components.literal("⟲").withStyle(ChatFormatting.BOLD)
+		);
+		ValueSettingsFormatter formatter = new ValueSettingsFormatter(this::formatSettings);
+		return new ValueSettingsBoard(label, 256, 16, rows, formatter);
+	}
 }

@@ -19,7 +19,7 @@ public class ModBlockEntityTypes {
 	public static final BlockEntityEntry<MercuryGeothermalVentBlockEntity> MERCURY_GEO;
 	public static final BlockEntityEntry<WaterPumpBlockEntity> WATER_PUMP;
 	public static final BlockEntityEntry<HydraulicPressBlockEntity> HYDRAULIC_PRESS;
-	public static final BlockEntityEntry<AcceleratorMotorBlockEntity> AC_MOTOR;
+	public static final BlockEntityEntry<AcceleratorMotorBlockEntity> ACCELERATOR_MOTOR;
 
 	static {
 		TEST_GRAVEL = Cmi.REGISTRATE.blockEntity("test_gravel", TestGravelBlockEntity::new)
@@ -39,7 +39,7 @@ public class ModBlockEntityTypes {
 				.renderer(() -> HydraulicPressRenderer::new)
 				.validBlock(ModBlocks.HYDRAULIC_PRESS)
 				.register();
-		AC_MOTOR = Cmi.CREATE_REGISTRATE.blockEntity("accelerator_motor", AcceleratorMotorBlockEntity::new)
+		ACCELERATOR_MOTOR = Cmi.CREATE_REGISTRATE.blockEntity("accelerator_motor", AcceleratorMotorBlockEntity::new)
 				.instance(() -> HalfShaftInstance::new, false)
 				.validBlocks(ModBlocks.ACCELERATOR_MOTOR)
 				.renderer(() -> AcceleratorMotorRenderer::new)

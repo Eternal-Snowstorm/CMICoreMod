@@ -8,12 +8,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AcceleratorMotorRenderer extends KineticBlockEntityRenderer<AcceleratorMotorBlockEntity> {
-    public AcceleratorMotorRenderer(BlockEntityRendererProvider.Context context) {
-        super(context);
-    }
+	public AcceleratorMotorRenderer(BlockEntityRendererProvider.Context context) {
+		super(context);
+	}
 
-    @Override
-    protected SuperByteBuffer getRotatedModel(AcceleratorMotorBlockEntity be, BlockState state) {
-        return CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, state);
-    }
+	@Override
+	protected SuperByteBuffer getRotatedModel(AcceleratorMotorBlockEntity be, BlockState state) {
+		return CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, state);
+	}
 }

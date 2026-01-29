@@ -1,6 +1,7 @@
 {
 	"values": [
 		"cmi:mars_geothermal_vent",
-		"cmi:mercury_geothermal_vent"
+		"cmi:mercury_geothermal_vent",
+		"cmi:accelerator_motor"
 	]
 }

@@ -1,6 +1,7 @@
 {
 	"values": [
 		"cmi:water_pump",
-		"cmi:hydraulic_press"
+		"cmi:hydraulic_press",
+		"cmi:accelerator_motor"
 	]
 }

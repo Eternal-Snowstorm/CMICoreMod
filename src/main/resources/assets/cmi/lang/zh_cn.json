@@ -4,6 +4,7 @@
 	"block.cmi.mars_geothermal_vent": "阿瑞斯地热通口",
 	"block.cmi.mercury_geothermal_vent": "赫尔墨斯地热通口",
 	"block.cmi.hydraulic_press": "液压机",
+	"block.cmi.accelerator_motor": "变速马达",
 	"curios.identifier.mechanisms": "构件",
 	"cmi.tooltip.water_pump.functional": "水井工作正常",
 	"cmi.tooltip.water_pump.non_functional": "水井关键结构缺失",

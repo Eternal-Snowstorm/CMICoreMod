@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.item;
+package top.nebula.cmi.common.block.hydraulic_press;
 
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import net.minecraft.client.gui.screens.Screen;
@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
-import top.nebula.cmi.common.block.hydraulic_press.HydraulicPressBlockEntity;
 
 import javax.annotation.Nullable;
 import java.util.List;

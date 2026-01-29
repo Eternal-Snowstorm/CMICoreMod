@@ -6,7 +6,7 @@ import top.nebula.cmi.Cmi;
 import top.nebula.libs.tags.TagsBuilder;
 
 public class ModBlockTags {
-	public static TagKey<Block> GRILL_SOURCES;
+	public static final TagKey<Block> GRILL_SOURCES;
 
 	static {
 		GRILL_SOURCES = TagsBuilder.block("grill_sources")
