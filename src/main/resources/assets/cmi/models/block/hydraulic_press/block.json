@@ -2,11 +2,11 @@
 	"parent": "minecraft:block/block",
 	"render_type": "cutout",
 	"textures": {
-		"3": "cmi:blocl/hydraulic_press/bronze_encased_pipe",
-		"4": "cmi:blocl/hydraulic_press/bronze_gearbox",
-		"6": "cmi:blocl/hydraulic_press/bronze_fluid_tank",
-		"7": "cmi:blocl/hydraulic_press/bronze_underside",
-		"8": "cmi:blocl/hydraulic_press/bronze_plating",
+		"3": "cmi:block/hydraulic_press/bronze_encased_pipe",
+		"4": "cmi:block/hydraulic_press/bronze_gearbox",
+		"6": "cmi:block/hydraulic_press/bronze_fluid_tank",
+		"7": "cmi:block/hydraulic_press/bronze_underside",
+		"8": "cmi:block/hydraulic_press/bronze_plating",
 		"9": "create:block/fluid_tank_window_single",
 		"particle": "cmi:block/hydraulic_press/bronze_plating"
 	},

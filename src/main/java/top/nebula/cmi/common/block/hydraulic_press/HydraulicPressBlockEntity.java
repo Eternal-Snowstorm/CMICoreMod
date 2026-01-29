@@ -1,6 +1,5 @@
 package top.nebula.cmi.common.block.hydraulic_press;
 
-import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.foundation.item.ItemHelper;
