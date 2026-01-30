@@ -10,6 +10,7 @@ authors = "${mod_authors}"
 description = '''${mod_description}'''
 [modproperties."${mod_id}"]
 catalogueImageIcon="icon.png"
+catalogueBackground="icon_title.png"
 [[dependencies."${mod_id}"]]
 modId = "forge"
 mandatory = true

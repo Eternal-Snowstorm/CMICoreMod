@@ -137,7 +137,9 @@ public class HydraulicPressBlockEntity extends MechanicalPressBlockEntity {
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
 		if (capability == ForgeCapabilities.FLUID_HANDLER) {
-			return LazyOptional.of(() -> fluidHandler).cast();
+			return LazyOptional.of(() -> {
+				return fluidHandler;
+			}).cast();
 		}
 		return super.getCapability(capability, side);
 	}
