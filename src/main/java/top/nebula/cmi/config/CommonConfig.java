@@ -23,19 +23,19 @@ public class CommonConfig {
 				.comment("Steam consumption per run of steam hammer (mB)")
 				.comment("type: int")
 				.comment("default: 1000")
-				.defineInRange("steam_consumption", 1000, 0, Integer.MAX_VALUE);
+				.defineInRange("steam_consumption", 1000, 0, 1000000);
 
 		STEAM_HAMMER_STEAM_CAPACITY = BUILDER
 				.comment("Steam capacity in steam hammer (mB)")
 				.comment("type: int")
 				.comment("default: 10000")
-				.defineInRange("steam_capacity", 10000, 1000, Integer.MAX_VALUE);
+				.defineInRange("steam_capacity", 10000, 1000, 1000000);
 
 		STEAM_HAMMER_STRESS_IMPACT = BUILDER
 				.comment("Stress impact of steam hammer (su)")
 				.comment("type: double")
 				.comment("default: 16.0")
-				.defineInRange("stress_impact", 16.0, 0.0, 1024.0);
+				.defineInRange("stress_impact", 16.0, 0.0, 64);
 
 		BUILDER.pop();
 
