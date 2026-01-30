@@ -64,7 +64,7 @@ public class ModJeiPlugin implements IModPlugin {
 		);
 		registration.getJeiHelpers().getRecipeType(Create.asResource("pressing"))
 				.ifPresent((type) -> {
-					registration.addRecipeCatalyst(ModBlocks.HYDRAULIC_PRESS.asStack(), type);
+					registration.addRecipeCatalyst(ModBlocks.STEAM_HAMMER.asStack(), type);
 				});
 	}
 }

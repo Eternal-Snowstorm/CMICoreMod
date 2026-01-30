@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.nebula.cmi.common.register.ModBlocks;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AddCreativeModeTabs {
 	public static final ResourceKey<CreativeModeTab> KUBEJS_TAB = ResourceKey.create(
 			Registries.CREATIVE_MODE_TAB,
@@ -20,7 +20,7 @@ public class AddCreativeModeTabs {
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == KUBEJS_TAB) {
 			event.accept(ModBlocks.ACCELERATOR_MOTOR.asItem());
-			event.accept(ModBlocks.HYDRAULIC_PRESS.asItem());
+			event.accept(ModBlocks.STEAM_HAMMER.asItem());
 			event.accept(ModBlocks.MARS_GEO.asItem());
 			event.accept(ModBlocks.MERCURY_GEO.asItem());
 		}

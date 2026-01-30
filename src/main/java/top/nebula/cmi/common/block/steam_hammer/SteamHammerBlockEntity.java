@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.hydraulic_press;
+package top.nebula.cmi.common.block.steam_hammer;
 
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
@@ -24,10 +24,10 @@ import top.nebula.cmi.tag.ModFluidTags;
 
 import java.util.Optional;
 
-public class HydraulicPressBlockEntity extends MechanicalPressBlockEntity {
-	private static final int STEAM_CAPACITY = CommonConfig.HYDRAULIC_PRESS_STEAM_CAPACITY.get();
+public class SteamHammerBlockEntity extends MechanicalPressBlockEntity {
+	private static final int STEAM_CAPACITY = CommonConfig.STEAM_HAMMER_STEAM_CAPACITY.get();
 
-	public HydraulicPressBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+	public SteamHammerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 
@@ -94,12 +94,12 @@ public class HydraulicPressBlockEntity extends MechanicalPressBlockEntity {
 	};
 
 	private boolean hasEnoughSteam() {
-		return !steam.isEmpty() && steam.getAmount() >= CommonConfig.HYDRAULIC_PRESS_STEAM_CONSUMPTION.get();
+		return !steam.isEmpty() && steam.getAmount() >= CommonConfig.STEAM_HAMMER_STEAM_CONSUMPTION.get();
 	}
 
 	private void consumeSteam() {
 		if (!steam.isEmpty()) {
-			steam.shrink(CommonConfig.HYDRAULIC_PRESS_STEAM_CONSUMPTION.get());
+			steam.shrink(CommonConfig.STEAM_HAMMER_STEAM_CONSUMPTION.get());
 			if (steam.isEmpty()) {
 				steam = FluidStack.EMPTY;
 			}

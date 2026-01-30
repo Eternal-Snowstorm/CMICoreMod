@@ -8,12 +8,12 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.block.accelerator_motor.AcceleratorMotorBlock;
 import top.nebula.cmi.common.block.golden_sapling.GoldenSaplingBlock;
-import top.nebula.cmi.common.block.hydraulic_press.HydraulicPressBlock;
+import top.nebula.cmi.common.block.steam_hammer.SteamHammerBlock;
 import top.nebula.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;
 import top.nebula.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
 import top.nebula.cmi.common.block.test_gravel.TestGravelBlock;
 import top.nebula.cmi.common.block.water_pump.WaterPumpBlock;
-import top.nebula.cmi.common.block.hydraulic_press.HydraulicPressItem;
+import top.nebula.cmi.common.block.steam_hammer.SteamHammerItem;
 
 public class ModBlocks {
 	public static final BlockEntry<GoldenSaplingBlock> GOLD_SAPLING;
@@ -21,7 +21,7 @@ public class ModBlocks {
 	public static final BlockEntry<MarsGeothermalVentBlock> MARS_GEO;
 	public static final BlockEntry<MercuryGeothermalVentBlock> MERCURY_GEO;
 	public static final BlockEntry<TestGravelBlock> TEST_GRAVEL;
-	public static final BlockEntry<HydraulicPressBlock> HYDRAULIC_PRESS;
+	public static final BlockEntry<SteamHammerBlock> STEAM_HAMMER;
 	public static final BlockEntry<AcceleratorMotorBlock> ACCELERATOR_MOTOR;
 
 	static {
@@ -45,11 +45,11 @@ public class ModBlocks {
 				.item()
 				.build()
 				.register();
-		HYDRAULIC_PRESS = Cmi.CREATE_REGISTRATE.block("hydraulic_press", HydraulicPressBlock::new)
+		STEAM_HAMMER = Cmi.CREATE_REGISTRATE.block("steam_hammer", SteamHammerBlock::new)
 				.initialProperties(SharedProperties::stone)
 				.blockstate(BlockStateGen.horizontalBlockProvider(true))
 				.transform(BlockStressDefaults.setImpact(16.0))
-				.item(HydraulicPressItem::new)
+				.item(SteamHammerItem::new)
 				.build()
 				.register();
 		ACCELERATOR_MOTOR = Cmi.REGISTRATE.block("accelerator_motor", AcceleratorMotorBlock::new)

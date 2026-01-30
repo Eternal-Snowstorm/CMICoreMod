@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.hydraulic_press;
+package top.nebula.cmi.common.block.steam_hammer;
 
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.utility.Lang;
@@ -18,15 +18,15 @@ import top.nebula.cmi.utils.CmiLang;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class HydraulicPressItem extends AssemblyOperatorBlockItem {
-	public HydraulicPressItem(Block block, Properties properties) {
+public class SteamHammerItem extends AssemblyOperatorBlockItem {
+	public SteamHammerItem(Block block, Properties properties) {
 		super(block, properties);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-		int steamCost = CommonConfig.HYDRAULIC_PRESS_STEAM_CONSUMPTION.get();
+		int steamCost = CommonConfig.STEAM_HAMMER_STEAM_CONSUMPTION.get();
 
 		Lang.translate("tooltip.holdForDescription", Component.literal("Shift")
 						.withStyle(Screen.hasShiftDown() ? ChatFormatting.WHITE : ChatFormatting.GRAY))
@@ -36,21 +36,21 @@ public class HydraulicPressItem extends AssemblyOperatorBlockItem {
 		if (Screen.hasShiftDown()) {
 			tooltip.add(Component.empty());
 
-			CmiLang.translate("tooltip.hydraulic_press.summary")
+			CmiLang.translate("tooltip.steam_hammer.summary")
 					.style(ChatFormatting.GRAY)
 					.addTo(tooltip);
 
 			tooltip.add(Component.empty());
 
-			CmiLang.translate("tooltip.hydraulic_press.condition1")
+			CmiLang.translate("tooltip.steam_hammer.condition1")
 					.style(ChatFormatting.GRAY)
 					.addTo(tooltip);
 
-			CmiLang.translate("tooltip.hydraulic_press.behaviour1", steamCost)
+			CmiLang.translate("tooltip.steam_hammer.behaviour1", steamCost)
 					.style(ChatFormatting.DARK_GRAY)
 					.addTo(tooltip);
 
-			CmiLang.translate("tooltip.hydraulic_press.behaviour2", steamCost)
+			CmiLang.translate("tooltip.steam_hammer.behaviour2", steamCost)
 					.style(ChatFormatting.DARK_GRAY)
 					.addTo(tooltip);
 		}

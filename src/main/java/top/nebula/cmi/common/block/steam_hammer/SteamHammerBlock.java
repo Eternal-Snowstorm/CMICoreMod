@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.hydraulic_press;
+package top.nebula.cmi.common.block.steam_hammer;
 
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlock;
 import net.minecraft.core.BlockPos;
@@ -12,10 +12,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.common.register.ModBlockEntityTypes;
-import top.nebula.cmi.config.CommonConfig;
 
-public class HydraulicPressBlock extends MechanicalPressBlock {
-	public HydraulicPressBlock(Properties properties) {
+public class SteamHammerBlock extends MechanicalPressBlock {
+	public SteamHammerBlock(Properties properties) {
 		super(properties.mapColor(MapColor.PODZOL)
 				.strength(5.0F, 6.0F)
 				.sound(SoundType.COPPER)
@@ -23,7 +22,7 @@ public class HydraulicPressBlock extends MechanicalPressBlock {
 	}
 
 	@Override
-	public BlockEntityType<? extends HydraulicPressBlockEntity> getBlockEntityType() {
+	public BlockEntityType<? extends SteamHammerBlockEntity> getBlockEntityType() {
 		return ModBlockEntityTypes.HYDRAULIC_PRESS.get();
 	}
 

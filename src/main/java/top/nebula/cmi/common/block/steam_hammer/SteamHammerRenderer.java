@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.hydraulic_press;
+package top.nebula.cmi.common.block.steam_hammer;
 
 import com.jozufozu.flywheel.backend.Backend;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -15,8 +15,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.client.block.resource.CmiBlockPartialModel;
 
-public class HydraulicPressRenderer extends KineticBlockEntityRenderer<MechanicalPressBlockEntity> {
-	public HydraulicPressRenderer(BlockEntityRendererProvider.Context context) {
+public class SteamHammerRenderer extends KineticBlockEntityRenderer<MechanicalPressBlockEntity> {
+	public SteamHammerRenderer(BlockEntityRendererProvider.Context context) {
 		super(context);
 	}
 

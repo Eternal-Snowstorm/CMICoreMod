@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.hydraulic_press;
+package top.nebula.cmi.common.block.steam_hammer;
 
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.api.instance.DynamicInstance;
@@ -13,10 +13,10 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import org.joml.Quaternionf;
 import top.nebula.cmi.client.block.resource.CmiBlockPartialModel;
 
-public class HydraulicPressInstance extends ShaftInstance<MechanicalPressBlockEntity> implements DynamicInstance {
+public class SteamHammerInstance extends ShaftInstance<MechanicalPressBlockEntity> implements DynamicInstance {
 	private final OrientedData pressHead;
 
-	public HydraulicPressInstance(MaterialManager materialManager, MechanicalPressBlockEntity blockEntity) {
+	public SteamHammerInstance(MaterialManager materialManager, MechanicalPressBlockEntity blockEntity) {
 		super(materialManager, blockEntity);
 
 		pressHead = materialManager.defaultSolid()
