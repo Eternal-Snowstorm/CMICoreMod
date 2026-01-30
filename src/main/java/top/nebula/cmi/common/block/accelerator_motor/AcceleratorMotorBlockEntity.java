@@ -3,14 +3,17 @@ package top.nebula.cmi.common.block.accelerator_motor;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
+import com.simibubi.create.content.kinetics.base.IRotate.SpeedLevel;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -59,6 +62,18 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 			return 0;
 		}
 		return convertToDirection(generatedSpeed.getValue(), getBlockState().getValue(AcceleratorMotorBlock.FACING));
+	}
+
+	@Override
+	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+		Lang.translate("gui.speedometer.title")
+				.style(ChatFormatting.GRAY)
+				.forGoggles(tooltip);
+
+		SpeedLevel.getFormattedSpeedText(speed, isOverStressed())
+				.forGoggles(tooltip);
+
+		return true;
 	}
 
 	static class MotorValueBox extends ValueBoxTransform.Sided {
