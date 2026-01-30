@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import top.nebula.cmi.client.CmiClient;
 import top.nebula.cmi.client.block.resource.CmiBlockPartialModel;
 import top.nebula.cmi.common.register.*;
+import top.nebula.cmi.compat.create.CmiStressValueProvider;
 import top.nebula.cmi.config.CommonConfig;
 import top.nebula.cmi.worldgen.region.ModOverworldRegion;
 import top.nebula.cmi.worldgen.surfacerule.ModSurfaceRuleData;
@@ -63,6 +64,8 @@ public class Cmi {
 
 	private void onCommonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
+			CmiStressValueProvider.register();
+
 			Regions.register(new ModOverworldRegion(5));
 
 			SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Cmi.MODID, ModSurfaceRuleData.makeRules());

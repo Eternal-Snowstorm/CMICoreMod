@@ -20,7 +20,6 @@ import top.nebula.cmi.config.CommonConfig;
 import java.util.List;
 
 public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
-	private static final int MAX_SPEED = 256;
 	protected ScrollValueBehaviour generatedSpeed;
 
 	public AcceleratorMotorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -30,7 +29,7 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 	@Override
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 		super.addBehaviours(behaviours);
-		int max = MAX_SPEED;
+		int max = CommonConfig.ACCELERATOR_MOTOR_MAX_SPEED.get();
 
 		generatedSpeed = new AcceleratorMotorScrollValueBehaviour(
 				Lang.translateDirect("kinetics.creative_motor.rotation_speed"),

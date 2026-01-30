@@ -11,6 +11,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
+import top.nebula.cmi.config.CommonConfig;
 
 public class AcceleratorMotorScrollValueBehaviour extends KineticScrollValueBehaviour {
 	public AcceleratorMotorScrollValueBehaviour(Component label, SmartBlockEntity be, ValueBoxTransform slot) {
@@ -19,11 +20,12 @@ public class AcceleratorMotorScrollValueBehaviour extends KineticScrollValueBeha
 
 	@Override
 	public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
+		int maxSpeed = CommonConfig.ACCELERATOR_MOTOR_MAX_SPEED.get();
 		ImmutableList<Component> rows = ImmutableList.of(
 				Components.literal("⟳").withStyle(ChatFormatting.BOLD),
 				Components.literal("⟲").withStyle(ChatFormatting.BOLD)
 		);
 		ValueSettingsFormatter formatter = new ValueSettingsFormatter(this::formatSettings);
-		return new ValueSettingsBoard(label, 256, 16, rows, formatter);
+		return new ValueSettingsBoard(label, maxSpeed, 16, rows, formatter);
 	}
 }
