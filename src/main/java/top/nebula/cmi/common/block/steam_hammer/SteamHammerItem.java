@@ -129,7 +129,8 @@ public class SteamHammerItem extends AssemblyOperatorBlockItem {
 			// 语言文件中用 “_” 包裹的文字会显示为高亮色
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					CmiLang.translateDirect("tooltip.steam_hammer.summary").getString(),
-					Palette.STANDARD_CREATE));
+					Palette.STANDARD_CREATE
+			));
 
 			tooltip.add(Component.empty());
 
@@ -138,19 +139,23 @@ public class SteamHammerItem extends AssemblyOperatorBlockItem {
 					.style(ChatFormatting.GRAY)
 					.addTo(tooltip);
 
-			// 行为行 - 使用 Palette 着色，带缩进（indent = 1）
-			// 支持动态参数 %s，会被 steamCost 替换
+			/*
+			 * 行为行 - 使用 Palette 着色，带缩进（indent = 1）
+			 * 支持动态参数 %s，会被 steamCost 替换
+			 */
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					CmiLang.translateDirect("tooltip.steam_hammer.behaviour1", steamCost).getString(),
 					Palette.STANDARD_CREATE.primary(),
 					Palette.STANDARD_CREATE.highlight(),
-					1));
+					1
+			));
 
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					CmiLang.translateDirect("tooltip.steam_hammer.behaviour2", steamCost).getString(),
 					Palette.STANDARD_CREATE.primary(),
 					Palette.STANDARD_CREATE.highlight(),
-					1));
+					1
+			));
 		}
 	}
 }
