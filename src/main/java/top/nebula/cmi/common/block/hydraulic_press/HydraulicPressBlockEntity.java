@@ -20,12 +20,12 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.nebula.cmi.config.CommonConfig;
-import top.nebula.cmi.common.tag.ModFluidTags;
+import top.nebula.cmi.tag.ModFluidTags;
 
 import java.util.Optional;
 
 public class HydraulicPressBlockEntity extends MechanicalPressBlockEntity {
-	private static final int STEAM_CAPACITY = 10000;
+	private static final int STEAM_CAPACITY = CommonConfig.HYDRAULIC_PRESS_STEAM_CAPACITY.get();
 
 	public HydraulicPressBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);

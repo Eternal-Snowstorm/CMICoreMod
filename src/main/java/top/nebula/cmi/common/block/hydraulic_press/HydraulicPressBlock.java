@@ -12,6 +12,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.common.register.ModBlockEntityTypes;
+import top.nebula.cmi.config.CommonConfig;
 
 public class HydraulicPressBlock extends MechanicalPressBlock {
 	public HydraulicPressBlock(Properties properties) {

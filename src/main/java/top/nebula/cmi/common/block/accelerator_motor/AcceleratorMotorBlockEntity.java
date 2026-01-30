@@ -15,13 +15,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import top.nebula.cmi.common.register.ModBlocks;
+import top.nebula.cmi.config.CommonConfig;
 
 import java.util.List;
 
 public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
-	public static final int DEFAULT_SPEED = 16;
-	public static final int MAX_SPEED = 256;
-
+	private static final int MAX_SPEED = 256;
 	protected ScrollValueBehaviour generatedSpeed;
 
 	public AcceleratorMotorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -32,9 +31,14 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 		super.addBehaviours(behaviours);
 		int max = MAX_SPEED;
-		generatedSpeed = new AcceleratorMotorScrollValueBehaviour(Lang.translateDirect("kinetics.creative_motor.rotation_speed"), this, new MotorValueBox());
+
+		generatedSpeed = new AcceleratorMotorScrollValueBehaviour(
+				Lang.translateDirect("kinetics.creative_motor.rotation_speed"),
+				this,
+				new MotorValueBox()
+		);
 		generatedSpeed.between(-max, max);
-		generatedSpeed.value = DEFAULT_SPEED;
+		generatedSpeed.value = CommonConfig.ACCELERATOR_MOTOR_DEFAULT_SPEED.get();
 		generatedSpeed.withCallback((integer) -> {
 			this.updateGeneratedRotation();
 		});
@@ -44,6 +48,7 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 	@Override
 	public void initialize() {
 		super.initialize();
+
 		if (!hasSource() || getGeneratedSpeed() > getTheoreticalSpeed()) {
 			updateGeneratedRotation();
 		}
@@ -57,7 +62,6 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 		return convertToDirection(generatedSpeed.getValue(), getBlockState().getValue(AcceleratorMotorBlock.FACING));
 	}
 
-
 	static class MotorValueBox extends ValueBoxTransform.Sided {
 		@Override
 		protected Vec3 getSouthLocation() {
@@ -67,8 +71,8 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 		@Override
 		public Vec3 getLocalOffset(BlockState state) {
 			Direction facing = state.getValue(AcceleratorMotorBlock.FACING);
-			return super.getLocalOffset(state).add(Vec3.atLowerCornerOf(facing.getNormal())
-					.scale(-1 / 16f));
+			return super.getLocalOffset(state)
+					.add(Vec3.atLowerCornerOf(facing.getNormal()).scale(-1 / 16f));
 		}
 
 		@Override
