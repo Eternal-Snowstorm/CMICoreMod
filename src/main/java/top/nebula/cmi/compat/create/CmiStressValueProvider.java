@@ -11,6 +11,7 @@ import top.nebula.cmi.common.register.ModBlocks;
 import top.nebula.cmi.config.CommonConfig;
 
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 /**
  * CMI 模组的应力值提供器，用于从配置文件读取应力值。
@@ -22,7 +23,6 @@ import javax.annotation.Nullable;
  * 在模组初始化时调用 {@link #register()} 方法注册此提供器。
  */
 public class CmiStressValueProvider implements BlockStressValues.IStressValueProvider {
-
 	/**
 	 * 注册此应力值提供器到 Create 的系统中。
 	 * 应在 FMLCommonSetupEvent 中调用。
@@ -44,7 +44,7 @@ public class CmiStressValueProvider implements BlockStressValues.IStressValuePro
 	@Override
 	public double getCapacity(Block block) {
 		if (block == ModBlocks.ACCELERATOR_MOTOR.get()) {
-			return CommonConfig.ACCELERATOR_MOTOR_STRESS_CAPACITY.get();
+			return 0;
 		}
 		ResourceLocation blockId = RegisteredObjects.getKeyOrThrow(block);
 		Double defaultCapacity = BlockStressDefaults.DEFAULT_CAPACITIES.get(blockId);
@@ -77,7 +77,7 @@ public class CmiStressValueProvider implements BlockStressValues.IStressValuePro
 			return Couple.create(0, maxSpeed);
 		}
 		ResourceLocation blockId = RegisteredObjects.getKeyOrThrow(block);
-		var supplier = BlockStressDefaults.GENERATOR_SPEEDS.get(blockId);
+		Supplier<Couple<Integer>> supplier = BlockStressDefaults.GENERATOR_SPEEDS.get(blockId);
 		return supplier != null ? supplier.get() : null;
 	}
 }

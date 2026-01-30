@@ -17,7 +17,7 @@ public class SteamHammerBlock extends MechanicalPressBlock {
 	public SteamHammerBlock(Properties properties) {
 		super(properties.mapColor(MapColor.PODZOL)
 				.strength(5.0F, 6.0F)
-				.sound(SoundType.COPPER)
+				.sound(SoundType.LANTERN)
 				.noOcclusion());
 	}
 
