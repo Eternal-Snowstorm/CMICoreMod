@@ -22,21 +22,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 import top.nebula.cmi.config.CommonConfig;
 
-/**
- * A faster version of Create's Spout that uses configurable filling time.
- * Inherits SpoutBlockEntity so that BlockSpoutingBehaviour.fillBlock() type check passes.
- * Default filling time is 6 ticks (vs original 20 ticks).
- */
 public class FastSpoutBlockEntity extends SpoutBlockEntity {
 
 	public FastSpoutBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 
-	/**
-	 * Get the configurable filling time.
-	 * Minimum 6 to ensure the processingTicks == 5 completion check works.
-	 */
 	public int getFillingTime() {
 		return Math.max(CommonConfig.FAST_SPOUT_FILLING_TIME.get(), 6);
 	}
@@ -49,9 +40,6 @@ public class FastSpoutBlockEntity extends SpoutBlockEntity {
 		return getTank().getPrimaryHandler().getFluid();
 	}
 
-	/**
-	 * Override whenItemHeld to use configurable filling time instead of FILLING_TIME(20).
-	 */
 	@Override
 	protected ProcessingResult whenItemHeld(TransportedItemStack transported,
 			TransportedItemStackHandlerBehaviour handler) {
@@ -75,7 +63,6 @@ public class FastSpoutBlockEntity extends SpoutBlockEntity {
 			return HOLD;
 		}
 
-		// Process finished
 		ItemStack out = FillingBySpout.fillItem(level, requiredAmountForItem, transported.stack, fluid);
 		if (!out.isEmpty()) {
 			List<TransportedItemStack> outList = new ArrayList<>();
@@ -94,21 +81,10 @@ public class FastSpoutBlockEntity extends SpoutBlockEntity {
 		return HOLD;
 	}
 
-	/**
-	 * Override tick to intercept and correct the FILLING_TIME used by super.tick().
-	 *
-	 * super.tick() flow when starting customProcess:
-	 *   1. Sets processingTicks = FILLING_TIME (20)
-	 *   2. Then processingTicks-- → becomes 19
-	 *
-	 * We detect this transition (from -1 to active) and correct the value
-	 * to our configurable filling time minus the 1 tick already decremented.
-	 */
 	@Override
 	public void tick() {
 		boolean wasIdle = (processingTicks == -1);
 		super.tick();
-		// If super.tick() just started a customProcess cycle (from -1 → FILLING_TIME-1 = 19)
 		if (wasIdle && processingTicks == FILLING_TIME - 1) {
 			processingTicks = getFillingTime() - 1;
 		}
