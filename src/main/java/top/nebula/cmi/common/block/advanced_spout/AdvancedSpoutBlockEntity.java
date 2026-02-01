@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.fast_spout;
+package top.nebula.cmi.common.block.advanced_spout;
 
 import java.util.ArrayList;
 import java.util.List;

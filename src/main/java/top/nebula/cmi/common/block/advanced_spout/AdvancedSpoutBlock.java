@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.fast_spout;
+package top.nebula.cmi.common.block.advanced_spout;
 
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;

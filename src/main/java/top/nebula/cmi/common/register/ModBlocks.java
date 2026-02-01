@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.RenderType;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.block.accelerator_motor.AcceleratorMotorBlock;
 import top.nebula.cmi.common.block.accelerator_motor.AcceleratorMotorItem;
-import top.nebula.cmi.common.block.fast_spout.AdvancedSpoutBlock;
+import top.nebula.cmi.common.block.advanced_spout.AdvancedSpoutBlock;
 import top.nebula.cmi.common.block.golden_sapling.GoldenSaplingBlock;
 import top.nebula.cmi.common.block.steam_hammer.SteamHammerBlock;
 import top.nebula.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;

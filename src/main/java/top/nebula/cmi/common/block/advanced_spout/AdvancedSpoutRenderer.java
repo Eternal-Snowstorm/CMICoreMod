@@ -1,4 +1,4 @@
-package top.nebula.cmi.common.block.fast_spout;
+package top.nebula.cmi.common.block.advanced_spout;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
