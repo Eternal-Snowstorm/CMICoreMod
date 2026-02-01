@@ -1,10 +1,11 @@
 {
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"render_type": "cutout",
 	"textures": {
 		"3": "cmi:block/steam_hammer/bronze_encased_pipe",
 		"4": "cmi:block/steam_hammer/bronze_gearbox",
-		"5": "cmi:block/steam_hammer/bronze_fluid_tank_inner_connected",
 		"6": "cmi:block/steam_hammer/bronze_fluid_tank",
 		"7": "cmi:block/steam_hammer/bronze_underside",
 		"8": "cmi:block/steam_hammer/bronze_plating",
@@ -208,11 +209,11 @@
 			"to": [13, 24, 13],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
 			"faces": {
-				"north": {"uv": [3, 0, 13, 11], "texture": "#6"},
-				"east": {"uv": [3, 0, 13, 11], "texture": "#6"},
-				"south": {"uv": [3, 0, 13, 11], "texture": "#6"},
-				"west": {"uv": [3, 0, 13, 11], "texture": "#6"},
-				"up": {"uv": [3, 3, 13, 14], "rotation": 180, "texture": "#8"}
+				"north": {"uv": [3, 1, 13, 12], "texture": "#6"},
+				"east": {"uv": [3, 1, 13, 12], "texture": "#6"},
+				"south": {"uv": [3, 1, 13, 12], "texture": "#6"},
+				"west": {"uv": [3, 1, 13, 12], "texture": "#6"},
+				"up": {"uv": [3, 3, 13, 13], "rotation": 180, "texture": "#8"}
 			}
 		},
 		{
@@ -233,12 +234,12 @@
 			"to": [14, 3, 14],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7, 8]},
 			"faces": {
-				"north": {"uv": [2, 4, 14, 0], "texture": "#6"},
-				"east": {"uv": [2, 4, 14, 0], "texture": "#6"},
-				"south": {"uv": [2, 4, 14, 0], "texture": "#6"},
-				"west": {"uv": [2, 4, 14, 0], "texture": "#6"},
+				"north": {"uv": [2, 5, 14, 1], "texture": "#6"},
+				"east": {"uv": [2, 5, 14, 1], "texture": "#6"},
+				"south": {"uv": [2, 5, 14, 1], "texture": "#6"},
+				"west": {"uv": [2, 5, 14, 1], "texture": "#6"},
 				"up": {"uv": [3, 3, 13, 13], "texture": "#7"},
-				"down": {"uv": [0.5, 12.5, 3.5, 15.5], "texture": "#5"}
+				"down": {"uv": [2, 2, 14, 14], "texture": "#7"}
 			}
 		},
 		{
