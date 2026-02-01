@@ -23,13 +23,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	}
 
 	private void saplingBlock(Supplier<? extends Block> block) {
-		simpleBlock(
-				block.get(),
-				models()
-						.cross(
-								ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
-								blockTexture(block.get()))
-						.renderType("cutout")
+		simpleBlock(block.get(), models().cross(
+						ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
+						blockTexture(block.get()))
+				.renderType("cutout")
 		);
 	}
 }

@@ -42,13 +42,6 @@ import top.nebula.cmi.Cmi;
  * @see LangBuilder 链式文本构建器
  */
 public class CmiLang {
-	/**
-	 * 创建一个新的 {@link LangBuilder} 实例, 使用 CMI 的命名空间。
-	 * <p>
-	 * 返回的 builder 可以通过链式调用添加文本、翻译、样式等。
-	 *
-	 * @return 新的 LangBuilder 实例
-	 */
 	public static LangBuilder builder() {
 		return new LangBuilder(Cmi.MODID);
 	}
@@ -68,17 +61,6 @@ public class CmiLang {
 		return builder().add(Components.translatable(String.format("%s.%s", Cmi.MODID, langKey), Lang.resolveBuilders(args)));
 	}
 
-	/**
-	 * 直接翻译指定的语言键并返回 {@link MutableComponent}, 支持动态参数。
-	 * <p>
-	 * 与 {@link #translate(String, Object...)} 类似, 但直接返回 Component
-	 * 而非 LangBuilder。适用于不需要额外链式操作的场景。
-	 *
-	 * @param langKey 语言键(不含 {@code cmi.} 前缀)
-	 * @param args    格式化参数, 用于替换翻译文本中的占位符(如 {@code %s})
-	 * @return 翻译后的可变文本组件
-	 * @see #translate(String, Object...) 返回 LangBuilder 以支持链式调用
-	 */
 	public static MutableComponent translateDirect(String langKey, Object... args) {
 		return Components.translatable(String.format("%s.%s", Cmi.MODID, langKey), Lang.resolveBuilders(args));
 	}
