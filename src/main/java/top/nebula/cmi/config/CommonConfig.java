@@ -24,6 +24,7 @@ public class CommonConfig {
 		BUILDER.comment("All settings below will only take effect after restarting the server or client.")
 				.push("general");
 
+		// Steam Hammer
 		BUILDER.comment("Steam Hammer settings")
 				.push("steam_hammer");
 
@@ -47,6 +48,7 @@ public class CommonConfig {
 
 		BUILDER.pop();
 
+		// Accelerator Moto
 		BUILDER.comment("Accelerator Motor settings")
 				.push("accelerator_motor");
 
@@ -64,6 +66,7 @@ public class CommonConfig {
 
 		BUILDER.pop();
 
+		// Fast Spout
 		BUILDER.comment("Fast Spout settings")
 				.push("fast_spout");
 
@@ -75,17 +78,18 @@ public class CommonConfig {
 				.comment("default: 5")
 				.defineInRange("filling_time", 5, 1, 100);
 
+		BUILDER.pop();
+
+		// Void Dust Collector
 		BUILDER.comment("Void Dust Collector settings")
 				.push("void_dust_collector");
-
-		BUILDER.pop();
 
 		VOID_DUST_COLLECTOR_WORK_TIME = BUILDER
 				.comment("Work time")
 				.comment("20 ticks = 1 second")
 				.comment("type: int")
 				.comment("default: 20")
-				.defineInRange("filling_time", 20, 1, 100000);
+				.defineInRange("work_time", 20, 1, 100000);
 
 		VOID_DUST_COLLECTOR_ENERGY_CONSUMPTION = BUILDER
 				.comment("Energy consumed per tick of void dust collector (FE)")
@@ -109,11 +113,11 @@ public class CommonConfig {
 				.comment("Work height of void dust collector")
 				.comment("type: int")
 				.comment("default: -63")
-				// 调试用, 回头要改回-63
-				.defineInRange("work_height", 65, -64, 319);
+				.defineInRange("work_height", -63, -64, 319);
 
 		BUILDER.pop();
 
+		// end
 		BUILDER.pop();
 	}
 
