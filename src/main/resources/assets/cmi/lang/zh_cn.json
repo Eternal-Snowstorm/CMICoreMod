@@ -5,7 +5,7 @@
 	"block.cmi.mercury_geothermal_vent": "赫尔墨斯地热通口",
 	"block.cmi.steam_hammer": "蒸汽锻锤",
 	"block.cmi.accelerator_motor": "变速马达",
-	"block.cmi.fast_spout": "快速注液器",
+	"block.cmi.fast_spout": "高级注液器",
 	"block.cmi.void_dust_collector": "虚空粉末收集器",
 	"curios.identifier.mechanisms": "构件",
 	"cmi.tooltip.water_pump.functional": "水井工作正常",
