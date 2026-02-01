@@ -78,6 +78,8 @@ public class CommonConfig {
 		BUILDER.comment("Void Dust Collector settings")
 				.push("void_dust_collector");
 
+		BUILDER.pop();
+
 		VOID_DUST_COLLECTOR_WORK_TIME = BUILDER
 				.comment("Work time")
 				.comment("20 ticks = 1 second")
@@ -108,9 +110,7 @@ public class CommonConfig {
 				.comment("type: int")
 				.comment("default: -63")
 				// 调试用, 回头要改回-63
-				.defineInRange("work_height", 63, -64, 319);
-
-		BUILDER.pop();
+				.defineInRange("work_height", 65, -64, 319);
 
 		BUILDER.pop();
 

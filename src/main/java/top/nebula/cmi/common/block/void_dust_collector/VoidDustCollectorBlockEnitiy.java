@@ -5,20 +5,21 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import top.nebula.cmi.Cmi;
 import top.nebula.cmi.config.CommonConfig;
 
 import javax.annotation.Nullable;
@@ -29,8 +30,12 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity {
 	private static final int ENERGY_CONSUMPTION = CommonConfig.VOID_DUST_COLLECTOR_ENERGY_CONSUMPTION.get();
 	private static final int WORK_HEIGHT = CommonConfig.VOID_DUST_COLLECTOR_WORK_HEIGHT.get();
 	private static final int WORK_TIME = CommonConfig.VOID_DUST_COLLECTOR_WORK_TIME.get();
-	private static final Block BLOCKS_BELOW = Blocks.GOLD_BLOCK;
-	private static final ItemStack OUTPUT_ITEM = Items.DIAMOND.getDefaultInstance();
+	private static final Block BLOCKS_BELOW = Lazy.of(() -> {
+		return ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("void_spring"));
+	}).get();
+	private static final ItemStack OUTPUT_ITEM = Lazy.of(() -> {
+		return ForgeRegistries.ITEMS.getValue(Cmi.loadResource("void_dust"));
+	}).get().getDefaultInstance();
 
 	private int energyStored = 0;
 	private int workTimer = 0;
