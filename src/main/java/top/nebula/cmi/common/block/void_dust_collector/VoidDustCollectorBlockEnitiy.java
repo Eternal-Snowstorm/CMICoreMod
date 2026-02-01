@@ -30,6 +30,7 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity {
 	private static final int WORK_HEIGHT = CommonConfig.VOID_DUST_COLLECTOR_WORK_HEIGHT.get();
 	private static final int WORK_TIME = CommonConfig.VOID_DUST_COLLECTOR_WORK_TIME.get();
 	private static final Block BLOCKS_BELOW = Blocks.GOLD_BLOCK;
+	private static final ItemStack OUTPUT_ITEM = Items.DIAMOND.getDefaultInstance();
 
 	private int energyStored = 0;
 	private int workTimer = 0;
@@ -94,7 +95,7 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity {
 		// 完成一次生成
 		if (workTimer >= workTimeRequired) {
 			if (stack.isEmpty()) {
-				capabilityHandler.itemHandler.setStackInSlot(0, Items.DIAMOND.getDefaultInstance());
+				capabilityHandler.itemHandler.setStackInSlot(0, OUTPUT_ITEM);
 			} else {
 				stack.grow(1);
 			}
