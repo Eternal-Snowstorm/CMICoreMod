@@ -32,7 +32,8 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity implements IHaveGo
 	private static final int CAPACITY = CommonConfig.VOID_DUST_COLLECTOR_ENERGY_CAPACITY.get();
 	private static final int MAX_RECEIVE = CommonConfig.VOID_DUST_COLLECTOR_MAX_RECEIVE.get();
 	private static final int ENERGY_CONSUMPTION = CommonConfig.VOID_DUST_COLLECTOR_ENERGY_CONSUMPTION.get();
-	private static final int WORK_HEIGHT = CommonConfig.VOID_DUST_COLLECTOR_WORK_HEIGHT.get();
+	private static final int MAX_WORK_HEIGHT = CommonConfig.VOID_DUST_COLLECTOR_MAX_WORK_HEIGHT.get();
+	private static final int MIN_WORK_HEIGHT = CommonConfig.VOID_DUST_COLLECTOR_MIN_WORK_HEIGHT.get();
 	private static final int WORK_TIME = CommonConfig.VOID_DUST_COLLECTOR_WORK_TIME.get();
 	private static final Block BLOCKS_BELOW = Lazy.of(() -> {
 		return ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("void_spring"));
@@ -68,7 +69,8 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity implements IHaveGo
 
 		boolean canWork = energyStored >= 1000 &&
 				level.getBlockState(worldPosition.below()).is(BLOCKS_BELOW) &&
-				this.getBlockPos().getY() == WORK_HEIGHT &&
+				this.getBlockPos().getY() <= MAX_WORK_HEIGHT &&
+				this.getBlockPos().getY() >= MIN_WORK_HEIGHT &&
 				(stack.isEmpty() || stack.getCount() < stack.getMaxStackSize());
 
 		// 同步BlockState

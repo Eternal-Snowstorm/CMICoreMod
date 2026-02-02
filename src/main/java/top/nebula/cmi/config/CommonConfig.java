@@ -18,7 +18,8 @@ public class CommonConfig {
 	public static final ForgeConfigSpec.IntValue VOID_DUST_COLLECTOR_WORK_TIME;
 	public static final ForgeConfigSpec.IntValue VOID_DUST_COLLECTOR_ENERGY_CONSUMPTION;
 	public static final ForgeConfigSpec.IntValue VOID_DUST_COLLECTOR_ENERGY_CAPACITY;
-	public static final ForgeConfigSpec.IntValue VOID_DUST_COLLECTOR_WORK_HEIGHT;
+	public static final ForgeConfigSpec.IntValue VOID_DUST_COLLECTOR_MIN_WORK_HEIGHT;
+	public static final ForgeConfigSpec.IntValue VOID_DUST_COLLECTOR_MAX_WORK_HEIGHT;
 	public static final ForgeConfigSpec.IntValue VOID_DUST_COLLECTOR_MAX_RECEIVE;
 
 	static {
@@ -118,8 +119,14 @@ public class CommonConfig {
 				.comment("default: 1000")
 				.defineInRange("max_receive", 1000, 0, Integer.MAX_VALUE);
 
-		VOID_DUST_COLLECTOR_WORK_HEIGHT = BUILDER
-				.comment("Work height of void dust collector")
+		VOID_DUST_COLLECTOR_MAX_WORK_HEIGHT = BUILDER
+				.comment("Maximum work height of void dust collector")
+				.comment("type: int")
+				.comment("default: -60")
+				.defineInRange("work_height", -60, -63, 319);
+
+		VOID_DUST_COLLECTOR_MIN_WORK_HEIGHT = BUILDER
+				.comment("Minimum work height of void dust collector(Collector doesnt work if greater than max height)")
 				.comment("type: int")
 				.comment("default: -63")
 				.defineInRange("work_height", -63, -63, 319);
