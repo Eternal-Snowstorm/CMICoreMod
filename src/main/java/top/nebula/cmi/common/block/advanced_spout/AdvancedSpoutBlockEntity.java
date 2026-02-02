@@ -49,8 +49,16 @@ public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
 		return getTank().getPrimaryHandler().getFluid();
 	}
 
+	public boolean isPowered() {
+		return level != null && level.hasNeighborSignal(worldPosition);
+	}
+
 	@Override
 	protected ProcessingResult whenItemHeld(TransportedItemStack transported, TransportedItemStackHandlerBehaviour handler) {
+		if (isPowered()) {
+			return ProcessingResult.HOLD;
+		}
+
 		if (processingTicks != -1 && processingTicks != 5) {
 			return ProcessingResult.HOLD;
 		}
@@ -97,6 +105,10 @@ public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
 
 	@Override
 	public void tick() {
+		if (isPowered()) {
+			return;
+		}
+
 		boolean wasIdle = (processingTicks == -1);
 		super.tick();
 		if (wasIdle && processingTicks == FILLING_TIME - 1) {

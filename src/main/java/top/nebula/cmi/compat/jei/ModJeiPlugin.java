@@ -66,5 +66,9 @@ public class ModJeiPlugin implements IModPlugin {
 				.ifPresent((type) -> {
 					registration.addRecipeCatalyst(ModBlocks.STEAM_HAMMER.asStack(), type);
 				});
+		registration.getJeiHelpers().getRecipeType(Create.asResource("spout_filling"))
+				.ifPresent((type) -> {
+					registration.addRecipeCatalyst(ModBlocks.FAST_SPOUT.asStack(), type);
+				});
 	}
 }
