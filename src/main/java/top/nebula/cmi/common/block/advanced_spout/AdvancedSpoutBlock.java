@@ -11,6 +11,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -18,8 +21,27 @@ import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.common.register.ModBlockEntityTypes;
 
 public class AdvancedSpoutBlock extends Block implements IWrenchable, IBE<AdvancedSpoutBlockEntity> {
+	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+
 	public AdvancedSpoutBlock(Properties properties) {
 		super(properties);
+		registerDefaultState(defaultBlockState().setValue(POWERED, false));
+	}
+
+	@Override
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(POWERED);
+	}
+
+	@Override
+	public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+								@NotNull Block block, @NotNull BlockPos fromPos, boolean isMoving) {
+		if (!level.isClientSide) {
+			boolean powered = level.hasNeighborSignal(pos);
+			if (state.getValue(POWERED) != powered) {
+				level.setBlock(pos, state.setValue(POWERED, powered), 2);
+			}
+		}
 	}
 
 	@Override
