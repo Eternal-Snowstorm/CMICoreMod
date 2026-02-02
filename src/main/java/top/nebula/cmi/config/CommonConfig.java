@@ -12,8 +12,8 @@ public class CommonConfig {
 	public static final ForgeConfigSpec.IntValue ACCELERATOR_MOTOR_DEFAULT_SPEED;
 	public static final ForgeConfigSpec.IntValue ACCELERATOR_MOTOR_MAX_SPEED;
 
-	public static final ForgeConfigSpec.IntValue FAST_SPOUT_FILLING_TIME;
-	public static final ForgeConfigSpec.IntValue FAST_SPOUT_CAPACITY;
+	public static final ForgeConfigSpec.IntValue ADVANCED_SPOUT_FILLING_TIME;
+	public static final ForgeConfigSpec.IntValue ADVANCED_SPOUT_CAPACITY;
 
 	public static final ForgeConfigSpec.IntValue VOID_DUST_COLLECTOR_WORK_TIME;
 	public static final ForgeConfigSpec.IntValue VOID_DUST_COLLECTOR_ENERGY_CONSUMPTION;
@@ -67,11 +67,11 @@ public class CommonConfig {
 
 		BUILDER.pop();
 
-		// Fast Spout
-		BUILDER.comment("Fast Spout settings")
-				.push("fast_spout");
+		// Advanced Spout
+		BUILDER.comment("Advanced Spout settings")
+				.push("advanced_spout");
 
-		FAST_SPOUT_FILLING_TIME = BUILDER
+		ADVANCED_SPOUT_FILLING_TIME = BUILDER
 				.comment("Filling time in ticks")
 				.comment("20 ticks = 1 second")
 				.comment("Original spout uses 20 ticks")
@@ -79,13 +79,13 @@ public class CommonConfig {
 				.comment("default: 5")
 				.defineInRange("filling_time", 5, 1, 100);
 
-		FAST_SPOUT_CAPACITY = BUILDER
+		ADVANCED_SPOUT_CAPACITY = BUILDER
 				.comment("Fluid capacity in mB (millibuckets)")
 				.comment("1000 mB = 1 bucket")
 				.comment("Original spout uses 1000 mB")
 				.comment("type: int")
-				.comment("default: 8000")
-				.defineInRange("capacity", 8000, 2000, 64000);
+				.comment("default: 5000")
+				.defineInRange("capacity", 5000, 2000, 64000);
 
 		BUILDER.pop();
 

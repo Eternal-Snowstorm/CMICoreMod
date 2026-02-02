@@ -23,6 +23,8 @@ public class AddCreativeModeTabs {
 			event.accept(ModBlocks.STEAM_HAMMER.asItem());
 			event.accept(ModBlocks.MARS_GEO.asItem());
 			event.accept(ModBlocks.MERCURY_GEO.asItem());
+			event.accept(ModBlocks.ADVANCED_SPOUT.asItem());
+			event.accept(ModBlocks.VOID_DUST_COLLECTOR.asItem());
 		}
 	}
 }

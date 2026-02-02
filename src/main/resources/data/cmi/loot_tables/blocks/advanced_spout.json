@@ -11,7 +11,7 @@
 			"entries": [
 				{
 					"type": "minecraft:item",
-					"name": "cmi:fast_spout"
+					"name": "cmi:advanced_spout"
 				}
 			],
 			"rolls": 1.0

@@ -38,14 +38,14 @@ public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
 
 		for (BlockEntityBehaviour behaviour : behaviours) {
 			if (behaviour instanceof SmartFluidTankBehaviour tankBehaviour) {
-				tankBehaviour.getPrimaryHandler().setCapacity(CommonConfig.FAST_SPOUT_CAPACITY.get());
+				tankBehaviour.getPrimaryHandler().setCapacity(CommonConfig.ADVANCED_SPOUT_CAPACITY.get());
 				break;
 			}
 		}
 	}
 
 	public int getFillingTime() {
-		return Math.max(CommonConfig.FAST_SPOUT_FILLING_TIME.get(), 6);
+		return Math.max(CommonConfig.ADVANCED_SPOUT_FILLING_TIME.get(), 6);
 	}
 
 	private SmartFluidTankBehaviour getTank() {

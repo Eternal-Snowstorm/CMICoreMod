@@ -29,7 +29,7 @@ public class ModBlocks {
 	public static final BlockEntry<TestGravelBlock> TEST_GRAVEL;
 	public static final BlockEntry<SteamHammerBlock> STEAM_HAMMER;
 	public static final BlockEntry<AcceleratorMotorBlock> ACCELERATOR_MOTOR;
-	public static final BlockEntry<AdvancedSpoutBlock> FAST_SPOUT;
+	public static final BlockEntry<AdvancedSpoutBlock> ADVANCED_SPOUT;
 	public static final BlockEntry<VoidDustCollectorBlock> VOID_DUST_COLLECTOR;
 
 	static {
@@ -67,7 +67,7 @@ public class ModBlocks {
 				.item(AcceleratorMotorItem::new)
 				.build()
 				.register();
-		FAST_SPOUT = Cmi.CREATE_REGISTRATE.block("fast_spout", AdvancedSpoutBlock::new)
+		ADVANCED_SPOUT = Cmi.CREATE_REGISTRATE.block("advanced_spout", AdvancedSpoutBlock::new)
 				.initialProperties(SharedProperties::copperMetal)
 				.addLayer(() -> RenderType::cutoutMipped)
 				.item(AssemblyOperatorBlockItem::new)

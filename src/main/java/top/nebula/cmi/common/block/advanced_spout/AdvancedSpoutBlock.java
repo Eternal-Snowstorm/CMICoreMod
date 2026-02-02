@@ -49,6 +49,6 @@ public class AdvancedSpoutBlock extends Block implements IWrenchable, IBE<Advanc
 
 	@Override
 	public BlockEntityType<? extends AdvancedSpoutBlockEntity> getBlockEntityType() {
-		return ModBlockEntityTypes.FAST_SPOUT.get();
+		return ModBlockEntityTypes.ADVANCED_SPOUT.get();
 	}
 }

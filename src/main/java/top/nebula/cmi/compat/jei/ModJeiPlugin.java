@@ -68,7 +68,7 @@ public class ModJeiPlugin implements IModPlugin {
 				});
 		registration.getJeiHelpers().getRecipeType(Create.asResource("spout_filling"))
 				.ifPresent((type) -> {
-					registration.addRecipeCatalyst(ModBlocks.FAST_SPOUT.asStack(), type);
+					registration.addRecipeCatalyst(ModBlocks.ADVANCED_SPOUT.asStack(), type);
 				});
 	}
 }

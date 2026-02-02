@@ -23,7 +23,7 @@ public class ModBlockEntityTypes {
 	public static final BlockEntityEntry<WaterPumpBlockEntity> WATER_PUMP;
 	public static final BlockEntityEntry<SteamHammerBlockEntity> HYDRAULIC_PRESS;
 	public static final BlockEntityEntry<AcceleratorMotorBlockEntity> ACCELERATOR_MOTOR;
-	public static final BlockEntityEntry<AdvancedSpoutBlockEntity> FAST_SPOUT;
+	public static final BlockEntityEntry<AdvancedSpoutBlockEntity> ADVANCED_SPOUT;
 	public static final BlockEntityEntry<VoidDustCollectorBlockEnitiy> VOID_DUST_COLLECTOR;
 
 	static {
@@ -49,8 +49,8 @@ public class ModBlockEntityTypes {
 				.validBlocks(ModBlocks.ACCELERATOR_MOTOR)
 				.renderer(() -> AcceleratorMotorRenderer::new)
 				.register();
-		FAST_SPOUT = Cmi.CREATE_REGISTRATE.blockEntity("fast_spout", AdvancedSpoutBlockEntity::new)
-				.validBlocks(ModBlocks.FAST_SPOUT)
+		ADVANCED_SPOUT = Cmi.CREATE_REGISTRATE.blockEntity("advanced_spout", AdvancedSpoutBlockEntity::new)
+				.validBlocks(ModBlocks.ADVANCED_SPOUT)
 				.renderer(() -> AdvancedSpoutRenderer::new)
 				.register();
 		VOID_DUST_COLLECTOR = Cmi.REGISTRATE.blockEntity("void_dust_collector", VoidDustCollectorBlockEnitiy::new)
