@@ -19,6 +19,8 @@
 	"cmi.tooltip.steam_hammer.behaviour2": "每次工作消耗 _%s mB_ 蒸汽",
 	"cmi.tooltip.accelerator_motor.behaviour1": "不提供_任何应力_的旋转发生器",
 	"cmi.tooltip.accelerator_motor.behaviour2": "默认最高转速为 _%s RPM_",
+	"cmi.tooltip.void_dust_collector.working": "虚空粉末收集器正常工作中",
+	"cmi.tooltip.void_dust_collector.unworking": "虚空粉末收集器工作停止",
 	"jei.category.cmi.accelerator": "构件催生",
 	"jei.catalyst.cmi.accelerator.1": "对着催生器使用构件",
 	"jei.catalyst.cmi.accelerator.2": "需要周围5x5范围内至少24个可触发方块",

@@ -1,8 +1,10 @@
 package top.nebula.cmi.common.block.void_dust_collector;
 
+import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -21,10 +23,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.config.CommonConfig;
+import top.nebula.cmi.utils.CmiLang;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class VoidDustCollectorBlockEnitiy extends BlockEntity {
+public class VoidDustCollectorBlockEnitiy extends BlockEntity implements IHaveGoggleInformation {
 	private static final int CAPACITY = CommonConfig.VOID_DUST_COLLECTOR_ENERGY_CAPACITY.get();
 	private static final int MAX_RECEIVE = CommonConfig.VOID_DUST_COLLECTOR_MAX_RECEIVE.get();
 	private static final int ENERGY_CONSUMPTION = CommonConfig.VOID_DUST_COLLECTOR_ENERGY_CONSUMPTION.get();
@@ -166,6 +170,20 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity {
 		workTimer = tag.getInt("WorkTimer");
 		workTimeRequired = tag.getInt("WorkTimeRequired");
 		capabilityHandler.itemHandler.deserializeNBT(tag.getCompound("Inventory"));
+	}
+
+	@Override
+	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+		if (isWorking()) {
+			CmiLang.builder()
+					.translate("tooltip.void_dust_collector.working")
+					.forGoggles(tooltip);
+		} else {
+			CmiLang.builder()
+					.translate("tooltip.void_dust_collector.unworking")
+					.forGoggles(tooltip);
+		}
+		return true;
 	}
 
 	private class ForgeCapabilityHandler {

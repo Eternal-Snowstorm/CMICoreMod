@@ -19,6 +19,8 @@
 	"cmi.tooltip.steam_hammer.behaviour2": "Consumes _%s mB_ of steam per operation",
 	"cmi.tooltip.accelerator_motor.behaviour1": "A rotational generator that provides _no stress_",
 	"cmi.tooltip.accelerator_motor.behaviour2": "Its default maximum rotational speed is _%s RPM_",
+	"cmi.tooltip.void_dust_collector.working": "Working",
+	"cmi.tooltip.void_dust_collector.unworking": "Stopped",
 	"jei.category.cmi.accelerator": "Mechanism Accelerator",
 	"jei.catalyst.cmi.accelerator.1": "Use a mechanism on the accelerator",
 	"jei.catalyst.cmi.accelerator.2": "Requires at least 24 triggerable blocks in a 5×5 area around",
