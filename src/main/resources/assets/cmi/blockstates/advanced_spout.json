@@ -1,7 +1,10 @@
 {
 	"variants": {
-		"": {
+		"powered=false": {
 			"model": "cmi:block/advanced_spout/block"
+		},
+		"powered=true": {
+			"model": "cmi:block/advanced_spout/block_on"
 		}
 	}
 }

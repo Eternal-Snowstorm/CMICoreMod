@@ -27,7 +27,6 @@ import net.minecraftforge.fluids.FluidStack;
 import top.nebula.cmi.config.CommonConfig;
 
 public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
-
 	public AdvancedSpoutBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
@@ -117,15 +116,17 @@ public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
 		}
 		tickBehaviours();
 
-		if (level == null)
+		if (level == null) {
 			return;
+		}
 
 		FluidStack currentFluidInTank = getCurrentFluid();
 
 		if (processingTicks == -1 && (isVirtual() || !level.isClientSide()) && !currentFluidInTank.isEmpty()) {
-			BlockSpoutingBehaviour.forEach(behaviour -> {
-				if (customProcess != null)
+			BlockSpoutingBehaviour.forEach((behaviour) -> {
+				if (customProcess != null) {
 					return;
+				}
 				if (behaviour.fillBlock(level, worldPosition.below(2), this, currentFluidInTank, true) > 0) {
 					processingTicks = getFillingTime();
 					customProcess = behaviour;
@@ -140,9 +141,10 @@ public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
 				int fillBlock = customProcess.fillBlock(level, worldPosition.below(2), this, currentFluidInTank, false);
 				customProcess = null;
 				if (fillBlock > 0) {
-					getTank().getPrimaryHandler()
-						.setFluid(FluidHelper.copyStackWithAmount(currentFluidInTank,
-							currentFluidInTank.getAmount() - fillBlock));
+					getTank().getPrimaryHandler().setFluid(FluidHelper.copyStackWithAmount(
+							currentFluidInTank,
+							currentFluidInTank.getAmount() - fillBlock)
+					);
 					sendSplash = true;
 					notifyUpdate();
 				}
@@ -155,8 +157,9 @@ public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
 	}
 
 	private void tickBehaviours() {
-		if (level == null)
+		if (level == null) {
 			return;
+		}
 		forEachBehaviour(BlockEntityBehaviour::tick);
 	}
 

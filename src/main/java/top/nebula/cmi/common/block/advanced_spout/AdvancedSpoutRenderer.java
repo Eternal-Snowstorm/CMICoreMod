@@ -2,25 +2,24 @@ package top.nebula.cmi.common.block.advanced_spout;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour.TankSegment;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import com.simibubi.create.foundation.fluid.FluidRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;
-
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fluids.FluidStack;
+import top.nebula.cmi.client.block.resource.CmiBlockPartialModel;
 
 public class AdvancedSpoutRenderer extends SafeBlockEntityRenderer<AdvancedSpoutBlockEntity> {
 	static final PartialModel[] BITS = {
-			AllPartialModels.SPOUT_TOP,
-			AllPartialModels.SPOUT_MIDDLE,
-			AllPartialModels.SPOUT_BOTTOM
+			CmiBlockPartialModel.SPOUT_TOP,
+			CmiBlockPartialModel.SPOUT_MIDDLE,
+			CmiBlockPartialModel.SPOUT_BOTTOM
 	};
 
 	public AdvancedSpoutRenderer(BlockEntityRendererProvider.Context context) {

@@ -16,8 +16,9 @@ public abstract class BasinCategoryMixin {
 			at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/processing/basin/BasinRecipe;getRequiredHeat()Lcom/simibubi/create/content/processing/recipe/HeatCondition;"),
 			remap = false, cancellable = true)
 	public void setRecipe(IRecipeLayoutBuilder builder, BasinRecipe recipe, IFocusGroup focuses, CallbackInfo info) {
-		if (recipe.getRequiredHeat() == HeatCondition.valueOf("GRILLED"))
+		if (recipe.getRequiredHeat() == HeatCondition.valueOf("GRILLED")) {
 			info.cancel();
+		}
 	}
 	/*
 	@Inject(
