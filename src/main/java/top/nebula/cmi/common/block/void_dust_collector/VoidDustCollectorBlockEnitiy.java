@@ -108,23 +108,6 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity {
 		}
 	}
 
-	public boolean isWorking() {
-		if (level == null) {
-			return false;
-		}
-
-		if (energyStored < 1000) {
-			return false;
-		}
-
-		BlockPos below = worldPosition.below();
-		if (!level.getBlockState(below).is(BLOCKS_BELOW)) {
-			return false;
-		}
-
-		return capabilityHandler.itemHandler.getStackInSlot(0).isEmpty();
-	}
-
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction direction) {
 		if (capability == ForgeCapabilities.ITEM_HANDLER) {
@@ -140,6 +123,14 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity {
 		}
 
 		return super.getCapability(capability, direction);
+	}
+
+	public boolean isWorking() {
+		BlockState state = getBlockState();
+		if (state.hasProperty(VoidDustCollectorBlock.WORKING)) {
+			return state.getValue(VoidDustCollectorBlock.WORKING);
+		}
+		return false;
 	}
 
 	@Override
