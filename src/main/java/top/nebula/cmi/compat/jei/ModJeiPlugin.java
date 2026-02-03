@@ -3,11 +3,13 @@ package top.nebula.cmi.compat.jei;
 import com.simibubi.create.Create;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.Cmi;
@@ -20,6 +22,7 @@ import top.nebula.cmi.compat.jei.category.WaterPumpCategory;
 import top.nebula.cmi.compat.jei.category.WaterPumpSeaWaterCategory;
 
 import java.util.List;
+import java.util.Map;
 
 @JeiPlugin
 public class ModJeiPlugin implements IModPlugin {
@@ -62,13 +65,19 @@ public class ModJeiPlugin implements IModPlugin {
 				ModBlocks.WATER_PUMP.asStack(),
 				WaterPumpSeaWaterCategory.WATER_PUMP_SEA_WATER_TYPE
 		);
-		registration.getJeiHelpers().getRecipeType(Create.asResource("pressing"))
-				.ifPresent((type) -> {
-					registration.addRecipeCatalyst(ModBlocks.STEAM_HAMMER.asStack(), type);
-				});
-		registration.getJeiHelpers().getRecipeType(Create.asResource("spout_filling"))
-				.ifPresent((type) -> {
-					registration.addRecipeCatalyst(ModBlocks.ADVANCED_SPOUT.asStack(), type);
-				});
+
+		IJeiHelpers helpers = registration.getJeiHelpers();
+
+		Map<ResourceLocation, ItemStack> catalysts = Map.of(
+				Create.asResource("pressing"), ModBlocks.STEAM_HAMMER.asStack(),
+				Create.asResource("spout_filling"), ModBlocks.ADVANCED_SPOUT.asStack()
+		);
+
+		catalysts.forEach((recipeId, stack) -> {
+			helpers.getRecipeType(recipeId)
+					.ifPresent((type) -> {
+						registration.addRecipeCatalyst(stack, type);
+					});
+		});
 	}
 }
