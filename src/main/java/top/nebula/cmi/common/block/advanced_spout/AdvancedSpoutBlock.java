@@ -15,7 +15,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.common.register.ModBlockEntityTypes;
@@ -71,5 +73,11 @@ public class AdvancedSpoutBlock extends Block implements IWrenchable, IBE<Advanc
 	@Override
 	public BlockEntityType<? extends AdvancedSpoutBlockEntity> getBlockEntityType() {
 		return ModBlockEntityTypes.ADVANCED_SPOUT.get();
+	}
+	@Override
+	public @NotNull VoxelShape getBlockSupportShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
+		VoxelShape fullBlock = Shapes.block();
+		VoxelShape bottomPlane = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
+		return Shapes.join(fullBlock, bottomPlane, BooleanOp.ONLY_FIRST);
 	}
 }
