@@ -22,7 +22,7 @@ public class VoidDustCollectorBlock extends Block implements IBE<VoidDustCollect
 
 	public VoidDustCollectorBlock(Properties properties) {
 		super(Properties.copy(Blocks.IRON_BLOCK)
-				.sound(SoundType.COPPER));
+				.sound(SoundType.NETHERITE_BLOCK));
 		this.registerDefaultState(this.stateDefinition.any()
 				.setValue(WORKING, false)
 				.setValue(FACING, Direction.NORTH));
