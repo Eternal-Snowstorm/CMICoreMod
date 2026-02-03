@@ -4,10 +4,7 @@ import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -24,7 +21,7 @@ public class VoidDustCollectorBlock extends Block implements IBE<VoidDustCollect
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
 	public VoidDustCollectorBlock(Properties properties) {
-		super(Properties.copy(Blocks.IRON_BLOCK));
+		super(Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.NETHERITE_BLOCK));
 		this.registerDefaultState(this.stateDefinition.any()
 				.setValue(WORKING, false)
 				.setValue(FACING, Direction.NORTH));
