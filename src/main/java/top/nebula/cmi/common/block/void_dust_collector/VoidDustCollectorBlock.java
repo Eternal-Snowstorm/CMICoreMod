@@ -21,7 +21,8 @@ public class VoidDustCollectorBlock extends Block implements IBE<VoidDustCollect
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
 	public VoidDustCollectorBlock(Properties properties) {
-		super(Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.NETHERITE_BLOCK));
+		super(Properties.copy(Blocks.IRON_BLOCK)
+				.sound(SoundType.COPPER));
 		this.registerDefaultState(this.stateDefinition.any()
 				.setValue(WORKING, false)
 				.setValue(FACING, Direction.NORTH));
