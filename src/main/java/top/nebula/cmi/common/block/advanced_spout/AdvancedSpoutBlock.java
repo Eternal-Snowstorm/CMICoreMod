@@ -24,6 +24,11 @@ import top.nebula.cmi.common.register.ModBlockEntityTypes;
 
 public class AdvancedSpoutBlock extends Block implements IWrenchable, IBE<AdvancedSpoutBlockEntity> {
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+	private static final VoxelShape SUPPORT_SHAPE = Shapes.join(
+			Shapes.block(),
+			Block.box(1.0D, 0.0D, 1.0D, 15.0D, 1.0D, 15.0D),
+			BooleanOp.ONLY_FIRST
+	);
 
 	public AdvancedSpoutBlock(Properties properties) {
 		super(properties);
@@ -76,8 +81,6 @@ public class AdvancedSpoutBlock extends Block implements IWrenchable, IBE<Advanc
 	}
 	@Override
 	public @NotNull VoxelShape getBlockSupportShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
-		VoxelShape fullBlock = Shapes.block();
-		VoxelShape bottomPlane = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-		return Shapes.join(fullBlock, bottomPlane, BooleanOp.ONLY_FIRST);
+		return SUPPORT_SHAPE;
 	}
 }
