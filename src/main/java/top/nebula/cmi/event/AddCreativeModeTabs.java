@@ -19,10 +19,11 @@ public class AddCreativeModeTabs {
 	@SubscribeEvent
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == KUBEJS_TAB) {
-			event.accept(ModBlocks.ACCELERATOR_MOTOR.asItem());
-			event.accept(ModBlocks.STEAM_HAMMER.asItem());
 			event.accept(ModBlocks.MARS_GEO.asItem());
 			event.accept(ModBlocks.MERCURY_GEO.asItem());
+			event.accept(ModBlocks.WATER_PUMP.asItem());
+			event.accept(ModBlocks.ACCELERATOR_MOTOR.asItem());
+			event.accept(ModBlocks.STEAM_HAMMER.asItem());
 			event.accept(ModBlocks.ADVANCED_SPOUT.asItem());
 			event.accept(ModBlocks.VOID_DUST_COLLECTOR.asItem());
 		}
