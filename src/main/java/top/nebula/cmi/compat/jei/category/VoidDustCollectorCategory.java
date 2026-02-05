@@ -64,6 +64,11 @@ public class VoidDustCollectorCategory implements IRecipeCategory<VoidDustCollec
 	}
 
 	@Override
+	public @NotNull IDrawable getIcon() {
+		return this.icon;
+	}
+
+	@Override
 	public int getWidth() {
 		return 178;
 	}
@@ -74,13 +79,8 @@ public class VoidDustCollectorCategory implements IRecipeCategory<VoidDustCollec
 	}
 
 	@Override
-	public @NotNull IDrawable getIcon() {
-		return this.icon;
-	}
-
-	@Override
 	public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull VoidDustCollectorRecipe recipe, @NotNull IFocusGroup focuses) {
-		builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 100, 35)
 				.addItemStack(VOID_DUST.get().getDefaultInstance());
 		builder.addInvisibleIngredients(RecipeIngredientRole.INPUT)
 				.addItemStack(ModBlocks.VOID_DUST_COLLECTOR.get().asItem().getDefaultInstance());
@@ -88,9 +88,9 @@ public class VoidDustCollectorCategory implements IRecipeCategory<VoidDustCollec
 
 	@Override
 	public void draw(@NotNull VoidDustCollectorRecipe recipe, @NotNull IRecipeSlotsView view, @NotNull GuiGraphics graphics, double mouseX, double mouseY) {
-		this.voidDustCollectorMB.draw(graphics, 30, 5);
-		AllGuiTextures.JEI_SHADOW.render(graphics, 30, 15);
-		AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 74, 10);
+		AllGuiTextures.JEI_SHADOW.render(graphics, 50, 50);
+		AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 94, 20);
+		this.voidDustCollectorMB.draw(graphics, 60, 10);
 		PoseStack pose = graphics.pose();
 		pose.popPose();
 	}
