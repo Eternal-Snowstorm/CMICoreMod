@@ -43,10 +43,12 @@ public class AcceleratorCategory {
 		return SimpleJeiCategory.builder(ACCELERATOR_TYPE)
 				.setTitle(Component.translatable("jei.category.cmi.accelerator"))
 				.setSize(178, 72)
-				.setIcon(() -> new DoubleItemIcon(
-						() -> ACCELERATOR_ITEM.get().getDefaultInstance(),
-						() -> PRECISION_MECHANISM.get().getDefaultInstance()
-				))
+				.setIcon(() -> {
+					return new DoubleItemIcon(
+							() -> ACCELERATOR_ITEM.get().getDefaultInstance(),
+							() -> PRECISION_MECHANISM.get().getDefaultInstance()
+					);
+				})
 				.setBackground(helper.createBlankDrawable(0, 0))
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.INPUT, 51, 5)

@@ -42,9 +42,9 @@ public class WaterPumpSeaWaterCategory {
 		return SimpleJeiCategory.builder(WATER_PUMP_SEA_WATER_TYPE)
 				.setTitle(Component.translatable("jei.category.cmi.water_pump_sea_water"))
 				.setSize(178, 72)
-				.setIcon(() -> helper.createDrawableItemStack(
-						ModBlocks.WATER_PUMP.get().asItem().getDefaultInstance()
-				))
+				.setIcon(() -> {
+					return helper.createDrawableItemStack(ModBlocks.WATER_PUMP.get().asItem().getDefaultInstance());
+				})
 				.setBackground(helper.createBlankDrawable(0, 0))
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)

@@ -31,9 +31,9 @@ public class WaterPumpCategory {
 		return SimpleJeiCategory.builder(WATER_PUMP_TYPE)
 				.setTitle(Component.translatable("jei.category.cmi.water_pump"))
 				.setSize(178, 72)
-				.setIcon(() -> helper.createDrawableItemStack(
-						ModBlocks.WATER_PUMP.get().asItem().getDefaultInstance()
-				))
+				.setIcon(() -> {
+					return helper.createDrawableItemStack(ModBlocks.WATER_PUMP.get().asItem().getDefaultInstance());
+				})
 				.setBackground(helper.createBlankDrawable(0, 0))
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)

@@ -37,10 +37,12 @@ public class VoidDustCollectorCategory {
 		return SimpleJeiCategory.builder(VOID_DUST_COLLECTOR_TYPE)
 				.setTitle(Component.translatable("jei.category.cmi.void_dust_collector"))
 				.setSize(178, 72)
-				.setIcon(() -> new DoubleItemIcon(
-						() -> VOID_SPRING.get().asItem().getDefaultInstance(),
-						() -> ModBlocks.VOID_DUST_COLLECTOR.get().asItem().getDefaultInstance()
-				))
+				.setIcon(() -> {
+					return new DoubleItemIcon(
+							() -> VOID_SPRING.get().asItem().getDefaultInstance(),
+							() -> ModBlocks.VOID_DUST_COLLECTOR.get().asItem().getDefaultInstance()
+					);
+				})
 				.setBackground(helper.createBlankDrawable(0, 0))
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.OUTPUT, 100, 35)
