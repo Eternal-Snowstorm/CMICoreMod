@@ -6,16 +6,10 @@ import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -24,130 +18,97 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.recipe.accelerator.AcceleratorRecipe;
+import top.nebula.libs.compat.jei.categoty.SimpleJeiCategory;
 
-public class AcceleratorCategory implements IRecipeCategory<AcceleratorRecipe> {
-	private final IDrawable background;
-	private final IDrawable icon;
-
+public class AcceleratorCategory {
 	public static final Lazy<Item> ACCELERATOR_ITEM = Lazy.of(() -> {
 		return ForgeRegistries.ITEMS.getValue(Cmi.loadResource("accelerator"));
 	});
-	public static final Lazy<Block> ACCELERATOR_BLOCK = Lazy.of(() -> {
+	private static final Lazy<Block> ACCELERATOR_BLOCK = Lazy.of(() -> {
 		return ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("accelerator"));
 	});
 	private static final Lazy<Item> PRECISION_MECHANISM = Lazy.of(() -> {
 		return ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("create:precision_mechanism"));
 	});
-	public static final ResourceLocation UID = Cmi.loadResource("accelerator");
+
 	public static final RecipeType<AcceleratorRecipe> ACCELERATOR_TYPE = RecipeType.create(
 			Cmi.MODID,
 			"accelerator",
 			AcceleratorRecipe.class
 	);
 
-	public AcceleratorCategory(IGuiHelper helper) {
-		this.background = helper.createBlankDrawable(0, 0);
-		this.icon = new DoubleItemIcon(
-				() -> ACCELERATOR_ITEM.get().getDefaultInstance(),
-				() -> PRECISION_MECHANISM.get().getDefaultInstance()
-		);
-	}
+	public static SimpleJeiCategory<AcceleratorRecipe> builder(IGuiHelper helper) {
+		return SimpleJeiCategory.builder(ACCELERATOR_TYPE)
+				.setTitle(Component.translatable("jei.category.cmi.accelerator"))
+				.setSize(178, 72)
+				.setIcon(() -> new DoubleItemIcon(
+						() -> ACCELERATOR_ITEM.get().getDefaultInstance(),
+						() -> PRECISION_MECHANISM.get().getDefaultInstance()
+				))
+				.setBackground(helper.createBlankDrawable(0, 0))
+				.setRecipe((builder, recipe, group) -> {
+					builder.addSlot(RecipeIngredientRole.INPUT, 51, 5)
+							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
+							.addIngredients(Ingredient.merge(recipe.inputs));
 
-	@Override
-	public int getWidth() {
-		return 178;
-	}
+					builder.addSlot(RecipeIngredientRole.INPUT, 27, 38)
+							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
+							.addItemStack(recipe.targetBlock.asItem().getDefaultInstance());
 
-	@Override
-	public int getHeight() {
-		return 72;
-	}
+					int xStart = 120;
+					int yStart = 5;
+					int id = 0;
 
-	@Override
-	public @NotNull RecipeType<AcceleratorRecipe> getRecipeType() {
-		return ACCELERATOR_TYPE;
-	}
+					for (AcceleratorRecipe.OutputEntry out : recipe.outputs) {
+						final int OUTPUT_SLOT_SIZE = 18;
+						final int OUTPUT_SLOT_GAP = 1;
 
-	@Override
-	public @NotNull Component getTitle() {
-		return Component.translatable("jei.category.cmi.accelerator");
-	}
+						int x = xStart + (id % 3) * (OUTPUT_SLOT_SIZE + OUTPUT_SLOT_GAP);
+						int y = yStart + (id / 3) * (OUTPUT_SLOT_SIZE + OUTPUT_SLOT_GAP);
+						float chance = out.chance;
 
-	@Override
-	public @NotNull IDrawable getBackground() {
-		return this.background;
-	}
+						builder.addSlot(RecipeIngredientRole.OUTPUT, x, y)
+								.setBackground(CreateRecipeCategory.getRenderedSlot(chance), -1, -1)
+								.addItemStack(out.block.asItem().getDefaultInstance())
+								.addTooltipCallback((view, tooltip) -> {
+									MutableComponent tranKey = Component.translatable(
+											"create.recipe.processing.chance",
+											chance < 0.01 ? "<1" : (int) (chance * 100)
+									).withStyle(ChatFormatting.GOLD);
 
-	@Override
-	public @NotNull IDrawable getIcon() {
-		return this.icon;
-	}
+									if (chance != 1) {
+										/*
+										 * index参数指的是在第几行添加Tooltip
+										 * 如果写1就指在第一行添加Tooltip
+										 * 其它数字同理
+										 */
+										tooltip.add(1, tranKey);
+									}
+								});
+						id++;
+					}
+				})
+				.setDraw((recipe, view, graphics, mouseX, mouseY) -> {
+					AllGuiTextures.JEI_SHADOW.render(graphics, 62, 47);
+					AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 74, 10);
 
-	@Override
-	public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull AcceleratorRecipe recipe, @NotNull IFocusGroup group) {
-		builder.addSlot(RecipeIngredientRole.INPUT, 51, 5)
-				.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
-				.addIngredients(Ingredient.merge(recipe.inputs));
+					PoseStack pose = graphics.pose();
 
-		builder.addSlot(RecipeIngredientRole.INPUT, 27, 38)
-				.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
-				.addItemStack(recipe.targetBlock.asItem().getDefaultInstance());
+					pose.pushPose();
+					pose.translate(74, 51, 100);
+					pose.mulPose(Axis.XP.rotationDegrees(-15.5f));
+					pose.mulPose(Axis.YP.rotationDegrees(22.5f));
 
-		int xStart = 120;
-		int yStart = 5;
-		int id = 0;
+					AnimatedKinetics.defaultBlockElement(ACCELERATOR_BLOCK.get().defaultBlockState())
+							.rotateBlock(0, 180, 0)
+							.atLocal(0.0, 0.0, 0.0)
+							.scale(24.0)
+							.render(graphics);
 
-		for (AcceleratorRecipe.OutputEntry out : recipe.outputs) {
-			final int OUTPUT_SLOT_SIZE = 18;
-			final int OUTPUT_SLOT_GAP = 1;
-
-			int x = xStart + (id % 3) * (OUTPUT_SLOT_SIZE + OUTPUT_SLOT_GAP);
-			int y = yStart + (id / 3) * (OUTPUT_SLOT_SIZE + OUTPUT_SLOT_GAP);
-			float chance = out.chance;
-
-			builder.addSlot(RecipeIngredientRole.OUTPUT, x, y)
-					.setBackground(CreateRecipeCategory.getRenderedSlot(chance), -1, -1)
-					.addItemStack(out.block.asItem().getDefaultInstance())
-					.addTooltipCallback((view, tooltip) -> {
-						MutableComponent tranKey = Component.translatable(
-								"create.recipe.processing.chance",
-								chance < 0.01 ? "<1" : (int) (chance * 100)
-						).withStyle(ChatFormatting.GOLD);
-
-						if (chance != 1) {
-							/*
-							 * index参数指的是在第几行添加Tooltip
-							 * 如果写1就指在第一行添加Tooltip
-							 * 其它数字同理
-							 */
-							tooltip.add(1, tranKey);
-						}
-					});
-			id++;
-		}
-	}
-
-	@Override
-	public void draw(@NotNull AcceleratorRecipe recipe, @NotNull IRecipeSlotsView view, @NotNull GuiGraphics graphics, double mouseX, double mouseY) {
-		AllGuiTextures.JEI_SHADOW.render(graphics, 62, 47);
-		AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 74, 10);
-
-		PoseStack pose = graphics.pose();
-
-		pose.pushPose();
-		pose.translate(74, 51, 100);
-		pose.mulPose(Axis.XP.rotationDegrees(-15.5f));
-		pose.mulPose(Axis.YP.rotationDegrees(22.5f));
-
-		AnimatedKinetics.defaultBlockElement(ACCELERATOR_BLOCK.get().defaultBlockState())
-				.rotateBlock(0, 180, 0)
-				.atLocal(0.0, 0.0, 0.0)
-				.scale(24.0)
-				.render(graphics);
-
-		pose.popPose();
+					pose.popPose();
+				})
+				.build();
 	}
 }

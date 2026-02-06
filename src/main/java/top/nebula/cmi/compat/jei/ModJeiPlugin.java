@@ -19,10 +19,7 @@ import top.nebula.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
 import top.nebula.cmi.common.recipe.water_pump.WaterPumpRecipe;
 import top.nebula.cmi.common.recipe.water_pump.WaterPumpSeaWaterRecipe;
 import top.nebula.cmi.common.register.ModBlocks;
-import top.nebula.cmi.compat.jei.category.AcceleratorCategory;
-import top.nebula.cmi.compat.jei.category.VoidDustCollectorCategory;
-import top.nebula.cmi.compat.jei.category.WaterPumpCategory;
-import top.nebula.cmi.compat.jei.category.WaterPumpSeaWaterCategory;
+import top.nebula.cmi.compat.jei.category.*;
 
 import java.util.List;
 import java.util.Map;
@@ -38,10 +35,10 @@ public class ModJeiPlugin implements IModPlugin {
 	public void registerCategories(@NotNull IRecipeCategoryRegistration registration) {
 		IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
 
-		registration.addRecipeCategories(new AcceleratorCategory(helper));
-		registration.addRecipeCategories(new WaterPumpCategory(helper));
-		registration.addRecipeCategories(new WaterPumpSeaWaterCategory(helper));
-		registration.addRecipeCategories(new VoidDustCollectorCategory(helper));
+		registration.addRecipeCategories(AcceleratorCategory.builder(helper));
+		registration.addRecipeCategories(WaterPumpCategory.builder(helper));
+		registration.addRecipeCategories(WaterPumpSeaWaterCategory.builder(helper));
+		registration.addRecipeCategories(VoidDustCollectorCategory.builder(helper));
 	}
 
 	@Override
