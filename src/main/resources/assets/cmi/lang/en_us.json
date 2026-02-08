@@ -7,6 +7,7 @@
 	"block.cmi.accelerator_motor": "Accelerator Motor",
 	"block.cmi.advanced_spout": "Advanced Spout",
 	"block.cmi.void_dust_collector": "Void Dust Collector",
+	"block.cmi.mechanical_belt_grinder": "Parallel Grinding",
 	"curios.identifier.mechanisms": "Mechanisms",
 	"cmi.tooltip.water_pump.functional": "Water Pump Functional",
 	"cmi.tooltip.water_pump.non_functional": "Water Pump Not Functional",
@@ -25,8 +26,6 @@
 	"cmi.tooltip.void_dust_collector.isWorking": "When working:",
 	"cmi.tooltip.void_dust_collector.workTime": "Collect one void dust per _%s Tick_",
 	"cmi.tooltip.void_dust_collector.energyConsumption": "Consumes _%s FE_ per Tick",
-	"jei.category.cmi.void_dust_collector": "Void Dust Collector",
-	"jei.category.cmi.accelerator": "Mechanism Accelerator",
 	"jei.catalyst.cmi.accelerator.1": "Use a mechanism on the accelerator",
 	"jei.catalyst.cmi.accelerator.2": "Requires at least 24 triggerable blocks in a 5×5 area around",
 	"jei.category.cmi.water_pump": "Multiblock Water Pump",
@@ -34,6 +33,9 @@
 	"jei.catalyst.cmi.water_pump.complete": "Structural Complete",
 	"jei.catalyst.cmi.water_pump.ocean": "In the ocean biome",
 	"jei.catalyst.cmi.water_pump.pos": "Core block at coordinate Y = 62",
+	"jei.category.cmi.void_dust_collector": "Void Dust Collector",
+	"jei.category.cmi.accelerator": "Mechanism Accelerator",
+	"jei.category.cmi.grinder": "Parallel grinding",
 	"jade.tip.cmi.powered.off": "State: off",
 	"jade.tip.cmi.powered.on": "State: on"
 }
