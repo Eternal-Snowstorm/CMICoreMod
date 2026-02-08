@@ -7,6 +7,7 @@
 	"block.cmi.accelerator_motor": "变速马达",
 	"block.cmi.advanced_spout": "高级注液器",
 	"block.cmi.void_dust_collector": "虚空粉末收集器",
+	"block.cmi.mechanical_belt_grinder": "并行磨砂机",
 	"curios.identifier.mechanisms": "构件",
 	"cmi.tooltip.water_pump.functional": "水井工作正常",
 	"cmi.tooltip.water_pump.non_functional": "水井关键结构缺失",
@@ -29,11 +30,12 @@
 	"jei.category.cmi.accelerator": "构件催生",
 	"jei.catalyst.cmi.accelerator.1": "对着催生器使用构件",
 	"jei.catalyst.cmi.accelerator.2": "需要周围5x5范围内至少24个可触发方块",
-	"jei.category.cmi.water_pump": "多方块水井",
-	"jei.category.cmi.water_pump_sea_water": "多方块水井",
 	"jei.catalyst.cmi.water_pump.complete": "结构完整",
 	"jei.catalyst.cmi.water_pump.ocean": "处于海洋群系",
 	"jei.catalyst.cmi.water_pump.pos": "核心方块处于坐标Y = 62",
+	"jei.category.cmi.water_pump": "多方块水井",
+	"jei.category.cmi.water_pump_sea_water": "多方块水井",
+	"jei.category.cmi.grinder": "并行打磨",
 	"jade.tip.cmi.powered.off": "状态: 关",
 	"jade.tip.cmi.powered.on": "状态: 开"
 }
