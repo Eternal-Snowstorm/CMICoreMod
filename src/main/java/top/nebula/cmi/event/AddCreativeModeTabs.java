@@ -26,6 +26,7 @@ public class AddCreativeModeTabs {
 			event.accept(CmiBlocks.STEAM_HAMMER.asItem());
 			event.accept(CmiBlocks.ADVANCED_SPOUT.asItem());
 			event.accept(CmiBlocks.VOID_DUST_COLLECTOR.asItem());
+			event.accept(CmiBlocks.BELT_GRINDER.asItem());
 		}
 	}
 }

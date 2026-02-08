@@ -9,6 +9,7 @@ public class BeltGrinderInstance extends SingleRotatingInstance<BeltGrinderBlock
 	public BeltGrinderInstance(MaterialManager materialManager, BeltGrinderBlockEntity blockEntity) {
 		super(materialManager, blockEntity);
 	}
+
 	@Override
 	protected Instancer<RotatingData> getModel() {
 		return getRotatingMaterial().getModel(shaft());
