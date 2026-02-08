@@ -33,7 +33,7 @@ public class AnimatedBeltGrinder extends AnimatedKinetics {
 				.render(graphics);
 
 		blockElement(CmiBlockPartialModel.GRINDER_BELT)
-				.rotateBlock(0, -90, -90)
+				.rotateBlock(0, -90, 0)
 				.scale(scale)
 				.render(graphics);
 
