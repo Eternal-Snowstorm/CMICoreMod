@@ -14,14 +14,14 @@ import top.nebula.libs.compat.jei.categoty.SimpleJeiCategory;
 
 import java.util.List;
 
-public abstract class GrindingCategory {
+public class GrindingCategory {
 	private static final AnimatedBeltGrinder ANIMATED_BELT_GRINDER = new AnimatedBeltGrinder();
 
 	public static SimpleJeiCategory<GrindingRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.GRINDING)
 				.setTitle(CmiLang.JeiLang.setCategory("grinding"))
-				.setSize(177, 60)
-				.setBackground(helper.createBlankDrawable(177, 60))
+				.setSize(178, 72)
+				.setBackground(helper.createBlankDrawable(178, 72))
 				.setIcon(() -> helper.createDrawableItemStack(CmiBlocks.BELT_GRINDER.asStack()))
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.INPUT, 44, 5)
