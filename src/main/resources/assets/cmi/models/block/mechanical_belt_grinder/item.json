@@ -1,10 +1,12 @@
 {
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "create:block/axis",
 		"1": "create:block/axis_top",
-		"3": "cmi:block/mechanical_belt_grinder/sand_paper",
-		"4": "cmi:block/mechanical_belt_grinder/mechanical_belt_grinder",
-		"particle": "cmi:block/mechanical_belt_grinder/sand_paper"
+		"3": "block/mechanical_belt_grinder/diamond_sand_paper",
+		"4": "block/mechanical_belt_grinder/mechanical_belt_grinder",
+		"particle": "block/mechanical_belt_grinder/diamond_sand_paper"
 	},
 	"elements": [
 		{
@@ -132,7 +134,7 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 225, 0],
+			"rotation": [0, -135, 0],
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
@@ -140,7 +142,7 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 225, 0],
+			"rotation": [30, -135, 0],
 			"translation": [0, -0.25, 0],
 			"scale": [0.6, 0.6, 0.6]
 		},

@@ -41,7 +41,7 @@ public class BeltGrinderRenderer extends SafeBlockEntityRenderer<BeltGrinderBloc
 	protected void renderBelt(BeltGrinderBlockEntity be, PoseStack ms, MultiBufferSource buffer, int light) {
 		BlockState blockState = be.getBlockState();
 		VertexConsumer vb = buffer.getBuffer(RenderType.solid());
-		SpriteShiftEntry beltShift = CmiSpriteShiftEntry.SAND_PAPER_BELT;
+		SpriteShiftEntry beltShift = CmiSpriteShiftEntry.DIAMOND_SAND_PAPER_BELT;
 		float speed = be.getSpeed() * 2;
 		float renderTick = AnimationTickHolder.getRenderTime(be.getLevel());
 		float time = renderTick * Direction.AxisDirection.POSITIVE.getStep();
