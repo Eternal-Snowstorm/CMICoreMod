@@ -1,7 +1,7 @@
 {
 	"textures": {
-		"4": "cmi:block/mechanical_belt_grinder/diamond_sand_paper",
-		"particle": "cmi:block/mechanical_belt_grinder/diamond_sand_paper"
+		"4": "cmi:block/mechanical_belt_grinder/sand_paper",
+		"particle": "cmi:block/mechanical_belt_grinder/sand_paper"
 	},
 	"elements": [
 		{
