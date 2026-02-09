@@ -8,6 +8,7 @@ import top.nebula.cmi.Cmi;
 public class CmiSpriteShiftEntry {
 	public static final SpriteShiftEntry SAND_PAPER_BELT;
 	public static final SpriteShiftEntry RED_SAND_PAPER_BELT;
+	public static final SpriteShiftEntry DIAMOND_SAND_PAPER_BELT;
 
 	static {
 		SAND_PAPER_BELT = addShift(
@@ -18,6 +19,11 @@ public class CmiSpriteShiftEntry {
 		RED_SAND_PAPER_BELT = addShift(
 				"mechanical_belt_grinder/red_sand_paper",
 				"mechanical_belt_grinder/red_sand_paper_scroll"
+		);
+
+		DIAMOND_SAND_PAPER_BELT = addShift(
+				"mechanical_belt_grinder/diamond_sand_paper",
+				"mechanical_belt_grinder/diamond_sand_paper_scroll"
 		);
 	}
 
