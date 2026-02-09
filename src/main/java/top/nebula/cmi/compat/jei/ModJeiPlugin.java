@@ -83,6 +83,10 @@ public class ModJeiPlugin implements IModPlugin {
 				CmiJeiRecipeType.VOID_DUST_COLLECTOR
 		);
 		registration.addRecipeCatalyst(
+				VoidDustCollectorCategory.VOID_SPRING.get().asItem().getDefaultInstance(),
+				CmiJeiRecipeType.VOID_DUST_COLLECTOR
+		);
+		registration.addRecipeCatalyst(
 				CmiBlocks.BELT_GRINDER.asStack(),
 				CmiJeiRecipeType.GRINDING
 		);

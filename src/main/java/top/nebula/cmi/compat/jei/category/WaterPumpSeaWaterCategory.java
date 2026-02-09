@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.recipe.water_pump.WaterPumpSeaWaterRecipe;
 import top.nebula.cmi.common.register.CmiBlocks;
-import top.nebula.cmi.compat.jei.CmiGuiTextures;
+import top.nebula.cmi.compat.jei.api.CmiGuiTextures;
 import top.nebula.cmi.compat.jei.api.CmiJeiRecipeType;
 import top.nebula.cmi.compat.jei.category.multiblock.WaterPumpMultiblock;
 import top.nebula.cmi.utils.CmiLang;

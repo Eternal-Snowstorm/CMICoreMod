@@ -19,7 +19,7 @@ import top.nebula.cmi.utils.CmiLang;
 import top.nebula.libs.compat.jei.categoty.SimpleJeiCategory;
 
 public class VoidDustCollectorCategory {
-	private static final Lazy<Block> VOID_SPRING = Lazy.of(() -> {
+	public static final Lazy<Block> VOID_SPRING = Lazy.of(() -> {
 		return ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("void_spring"));
 	});
 	private static final Lazy<Item> VOID_DUST = Lazy.of(() -> {

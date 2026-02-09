@@ -1,6 +1,4 @@
-package top.nebula.cmi.compat.jei;
-
-import top.nebula.cmi.compat.jei.api.CmiGuiTexture;
+package top.nebula.cmi.compat.jei.api;
 
 public class CmiGuiTextures {
     public static final CmiGuiTexture WATER_PUMP_SEA_WATER_ARROW;
