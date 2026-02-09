@@ -6,7 +6,7 @@ import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 
-public interface BeltGrinderSchema {
+public interface GrindingSchema {
 	RecipeKey<OutputItem[]> RESULTS = ItemComponents.OUTPUT_ARRAY.key("results");
 	RecipeKey<InputItem[]> INPUT = ItemComponents.INPUT_ARRAY.key("ingredients");
 	RecipeKey<Double> PROCESSING_TIME = NumberComponent.DOUBLE.key("processingTime").optional(20d);
