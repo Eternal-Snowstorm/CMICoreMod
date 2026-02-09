@@ -21,8 +21,8 @@ public class GrindingCategory {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.GRINDING)
 				.setTitle(CmiLang.JeiLang.setCategory("grinding"))
 				.setSize(178, 72)
-				.setBackground(helper.createBlankDrawable(178, 72))
-				.setIcon(() -> helper.createDrawableItemStack(CmiBlocks.BELT_GRINDER.asStack()))
+				.setBackground(178, 72)
+				.setIcon(CmiBlocks.BELT_GRINDER.asStack())
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.INPUT, 44, 5)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)

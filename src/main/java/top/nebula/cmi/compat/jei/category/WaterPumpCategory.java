@@ -26,10 +26,8 @@ public class WaterPumpCategory {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.WATER_PUMP)
 				.setTitle(CmiLang.JeiLang.setCategory("water_pump"))
 				.setSize(178, 72)
-				.setIcon(() -> {
-					return helper.createDrawableItemStack(CmiBlocks.WATER_PUMP.get().asItem().getDefaultInstance());
-				})
-				.setBackground(helper.createBlankDrawable(0, 0))
+				.setIcon(CmiBlocks.WATER_PUMP.get().asItem().getDefaultInstance())
+				.setBackground(0, 0)
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
