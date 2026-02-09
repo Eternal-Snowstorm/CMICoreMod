@@ -28,7 +28,7 @@ public class VoidDustCollectorCategory {
 	private static final VoidDustCollectorMultiblock VOID_MB = new VoidDustCollectorMultiblock();
 
 	public static SimpleJeiCategory<VoidDustCollectorRecipe> builder(IGuiHelper helper) {
-		return SimpleJeiCategory.builder(CmiJeiRecipeType.VOID_DUST_COLLECTOR)
+		return SimpleJeiCategory.builder(CmiJeiRecipeType.VOID_DUST_COLLECTOR, helper)
 				.setTitle(CmiLang.JeiLang.setCategory("void_dust_collector"))
 				.setSize(178, 72)
 				.setIcon(() -> {
@@ -37,7 +37,7 @@ public class VoidDustCollectorCategory {
 							() -> CmiBlocks.VOID_DUST_COLLECTOR.get().asItem().getDefaultInstance()
 					);
 				})
-				.setBackground(helper.createBlankDrawable(0, 0))
+				.setBackground(0, 0)
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.OUTPUT, 100, 35)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)

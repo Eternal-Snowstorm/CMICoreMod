@@ -23,7 +23,7 @@ public class WaterPumpCategory {
 	private static final WaterPumpMultiblock WATER_PUMP_MB = new WaterPumpMultiblock();
 
 	public static SimpleJeiCategory<WaterPumpRecipe> builder(IGuiHelper helper) {
-		return SimpleJeiCategory.builder(CmiJeiRecipeType.WATER_PUMP)
+		return SimpleJeiCategory.builder(CmiJeiRecipeType.WATER_PUMP, helper)
 				.setTitle(CmiLang.JeiLang.setCategory("water_pump"))
 				.setSize(178, 72)
 				.setIcon(CmiBlocks.WATER_PUMP.get().asItem().getDefaultInstance())

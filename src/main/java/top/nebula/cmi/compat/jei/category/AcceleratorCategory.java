@@ -35,7 +35,7 @@ public class AcceleratorCategory {
 	});
 
 	public static SimpleJeiCategory<AcceleratorRecipe> builder(IGuiHelper helper) {
-		return SimpleJeiCategory.builder(CmiJeiRecipeType.ACCELERATOR)
+		return SimpleJeiCategory.builder(CmiJeiRecipeType.ACCELERATOR, helper)
 				.setTitle(CmiLang.JeiLang.setCategory("accelerator"))
 				.setSize(178, 72)
 				.setIcon(() -> {
@@ -44,7 +44,7 @@ public class AcceleratorCategory {
 							() -> PRECISION_MECHANISM.get().getDefaultInstance()
 					);
 				})
-				.setBackground(helper.createBlankDrawable(0, 0))
+				.setBackground(0, 0)
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.INPUT, 51, 5)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)

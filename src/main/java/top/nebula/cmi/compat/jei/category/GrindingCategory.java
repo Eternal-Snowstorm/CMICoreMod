@@ -18,7 +18,7 @@ public class GrindingCategory {
 	private static final AnimatedBeltGrinder ANIMATED_BELT_GRINDER = new AnimatedBeltGrinder();
 
 	public static SimpleJeiCategory<GrindingRecipe> builder(IGuiHelper helper) {
-		return SimpleJeiCategory.builder(CmiJeiRecipeType.GRINDING)
+		return SimpleJeiCategory.builder(CmiJeiRecipeType.GRINDING, helper)
 				.setTitle(CmiLang.JeiLang.setCategory("grinding"))
 				.setSize(178, 72)
 				.setBackground(178, 72)
