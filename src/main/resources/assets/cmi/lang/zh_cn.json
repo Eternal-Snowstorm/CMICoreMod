@@ -7,7 +7,7 @@
 	"block.cmi.accelerator_motor": "变速马达",
 	"block.cmi.advanced_spout": "高级注液器",
 	"block.cmi.void_dust_collector": "虚空粉末收集器",
-	"block.cmi.mechanical_belt_grinder": "并行磨砂机",
+	"block.cmi.mechanical_belt_grinder": "动力磨砂机",
 	"curios.identifier.mechanisms": "构件",
 	"cmi.tooltip.water_pump.functional": "水井工作正常",
 	"cmi.tooltip.water_pump.non_functional": "水井关键结构缺失",

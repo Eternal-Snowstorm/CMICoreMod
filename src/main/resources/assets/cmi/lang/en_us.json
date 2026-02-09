@@ -7,7 +7,7 @@
 	"block.cmi.accelerator_motor": "Accelerator Motor",
 	"block.cmi.advanced_spout": "Advanced Spout",
 	"block.cmi.void_dust_collector": "Void Dust Collector",
-	"block.cmi.mechanical_belt_grinder": "Parallel Grinding",
+	"block.cmi.mechanical_belt_grinder": "Belt Grinding",
 	"curios.identifier.mechanisms": "Mechanisms",
 	"cmi.tooltip.water_pump.functional": "Water Pump Functional",
 	"cmi.tooltip.water_pump.non_functional": "Water Pump Not Functional",
