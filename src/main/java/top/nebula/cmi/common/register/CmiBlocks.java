@@ -4,10 +4,8 @@ import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
-import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.minecraft.core.registries.Registries;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.block.accelerator_motor.AcceleratorMotorBlock;
 import top.nebula.cmi.common.block.accelerator_motor.AcceleratorMotorItem;
@@ -82,9 +80,6 @@ public class CmiBlocks {
 		BELT_GRINDER = Cmi.REGISTRATE.block("mechanical_belt_grinder", BeltGrinderBlock::new)
 				.initialProperties(SharedProperties::stone)
 				.transform(BlockStressDefaults.setImpact(8.0))
-				.onRegisterAfter(Registries.ITEM, (block) -> {
-					ItemDescription.useKey(block, "block.cmi.mechanical_grinder");
-				})
 				.item()
 				.build()
 				.register();
