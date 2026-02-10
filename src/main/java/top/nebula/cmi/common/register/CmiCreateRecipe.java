@@ -10,9 +10,10 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.block.belt_grinder.GrindingRecipe;
+
+import java.util.function.Supplier;
 
 public class CmiCreateRecipe {
 	private static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS;
@@ -30,11 +31,11 @@ public class CmiCreateRecipe {
 	private static <T extends ProcessingRecipe<?>> TypeInfo<T> register(String name, ProcessingRecipeBuilder.ProcessingRecipeFactory<T> factory) {
 		ResourceLocation id = Cmi.loadResource(name);
 
-		RegistryObject<RecipeSerializer<?>> serializer = SERIALIZERS.register(name, () -> {
+		Supplier<RecipeSerializer<?>> serializer = SERIALIZERS.register(name, () -> {
 			return new ProcessingRecipeSerializer<>(factory);
 		});
 
-		RegistryObject<RecipeType<?>> type = TYPES.register(name, () -> {
+		Supplier<RecipeType<?>> type = TYPES.register(name, () -> {
 			return RecipeType.simple(id);
 		});
 
@@ -43,10 +44,10 @@ public class CmiCreateRecipe {
 
 	public static class TypeInfo<T> implements IRecipeTypeInfo {
 		private final ResourceLocation id;
-		private final RegistryObject<RecipeSerializer<?>> serializer;
-		private final RegistryObject<RecipeType<?>> type;
+		private final Supplier<RecipeSerializer<?>> serializer;
+		private final Supplier<RecipeType<?>> type;
 
-		private TypeInfo(ResourceLocation id, RegistryObject<RecipeSerializer<?>> serializer, RegistryObject<RecipeType<?>> type) {
+		private TypeInfo(ResourceLocation id, Supplier<RecipeSerializer<?>> serializer, Supplier<RecipeType<?>> type) {
 			this.id = id;
 			this.serializer = serializer;
 			this.type = type;
