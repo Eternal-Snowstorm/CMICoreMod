@@ -9,7 +9,7 @@ import top.nebula.cmi.common.block.belt_grinder.GrindingRecipe;
 import top.nebula.cmi.common.register.CmiBlocks;
 import top.nebula.cmi.compat.jei.api.CmiJeiRecipeType;
 import top.nebula.cmi.compat.jei.category.animations.AnimatedBeltGrinder;
-import top.nebula.cmi.utils.CmiLang;
+import top.nebula.cmi.api.CmiLang;
 import top.nebula.libs.compat.jei.categoty.SimpleJeiCategory;
 
 import java.util.List;

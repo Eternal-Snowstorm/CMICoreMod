@@ -23,7 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.config.CommonConfig;
-import top.nebula.cmi.utils.CmiLang;
+import top.nebula.cmi.api.CmiLang;
 
 import javax.annotation.Nullable;
 import java.util.List;

@@ -1,4 +1,4 @@
-package top.nebula.cmi.utils;
+package top.nebula.cmi.api;
 
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;

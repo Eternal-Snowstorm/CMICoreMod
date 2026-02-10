@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import top.nebula.cmi.common.register.CmiBlocks;
 import top.nebula.cmi.common.register.CmiCreateRecipe;
 import top.nebula.cmi.compat.jei.category.CmiSequencedAssemblySubCategory;
-import top.nebula.cmi.utils.CmiLang;
+import top.nebula.cmi.api.CmiLang;
 
 import java.util.List;
 import java.util.Set;

@@ -15,7 +15,7 @@ import top.nebula.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
 import top.nebula.cmi.common.register.CmiBlocks;
 import top.nebula.cmi.compat.jei.api.CmiJeiRecipeType;
 import top.nebula.cmi.compat.jei.category.multiblock.VoidDustCollectorMultiblock;
-import top.nebula.cmi.utils.CmiLang;
+import top.nebula.cmi.api.CmiLang;
 import top.nebula.libs.compat.jei.categoty.SimpleJeiCategory;
 
 public class VoidDustCollectorCategory {

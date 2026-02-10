@@ -20,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.recipe.accelerator.AcceleratorRecipe;
 import top.nebula.cmi.compat.jei.api.CmiJeiRecipeType;
-import top.nebula.cmi.utils.CmiLang;
+import top.nebula.cmi.api.CmiLang;
 import top.nebula.libs.compat.jei.categoty.SimpleJeiCategory;
 
 public class AcceleratorCategory {

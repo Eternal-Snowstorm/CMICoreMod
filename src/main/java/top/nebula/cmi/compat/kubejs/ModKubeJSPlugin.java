@@ -6,7 +6,7 @@ import dev.latvian.mods.kubejs.script.BindingsEvent;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.compat.kubejs.recipe.AcceleratorSchema;
 import top.nebula.cmi.compat.kubejs.recipe.GrindingSchema;
-import top.nebula.cmi.utils.CmiLang;
+import top.nebula.cmi.api.CmiLang;
 
 public class ModKubeJSPlugin extends KubeJSPlugin {
 	@Override

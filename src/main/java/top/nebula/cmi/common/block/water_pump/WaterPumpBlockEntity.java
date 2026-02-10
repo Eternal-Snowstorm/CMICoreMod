@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.nebula.cmi.Cmi;
 import top.nebula.cmi.common.register.CmiBlocks;
-import top.nebula.cmi.utils.CmiLang;
+import top.nebula.cmi.api.CmiLang;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
