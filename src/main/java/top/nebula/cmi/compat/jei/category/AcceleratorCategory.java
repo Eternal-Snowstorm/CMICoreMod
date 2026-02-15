@@ -36,7 +36,7 @@ public class AcceleratorCategory {
 
 	public static SimpleJeiCategory<AcceleratorRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.ACCELERATOR, helper)
-				.setTitle(CmiLang.JeiLang.setCategory("accelerator"))
+				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("accelerator"))
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(

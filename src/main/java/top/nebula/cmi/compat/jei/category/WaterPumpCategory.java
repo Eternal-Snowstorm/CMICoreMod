@@ -24,7 +24,7 @@ public class WaterPumpCategory {
 
 	public static SimpleJeiCategory<WaterPumpRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.WATER_PUMP, helper)
-				.setTitle(CmiLang.JeiLang.setCategory("water_pump"))
+				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("water_pump"))
 				.setSize(178, 72)
 				.setIcon(CmiBlocks.WATER_PUMP.get().asItem().getDefaultInstance())
 				.setBackground(0, 0)

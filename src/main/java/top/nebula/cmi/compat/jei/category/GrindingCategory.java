@@ -19,7 +19,7 @@ public class GrindingCategory {
 
 	public static SimpleJeiCategory<GrindingRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.GRINDING, helper)
-				.setTitle(CmiLang.JeiLang.setCategory("grinding"))
+				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("grinding"))
 				.setSize(178, 72)
 				.setBackground(178, 72)
 				.setIcon(CmiBlocks.BELT_GRINDER.asStack())

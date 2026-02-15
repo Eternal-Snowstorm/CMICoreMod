@@ -29,7 +29,7 @@ public class VoidDustCollectorCategory {
 
 	public static SimpleJeiCategory<VoidDustCollectorRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.VOID_DUST_COLLECTOR, helper)
-				.setTitle(CmiLang.JeiLang.setCategory("void_dust_collector"))
+				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("void_dust_collector"))
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(
