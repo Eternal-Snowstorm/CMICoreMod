@@ -119,6 +119,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     // Nebula Utils
     implementation files("libs/Nebula Libs-1.5.0.jar")
+    compileOnly files("libs/Nebula Libs-1.5.0-sources.jar")
     implementation name: 'Nebula Libs-1.5.0'
     jarJar(group: "top.nebula", name: "Nebula Libs", version: "[1.5.0,)")
 
