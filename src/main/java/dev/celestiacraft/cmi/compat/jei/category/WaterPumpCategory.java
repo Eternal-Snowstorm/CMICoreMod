@@ -14,8 +14,8 @@ import dev.celestiacraft.cmi.compat.jei.api.CmiGuiTextures;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.multiblock.WaterPumpMultiblock;
 import dev.celestiacraft.cmi.api.CmiLang;
-import top.nebula.libs.client.ClientRenderUtils;
-import top.nebula.libs.compat.jei.categoty.SimpleJeiCategory;
+import dev.celestiacraft.libs.client.ClientRenderUtils;
+import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 
 import java.util.Collections;
 

@@ -10,7 +10,7 @@ import dev.celestiacraft.cmi.common.register.CmiBlocks;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.animations.AnimatedBeltGrinder;
 import dev.celestiacraft.cmi.api.CmiLang;
-import top.nebula.libs.compat.jei.categoty.SimpleJeiCategory;
+import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 
 import java.util.List;
 

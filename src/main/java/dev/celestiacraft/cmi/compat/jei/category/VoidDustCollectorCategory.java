@@ -16,7 +16,7 @@ import dev.celestiacraft.cmi.common.register.CmiBlocks;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.multiblock.VoidDustCollectorMultiblock;
 import dev.celestiacraft.cmi.api.CmiLang;
-import top.nebula.libs.compat.jei.categoty.SimpleJeiCategory;
+import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 
 public class VoidDustCollectorCategory {
 	public static final Lazy<Block> VOID_SPRING = Lazy.of(() -> {

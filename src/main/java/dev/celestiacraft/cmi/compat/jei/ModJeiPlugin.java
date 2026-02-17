@@ -23,7 +23,7 @@ import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpSeaWaterRecipe;
 import dev.celestiacraft.cmi.common.register.CmiBlocks;
 import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
-import top.nebula.cmi.compat.jei.category.*;
+import dev.celestiacraft.cmi.compat.jei.category.*;
 
 import java.util.List;
 import java.util.Map;
