@@ -23,7 +23,7 @@ public class SteamHammerBlock extends MechanicalPressBlock {
 
 	@Override
 	public BlockEntityType<? extends SteamHammerBlockEntity> getBlockEntityType() {
-		return CmiBlockEntityTypes.HYDRAULIC_PRESS.get();
+		return CmiBlockEntityTypes.STEAM_HAMMER.get();
 	}
 
 	@Override

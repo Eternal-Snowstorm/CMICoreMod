@@ -24,7 +24,7 @@ public class CmiBlockEntityTypes {
 	public static final BlockEntityEntry<MarsGeothermalVentBlockEntity> MARS_GEO;
 	public static final BlockEntityEntry<MercuryGeothermalVentBlockEntity> MERCURY_GEO;
 	public static final BlockEntityEntry<WaterPumpBlockEntity> WATER_PUMP;
-	public static final BlockEntityEntry<SteamHammerBlockEntity> HYDRAULIC_PRESS;
+	public static final BlockEntityEntry<SteamHammerBlockEntity> STEAM_HAMMER;
 	public static final BlockEntityEntry<AcceleratorMotorBlockEntity> ACCELERATOR_MOTOR;
 	public static final BlockEntityEntry<AdvancedSpoutBlockEntity> ADVANCED_SPOUT;
 	public static final BlockEntityEntry<VoidDustCollectorBlockEnitiy> VOID_DUST_COLLECTOR;
@@ -43,7 +43,7 @@ public class CmiBlockEntityTypes {
 		WATER_PUMP = Cmi.REGISTRATE.blockEntity("water_pump", WaterPumpBlockEntity::new)
 				.validBlock(CmiBlocks.WATER_PUMP)
 				.register();
-		HYDRAULIC_PRESS = Cmi.CREATE_REGISTRATE.blockEntity("hydraulic_press", SteamHammerBlockEntity::new)
+		STEAM_HAMMER = Cmi.CREATE_REGISTRATE.blockEntity("steam_hammer", SteamHammerBlockEntity::new)
 				.instance(() -> SteamHammerInstance::new)
 				.renderer(() -> SteamHammerRenderer::new)
 				.validBlock(CmiBlocks.STEAM_HAMMER)
