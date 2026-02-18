@@ -9,7 +9,6 @@ public class ModFluidTags {
 
 	static {
 		STEAM = TagsBuilder.fluid("steam")
-				.forge()
-				.build();
+				.forge();
 	}
 }

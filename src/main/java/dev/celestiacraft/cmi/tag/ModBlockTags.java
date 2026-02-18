@@ -11,11 +11,9 @@ public class ModBlockTags {
 
 	static {
 		GRILL_SOURCES = TagsBuilder.block("grill_sources")
-				.custom(Cmi.MODID)
-				.build();
+				.custom(Cmi.MODID);
 
 		SPOUT_ATTACHMENTS = TagsBuilder.block("spout_attachments")
-				.custom(Cmi.MODID)
-				.build();
+				.custom(Cmi.MODID);
 	}
 }
