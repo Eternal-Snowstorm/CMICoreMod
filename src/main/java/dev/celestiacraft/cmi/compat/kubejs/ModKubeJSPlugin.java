@@ -19,8 +19,27 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 	public void registerBindings(BindingsEvent event) {
 		super.registerBindings(event);
 
-		event.add("CmiCore", Cmi.class);
-		event.add("CmiLang", CmiLang.class);
-		event.add("CmiLang$JeiLang", CmiLang.JeiLang.class);
+		new Binder(event)
+				.simple(CmiLang.class)
+				.name("CmiCore", Cmi.class)
+				.name("CmiLang$JeiLang", CmiLang.JeiLang.class);
+	}
+
+	private static class Binder {
+		private final BindingsEvent event;
+
+		private Binder(BindingsEvent event) {
+			this.event = event;
+		}
+
+		public Binder simple(Class<?> clazz) {
+			event.add(clazz.getSimpleName(), clazz);
+			return this;
+		}
+
+		public Binder name(String name, Class<?> clazz) {
+			event.add(name, clazz);
+			return this;
+		}
 	}
 }
