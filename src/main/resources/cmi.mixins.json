@@ -8,7 +8,6 @@
 		"AnimatedBlazeBurnerMixin",
 		"BasinBlockEntityMixin",
 		"BasinCategoryMixin",
-		"FireBlockMixin",
 		"HeatConditionMixin",
 		"HeatLevelMixin",
 		"ClassFilterMixin",
