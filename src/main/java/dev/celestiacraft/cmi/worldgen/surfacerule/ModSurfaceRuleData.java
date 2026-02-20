@@ -2,20 +2,19 @@ package dev.celestiacraft.cmi.worldgen.surfacerule;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.worldgen.biome.ModBiomes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Noises;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModSurfaceRuleData {
 
 	private static final SurfaceRules.RuleSource ANDESITE = makeStateRule(Blocks.ANDESITE);
 	private static final SurfaceRules.RuleSource STONE = makeStateRule(Blocks.STONE);
-	private static final SurfaceRules.RuleSource PEAT = makeStateRule(
-			BuiltInRegistries.BLOCK.get(Cmi.loadResource("peat_block")));
+	private static final SurfaceRules.RuleSource PEAT = makeStateRule(ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("peat_block")));
 
 	public static SurfaceRules.RuleSource makeRules() {
 		return SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.ANDESITE_CAVE), ANDESITE));
