@@ -11,5 +11,5 @@ public interface GrindingSchema {
 	RecipeKey<InputItem[]> INPUT = ItemComponents.INPUT_ARRAY.key("ingredients");
 	RecipeKey<Double> PROCESSING_TIME = NumberComponent.DOUBLE.key("processingTime").optional(20d);
 
-	RecipeSchema SCHEMA = new RecipeSchema(INPUT, RESULTS, PROCESSING_TIME);
+	RecipeSchema SCHEMA = new RecipeSchema(RESULTS, INPUT, PROCESSING_TIME);
 }
