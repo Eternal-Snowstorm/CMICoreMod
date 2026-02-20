@@ -11,7 +11,6 @@ import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModSurfaceRuleData {
-
 	private static final SurfaceRules.RuleSource ANDESITE = makeStateRule(Blocks.ANDESITE);
 	private static final SurfaceRules.RuleSource STONE = makeStateRule(Blocks.STONE);
 	private static final SurfaceRules.RuleSource PEAT = makeStateRule(ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("peat_block")));
