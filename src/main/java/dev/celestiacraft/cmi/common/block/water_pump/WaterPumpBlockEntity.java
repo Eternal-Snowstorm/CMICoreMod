@@ -3,7 +3,6 @@ package dev.celestiacraft.cmi.common.block.water_pump;
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles;
 import blusunrize.immersiveengineering.common.register.IEBlocks;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.Half;
@@ -30,10 +29,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockHandler;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockStructureBuilder;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import vazkii.patchouli.api.IMultiblock;
-import vazkii.patchouli.api.PatchouliAPI;
 
 import java.util.List;
 
@@ -190,42 +189,26 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 		}
 	};
 
-	private boolean isShowMultiblock = false;
+	// 多方块处理器：封装验证缓存（20tick）+ 渲染切换逻辑
+	private final MultiblockHandler multiblock = MultiblockHandler
+			.builder(this, STRUCTURE::get)
+			.translationKey(String.format("multiblock.building.%s.water_pump", Cmi.MODID))
+			.renderOffset(0, -1, 0)
+			.cacheTicks(20)
+			.build();
 
-	private boolean isShowMultiblock() {
-		if (isStructureValid()) {
-			isShowMultiblock = false;
-		} else {
-			isShowMultiblock = !isShowMultiblock;
-		}
-		return isShowMultiblock;
-	}
-
-	/*
-	 * 显示结构
-	 * 由于客户端渲染因为某些不可抗因素 需要Y轴下沉一格
+	/**
+	 * 切换多方块全息预览的显示/隐藏
 	 */
 	public void showMultiblock() {
-		if (level != null && !level.isClientSide) {
-			return;
-		}
-		if (isShowMultiblock()) {
-			String tranKey = String.format("multiblock.building.%s.water_pump", Cmi.MODID);
-			PatchouliAPI.get().showMultiblock(
-					STRUCTURE.get(),
-					Component.translatable(tranKey),
-					worldPosition.offset(0, -1, 0),
-					Rotation.NONE
-			);
-		} else {
-			// 清理掉 所有 显示结构
-			PatchouliAPI.get().clearMultiblock();
-		}
+		multiblock.toggleVisualization();
 	}
 
-	// 外部可调用的方法，判断结构是否完整
+	/**
+	 * 判断结构是否完整（带 tick 缓存，20tick 刷新一次）
+	 */
 	public boolean isStructureValid() {
-		return STRUCTURE.get().validate(level, worldPosition) != null;
+		return multiblock.isValid();
 	}
 
 	private boolean isOcean() {
