@@ -3,6 +3,7 @@ package dev.celestiacraft.cmi.common.block.water_pump;
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles;
 import blusunrize.immersiveengineering.common.register.IEBlocks;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import dev.celestiacraft.libs.compat.patchouli.multiblock.IMultiblockProvider;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.Half;
@@ -13,7 +14,6 @@ import dev.celestiacraft.cmi.common.register.CmiBlocks;
 import dev.celestiacraft.cmi.api.CmiLang;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -36,7 +36,7 @@ import vazkii.patchouli.api.IMultiblock;
 
 import java.util.List;
 
-public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInformation {
+public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInformation, IMultiblockProvider {
 	public WaterPumpBlockEntity(BlockEntityType<? extends WaterPumpBlockEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
@@ -105,7 +105,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 				})
 				// 西边楼梯(左边), 朝东
 				.define('G', (builder) -> {
-					builder.stateMap(BuiltInRegistries.BLOCK.get(STAIRS), PropertyImmutableMap.create()
+					builder.stateMap(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
 							.add(StairBlock.FACING, Direction.NORTH)
 							.add(StairBlock.HALF, Half.TOP)
 							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
@@ -113,7 +113,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 				})
 				// 东边楼梯(右边), 朝西
 				.define('H', (builder) -> {
-					builder.stateMap(BuiltInRegistries.BLOCK.get(STAIRS), PropertyImmutableMap.create()
+					builder.stateMap(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
 							.add(StairBlock.FACING, Direction.SOUTH)
 							.add(StairBlock.HALF, Half.TOP)
 							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
@@ -121,7 +121,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 				})
 				// 南边楼梯(下方), 朝北
 				.define('I', (builder) -> {
-					builder.stateMap(BuiltInRegistries.BLOCK.get(STAIRS), PropertyImmutableMap.create()
+					builder.stateMap(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
 							.add(StairBlock.FACING, Direction.EAST)
 							.add(StairBlock.HALF, Half.TOP)
 							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
@@ -189,26 +189,17 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 		}
 	};
 
-	// 多方块处理器：封装验证缓存（20tick）+ 渲染切换逻辑
+	// 多方块处理器：封装验证缓存(20tick) + 渲染切换逻辑
 	private final MultiblockHandler multiblock = MultiblockHandler
-			.builder(this, STRUCTURE::get)
+			.builder(this, STRUCTURE)
 			.translationKey(String.format("multiblock.building.%s.water_pump", Cmi.MODID))
 			.renderOffset(0, -1, 0)
 			.cacheTicks(20)
 			.build();
 
-	/**
-	 * 切换多方块全息预览的显示/隐藏
-	 */
-	public void showMultiblock() {
-		multiblock.toggleVisualization();
-	}
-
-	/**
-	 * 判断结构是否完整（带 tick 缓存，20tick 刷新一次）
-	 */
-	public boolean isStructureValid() {
-		return multiblock.isValid();
+	@Override
+	public MultiblockHandler getMultiblockHandler() {
+		return this.multiblock;
 	}
 
 	private boolean isOcean() {
