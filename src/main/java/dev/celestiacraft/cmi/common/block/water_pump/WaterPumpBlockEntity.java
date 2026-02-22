@@ -130,6 +130,19 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 				.build();
 	});
 
+	// 多方块处理器：封装验证缓存(20tick) + 渲染切换逻辑
+	private final MultiblockHandler multiblock = MultiblockHandler
+			.builder(this, STRUCTURE)
+			.translationKey(String.format("multiblock.building.%s.water_pump", Cmi.MODID))
+			.renderOffset(0, -1, 0)
+			.cacheTicks(20)
+			.build();
+
+	@Override
+	public MultiblockHandler getMultiblockHandler() {
+		return this.multiblock;
+	}
+
 	private final IFluidHandler fluidHandler = new IFluidHandler() {
 		@Override
 		public int getTanks() {
@@ -188,19 +201,6 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 			return FluidStack.EMPTY;
 		}
 	};
-
-	// 多方块处理器：封装验证缓存(20tick) + 渲染切换逻辑
-	private final MultiblockHandler multiblock = MultiblockHandler
-			.builder(this, STRUCTURE)
-			.translationKey(String.format("multiblock.building.%s.water_pump", Cmi.MODID))
-			.renderOffset(0, -1, 0)
-			.cacheTicks(20)
-			.build();
-
-	@Override
-	public MultiblockHandler getMultiblockHandler() {
-		return this.multiblock;
-	}
 
 	private boolean isOcean() {
 		if (this.level != null) {
