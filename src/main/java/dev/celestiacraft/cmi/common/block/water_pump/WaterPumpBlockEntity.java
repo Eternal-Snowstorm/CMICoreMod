@@ -4,6 +4,9 @@ import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles;
 import blusunrize.immersiveengineering.common.register.IEBlocks;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.IMultiblockProvider;
+import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockHandler;
+import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockStructureBuilder;
+import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.Half;
@@ -29,9 +32,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockHandler;
-import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockStructureBuilder;
-import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import vazkii.patchouli.api.IMultiblock;
 
 import java.util.List;
@@ -131,8 +131,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 	});
 
 	// 多方块处理器：封装验证缓存(20tick) + 渲染切换逻辑
-	private final MultiblockHandler multiblock = MultiblockHandler
-			.builder(this, STRUCTURE)
+	private final MultiblockHandler multiblock = MultiblockHandler.builder(this, STRUCTURE)
 			.translationKey(String.format("multiblock.building.%s.water_pump", Cmi.MODID))
 			.renderOffset(0, -1, 0)
 			.cacheTicks(20)
