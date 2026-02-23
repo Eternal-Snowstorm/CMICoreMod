@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class WaterPumpBlock extends Block implements IBE<WaterPumpBlockEntity> {
 	public WaterPumpBlock(Properties properties) {
-		super(Properties.copy(net.minecraft.world.level.block.Blocks.OAK_PLANKS));
+		super(Properties.copy(Blocks.OAK_PLANKS));
 	}
 
 	@Override
