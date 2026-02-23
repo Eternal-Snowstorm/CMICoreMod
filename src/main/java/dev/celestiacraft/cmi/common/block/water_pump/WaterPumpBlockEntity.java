@@ -131,7 +131,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 	});
 
 	// 多方块处理器：封装验证缓存(20tick) + 渲染切换逻辑
-	private final MultiblockHandler multiblock = MultiblockHandler.builder(this, STRUCTURE)
+	private final MultiblockHandler MULTIBLOCK = MultiblockHandler.builder(this, STRUCTURE)
 			.translationKey(String.format("multiblock.building.%s.water_pump", Cmi.MODID))
 			.renderOffset(0, -1, 0)
 			.cacheTicks(20)
@@ -140,7 +140,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 	// 获取多方块处理器
 	@Override
 	public MultiblockHandler getMultiblockHandler() {
-		return this.multiblock;
+		return MULTIBLOCK;
 	}
 
 	private final IFluidHandler fluidHandler = new IFluidHandler() {
