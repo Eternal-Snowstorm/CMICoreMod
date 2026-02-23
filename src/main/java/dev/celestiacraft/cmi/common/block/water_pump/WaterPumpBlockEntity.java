@@ -137,6 +137,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 			.cacheTicks(20)
 			.build();
 
+	// 获取多方块处理器
 	@Override
 	public MultiblockHandler getMultiblockHandler() {
 		return this.multiblock;
