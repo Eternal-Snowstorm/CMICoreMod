@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.item.TooltipHelper.Palette;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import com.tterrag.registrate.Registrate;
 import dev.celestiacraft.cmi.common.register.*;
+import dev.celestiacraft.cmi.network.CmiNetwork;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -58,6 +59,8 @@ public class Cmi {
 
 		CmiBlockPartialModel.init();
 		CmiSpriteShiftEntry.init();
+
+		CmiNetwork.register();
 
 		bus.addListener(this::onCommonSetup);
 

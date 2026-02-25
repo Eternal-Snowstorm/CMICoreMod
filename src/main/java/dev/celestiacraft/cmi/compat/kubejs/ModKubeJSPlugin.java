@@ -1,12 +1,13 @@
 package dev.celestiacraft.cmi.compat.kubejs;
 
+import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.api.CmiLang;
+import dev.celestiacraft.cmi.compat.kubejs.recipe.AcceleratorSchema;
+import dev.celestiacraft.cmi.compat.kubejs.recipe.GrindingSchema;
+import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
-import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.compat.kubejs.recipe.AcceleratorSchema;
-import dev.celestiacraft.cmi.compat.kubejs.recipe.GrindingSchema;
-import dev.celestiacraft.cmi.api.CmiLang;
 
 public class ModKubeJSPlugin extends KubeJSPlugin {
 	@Override
@@ -22,7 +23,8 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		new Binder(event)
 				.simple(CmiLang.class)
 				.name("CmiCore", Cmi.class)
-				.name("CmiLang$JeiLang", CmiLang.JeiLang.class);
+				.name("CmiLang$JeiLang", CmiLang.JeiLang.class)
+				.simple(ClientSeedHandler.class);
 	}
 
 	private static class Binder {
