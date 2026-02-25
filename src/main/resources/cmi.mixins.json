@@ -13,7 +13,10 @@
 		"ClassFilterMixin",
 		"CryoFreezingCategoryMixin",
 		"MixerLogicMixin",
-		"MixerStateAccessor"
+		"MixerStateAccessor",
+		"ChemicalLogicAccessor",
+		"ChemicalStateAccessor",
+		"ChemicalStateMixin"
 	],
 	"client": [
 	],

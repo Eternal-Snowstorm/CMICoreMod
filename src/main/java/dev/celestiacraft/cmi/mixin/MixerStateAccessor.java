@@ -6,9 +6,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-/**
- * Accessor mixin for MixerLogic.State to expose the private outputRef field.
- */
 @Mixin(value = MixerLogic.State.class, remap = false)
 public interface MixerStateAccessor {
 
