@@ -11,7 +11,9 @@
 		"HeatConditionMixin",
 		"HeatLevelMixin",
 		"ClassFilterMixin",
-		"CryoFreezingCategoryMixin"
+		"CryoFreezingCategoryMixin",
+		"MixerLogicMixin",
+		"MixerStateAccessor"
 	],
 	"client": [
 	],
