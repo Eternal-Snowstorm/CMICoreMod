@@ -43,24 +43,24 @@ public class CmiBlockEntityTypes {
 		WATER_PUMP = Cmi.REGISTRATE.blockEntity("water_pump", WaterPumpBlockEntity::new)
 				.validBlock(CmiBlocks.WATER_PUMP)
 				.register();
-		STEAM_HAMMER = Cmi.CREATE_REGISTRATE.blockEntity("steam_hammer", SteamHammerBlockEntity::new)
+		STEAM_HAMMER = Cmi.REGISTRATE.blockEntity("steam_hammer", SteamHammerBlockEntity::new)
 				.instance(() -> SteamHammerInstance::new)
 				.renderer(() -> SteamHammerRenderer::new)
 				.validBlock(CmiBlocks.STEAM_HAMMER)
 				.register();
-		ACCELERATOR_MOTOR = Cmi.CREATE_REGISTRATE.blockEntity("accelerator_motor", AcceleratorMotorBlockEntity::new)
+		ACCELERATOR_MOTOR = Cmi.REGISTRATE.blockEntity("accelerator_motor", AcceleratorMotorBlockEntity::new)
 				.instance(() -> HalfShaftInstance::new, false)
 				.validBlocks(CmiBlocks.ACCELERATOR_MOTOR)
 				.renderer(() -> AcceleratorMotorRenderer::new)
 				.register();
-		ADVANCED_SPOUT = Cmi.CREATE_REGISTRATE.blockEntity("advanced_spout", AdvancedSpoutBlockEntity::new)
+		ADVANCED_SPOUT = Cmi.REGISTRATE.blockEntity("advanced_spout", AdvancedSpoutBlockEntity::new)
 				.validBlocks(CmiBlocks.ADVANCED_SPOUT)
 				.renderer(() -> AdvancedSpoutRenderer::new)
 				.register();
 		VOID_DUST_COLLECTOR = Cmi.REGISTRATE.blockEntity("void_dust_collector", VoidDustCollectorBlockEnitiy::new)
 				.validBlock(CmiBlocks.VOID_DUST_COLLECTOR)
 				.register();
-		BELT_GRINDER = Cmi.CREATE_REGISTRATE.blockEntity("mechanical_belt_grinder", BeltGrinderBlockEntity::new)
+		BELT_GRINDER = Cmi.REGISTRATE.blockEntity("mechanical_belt_grinder", BeltGrinderBlockEntity::new)
 				.instance(() -> BeltGrinderInstance::new)
 				.validBlocks(CmiBlocks.BELT_GRINDER)
 				.renderer(() -> BeltGrinderRenderer::new)

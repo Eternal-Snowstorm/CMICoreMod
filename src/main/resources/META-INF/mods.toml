@@ -81,3 +81,6 @@ versionRange = "[2001.2.3-build.10,)"
 modId = "jei"
 mandatory = true
 versionRange = "${jei_version_range}"
+
+[[mixins]]
+config = "cmi.mixins.json"

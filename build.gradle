@@ -71,8 +71,6 @@ minecraft {
 
 mixin {
     add sourceSets.main, "${mod_id}.refmap.json"
-
-    config "${mod_id}.mixins.json"
 }
 
 sourceSets.main.resources {
@@ -119,9 +117,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     // Nebula Utils
-    implementation files("libs/Nebula Libs-1.5.0.jar")
+    implementation files("libs/Nebula Libs-1.5.0-dev.jar")
     compileOnly files("libs/Nebula Libs-1.5.0-sources.jar")
-    implementation name: 'Nebula Libs-1.5.0'
     jarJar(group: "dev.celestiacraft", name: "Nebula Libs", version: "[1.5.0,)")
 
     // Create + Flywheel + Registrate
@@ -170,6 +167,13 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+
+    // architectury
+    runtimeOnly fg.deobf("curse.maven:architectury-api-419699:5137938")
+    // resourceful config
+    runtimeOnly fg.deobf("curse.maven:resourceful-config-714059:6231176")
+    // citadel
+    runtimeOnly fg.deobf("curse.maven:citadel-331936:7476570")
     // Lomkok
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
@@ -178,6 +182,7 @@ dependencies {
 }
 
 tasks.named('processResources', ProcessResources).configure {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     var replaceProperties = [
             minecraft_version                 : minecraft_version,
             minecraft_version_range           : minecraft_version_range,
@@ -207,6 +212,7 @@ tasks.named('processResources', ProcessResources).configure {
 }
 
 tasks.named('jar', Jar).configure {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes([
                 "Specification-Title"     : mod_id,
@@ -224,6 +230,7 @@ tasks.named('jar', Jar).configure {
 }
 
 tasks.named('jarJar') {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes([
                 "Specification-Title"     : mod_id,
