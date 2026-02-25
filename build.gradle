@@ -141,6 +141,8 @@ dependencies {
     implementation fg.deobf("curse.maven:create-steam-n-rails-688231:5840017")
     // IE
     implementation fg.deobf("curse.maven:immersive-engineering-231951:6206989")
+    // II
+    implementation fg.deobf("curse.maven:immersive-industry-542053:7530803")
     // Botarium
     implementation fg.deobf("curse.maven:botarium-704113:5486070")
     // Resourceful Lib
