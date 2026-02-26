@@ -145,9 +145,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 
 	@Override
 	public void setRemoved() {
-		if (this.level != null && this.level.isClientSide()) {
-			MULTIBLOCK.hideVisualization();
-		}
+		cancelShowMultiblock();
 		super.setRemoved();
 	}
 

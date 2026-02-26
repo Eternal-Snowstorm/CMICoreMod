@@ -98,9 +98,11 @@ public class ModJeiPlugin implements IModPlugin {
 				"spout_filling", CmiBlocks.ADVANCED_SPOUT.asStack()
 		);
 
-		createCatalysts.forEach((recipeId, stack) ->
+		createCatalysts.forEach((recipeId, stack) -> {
 			helpers.getRecipeType(Create.asResource(recipeId), Recipe.class)
-					.ifPresent(type -> registration.addRecipeCatalyst(stack, type))
-		);
+					.ifPresent((type) -> {
+						registration.addRecipeCatalyst(stack, type);
+					});
+		});
 	}
 }
