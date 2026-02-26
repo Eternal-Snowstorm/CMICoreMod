@@ -143,6 +143,14 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 		return MULTIBLOCK;
 	}
 
+	@Override
+	public void setRemoved() {
+		if (this.level != null && this.level.isClientSide()) {
+			MULTIBLOCK.hideVisualization();
+		}
+		super.setRemoved();
+	}
+
 	private final IFluidHandler fluidHandler = new IFluidHandler() {
 		@Override
 		public int getTanks() {
