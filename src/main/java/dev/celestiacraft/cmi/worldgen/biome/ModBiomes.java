@@ -46,7 +46,7 @@ public class ModBiomes {
 						.waterColor(4159204)
 						.waterFogColor(329011)
 						.fogColor(12638463)
-						.skyColor(0x30c918)
+						.skyColor(0x78A7FF)
 						.ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
 						.build())
 				.build();
