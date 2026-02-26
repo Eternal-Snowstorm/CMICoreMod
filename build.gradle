@@ -71,6 +71,7 @@ minecraft {
 
 mixin {
     add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
 }
 
 sourceSets.main.resources {
@@ -250,4 +251,8 @@ tasks.named('jarJar') {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.compilerArgs << "-parameters"
+}
+
+afterEvaluate {
+    minecraft.runs.data.jvmArgs.removeIf { it.contains('mixin.config') }
 }
