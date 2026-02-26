@@ -37,5 +37,6 @@
 	"jei.category.cmi.accelerator": "Mechanism Accelerator",
 	"jei.category.cmi.grinding": "Parallel grinding",
 	"jade.tip.cmi.powered.off": "State: off",
-	"jade.tip.cmi.powered.on": "State: on"
+	"jade.tip.cmi.powered.on": "State: on",
+	"config.jade.plugin_cmi.common": "CMI"
 }

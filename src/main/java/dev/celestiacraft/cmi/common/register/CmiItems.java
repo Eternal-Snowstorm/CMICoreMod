@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.common.register;
 
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.item.NuclearMechanismItem;
@@ -13,6 +14,7 @@ public class CmiItems {
 		TEST_BRUSH = Cmi.REGISTRATE.item("test_brush", TestBrushItem::new)
 				.register();
 		NUCLEAR_MECHANISM = Cmi.REGISTRATE.item("nuclear_mechanism", NuclearMechanismItem::new)
+				.model(NonNullBiConsumer.noop())
 				.register();
 	}
 

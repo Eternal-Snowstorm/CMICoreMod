@@ -37,5 +37,6 @@
 	"jei.category.cmi.water_pump_sea_water": "多方块水井",
 	"jei.category.cmi.grinding": "并行打磨",
 	"jade.tip.cmi.powered.off": "状态: 关",
-	"jade.tip.cmi.powered.on": "状态: 开"
+	"jade.tip.cmi.powered.on": "状态: 开",
+	"config.jade.plugin_cmi.common": "CMI"
 }
