@@ -118,7 +118,13 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     // Nebula Utils
-    implementation files("libs/Nebula Libs-1.5.0-dev.jar")
+    // 如果要在CMICore里面runClient的时候使用Nebula Libs-1.5.0-dev，专门开发环境准备的防止混淆名冲突，
+    // 如果要修改CMICore里面的代码导包到时候使用Nebula Libs-1.5.0。
+
+//    implementation files("libs/Nebula Libs-1.5.0-dev.jar")
+    implementation files("libs/Nebula Libs-1.5.0.jar")
+
+
     compileOnly files("libs/Nebula Libs-1.5.0-sources.jar")
     jarJar(group: "dev.celestiacraft", name: "Nebula Libs", version: "[1.5.0,)")
 
@@ -253,6 +259,8 @@ tasks.withType(JavaCompile).configureEach {
     options.compilerArgs << "-parameters"
 }
 
+
+// 谁删谁傻逼 ⬇️
 afterEvaluate {
     minecraft.runs.data.jvmArgs.removeIf { it.contains('mixin.config') }
 }
