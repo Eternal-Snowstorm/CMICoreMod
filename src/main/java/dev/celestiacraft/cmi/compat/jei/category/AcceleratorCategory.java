@@ -34,6 +34,7 @@ public class AcceleratorCategory {
 		return ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("create:precision_mechanism"));
 	});
 
+	@SuppressWarnings("removal")
 	public static SimpleJeiCategory<AcceleratorRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.ACCELERATOR, helper)
 				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("accelerator"))
