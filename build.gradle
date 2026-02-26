@@ -120,6 +120,7 @@ dependencies {
     // Nebula Libs — 通过 mavenLocal + fg.deobf() 引入，ForgeGradle 自动将 SRG 名反映射为 Parchment 名
     // IDEA 导包和 runClient 都正常，不再需要手动切换 -dev 和正式版
     // 需要先在 Nebula-Utils 项目执行 ./gradlew publishToMavenLocal
+
     implementation fg.deobf("top.nebula:nebula_libs:1.5.0")
     compileOnly files("libs/Nebula Libs-1.5.0-sources.jar")
     jarJar(group: "dev.celestiacraft", name: "Nebula Libs", version: "[1.5.0,)")
