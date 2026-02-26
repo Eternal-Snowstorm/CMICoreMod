@@ -17,6 +17,7 @@ import java.util.List;
 public class GrindingCategory {
 	private static final AnimatedBeltGrinder ANIMATED_BELT_GRINDER = new AnimatedBeltGrinder();
 
+	@SuppressWarnings("removal")
 	public static SimpleJeiCategory<GrindingRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.GRINDING, helper)
 				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("grinding"))

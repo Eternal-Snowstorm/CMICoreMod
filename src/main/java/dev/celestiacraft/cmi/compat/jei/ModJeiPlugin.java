@@ -12,6 +12,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 import dev.celestiacraft.cmi.Cmi;
@@ -97,11 +98,9 @@ public class ModJeiPlugin implements IModPlugin {
 				"spout_filling", CmiBlocks.ADVANCED_SPOUT.asStack()
 		);
 
-		createCatalysts.forEach((recipeId, stack) -> {
-			helpers.getRecipeType(Create.asResource(recipeId))
-					.ifPresent((type) -> {
-						registration.addRecipeCatalyst(stack, type);
-					});
-		});
+		createCatalysts.forEach((recipeId, stack) ->
+			helpers.getRecipeType(Create.asResource(recipeId), Recipe.class)
+					.ifPresent(type -> registration.addRecipeCatalyst(stack, type))
+		);
 	}
 }
