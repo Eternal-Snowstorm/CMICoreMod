@@ -7,7 +7,6 @@ import dev.celestiacraft.cmi.api.CmiLang;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -22,6 +21,7 @@ import java.util.List;
 public class StructureExportScreen extends Screen {
 
     private EditBox pathInput;
+    private EditBox resolutionInput;
     private StructureScene scene;
     private StructureRenderer renderer;
 
@@ -70,12 +70,13 @@ public class StructureExportScreen extends Screen {
                         btn -> loadStructure())
                 .bounds(centerX + 65, 10, 50, 20).build());
 
-        addRenderableWidget(CycleButton.<Integer>builder(v -> Component.literal(v + "px"))
-                .withValues(1024, 2048, 4096, 8192)
-                .withInitialValue(selectedResolution)
-                .create(centerX - 140, this.height - 30, 130, 20,
-                        CmiLang.translateDirect("export.resolution"),
-                        (btn, val) -> selectedResolution = val));
+        resolutionInput = new EditBox(this.font, centerX - 140, this.height - 30, 130, 20,
+                Component.literal("Resolution"));
+        resolutionInput.setMaxLength(5);
+        resolutionInput.setValue(String.valueOf(selectedResolution));
+        resolutionInput.setHint(Component.literal("2048"));
+        resolutionInput.setFilter(s -> s.isEmpty() || s.matches("\\d+"));
+        addRenderableWidget(resolutionInput);
 
         addRenderableWidget(Button.builder(CmiLang.translateDirect("export.save"),
                         btn -> pendingExport = true)
@@ -89,11 +90,9 @@ public class StructureExportScreen extends Screen {
     private void loadStructure() {
         String pathStr = pathInput.getValue().trim();
         if (pathStr.isEmpty()) return;
-
         if (!pathStr.endsWith(".nbt")) {
             pathStr = pathStr + ".nbt";
         }
-
         Path path = Minecraft.getInstance().gameDirectory.toPath().resolve("schematics").resolve(pathStr);
         if (!Files.exists(path)) {
             if (Minecraft.getInstance().player != null) {
@@ -145,7 +144,7 @@ public class StructureExportScreen extends Screen {
     public void render(@Nonnull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(graphics);
 
-        if (!pathInput.isFocused()) {
+        if (!pathInput.isFocused() && !resolutionInput.isFocused()) {
             long window = Minecraft.getInstance().getWindow().getWindow();
             float panSpeed = 0.05f / zoom;
             if (InputConstants.isKeyDown(window, InputConstants.KEY_A)) panX += panSpeed;
@@ -153,9 +152,7 @@ public class StructureExportScreen extends Screen {
             if (InputConstants.isKeyDown(window, InputConstants.KEY_W)) panY -= panSpeed;
             if (InputConstants.isKeyDown(window, InputConstants.KEY_S)) panY += panSpeed;
         }
-
         super.render(graphics, mouseX, mouseY, partialTick);
-
         if (scene == null || renderer == null) {
             graphics.drawCenteredString(this.font,
                     CmiLang.translateDirect("export.no_structure"),
@@ -166,27 +163,21 @@ public class StructureExportScreen extends Screen {
             renderer.renderPreview(poseStack, rotationX, rotationY, zoom, panX, panY,
                     this.width, previewH);
         }
-
         if (pendingExport && renderer != null) {
             pendingExport = false;
             doExport();
         }
-
-        // Render suggestion dropdown
         showSuggestions = pathInput.isFocused() && !tabCompletionList.isEmpty();
         if (showSuggestions) {
             int dropX = pathInput.getX();
             int dropY = pathInput.getY() + pathInput.getHeight();
             int dropW = pathInput.getWidth();
             int visibleCount = Math.min(tabCompletionList.size(), MAX_SUGGESTIONS);
-
             // Background
             graphics.fill(dropX, dropY, dropX + dropW, dropY + visibleCount * SUGGESTION_HEIGHT, 0xE0000000);
-            // Border
             graphics.fill(dropX, dropY, dropX + 1, dropY + visibleCount * SUGGESTION_HEIGHT, 0xFF555555);
             graphics.fill(dropX + dropW - 1, dropY, dropX + dropW, dropY + visibleCount * SUGGESTION_HEIGHT, 0xFF555555);
             graphics.fill(dropX, dropY + visibleCount * SUGGESTION_HEIGHT - 1, dropX + dropW, dropY + visibleCount * SUGGESTION_HEIGHT, 0xFF555555);
-
             for (int i = 0; i < visibleCount; i++) {
                 int itemY = dropY + i * SUGGESTION_HEIGHT;
                 boolean hovered = mouseX >= dropX && mouseX < dropX + dropW
@@ -202,18 +193,26 @@ public class StructureExportScreen extends Screen {
     }
 
     private void doExport() {
+        int resolution;
+        try {
+            resolution = Integer.parseInt(resolutionInput.getValue().trim());
+        } catch (NumberFormatException e) {
+            resolution = selectedResolution;
+        }
+        resolution = Math.max(1024, Math.min(16384, resolution));
+
         String pathStr = pathInput.getValue().trim();
         String baseName = Path.of(pathStr).getFileName().toString()
                 .replaceAll("\\.[^.]+$", "");
         Path exportDir = Minecraft.getInstance().gameDirectory.toPath().resolve("screenshots").resolve("exports");
-        Path outputPath = exportDir.resolve(baseName + "_" + selectedResolution + ".png");
+        Path outputPath = exportDir.resolve(baseName + "_" + resolution + ".png");
 
         if (Minecraft.getInstance().player != null) {
             Minecraft.getInstance().player.displayClientMessage(
                     Component.literal("§7Exporting..."), false);
         }
 
-        renderer.exportToPng(outputPath, selectedResolution, rotationX, rotationY, zoom, panX, panY,
+        renderer.exportToPng(outputPath, resolution, rotationX, rotationY, zoom, panX, panY,
                 path -> {
                     if (Minecraft.getInstance().player != null) {
                         Minecraft.getInstance().player.displayClientMessage(
@@ -262,13 +261,12 @@ public class StructureExportScreen extends Screen {
             pathInput.setValue(tabCompletionList.get(index));
             showSuggestions = false;
             tabCompletionIndex = -1;
-            lastInputForSuggestions = null; // allow re-scan next time
+            lastInputForSuggestions = null;
         }
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        // Handle suggestion dropdown clicks
         if (button == 0 && showSuggestions && !tabCompletionList.isEmpty()) {
             int dropX = pathInput.getX();
             int dropY = pathInput.getY() + pathInput.getHeight();

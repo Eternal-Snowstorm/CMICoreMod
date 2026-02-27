@@ -133,10 +133,22 @@ public class StructureRenderer {
         renderBlocks(blockPose, bufferSource);
         bufferSource.endBatch();
         // 读取像素（必须在渲染线程）
-        NativeImage image = new NativeImage(exportWidth, exportHeight, false);
-        RenderSystem.bindTexture(fbo.getColorTextureId());
-        image.downloadTexture(0, false);
-        image.flipY();
+        NativeImage image;
+        try {
+            image = new NativeImage(exportWidth, exportHeight, false);
+            RenderSystem.bindTexture(fbo.getColorTextureId());
+            image.downloadTexture(0, false);
+            image.flipY();
+        } catch (OutOfMemoryError e) {
+            Cmi.LOGGER.error("Export failed: resolution {}x{} is too large, out of memory", exportWidth, exportHeight);
+            modelView.popPose();
+            RenderSystem.applyModelViewMatrix();
+            fbo.destroyBuffers();
+            mc.getMainRenderTarget().bindWrite(true);
+            RenderSystem.viewport(0, 0, mc.getWindow().getWidth(), mc.getWindow().getHeight());
+            onError.accept(new RuntimeException("Resolution too large, out of memory. Try a smaller value."));
+            return;
+        }
         modelView.popPose();
         RenderSystem.applyModelViewMatrix();
         fbo.destroyBuffers();
