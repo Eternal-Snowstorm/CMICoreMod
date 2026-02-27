@@ -49,9 +49,8 @@ public class StructureScene {
         for (int i = 0; i < paletteTag.size(); i++) {
             CompoundTag paletteEntry = paletteTag.getCompound(i);
             String blockName = paletteEntry.getString("Name");
-            ResourceLocation blockId = new ResourceLocation(blockName);
+            ResourceLocation blockId = ResourceLocation.parse(blockName);
             if (!BuiltInRegistries.BLOCK.containsKey(blockId)) {
-                // 方块来自未加载的mod
                 palette[i] = Blocks.AIR.defaultBlockState();
                 if (!missingBlocks.contains(blockName)) {
                     missingBlocks.add(blockName);
