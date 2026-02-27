@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,6 +45,7 @@ public class StructureRenderer {
         this.scene = scene;
         this.virtualLevel = new VirtualBlockLevel(realLevel, scene.getBlocks(), scene.getBlockEntityNbt());
         this.virtualLevel.initAllBlockEntities();
+        this.virtualLevel.initEntities(scene.getEntities());
         this.virtualLevel.refreshTransmitterConnections();
         this.virtualLevel.updateNeighborStates();
     }
@@ -238,5 +240,20 @@ public class StructureRenderer {
             poseStack.popPose();
         }
         bufferSource.endBatch(RenderType.translucent());
+
+        // 实体渲染
+        for (Entity entity : virtualLevel.getRenderedEntities()) {
+            try {
+                poseStack.pushPose();
+                mc.getEntityRenderDispatcher().render(
+                        entity,
+                        entity.getX(), entity.getY(), entity.getZ(),
+                        entity.getYRot(), 0f,
+                        poseStack, bufferSource, LightTexture.FULL_BRIGHT);
+                poseStack.popPose();
+            } catch (Exception ignored) {
+            }
+        }
+        bufferSource.endBatch();
     }
 }

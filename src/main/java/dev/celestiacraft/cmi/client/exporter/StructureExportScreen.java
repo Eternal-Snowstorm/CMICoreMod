@@ -7,6 +7,7 @@ import dev.celestiacraft.cmi.api.CmiLang;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -22,6 +23,9 @@ public class StructureExportScreen extends Screen {
 
     private EditBox pathInput;
     private EditBox resolutionInput;
+    private EditBox rotXInput;
+    private EditBox rotYInput;
+    private Button lockButton;
     private StructureScene scene;
     private StructureRenderer renderer;
 
@@ -31,6 +35,8 @@ public class StructureExportScreen extends Screen {
     private float panX = 0f;
     private float panY = 0f;
     private boolean dragging = false;
+    private boolean angleLocked = false;
+    private Checkbox saveConfigCheckbox;
 
     private int selectedResolution = 2048;
     private boolean pendingExport = false;
@@ -54,6 +60,12 @@ public class StructureExportScreen extends Screen {
 
     @Override
     protected void init() {
+        ExportConfig cfg = ExportConfig.load();
+        rotationX = cfg.rotationX;
+        rotationY = cfg.rotationY;
+        angleLocked = cfg.angleLocked;
+        zoom = cfg.zoom;
+
         int centerX = this.width / 2;
 
         pathInput = new EditBox(this.font, centerX - 140, 10, 200, 20,
@@ -82,8 +94,68 @@ public class StructureExportScreen extends Screen {
                         btn -> pendingExport = true)
                 .bounds(centerX + 5, this.height - 30, 110, 20).build());
 
+        // 角度控制行
+        int angleY = this.height - 55;
+        rotXInput = new EditBox(this.font, centerX - 125, angleY, 45, 20,
+                Component.literal("RotX"));
+        rotXInput.setMaxLength(7);
+        rotXInput.setValue(String.format("%.1f", rotationX));
+        rotXInput.setFilter(s -> s.isEmpty() || s.equals("-") || s.matches("-?\\d*\\.?\\d*"));
+        rotXInput.setResponder(text -> {
+            try {
+                float val = Float.parseFloat(text);
+                rotationX = Math.max(-90f, Math.min(90f, val));
+            } catch (NumberFormatException ignored) {}
+        });
+        addRenderableWidget(rotXInput);
+
+        rotYInput = new EditBox(this.font, centerX - 50, angleY, 45, 20,
+                Component.literal("RotY"));
+        rotYInput.setMaxLength(7);
+        rotYInput.setValue(String.format("%.1f", rotationY));
+        rotYInput.setFilter(s -> s.isEmpty() || s.equals("-") || s.matches("-?\\d*\\.?\\d*"));
+        rotYInput.setResponder(text -> {
+            try {
+                rotationY = Float.parseFloat(text);
+            } catch (NumberFormatException ignored) {}
+        });
+        addRenderableWidget(rotYInput);
+
+        lockButton = Button.builder(angleLocked
+                        ? CmiLang.translateDirect("export.unlock")
+                        : CmiLang.translateDirect("export.lock"),
+                        btn -> {
+                            angleLocked = !angleLocked;
+                            btn.setMessage(angleLocked
+                                    ? CmiLang.translateDirect("export.unlock")
+                                    : CmiLang.translateDirect("export.lock"));
+                        })
+                .bounds(centerX + 5, angleY, 40, 20).build();
+        addRenderableWidget(lockButton);
+
+        addRenderableWidget(Button.builder(CmiLang.translateDirect("export.rotate"),
+                        btn -> {
+                            rotationY += 90f;
+                            if (rotationY >= 360f) rotationY -= 360f;
+                            syncAngleInputs();
+                        })
+                .bounds(centerX + 50, angleY, 65, 20).build());
+
+        saveConfigCheckbox = new Checkbox(centerX + 120, angleY, 20, 20,
+                CmiLang.translateDirect("export.save_config"), false);
+        addRenderableWidget(saveConfigCheckbox);
+
         if (initialPath != null && scene == null) {
             loadStructure();
+        }
+    }
+
+    private void syncAngleInputs() {
+        if (rotXInput != null && !rotXInput.isFocused()) {
+            rotXInput.setValue(String.format("%.1f", rotationX));
+        }
+        if (rotYInput != null && !rotYInput.isFocused()) {
+            rotYInput.setValue(String.format("%.1f", rotationY));
         }
     }
 
@@ -144,7 +216,8 @@ public class StructureExportScreen extends Screen {
     public void render(@Nonnull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(graphics);
 
-        if (!pathInput.isFocused() && !resolutionInput.isFocused()) {
+        if (!pathInput.isFocused() && !resolutionInput.isFocused()
+                && !rotXInput.isFocused() && !rotYInput.isFocused()) {
             long window = Minecraft.getInstance().getWindow().getWindow();
             float panSpeed = 0.05f / zoom;
             if (InputConstants.isKeyDown(window, InputConstants.KEY_A)) panX += panSpeed;
@@ -153,6 +226,13 @@ public class StructureExportScreen extends Screen {
             if (InputConstants.isKeyDown(window, InputConstants.KEY_S)) panY += panSpeed;
         }
         super.render(graphics, mouseX, mouseY, partialTick);
+
+        // 角度标签
+        int angleY = this.height - 50;
+        int centerLabelX = this.width / 2;
+        graphics.drawString(this.font, "X:", centerLabelX - 140, angleY, 0xFFFFFF);
+        graphics.drawString(this.font, "Y:", centerLabelX - 65, angleY, 0xFFFFFF);
+
         if (scene == null || renderer == null) {
             graphics.drawCenteredString(this.font,
                     CmiLang.translateDirect("export.no_structure"),
@@ -281,11 +361,16 @@ public class StructureExportScreen extends Screen {
                 }
             }
         }
+        // 先让控件处理点击（输入框、按钮等）
+        if (super.mouseClicked(mouseX, mouseY, button)) {
+            return true;
+        }
+        // 没有控件处理时，才启动预览区域拖拽
         if (button == 0 && mouseY > 35 && mouseY < this.height - 40) {
             dragging = true;
             return true;
         }
-        return super.mouseClicked(mouseX, mouseY, button);
+        return false;
     }
 
     @Override
@@ -296,10 +381,11 @@ public class StructureExportScreen extends Screen {
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
-        if (dragging && button == 0) {
+        if (dragging && button == 0 && !angleLocked) {
             rotationY += (float) dragX * 0.5f;
             rotationX += (float) dragY * 0.5f;
             rotationX = Math.max(-90f, Math.min(90f, rotationX));
+            syncAngleInputs();
             return true;
         }
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
@@ -309,6 +395,19 @@ public class StructureExportScreen extends Screen {
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
         zoom = (float) Math.max(0.1, Math.min(10.0, zoom + delta * 0.1));
         return true;
+    }
+
+    @Override
+    public void onClose() {
+        if (saveConfigCheckbox != null && saveConfigCheckbox.selected()) {
+            ExportConfig cfg = new ExportConfig();
+            cfg.rotationX = rotationX;
+            cfg.rotationY = rotationY;
+            cfg.angleLocked = angleLocked;
+            cfg.zoom = zoom;
+            ExportConfig.save(cfg);
+        }
+        super.onClose();
     }
 
     @Override

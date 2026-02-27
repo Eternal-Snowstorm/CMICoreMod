@@ -38,5 +38,15 @@
 	"jei.category.cmi.grinding": "并行打磨",
 	"jade.tip.cmi.powered.off": "状态: 关",
 	"jade.tip.cmi.powered.on": "状态: 开",
-	"config.jade.plugin_cmi.common": "CMI"
+	"config.jade.plugin_cmi.common": "CMI",
+	"cmi.screen.structure_export": "结构导出",
+	"cmi.export.load": "加载",
+	"cmi.export.save": "导出",
+	"cmi.export.resolution": "分辨率",
+	"cmi.export.no_structure": "未加载结构",
+	"cmi.export.success": "已导出至 %s",
+	"cmi.export.lock": "锁定",
+	"cmi.export.unlock": "解锁",
+	"cmi.export.rotate": "旋转90°",
+	"cmi.export.save_config": "保存角度"
 }
