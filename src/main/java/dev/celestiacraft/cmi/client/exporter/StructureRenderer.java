@@ -44,6 +44,7 @@ public class StructureRenderer {
         this.scene = scene;
         this.virtualLevel = new VirtualBlockLevel(realLevel, scene.getBlocks(), scene.getBlockEntityNbt());
         this.virtualLevel.initAllBlockEntities();
+        this.virtualLevel.refreshTransmitterConnections();
         this.virtualLevel.updateNeighborStates();
     }
 

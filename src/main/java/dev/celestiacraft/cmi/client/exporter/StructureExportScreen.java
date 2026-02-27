@@ -16,6 +16,8 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StructureExportScreen extends Screen {
 
@@ -34,6 +36,13 @@ public class StructureExportScreen extends Screen {
     private boolean pendingExport = false;
     private final String initialPath;
 
+    private List<String> tabCompletionList = new ArrayList<>();
+    private int tabCompletionIndex = -1;
+    private String lastInputForSuggestions = null;
+    private boolean showSuggestions = false;
+    private static final int SUGGESTION_HEIGHT = 12;
+    private static final int MAX_SUGGESTIONS = 8;
+
     public StructureExportScreen(String initialPath) {
         super(CmiLang.translateDirect("screen.structure_export"));
         this.initialPath = initialPath;
@@ -50,6 +59,8 @@ public class StructureExportScreen extends Screen {
         pathInput = new EditBox(this.font, centerX - 140, 10, 200, 20,
                 Component.literal("Path"));
         pathInput.setMaxLength(512);
+        pathInput.setHint(Component.literal("filename.nbt"));
+        pathInput.setResponder(text -> refreshSuggestions());
         if (initialPath != null) {
             pathInput.setValue(initialPath);
         }
@@ -79,7 +90,11 @@ public class StructureExportScreen extends Screen {
         String pathStr = pathInput.getValue().trim();
         if (pathStr.isEmpty()) return;
 
-        Path path = Minecraft.getInstance().gameDirectory.toPath().resolve(pathStr);
+        if (!pathStr.endsWith(".nbt")) {
+            pathStr = pathStr + ".nbt";
+        }
+
+        Path path = Minecraft.getInstance().gameDirectory.toPath().resolve("schematics").resolve(pathStr);
         if (!Files.exists(path)) {
             if (Minecraft.getInstance().player != null) {
                 Minecraft.getInstance().player.displayClientMessage(
@@ -105,6 +120,25 @@ public class StructureExportScreen extends Screen {
                         Component.literal("Failed to load: " + e.getMessage()), false);
             }
         }
+    }
+
+    private void refreshSuggestions() {
+        String input = pathInput.getValue().trim().toLowerCase();
+        if (input.equals(lastInputForSuggestions)) return;
+        lastInputForSuggestions = input;
+        tabCompletionList.clear();
+        tabCompletionIndex = -1;
+        Path schematicsDir = Minecraft.getInstance().gameDirectory.toPath().resolve("schematics");
+        if (Files.isDirectory(schematicsDir)) {
+            try (var stream = Files.list(schematicsDir)) {
+                stream.filter(p -> p.toString().endsWith(".nbt"))
+                        .map(p -> p.getFileName().toString())
+                        .filter(name -> name.toLowerCase().startsWith(input))
+                        .sorted()
+                        .forEach(tabCompletionList::add);
+            } catch (Exception ignored) {}
+        }
+        showSuggestions = pathInput.isFocused() && !tabCompletionList.isEmpty();
     }
 
     @Override
@@ -137,13 +171,41 @@ public class StructureExportScreen extends Screen {
             pendingExport = false;
             doExport();
         }
+
+        // Render suggestion dropdown
+        showSuggestions = pathInput.isFocused() && !tabCompletionList.isEmpty();
+        if (showSuggestions) {
+            int dropX = pathInput.getX();
+            int dropY = pathInput.getY() + pathInput.getHeight();
+            int dropW = pathInput.getWidth();
+            int visibleCount = Math.min(tabCompletionList.size(), MAX_SUGGESTIONS);
+
+            // Background
+            graphics.fill(dropX, dropY, dropX + dropW, dropY + visibleCount * SUGGESTION_HEIGHT, 0xE0000000);
+            // Border
+            graphics.fill(dropX, dropY, dropX + 1, dropY + visibleCount * SUGGESTION_HEIGHT, 0xFF555555);
+            graphics.fill(dropX + dropW - 1, dropY, dropX + dropW, dropY + visibleCount * SUGGESTION_HEIGHT, 0xFF555555);
+            graphics.fill(dropX, dropY + visibleCount * SUGGESTION_HEIGHT - 1, dropX + dropW, dropY + visibleCount * SUGGESTION_HEIGHT, 0xFF555555);
+
+            for (int i = 0; i < visibleCount; i++) {
+                int itemY = dropY + i * SUGGESTION_HEIGHT;
+                boolean hovered = mouseX >= dropX && mouseX < dropX + dropW
+                        && mouseY >= itemY && mouseY < itemY + SUGGESTION_HEIGHT;
+                boolean selected = i == tabCompletionIndex;
+                if (selected || hovered) {
+                    graphics.fill(dropX + 1, itemY, dropX + dropW - 1, itemY + SUGGESTION_HEIGHT, 0xFF333355);
+                }
+                int textColor = selected ? 0xFFFFFF00 : (hovered ? 0xFFFFFFCC : 0xFFCCCCCC);
+                graphics.drawString(this.font, tabCompletionList.get(i), dropX + 3, itemY + 2, textColor);
+            }
+        }
     }
 
     private void doExport() {
         String pathStr = pathInput.getValue().trim();
         String baseName = Path.of(pathStr).getFileName().toString()
                 .replaceAll("\\.[^.]+$", "");
-        Path exportDir = Minecraft.getInstance().gameDirectory.toPath().resolve("exports");
+        Path exportDir = Minecraft.getInstance().gameDirectory.toPath().resolve("screenshots").resolve("exports");
         Path outputPath = exportDir.resolve(baseName + "_" + selectedResolution + ".png");
 
         if (Minecraft.getInstance().player != null) {
@@ -168,7 +230,59 @@ public class StructureExportScreen extends Screen {
     }
 
     @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (pathInput.isFocused() && showSuggestions && !tabCompletionList.isEmpty()) {
+            int visibleCount = Math.min(tabCompletionList.size(), MAX_SUGGESTIONS);
+            if (keyCode == InputConstants.KEY_DOWN) {
+                tabCompletionIndex = Math.min(tabCompletionIndex + 1, visibleCount - 1);
+                return true;
+            }
+            if (keyCode == InputConstants.KEY_UP) {
+                tabCompletionIndex = Math.max(tabCompletionIndex - 1, 0);
+                return true;
+            }
+            if ((keyCode == InputConstants.KEY_TAB || keyCode == InputConstants.KEY_RETURN) && tabCompletionIndex >= 0) {
+                applySuggestion(tabCompletionIndex);
+                return true;
+            }
+            if (keyCode == InputConstants.KEY_TAB) {
+                applySuggestion(0);
+                return true;
+            }
+            if (keyCode == InputConstants.KEY_ESCAPE) {
+                showSuggestions = false;
+                return true;
+            }
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    private void applySuggestion(int index) {
+        if (index >= 0 && index < tabCompletionList.size()) {
+            pathInput.setValue(tabCompletionList.get(index));
+            showSuggestions = false;
+            tabCompletionIndex = -1;
+            lastInputForSuggestions = null; // allow re-scan next time
+        }
+    }
+
+    @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        // Handle suggestion dropdown clicks
+        if (button == 0 && showSuggestions && !tabCompletionList.isEmpty()) {
+            int dropX = pathInput.getX();
+            int dropY = pathInput.getY() + pathInput.getHeight();
+            int dropW = pathInput.getWidth();
+            int visibleCount = Math.min(tabCompletionList.size(), MAX_SUGGESTIONS);
+            if (mouseX >= dropX && mouseX < dropX + dropW
+                    && mouseY >= dropY && mouseY < dropY + visibleCount * SUGGESTION_HEIGHT) {
+                int clickedIndex = (int) ((mouseY - dropY) / SUGGESTION_HEIGHT);
+                if (clickedIndex >= 0 && clickedIndex < visibleCount) {
+                    applySuggestion(clickedIndex);
+                    return true;
+                }
+            }
+        }
         if (button == 0 && mouseY > 35 && mouseY < this.height - 40) {
             dragging = true;
             return true;

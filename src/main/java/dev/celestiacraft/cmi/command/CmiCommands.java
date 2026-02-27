@@ -9,6 +9,9 @@ import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
@@ -18,18 +21,30 @@ public class CmiCommands {
     @SubscribeEvent
     public static void onRegisterClientCommands(RegisterClientCommandsEvent event) {
         event.getDispatcher().register(
-                literal("cmi")
+                literal("nebula")
                         .then(literal("export")
                                 .executes(ctx -> {
                                     Minecraft.getInstance().tell(() ->
                                             Minecraft.getInstance().setScreen(new StructureExportScreen()));
                                     return 1;
                                 })
-                                .then(argument("path", StringArgumentType.greedyString())
+                                .then(argument("file", StringArgumentType.string())
+                                        .suggests((ctx, builder) -> {
+                                            Path schematicsDir = Minecraft.getInstance().gameDirectory.toPath().resolve("schematics");
+                                            if (Files.isDirectory(schematicsDir)) {
+                                                try (var stream = Files.list(schematicsDir)) {
+                                                    stream.filter(p -> p.toString().endsWith(".nbt"))
+                                                            .map(p -> p.getFileName().toString())
+                                                            .filter(name -> name.toLowerCase().startsWith(builder.getRemainingLowerCase()))
+                                                            .forEach(builder::suggest);
+                                                } catch (Exception ignored) {}
+                                            }
+                                            return builder.buildFuture();
+                                        })
                                         .executes(ctx -> {
-                                            String path = StringArgumentType.getString(ctx, "path");
+                                            String file = StringArgumentType.getString(ctx, "file");
                                             Minecraft.getInstance().tell(() ->
-                                                    Minecraft.getInstance().setScreen(new StructureExportScreen(path)));
+                                                    Minecraft.getInstance().setScreen(new StructureExportScreen(file)));
                                             return 1;
                                         })
                                 )

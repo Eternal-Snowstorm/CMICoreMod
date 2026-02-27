@@ -2,6 +2,8 @@ package dev.celestiacraft.cmi.client.exporter;
 
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import lombok.Getter;
+import mekanism.common.content.network.transmitter.Transmitter;
+import mekanism.common.tile.transmitter.TileEntityTransmitter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -78,6 +80,26 @@ public class VirtualBlockLevel extends WrappedWorld {
             if (entry.getValue().getBlock() instanceof EntityBlock) {
                 getBlockEntity(entry.getKey());
             }
+        }
+    }
+
+    public void refreshTransmitterConnections() {
+        for (Map.Entry<BlockPos, BlockEntity> entry : blockEntities.entrySet()) {
+            BlockEntity be = entry.getValue();
+            if (!(be instanceof TileEntityTransmitter transmitterTile)) continue;
+            Transmitter<?, ?, ?> transmitter = transmitterTile.getTransmitter();
+            byte connections = 0x00;
+            for (Direction side : Direction.values()) {
+                BlockPos neighborPos = entry.getKey().relative(side);
+                BlockEntity neighborBe = blockEntities.get(neighborPos);
+                if (neighborBe instanceof TileEntityTransmitter neighborTile
+                        && transmitter.supportsTransmissionType(neighborTile)
+                        && transmitter.canConnect(side)
+                        && neighborTile.getTransmitter().canConnect(side.getOpposite())) {
+                    connections |= (byte) (1 << side.ordinal());
+                }
+            }
+            transmitter.currentTransmitterConnections = connections;
         }
     }
 
