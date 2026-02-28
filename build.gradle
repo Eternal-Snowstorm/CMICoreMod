@@ -121,9 +121,9 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    implementation("dev.celestiacraft:nebula_libs:1.5.0:dev") { transitive = false }
+    implementation("dev.celestiacraft:nebula_libs:1.6.0:dev") { transitive = false }
 //    compileOnly files("libs/Nebula Libs-1.5.0-sources.jar")
-    jarJar(group: "dev.celestiacraft", name: "Nebula Libs", version: "[1.5.0,)")
+    jarJar(group: "dev.celestiacraft", name: "nebula_libs", version: "[1.6.0]") { transitive = false }
 
     // Create + Flywheel + Registrate
     implementation fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
