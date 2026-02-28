@@ -44,5 +44,9 @@
 	"cmi.export.save": "Export",
 	"cmi.export.resolution": "Resolution",
 	"cmi.export.no_structure": "No structure loaded",
-	"cmi.export.success": "Exported to %s"
+	"cmi.export.success": "Exported to %s",
+	"cmi.export.lock": "Lock",
+	"cmi.export.unlock": "Unlock",
+	"cmi.export.rotate": "Rotate 90",
+	"cmi.export.save_config": "Save Angle"
 }

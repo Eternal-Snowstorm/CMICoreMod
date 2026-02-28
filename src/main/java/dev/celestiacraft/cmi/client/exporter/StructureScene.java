@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.registries.BuiltInRegistries;
 
+import net.minecraft.world.phys.Vec3;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -21,8 +23,11 @@ import java.util.Map;
 
 @Getter
 public class StructureScene {
+    public record EntityInfo(Vec3 pos, CompoundTag nbt) {}
+
     private final Map<BlockPos, BlockState> blocks = new HashMap<>();
     private final Map<BlockPos, CompoundTag> blockEntityNbt = new HashMap<>();
+    private final List<EntityInfo> entities = new ArrayList<>();
     private final List<String> missingBlocks = new ArrayList<>();
     private int sizeX, sizeY, sizeZ;
     private float centerX, centerY, centerZ;
@@ -82,5 +87,17 @@ public class StructureScene {
         centerY = sizeY / 2f;
         centerZ = sizeZ / 2f;
         maxDimension = Math.max(sizeX, Math.max(sizeY, sizeZ));
+
+        if (root.contains("entities", Tag.TAG_LIST)) {
+            ListTag entitiesList = root.getList("entities", Tag.TAG_COMPOUND);
+            for (int i = 0; i < entitiesList.size(); i++) {
+                CompoundTag entityEntry = entitiesList.getCompound(i);
+                if (!entityEntry.contains("nbt", Tag.TAG_COMPOUND)) continue;
+                ListTag posTag = entityEntry.getList("pos", Tag.TAG_DOUBLE);
+                Vec3 pos = new Vec3(posTag.getDouble(0), posTag.getDouble(1), posTag.getDouble(2));
+                CompoundTag nbt = entityEntry.getCompound("nbt");
+                entities.add(new EntityInfo(pos, nbt));
+            }
+        }
     }
 }

@@ -2,9 +2,14 @@ package dev.celestiacraft.cmi.client.exporter;
 
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import lombok.Getter;
+import mekanism.common.content.network.transmitter.Transmitter;
+import mekanism.common.tile.transmitter.TileEntityTransmitter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
@@ -25,6 +30,8 @@ public class VirtualBlockLevel extends WrappedWorld {
     private final Map<BlockPos, BlockEntity> blockEntities = new HashMap<>();
     @Getter
     private final List<BlockEntity> renderedBlockEntities = new ArrayList<>();
+    @Getter
+    private final List<Entity> renderedEntities = new ArrayList<>();
 
     public VirtualBlockLevel(Level wrapped, Map<BlockPos, BlockState> blocks,
                              Map<BlockPos, CompoundTag> blockEntityNbt) {
@@ -78,6 +85,43 @@ public class VirtualBlockLevel extends WrappedWorld {
             if (entry.getValue().getBlock() instanceof EntityBlock) {
                 getBlockEntity(entry.getKey());
             }
+        }
+    }
+
+    public void initEntities(List<StructureScene.EntityInfo> entityInfos) {
+        for (StructureScene.EntityInfo info : entityInfos) {
+            try {
+                Entity entity = EntityType.loadEntityRecursive(info.nbt(), this, e -> {
+                    Vec3 pos = info.pos();
+                    e.moveTo(pos.x, pos.y, pos.z, e.getYRot(), e.getXRot());
+                    e.setDeltaMovement(Vec3.ZERO);
+                    return e;
+                });
+                if (entity != null) {
+                    renderedEntities.add(entity);
+                }
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
+    public void refreshTransmitterConnections() {
+        for (Map.Entry<BlockPos, BlockEntity> entry : blockEntities.entrySet()) {
+            BlockEntity be = entry.getValue();
+            if (!(be instanceof TileEntityTransmitter transmitterTile)) continue;
+            Transmitter<?, ?, ?> transmitter = transmitterTile.getTransmitter();
+            byte connections = 0x00;
+            for (Direction side : Direction.values()) {
+                BlockPos neighborPos = entry.getKey().relative(side);
+                BlockEntity neighborBe = blockEntities.get(neighborPos);
+                if (neighborBe instanceof TileEntityTransmitter neighborTile
+                        && transmitter.supportsTransmissionType(neighborTile)
+                        && transmitter.canConnect(side)
+                        && neighborTile.getTransmitter().canConnect(side.getOpposite())) {
+                    connections |= (byte) (1 << side.ordinal());
+                }
+            }
+            transmitter.currentTransmitterConnections = connections;
         }
     }
 
