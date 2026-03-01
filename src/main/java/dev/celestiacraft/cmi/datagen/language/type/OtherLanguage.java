@@ -15,16 +15,6 @@ public class OtherLanguage extends LanguageGenerate {
 				"Mechanisms",
 				"构件"
 		);
-		addTooltipLang(
-				"water_pump.functional",
-				"Water Pump Functional",
-				"水井工作正常"
-		);
-		addTooltipLang(
-				"water_pump.non_functional",
-				"Water Pump Not Functional",
-				"水井结构不完整"
-		);
 		addLanguage(
 				"multiblock.building",
 				"water_pump",

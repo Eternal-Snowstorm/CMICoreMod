@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.datagen;
 
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.datagen.language.LanguageGenerate;
 import dev.celestiacraft.cmi.datagen.language.locale.Chinese;
 import dev.celestiacraft.cmi.datagen.language.locale.English;
 import dev.celestiacraft.cmi.worldgen.WorldGenProvider;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.concurrent.CompletableFuture;
 
-@Mod.EventBusSubscriber(modid = Cmi.MODID)
+@Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
 	@SubscribeEvent
 	public static void onDatagen(GatherDataEvent event) {
@@ -25,10 +26,8 @@ public class DataGenerators {
 		boolean server = event.includeServer();
 
 		// Client
+		LanguageGenerate.register();
 		generator.addProvider(event.includeClient(), new English(output));
 		generator.addProvider(event.includeClient(), new Chinese(output));
-
-		// Server
-		generator.addProvider(server, new WorldGenProvider(output, provider));
 	}
 }
