@@ -1,6 +1,5 @@
 package dev.celestiacraft.cmi.datagen.language.type;
 
-
 import dev.celestiacraft.cmi.datagen.language.LanguageGenerate;
 import org.jetbrains.annotations.NotNull;
 
@@ -55,7 +54,9 @@ public class ItemLanguage extends LanguageGenerate {
 			String en = mech.get(1);
 			String zh = mech.get(2);
 
-			addItemLanguage(id, en, zh);
+			String mechKey = String.format("%s_mechanism", id);
+
+			addItemLanguage(mechKey, en, zh);
 		});
 	}
 
