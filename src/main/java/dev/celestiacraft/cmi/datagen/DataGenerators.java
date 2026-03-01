@@ -23,7 +23,6 @@ public class DataGenerators {
 		PackOutput output = generator.getPackOutput();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 		CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
-		boolean server = event.includeServer();
 
 		// Client
 		LanguageGenerate.register();
@@ -31,6 +30,6 @@ public class DataGenerators {
 		generator.addProvider(event.includeClient(), new Chinese(output));
 
 		// Server
-		generator.addProvider(server, new WorldGenProvider(output, provider));
+		generator.addProvider(event.includeServer(), new WorldGenProvider(output, provider));
 	}
 }
