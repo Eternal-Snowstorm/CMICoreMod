@@ -8,7 +8,6 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
@@ -19,12 +18,8 @@ import dev.celestiacraft.cmi.api.CmiLang;
 import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 
 public class VoidDustCollectorCategory {
-	public static final Lazy<Block> VOID_SPRING = Lazy.of(() -> {
-		return ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("void_spring"));
-	});
-	private static final Lazy<Item> VOID_DUST = Lazy.of(() -> {
-		return ForgeRegistries.ITEMS.getValue(Cmi.loadResource("void_dust"));
-	});
+	public static final Block VOID_SPRING = ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("void_spring"));
+	private static final Item VOID_DUST = ForgeRegistries.ITEMS.getValue(Cmi.loadResource("void_dust"));
 	private static final VoidDustCollectorMultiblock VOID_MB = new VoidDustCollectorMultiblock();
 
 	public static SimpleJeiCategory<VoidDustCollectorRecipe> builder(IGuiHelper helper) {
@@ -33,7 +28,7 @@ public class VoidDustCollectorCategory {
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(
-							() -> VOID_SPRING.get().asItem().getDefaultInstance(),
+							() -> VOID_SPRING.asItem().getDefaultInstance(),
 							() -> CmiBlock.VOID_DUST_COLLECTOR.get().asItem().getDefaultInstance()
 					);
 				})
@@ -41,9 +36,9 @@ public class VoidDustCollectorCategory {
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.OUTPUT, 100, 35)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
-							.addItemStack(VOID_DUST.get().getDefaultInstance());
+							.addItemStack(VOID_DUST.getDefaultInstance());
 					builder.addInvisibleIngredients(RecipeIngredientRole.INPUT)
-							.addItemStack(VOID_SPRING.get().asItem().getDefaultInstance())
+							.addItemStack(VOID_SPRING.asItem().getDefaultInstance())
 							.addItemStack(CmiBlock.VOID_DUST_COLLECTOR.get().asItem().getDefaultInstance());
 				})
 				.setDraw((recipe, view, graphics, mouseX, mouseY) -> {

@@ -25,14 +25,8 @@ import java.util.Collections;
 
 public class WaterPumpSeaWaterCategory {
 	private static final WaterPumpMultiblock WATER_PUMP_MB = new WaterPumpMultiblock();
-
-	private static final Lazy<Fluid> SEA_WATER = Lazy.of(() -> {
-		return ForgeRegistries.FLUIDS.getValue(Cmi.loadResource("sea_water"));
-	});
-
-	private static final Lazy<Item> SEA_WATER_BUCKET = Lazy.of(() -> {
-		return ForgeRegistries.ITEMS.getValue(Cmi.loadResource("sea_water_bucket"));
-	});
+	private static final Fluid SEA_WATER = ForgeRegistries.FLUIDS.getValue(Cmi.loadResource("sea_water"));
+	private static final Item SEA_WATER_BUCKET = ForgeRegistries.ITEMS.getValue(Cmi.loadResource("sea_water_bucket"));
 
 	public static SimpleJeiCategory<WaterPumpSeaWaterRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.SEA_WATER_PUMP, helper)
@@ -41,15 +35,15 @@ public class WaterPumpSeaWaterCategory {
 				.setIcon(() -> {
 					return new DoubleItemIcon(
 							() -> CmiBlock.WATER_PUMP.get().asItem().getDefaultInstance(),
-							() -> SEA_WATER_BUCKET.get().getDefaultInstance()
+							() -> SEA_WATER_BUCKET.getDefaultInstance()
 					);
 				})
 				.setBackground(0, 0)
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
-							.addFluidStack(SEA_WATER.get(), Integer.MAX_VALUE)
-							.addItemStack(SEA_WATER_BUCKET.get().getDefaultInstance());
+							.addFluidStack(SEA_WATER, Integer.MAX_VALUE)
+							.addItemStack(SEA_WATER_BUCKET.getDefaultInstance());
 				})
 				.setTooltips((recipe, view, mouseX, mouseY) -> {
 					if (ClientRenderUtils.isCursorInsideBounds(86, 21, 14, 14, mouseX, mouseY)) {

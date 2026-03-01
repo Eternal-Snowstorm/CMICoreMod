@@ -23,9 +23,10 @@ public class ModBiomes {
 		BiomeDefaultFeatures.caveSpawns(mobBuilder);
 		BiomeDefaultFeatures.monsters(mobBuilder, 95, 5, 100, false);
 
-		BiomeGenerationSettings.Builder genBuilder =
-				new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE),
-						context.lookup(Registries.CONFIGURED_CARVER));
+		BiomeGenerationSettings.Builder genBuilder = new BiomeGenerationSettings.Builder(
+				context.lookup(Registries.PLACED_FEATURE),
+				context.lookup(Registries.CONFIGURED_CARVER)
+		);
 
 		BiomeDefaultFeatures.addPlainGrass(genBuilder);
 		BiomeDefaultFeatures.addDefaultOres(genBuilder, true);

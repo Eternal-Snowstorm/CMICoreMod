@@ -68,7 +68,7 @@ public class ModJeiPlugin implements IModPlugin {
 		IJeiHelpers helpers = registration.getJeiHelpers();
 
 		registration.addRecipeCatalyst(
-				AcceleratorCategory.ACCELERATOR_ITEM.get().getDefaultInstance(),
+				AcceleratorCategory.ACCELERATOR_ITEM.getDefaultInstance(),
 				CmiJeiRecipeType.ACCELERATOR
 		);
 		registration.addRecipeCatalyst(
@@ -84,7 +84,7 @@ public class ModJeiPlugin implements IModPlugin {
 				CmiJeiRecipeType.VOID_DUST_COLLECTOR
 		);
 		registration.addRecipeCatalyst(
-				VoidDustCollectorCategory.VOID_SPRING.get().asItem().getDefaultInstance(),
+				VoidDustCollectorCategory.VOID_SPRING.asItem().getDefaultInstance(),
 				CmiJeiRecipeType.VOID_DUST_COLLECTOR
 		);
 		registration.addRecipeCatalyst(
