@@ -68,7 +68,7 @@ public class ModJeiPlugin implements IModPlugin {
 		IJeiHelpers helpers = registration.getJeiHelpers();
 
 		registration.addRecipeCatalyst(
-				AcceleratorCategory.ACCELERATOR_ITEM.getDefaultInstance(),
+				CmiBlock.ACCELERATOR_BLOCK.asItem().getDefaultInstance(),
 				CmiJeiRecipeType.ACCELERATOR
 		);
 		registration.addRecipeCatalyst(
