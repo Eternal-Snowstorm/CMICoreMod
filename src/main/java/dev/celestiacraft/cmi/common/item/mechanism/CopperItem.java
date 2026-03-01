@@ -2,7 +2,6 @@ package dev.celestiacraft.cmi.common.item.mechanism;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.item.MechanismItem;
-import dev.celestiacraft.cmi.common.register.CmiMechanism;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -34,12 +33,11 @@ public class CopperItem extends MechanismItem {
 		Player player = event.getEntity();
 		ItemStack item = event.getItemStack();
 
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return;
 		}
 
 		if (item.getItem() instanceof CopperItem copper) {
-
 			// 射线检测
 			HitResult hitResult = player.pick(5.0D, 0.0F, false);
 			if (hitResult instanceof BlockHitResult blockHit) {
