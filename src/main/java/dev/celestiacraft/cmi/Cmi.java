@@ -53,6 +53,7 @@ public class Cmi {
 		CmiBlocks.register();
 		CmiBlockEntityTypes.register();
 		CmiItems.register();
+		CmiMechanism.register();
 		CmiRecipeType.register(bus);
 		CmiRecipeSerializer.register(bus);
 		CmiCreateRecipe.register(bus);
