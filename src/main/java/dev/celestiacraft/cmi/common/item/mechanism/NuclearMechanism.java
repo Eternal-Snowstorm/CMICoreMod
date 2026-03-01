@@ -15,29 +15,43 @@ import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
 public class NuclearMechanism extends MechanismItem {
+	private static final Capability<ICurio> CURIO_CAP = CapabilityManager.get(new CapabilityToken<>() {
+	});
+
+	private static final Capability<IRadiationShielding> RADIATION_CAP = CapabilityManager.get(new CapabilityToken<>() {
+	});
+
 	@Override
 	public @Nullable ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
 		return new ICapabilityProvider() {
+			private final LazyOptional<ICurio> curio = LazyOptional.of(() -> {
+				return new ICurio() {
+					@Override
+					public ItemStack getStack() {
+						return stack;
+					}
+				};
+			});
+
+			private final LazyOptional<IRadiationShielding> shielding = LazyOptional.of(() -> {
+				return new IRadiationShielding() {
+					@Override
+					public double getRadiationShielding() {
+						return 1.0;
+					}
+				};
+			});
+
 			@Override
 			public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction direction) {
-				if (capability == CapabilityManager.get(new CapabilityToken<ICurio>() {
-				})) {
-					return LazyOptional.of(() -> new ICurio() {
-						@Override
-						public ItemStack getStack() {
-							return stack;
-						}
-					}).cast();
+				if (capability == CURIO_CAP) {
+					return curio.cast();
 				}
-				if (capability == CapabilityManager.get(new CapabilityToken<IRadiationShielding>() {
-				})) {
-					return LazyOptional.of(() -> new IRadiationShielding() {
-						@Override
-						public double getRadiationShielding() {
-							return 1.0;
-						}
-					}).cast();
+
+				if (capability == RADIATION_CAP) {
+					return shielding.cast();
 				}
+
 				return LazyOptional.empty();
 			}
 		};
