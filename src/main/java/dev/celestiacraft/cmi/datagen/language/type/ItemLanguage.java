@@ -54,9 +54,11 @@ public class ItemLanguage extends LanguageGenerate {
 			String en = mech.get(1);
 			String zh = mech.get(2);
 
-			String mechKey = String.format("%s_mechanism", id);
+			String key = String.format("%s_mechanism", id);
+			en = String.format("%s Mechanism", en);
+			zh = String.format("%s构件", zh);
 
-			addItemLanguage(mechKey, en, zh);
+			addItemLanguage(key, en, zh);
 		});
 	}
 
