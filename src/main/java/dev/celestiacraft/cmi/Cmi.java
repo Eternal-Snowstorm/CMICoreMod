@@ -19,10 +19,8 @@ import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.compat.create.CmiStressValueProvider;
 import dev.celestiacraft.cmi.config.CommonConfig;
-import dev.celestiacraft.cmi.worldgen.WorldGenProvider;
 import dev.celestiacraft.cmi.worldgen.region.ModOverworldRegion;
 import dev.celestiacraft.cmi.worldgen.surfacerule.ModSurfaceRuleData;
-import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -65,7 +63,6 @@ public class Cmi {
 		CmiNetwork.register();
 
 		bus.addListener(this::onCommonSetup);
-		bus.addListener(Cmi::gatherData);
 
 		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/cmi/common.toml");
 
@@ -81,10 +78,5 @@ public class Cmi {
 			SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Cmi.MODID, ModSurfaceRuleData.makeRules());
 			SurfaceRuleManager.addToDefaultSurfaceRulesAtStage(SurfaceRuleManager.RuleCategory.OVERWORLD, SurfaceRuleManager.RuleStage.AFTER_BEDROCK, 0, ModSurfaceRuleData.makeInjections());
 		});
-	}
-
-	private static void gatherData(GatherDataEvent event) {
-		event.getGenerator().addProvider(event.includeServer(),
-				new WorldGenProvider(event.getGenerator().getPackOutput(), event.getLookupProvider()));
 	}
 }
