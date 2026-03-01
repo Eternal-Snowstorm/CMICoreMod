@@ -14,7 +14,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
-public class NuclearMechanism extends MechanismItem {
+public class NuclearItem extends MechanismItem {
+	public NuclearItem(Properties properties) {
+		super(properties);
+	}
+
 	private static final Capability<ICurio> CURIO_CAP = CapabilityManager.get(new CapabilityToken<>() {
 	});
 
