@@ -9,11 +9,12 @@ import dev.celestiacraft.cmi.common.item.MechanismItem;
 import dev.celestiacraft.cmi.common.item.mechanism.NuclearItem;
 import dev.celestiacraft.cmi.common.item.mechanism.WoodenItem;
 import dev.celestiacraft.cmi.tag.ModItemTags;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class CmiMechanism {
 	public static final List<ItemEntry<?>> CREATIVE_TAB_ITEMS = new ArrayList<>();
@@ -21,7 +22,7 @@ public class CmiMechanism {
 	public static final ItemEntry<WoodenItem> WOODEN;
 
 	static {
-		Cmi.REGISTRATE.defaultCreativeTab(Objects.requireNonNull(CmiCreativeTab.MECHANISMS.get()));
+		Cmi.REGISTRATE.defaultCreativeTab(ResourceKey.create(Registries.CREATIVE_MODE_TAB, Cmi.loadResource("mechanisms")));
 
 		WOODEN = registerMechanism("wooden", WoodenItem::new)
 				.register();
