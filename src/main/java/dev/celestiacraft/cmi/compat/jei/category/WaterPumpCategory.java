@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.compat.jei.category;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -26,7 +27,12 @@ public class WaterPumpCategory {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.WATER_PUMP, helper)
 				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("water_pump"))
 				.setSize(178, 72)
-				.setIcon(CmiBlocks.WATER_PUMP.get().asItem().getDefaultInstance())
+				.setIcon(() -> {
+					return new DoubleItemIcon(
+							() -> CmiBlocks.WATER_PUMP.get().asItem().getDefaultInstance(),
+							() -> Items.WATER_BUCKET.getDefaultInstance()
+					);
+				})
 				.setBackground(0, 0)
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)

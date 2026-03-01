@@ -1,6 +1,8 @@
 package dev.celestiacraft.cmi.datagen;
 
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.datagen.language.locale.Chinese;
+import dev.celestiacraft.cmi.datagen.language.locale.English;
 import dev.celestiacraft.cmi.worldgen.WorldGenProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -22,6 +24,11 @@ public class DataGenerators {
 		CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
 		boolean server = event.includeServer();
 
+		// Client
+		generator.addProvider(event.includeClient(), new English(output));
+		generator.addProvider(event.includeClient(), new Chinese(output));
+
+		// Server
 		generator.addProvider(server, new WorldGenProvider(output, provider));
 	}
 }

@@ -2,11 +2,13 @@ package dev.celestiacraft.cmi.compat.jei.category;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -37,7 +39,12 @@ public class WaterPumpSeaWaterCategory {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.SEA_WATER_PUMP, helper)
 				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("water_pump_sea_water"))
 				.setSize(178, 72)
-				.setIcon(CmiBlocks.WATER_PUMP.get().asItem().getDefaultInstance())
+				.setIcon(() -> {
+					return new DoubleItemIcon(
+							() -> CmiBlocks.WATER_PUMP.get().asItem().getDefaultInstance(),
+							() -> SEA_WATER_BUCKET.get().getDefaultInstance()
+					);
+				})
 				.setBackground(0, 0)
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)
