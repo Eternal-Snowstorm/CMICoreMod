@@ -53,7 +53,7 @@ public class CmiBlock {
 							.forAllStatesExcept((state) -> {
 								BlockModelProvider models = provider.models();
 								return ConfiguredModel.builder()
-										.modelFile(models.getExistingFile(Cmi.loadResource("block/ore/ore")))
+										.modelFile(models.getExistingFile(Cmi.loadResource("block/accelerator")))
 										.build();
 							});
 				})
