@@ -18,6 +18,7 @@ public class CmiMechanism {
 	public static final ItemEntry<PigIronItem> PIG_IRON;
 	public static final ItemEntry<CopperItem> COPPER;
 	public static final ItemEntry<CoilItem> COIL;
+	public static final ItemEntry<NatureItem> NATURE;
 
 	static {
 		Cmi.REGISTRATE.defaultCreativeTab(ResourceKey.create(
@@ -33,7 +34,9 @@ public class CmiMechanism {
 				.register();
 		COPPER = registerMechanism("copper", CopperItem::new)
 				.register();
-		COIL = registerMechanism("coil",CoilItem::new)
+		COIL = registerMechanism("coil", CoilItem::new)
+				.register();
+		NATURE = registerMechanism("nature", NatureItem::new)
 				.register();
 	}
 
