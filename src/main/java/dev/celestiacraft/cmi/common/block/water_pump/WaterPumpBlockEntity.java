@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraftforge.registries.ForgeRegistries;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.api.CmiLang;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -81,7 +81,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 				})
 				// 水泵
 				.define('0', (builder) -> {
-					builder.block(CmiBlocks.WATER_PUMP.get());
+					builder.block(CmiBlock.WATER_PUMP.get());
 				})
 				// 木栅栏
 				.define('C', (builder) -> {

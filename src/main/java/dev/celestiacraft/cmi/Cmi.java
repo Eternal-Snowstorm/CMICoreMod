@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 import dev.celestiacraft.cmi.client.CmiClient;
 import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
-import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.compat.create.CmiStressValueProvider;
 import dev.celestiacraft.cmi.config.CommonConfig;
 import dev.celestiacraft.cmi.worldgen.WorldGenProvider;
@@ -50,9 +49,9 @@ public class Cmi {
 
 		REGISTRATE.registerEventListeners(bus);
 
-		CmiBlocks.register();
+		CmiBlock.register();
 		CmiBlockEntityTypes.register();
-		CmiItems.register();
+		CmiItem.register();
 		CmiMechanism.register();
 		CmiRecipeType.register(bus);
 		CmiRecipeSerializer.register(bus);

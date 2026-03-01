@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 
 public class WaterPumpMultiblock extends AnimatedKinetics {
 	private static final Lazy<Block> STAIRS = Lazy.of(() -> {
@@ -32,7 +32,7 @@ public class WaterPumpMultiblock extends AnimatedKinetics {
 		matrixStack.mulPose(Axis.YP.rotationDegrees(22.5F));
 
 		int scale = 15;
-		defaultBlockElement(CmiBlocks.WATER_PUMP.get().defaultBlockState())
+		defaultBlockElement(CmiBlock.WATER_PUMP.get().defaultBlockState())
 				.atLocal(0.0F, 4.0F, 0.0F)
 				.scale(scale)
 				.render(graphics);

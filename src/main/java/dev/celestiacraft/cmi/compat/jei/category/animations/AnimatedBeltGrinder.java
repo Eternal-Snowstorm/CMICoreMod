@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
 import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderBlock;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 
 public class AnimatedBeltGrinder extends AnimatedKinetics {
 	@Override
@@ -26,7 +26,7 @@ public class AnimatedBeltGrinder extends AnimatedKinetics {
 				.scale(scale)
 				.render(graphics);
 
-		blockElement(CmiBlocks.BELT_GRINDER.getDefaultState()
+		blockElement(CmiBlock.BELT_GRINDER.getDefaultState()
 				.setValue(BeltGrinderBlock.HORIZONTAL_FACING, Direction.WEST))
 				.rotateBlock(0, 0, 0)
 				.scale(scale)

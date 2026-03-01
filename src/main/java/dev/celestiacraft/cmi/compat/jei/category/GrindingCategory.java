@@ -6,7 +6,7 @@ import com.simibubi.create.foundation.gui.AllGuiTextures;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import dev.celestiacraft.cmi.common.block.belt_grinder.GrindingRecipe;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.animations.AnimatedBeltGrinder;
 import dev.celestiacraft.cmi.api.CmiLang;
@@ -23,7 +23,7 @@ public class GrindingCategory {
 				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("grinding"))
 				.setSize(178, 72)
 				.setBackground(178, 72)
-				.setIcon(CmiBlocks.BELT_GRINDER.asStack())
+				.setIcon(CmiBlock.BELT_GRINDER.asStack())
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.INPUT, 44, 5)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)

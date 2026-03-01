@@ -8,13 +8,12 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpSeaWaterRecipe;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.compat.jei.api.CmiGuiTextures;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.multiblock.WaterPumpMultiblock;
@@ -41,7 +40,7 @@ public class WaterPumpSeaWaterCategory {
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(
-							() -> CmiBlocks.WATER_PUMP.get().asItem().getDefaultInstance(),
+							() -> CmiBlock.WATER_PUMP.get().asItem().getDefaultInstance(),
 							() -> SEA_WATER_BUCKET.get().getDefaultInstance()
 					);
 				})

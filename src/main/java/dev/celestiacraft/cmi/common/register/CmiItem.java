@@ -4,7 +4,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.item.TestBrushItem;
 
-public class CmiItems {
+public class CmiItem {
 	public static final ItemEntry<TestBrushItem> TEST_BRUSH;
 
 	static {

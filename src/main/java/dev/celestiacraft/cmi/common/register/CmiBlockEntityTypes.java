@@ -32,37 +32,37 @@ public class CmiBlockEntityTypes {
 
 	static {
 		TEST_GRAVEL = Cmi.REGISTRATE.blockEntity("test_gravel", TestGravelBlockEntity::new)
-				.validBlock(CmiBlocks.TEST_GRAVEL)
+				.validBlock(CmiBlock.TEST_GRAVEL)
 				.register();
 		MARS_GEO = Cmi.REGISTRATE.blockEntity("mars_geothermal_vent", MarsGeothermalVentBlockEntity::new)
-				.validBlock(CmiBlocks.MARS_GEO)
+				.validBlock(CmiBlock.MARS_GEO)
 				.register();
 		MERCURY_GEO = Cmi.REGISTRATE.blockEntity("mercury_geothermal_vent", MercuryGeothermalVentBlockEntity::new)
-				.validBlock(CmiBlocks.MERCURY_GEO)
+				.validBlock(CmiBlock.MERCURY_GEO)
 				.register();
 		WATER_PUMP = Cmi.REGISTRATE.blockEntity("water_pump", WaterPumpBlockEntity::new)
-				.validBlock(CmiBlocks.WATER_PUMP)
+				.validBlock(CmiBlock.WATER_PUMP)
 				.register();
 		STEAM_HAMMER = Cmi.REGISTRATE.blockEntity("steam_hammer", SteamHammerBlockEntity::new)
 				.instance(() -> SteamHammerInstance::new)
 				.renderer(() -> SteamHammerRenderer::new)
-				.validBlock(CmiBlocks.STEAM_HAMMER)
+				.validBlock(CmiBlock.STEAM_HAMMER)
 				.register();
 		ACCELERATOR_MOTOR = Cmi.REGISTRATE.blockEntity("accelerator_motor", AcceleratorMotorBlockEntity::new)
 				.instance(() -> HalfShaftInstance::new, false)
-				.validBlocks(CmiBlocks.ACCELERATOR_MOTOR)
+				.validBlocks(CmiBlock.ACCELERATOR_MOTOR)
 				.renderer(() -> AcceleratorMotorRenderer::new)
 				.register();
 		ADVANCED_SPOUT = Cmi.REGISTRATE.blockEntity("advanced_spout", AdvancedSpoutBlockEntity::new)
-				.validBlocks(CmiBlocks.ADVANCED_SPOUT)
+				.validBlocks(CmiBlock.ADVANCED_SPOUT)
 				.renderer(() -> AdvancedSpoutRenderer::new)
 				.register();
 		VOID_DUST_COLLECTOR = Cmi.REGISTRATE.blockEntity("void_dust_collector", VoidDustCollectorBlockEnitiy::new)
-				.validBlock(CmiBlocks.VOID_DUST_COLLECTOR)
+				.validBlock(CmiBlock.VOID_DUST_COLLECTOR)
 				.register();
 		BELT_GRINDER = Cmi.REGISTRATE.blockEntity("mechanical_belt_grinder", BeltGrinderBlockEntity::new)
 				.instance(() -> BeltGrinderInstance::new)
-				.validBlocks(CmiBlocks.BELT_GRINDER)
+				.validBlocks(CmiBlock.BELT_GRINDER)
 				.renderer(() -> BeltGrinderRenderer::new)
 				.register();
 	}

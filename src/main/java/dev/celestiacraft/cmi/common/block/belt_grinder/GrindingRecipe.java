@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
 import dev.celestiacraft.cmi.compat.jei.category.CmiSequencedAssemblySubCategory;
 import dev.celestiacraft.cmi.api.CmiLang;
@@ -60,7 +60,7 @@ public class GrindingRecipe extends ProcessingRecipe<RecipeWrapper> implements I
 
 	@Override
 	public void addRequiredMachines(Set<ItemLike> list) {
-		list.add(CmiBlocks.BELT_GRINDER.get());
+		list.add(CmiBlock.BELT_GRINDER.get());
 	}
 
 	@Override

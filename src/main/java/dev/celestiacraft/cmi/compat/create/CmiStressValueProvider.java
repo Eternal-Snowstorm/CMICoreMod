@@ -7,7 +7,7 @@ import com.simibubi.create.foundation.utility.RegisteredObjects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.config.CommonConfig;
 
 import javax.annotation.Nullable;
@@ -33,7 +33,7 @@ public class CmiStressValueProvider implements BlockStressValues.IStressValuePro
 
 	@Override
 	public double getImpact(Block block) {
-		if (block == CmiBlocks.STEAM_HAMMER.get()) {
+		if (block == CmiBlock.STEAM_HAMMER.get()) {
 			return CommonConfig.STEAM_HAMMER_STRESS_IMPACT.get();
 		}
 		ResourceLocation blockId = RegisteredObjects.getKeyOrThrow(block);
@@ -43,7 +43,7 @@ public class CmiStressValueProvider implements BlockStressValues.IStressValuePro
 
 	@Override
 	public double getCapacity(Block block) {
-		if (block == CmiBlocks.ACCELERATOR_MOTOR.get()) {
+		if (block == CmiBlock.ACCELERATOR_MOTOR.get()) {
 			return 0;
 		}
 		ResourceLocation blockId = RegisteredObjects.getKeyOrThrow(block);
@@ -53,7 +53,7 @@ public class CmiStressValueProvider implements BlockStressValues.IStressValuePro
 
 	@Override
 	public boolean hasImpact(Block block) {
-		if (block == CmiBlocks.STEAM_HAMMER.get()) {
+		if (block == CmiBlock.STEAM_HAMMER.get()) {
 			return true;
 		}
 		ResourceLocation blockId = RegisteredObjects.getKeyOrThrow(block);
@@ -62,7 +62,7 @@ public class CmiStressValueProvider implements BlockStressValues.IStressValuePro
 
 	@Override
 	public boolean hasCapacity(Block block) {
-		if (block == CmiBlocks.ACCELERATOR_MOTOR.get()) {
+		if (block == CmiBlock.ACCELERATOR_MOTOR.get()) {
 			return true;
 		}
 		ResourceLocation blockId = RegisteredObjects.getKeyOrThrow(block);
@@ -72,7 +72,7 @@ public class CmiStressValueProvider implements BlockStressValues.IStressValuePro
 	@Nullable
 	@Override
 	public Couple<Integer> getGeneratedRPM(Block block) {
-		if (block == CmiBlocks.ACCELERATOR_MOTOR.get()) {
+		if (block == CmiBlock.ACCELERATOR_MOTOR.get()) {
 			int maxSpeed = CommonConfig.ACCELERATOR_MOTOR_MAX_SPEED.get();
 			return Couple.create(0, maxSpeed);
 		}

@@ -21,10 +21,9 @@ import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 import dev.celestiacraft.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
 import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpRecipe;
 import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpSeaWaterRecipe;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
-import dev.celestiacraft.cmi.compat.jei.category.*;
 
 import java.util.List;
 import java.util.Map;
@@ -73,15 +72,15 @@ public class ModJeiPlugin implements IModPlugin {
 				CmiJeiRecipeType.ACCELERATOR
 		);
 		registration.addRecipeCatalyst(
-				CmiBlocks.WATER_PUMP.asStack(),
+				CmiBlock.WATER_PUMP.asStack(),
 				CmiJeiRecipeType.WATER_PUMP
 		);
 		registration.addRecipeCatalyst(
-				CmiBlocks.WATER_PUMP.asStack(),
+				CmiBlock.WATER_PUMP.asStack(),
 				CmiJeiRecipeType.SEA_WATER_PUMP
 		);
 		registration.addRecipeCatalyst(
-				CmiBlocks.VOID_DUST_COLLECTOR.asStack(),
+				CmiBlock.VOID_DUST_COLLECTOR.asStack(),
 				CmiJeiRecipeType.VOID_DUST_COLLECTOR
 		);
 		registration.addRecipeCatalyst(
@@ -89,13 +88,13 @@ public class ModJeiPlugin implements IModPlugin {
 				CmiJeiRecipeType.VOID_DUST_COLLECTOR
 		);
 		registration.addRecipeCatalyst(
-				CmiBlocks.BELT_GRINDER.asStack(),
+				CmiBlock.BELT_GRINDER.asStack(),
 				CmiJeiRecipeType.GRINDING
 		);
 
 		Map<String, ItemStack> createCatalysts = Map.of(
-				"pressing", CmiBlocks.STEAM_HAMMER.asStack(),
-				"spout_filling", CmiBlocks.ADVANCED_SPOUT.asStack()
+				"pressing", CmiBlock.STEAM_HAMMER.asStack(),
+				"spout_filling", CmiBlock.ADVANCED_SPOUT.asStack()
 		);
 
 		createCatalysts.forEach((recipeId, stack) -> {

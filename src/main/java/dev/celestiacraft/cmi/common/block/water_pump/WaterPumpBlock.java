@@ -14,7 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntityTypes;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -48,7 +48,7 @@ public class WaterPumpBlock extends Block implements IBE<WaterPumpBlockEntity> {
 			return;
 		}
 
-		boolean isBlockAndItem = state.is(CmiBlocks.WATER_PUMP.get())
+		boolean isBlockAndItem = state.is(CmiBlock.WATER_PUMP.get())
 				&& item.is(AllTags.AllItemTags.WRENCH.tag);
 
 		if (isBlockAndItem && hand == InteractionHand.MAIN_HAND && !player.isShiftKeyDown()) {

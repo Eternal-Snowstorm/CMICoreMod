@@ -54,11 +54,17 @@ public class ItemLanguage extends LanguageGenerate {
 			String en = mech.get(1);
 			String zh = mech.get(2);
 
-			String key = String.format("%s_mechanism", id);
-			en = String.format("%s Mechanism", en);
-			zh = String.format("%s构件", zh);
+			String completeKey = String.format("%s_mechanism", id);
+			String completeEn = String.format("%s Mechanism", en);
+			String completeZh = String.format("%s构件", zh);
 
-			addItemLanguage(key, en, zh);
+			addItemLanguage(completeKey, completeEn, completeZh);
+
+			String incompleteKey = String.format("incomplete_%s_mechanism", id);
+			String incompleteEn = String.format("Incomplete %s Mechanism", en);
+			String incompleteZh = String.format("%s构件(半成品)", zh);
+
+			addItemLanguage(incompleteKey, incompleteEn, incompleteZh);
 		});
 	}
 

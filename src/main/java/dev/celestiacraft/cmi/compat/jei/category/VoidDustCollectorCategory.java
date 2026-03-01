@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.multiblock.VoidDustCollectorMultiblock;
 import dev.celestiacraft.cmi.api.CmiLang;
@@ -34,7 +34,7 @@ public class VoidDustCollectorCategory {
 				.setIcon(() -> {
 					return new DoubleItemIcon(
 							() -> VOID_SPRING.get().asItem().getDefaultInstance(),
-							() -> CmiBlocks.VOID_DUST_COLLECTOR.get().asItem().getDefaultInstance()
+							() -> CmiBlock.VOID_DUST_COLLECTOR.get().asItem().getDefaultInstance()
 					);
 				})
 				.setBackground(0, 0)
@@ -44,7 +44,7 @@ public class VoidDustCollectorCategory {
 							.addItemStack(VOID_DUST.get().getDefaultInstance());
 					builder.addInvisibleIngredients(RecipeIngredientRole.INPUT)
 							.addItemStack(VOID_SPRING.get().asItem().getDefaultInstance())
-							.addItemStack(CmiBlocks.VOID_DUST_COLLECTOR.get().asItem().getDefaultInstance());
+							.addItemStack(CmiBlock.VOID_DUST_COLLECTOR.get().asItem().getDefaultInstance());
 				})
 				.setDraw((recipe, view, graphics, mouseX, mouseY) -> {
 					AllGuiTextures.JEI_SHADOW.render(graphics, 50, 50);

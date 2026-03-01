@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpRecipe;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.compat.jei.api.CmiGuiTextures;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.multiblock.WaterPumpMultiblock;
@@ -29,7 +29,7 @@ public class WaterPumpCategory {
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(
-							() -> CmiBlocks.WATER_PUMP.get().asItem().getDefaultInstance(),
+							() -> CmiBlock.WATER_PUMP.get().asItem().getDefaultInstance(),
 							() -> Items.WATER_BUCKET.getDefaultInstance()
 					);
 				})

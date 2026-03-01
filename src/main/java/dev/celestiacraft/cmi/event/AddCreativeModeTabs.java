@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import dev.celestiacraft.cmi.common.register.CmiBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -36,14 +36,14 @@ public class AddCreativeModeTabs {
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == KUBEJS_TAB) {
 			List<? extends BlockEntry<? extends Block>> list = List.of(
-					CmiBlocks.MARS_GEO,
-					CmiBlocks.MERCURY_GEO,
-					CmiBlocks.WATER_PUMP,
-					CmiBlocks.ACCELERATOR_MOTOR,
-					CmiBlocks.STEAM_HAMMER,
-					CmiBlocks.ADVANCED_SPOUT,
-					CmiBlocks.VOID_DUST_COLLECTOR,
-					CmiBlocks.BELT_GRINDER
+					CmiBlock.MARS_GEO,
+					CmiBlock.MERCURY_GEO,
+					CmiBlock.WATER_PUMP,
+					CmiBlock.ACCELERATOR_MOTOR,
+					CmiBlock.STEAM_HAMMER,
+					CmiBlock.ADVANCED_SPOUT,
+					CmiBlock.VOID_DUST_COLLECTOR,
+					CmiBlock.BELT_GRINDER
 			);
 			list.forEach((block) -> {
 				event.accept(block.asItem());

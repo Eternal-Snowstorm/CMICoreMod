@@ -6,9 +6,11 @@ import net.minecraft.world.item.Item;
 
 public class ModItemTags {
 	public static final TagKey<Item> MECHANISMS;
+	public static final TagKey<Item> INCOMPLETE_MECHANISMS;
 
 	static {
 		MECHANISMS = TagsBuilder.item("mechanisms", "create");
+		INCOMPLETE_MECHANISMS = TagsBuilder.item("incomplete_mechanisms", "create");
 	}
 
 	public static TagKey<Item> mechanism(String name) {
