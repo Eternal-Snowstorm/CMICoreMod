@@ -1,9 +1,9 @@
-package dev.celestiacraft.cmi.common.item;
+package dev.celestiacraft.cmi.common.item.mechanism;
 
+import dev.celestiacraft.cmi.common.item.MechanismItem;
 import mekanism.api.radiation.capability.IRadiationShielding;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -14,11 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
-public class NuclearMechanismItem extends Item {
-	public NuclearMechanismItem(Item.Properties properties) {
-		super(properties);
-	}
-
+public class NuclearMechanism extends MechanismItem {
 	@Override
 	public @Nullable ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
 		return new ICapabilityProvider() {
