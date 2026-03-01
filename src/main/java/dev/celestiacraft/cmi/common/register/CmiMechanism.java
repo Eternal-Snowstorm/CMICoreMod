@@ -21,6 +21,7 @@ public class CmiMechanism {
 	public static final ItemEntry<NatureItem> NATURE;
 	public static final ItemEntry<EnchantedItem> ENCHANTED;
 	public static final ItemEntry<EnderItem> ENDER;
+	public static final ItemEntry<PotionItem> POTION;
 
 	static {
 		Cmi.REGISTRATE.defaultCreativeTab(ResourceKey.create(
@@ -43,6 +44,8 @@ public class CmiMechanism {
 		ENCHANTED = registerMechanism("enchanted", EnchantedItem::new)
 				.register();
 		ENDER = registerMechanism("ender", EnderItem::new)
+				.register();
+		POTION = registerMechanism("potion", PotionItem::new)
 				.register();
 	}
 

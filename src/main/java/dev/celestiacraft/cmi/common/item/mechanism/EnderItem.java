@@ -24,7 +24,7 @@ public class EnderItem extends MechanismItem {
 	}
 
 	@SubscribeEvent
-	public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+	public static void onRightClick(PlayerInteractEvent.RightClickItem event) {
 		Level level = event.getLevel();
 		Player player = event.getEntity();
 		ItemStack stack = event.getItemStack();
