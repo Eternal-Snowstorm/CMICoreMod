@@ -27,25 +27,27 @@ public class PotionItem extends MechanismItem {
 	public static void onRightClick(PlayerInteractEvent.RightClickItem event) {
 		Level level = event.getLevel();
 		Player player = event.getEntity();
-		ItemStack stack = event.getItemStack();
+		ItemStack item = event.getItemStack();
 		BlockPos pos = player.blockPosition();
 
 		if (level.isClientSide()) {
 			return;
 		}
 
-		List<MobEffect> effects = List.of(
-				MobEffects.SATURATION,
-				MobEffects.FIRE_RESISTANCE,
-				MobEffects.DIG_SPEED,
-				MobEffects.DAMAGE_RESISTANCE,
-				MobEffects.ABSORPTION,
-				MobEffects.REGENERATION
-		);
-		effects.forEach((effect) -> {
-			MobEffectInstance instance = new MobEffectInstance(effect, 300, 8);
-			player.addEffect(instance);
-		});
-		player.playNotifySound(AllSoundEvents.CRAFTER_CLICK.getMainEvent(), SoundSource.VOICE, 2, 1);
+		if (item.getItem() instanceof PotionItem potion) {
+			List<MobEffect> effects = List.of(
+					MobEffects.SATURATION,
+					MobEffects.FIRE_RESISTANCE,
+					MobEffects.DIG_SPEED,
+					MobEffects.DAMAGE_RESISTANCE,
+					MobEffects.ABSORPTION,
+					MobEffects.REGENERATION
+			);
+			effects.forEach((effect) -> {
+				MobEffectInstance instance = new MobEffectInstance(effect, 300, 8);
+				player.addEffect(instance);
+			});
+			player.playNotifySound(AllSoundEvents.CRAFTER_CLICK.getMainEvent(), SoundSource.VOICE, 2, 1);
+		}
 	}
 }
