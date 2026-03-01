@@ -7,8 +7,8 @@ public class OtherLanguage extends LanguageGenerate {
 	public static void addLang() {
 		addCreativeTabLang(
 				"mechanisms",
-				"构件与革新: 构件",
-				"CMI: Mechanisms"
+				"CMI: Mechanisms",
+				"构件与革新: 构件"
 		);
 		addCustomLang(
 				"curios.identifier.mechanisms",

@@ -29,5 +29,8 @@ public class DataGenerators {
 		LanguageGenerate.register();
 		generator.addProvider(event.includeClient(), new English(output));
 		generator.addProvider(event.includeClient(), new Chinese(output));
+
+		// Server
+		generator.addProvider(server, new WorldGenProvider(output, provider));
 	}
 }
