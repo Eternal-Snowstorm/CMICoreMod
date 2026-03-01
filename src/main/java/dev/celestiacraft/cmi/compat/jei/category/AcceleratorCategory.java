@@ -7,6 +7,7 @@ import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.ChatFormatting;
@@ -14,17 +15,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.api.CmiLang;
 import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 
 public class AcceleratorCategory {
-	public static final Item ACCELERATOR_ITEM = ForgeRegistries.ITEMS.getValue(Cmi.loadResource("accelerator"));
-	private static final Block ACCELERATOR_BLOCK = ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("accelerator"));
 	private static final Item PRECISION_MECHANISM = ForgeRegistries.ITEMS.getValue(Create.asResource("precision_mechanism"));
 
 	@SuppressWarnings("removal")
@@ -34,7 +31,7 @@ public class AcceleratorCategory {
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(
-							() -> ACCELERATOR_ITEM.getDefaultInstance(),
+							() -> CmiBlock.ACCELERATOR_BLOCK.get().asItem().getDefaultInstance(),
 							() -> PRECISION_MECHANISM.getDefaultInstance()
 					);
 				})
@@ -92,7 +89,7 @@ public class AcceleratorCategory {
 					pose.mulPose(Axis.XP.rotationDegrees(-15.5f));
 					pose.mulPose(Axis.YP.rotationDegrees(22.5f));
 
-					AnimatedKinetics.defaultBlockElement(ACCELERATOR_BLOCK.defaultBlockState())
+					AnimatedKinetics.defaultBlockElement(CmiBlock.ACCELERATOR_BLOCK.get().defaultBlockState())
 							.rotateBlock(0, 180, 0)
 							.atLocal(0.0, 0.0, 0.0)
 							.scale(24.0)

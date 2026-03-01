@@ -6,10 +6,7 @@ import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.item.mechanism.CopperItem;
-import dev.celestiacraft.cmi.common.item.mechanism.NuclearItem;
-import dev.celestiacraft.cmi.common.item.mechanism.PigIronItem;
-import dev.celestiacraft.cmi.common.item.mechanism.WoodenItem;
+import dev.celestiacraft.cmi.common.item.mechanism.*;
 import dev.celestiacraft.cmi.tag.ModItemTags;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -20,6 +17,7 @@ public class CmiMechanism {
 	public static final ItemEntry<NuclearItem> NUCLEAR;
 	public static final ItemEntry<PigIronItem> PIG_IRON;
 	public static final ItemEntry<CopperItem> COPPER;
+	public static final ItemEntry<CoilItem> COIL;
 
 	static {
 		Cmi.REGISTRATE.defaultCreativeTab(ResourceKey.create(
@@ -34,6 +32,8 @@ public class CmiMechanism {
 		PIG_IRON = registerMechanism("pig_iron", PigIronItem::new)
 				.register();
 		COPPER = registerMechanism("copper", CopperItem::new)
+				.register();
+		COIL = registerMechanism("coil",CoilItem::new)
 				.register();
 	}
 

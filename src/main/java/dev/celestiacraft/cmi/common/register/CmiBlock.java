@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.common.register;
 
+import com.simibubi.create.AllTags;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -7,6 +8,8 @@ import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.block.accelerator.AcceleratorBlock;
+import dev.celestiacraft.cmi.common.block.accelerator.AcceleratorItem;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorBlock;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorItem;
 import dev.celestiacraft.cmi.common.block.advanced_spout.AdvancedSpoutBlock;
@@ -20,6 +23,10 @@ import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorB
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorItem;
 import dev.celestiacraft.cmi.common.block.water_pump.WaterPumpBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerItem;
+import net.minecraft.tags.BlockTags;
+import net.minecraftforge.client.model.generators.BlockModelProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.common.Tags;
 
 public class CmiBlock {
 	public static final BlockEntry<TestGravelBlock> TEST_GRAVEL;
@@ -32,8 +39,26 @@ public class CmiBlock {
 	public static final BlockEntry<AdvancedSpoutBlock> ADVANCED_SPOUT;
 	public static final BlockEntry<VoidDustCollectorBlock> VOID_DUST_COLLECTOR;
 	public static final BlockEntry<BeltGrinderBlock> BELT_GRINDER;
+	public static final BlockEntry<AcceleratorBlock> ACCELERATOR_BLOCK;
 
 	static {
+		ACCELERATOR_BLOCK = Cmi.REGISTRATE.block("accelerator", AcceleratorBlock::new)
+				.item(AcceleratorItem::new)
+				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(Cmi.loadResource("block/ore/ore")))
+										.build();
+							});
+				})
+				.register();
+
 		TEST_GRAVEL = Cmi.REGISTRATE.block("test_gravel", TestGravelBlock::new)
 				.item()
 				.build()
