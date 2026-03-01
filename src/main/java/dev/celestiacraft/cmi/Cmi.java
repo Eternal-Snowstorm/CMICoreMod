@@ -58,6 +58,8 @@ public class Cmi {
 		CmiRecipeSerializer.register(bus);
 		CmiCreateRecipe.register(bus);
 
+		CmiCreativeTab.register(bus);
+
 		CmiBlockPartialModel.init();
 		CmiSpriteShiftEntry.init();
 
