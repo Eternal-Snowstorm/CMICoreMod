@@ -12,8 +12,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import static java.lang.Math.PI;
-
 public class SculkItem extends MechanismItem {
 	public SculkItem(Properties properties) {
 		super(properties);
@@ -22,7 +20,7 @@ public class SculkItem extends MechanismItem {
 	@SubscribeEvent
 	public static void onRightClickEvent(PlayerInteractEvent.RightClickItem event) {
 		int sonicBoobRange = 10;
-		double sonicBoomAngle = PI / 13;
+		double sonicBoomAngle = Math.PI / 13;
 		Level level = event.getLevel();
 		Player player = event.getEntity();
 		ItemStack stack = event.getItemStack();
@@ -66,12 +64,13 @@ public class SculkItem extends MechanismItem {
 			);
 		}
 
-		serverLevel.getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(sonicBoobRange)).forEach(entity -> {
-			Vec3 direction = entity.getEyePosition().subtract(startingPos).normalize();
+		serverLevel.getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(sonicBoobRange))
+				.forEach((entity) -> {
+					Vec3 direction = entity.getEyePosition().subtract(startingPos).normalize();
 
-			if (Math.acos(direction.dot(sight)) <= sonicBoomAngle && entity.isAlive()) {
-				entity.hurt(level.damageSources().sonicBoom(player), 10);
-			}
-		});
+					if (Math.acos(direction.dot(sight)) <= sonicBoomAngle && entity.isAlive()) {
+						entity.hurt(level.damageSources().sonicBoom(player), 10);
+					}
+				});
 	}
 }
