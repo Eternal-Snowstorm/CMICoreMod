@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.common.register;
 
+import com.simibubi.create.AllItems;
 import dev.celestiacraft.cmi.Cmi;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -18,7 +19,7 @@ public class CmiCreativeTab {
 		TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Cmi.MODID);
 
 		MECHANISMS = addCreativeModeTab("mechanisms", () -> {
-			return CmiMechanism.NUCLEAR.asStack();
+			return AllItems.PRECISION_MECHANISM.asStack();
 		});
 	}
 
