@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.compat.jei.category.multiblock;
+package dev.celestiacraft.cmi.compat.jei.category.structure;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -13,7 +13,7 @@ import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlock;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 
-public class VoidDustCollectorMultiblock extends AnimatedKinetics {
+public class VoidDustCollectorStructure extends AnimatedKinetics {
 	private static final Lazy<Block> VOID_SPRING = Lazy.of(() -> {
 		return ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("void_spring"));
 	});

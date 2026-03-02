@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.compat.jei.category.multiblock;
+package dev.celestiacraft.cmi.compat.jei.category.structure;
 
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles;
 import blusunrize.immersiveengineering.common.register.IEBlocks;
@@ -17,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 
-public class WaterPumpMultiblock extends AnimatedKinetics {
+public class WaterPumpStructure extends AnimatedKinetics {
 	private static final Lazy<Block> STAIRS = Lazy.of(() -> {
 		String stair = "immersiveengineering:stairs_treated_wood_horizontal";
 		return ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(stair));

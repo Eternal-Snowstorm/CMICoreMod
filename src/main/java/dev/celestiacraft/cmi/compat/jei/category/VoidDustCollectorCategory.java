@@ -13,14 +13,14 @@ import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
-import dev.celestiacraft.cmi.compat.jei.category.multiblock.VoidDustCollectorMultiblock;
+import dev.celestiacraft.cmi.compat.jei.category.structure.VoidDustCollectorStructure;
 import dev.celestiacraft.cmi.api.CmiLang;
 import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 
 public class VoidDustCollectorCategory {
 	public static final Block VOID_SPRING = ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("void_spring"));
 	private static final Item VOID_DUST = ForgeRegistries.ITEMS.getValue(Cmi.loadResource("void_dust"));
-	private static final VoidDustCollectorMultiblock VOID_MB = new VoidDustCollectorMultiblock();
+	private static final VoidDustCollectorStructure VOID_MB = new VoidDustCollectorStructure();
 
 	public static SimpleJeiCategory<VoidDustCollectorRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.VOID_DUST_COLLECTOR, helper)

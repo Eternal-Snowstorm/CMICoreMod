@@ -13,7 +13,7 @@ import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpRecipe;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.compat.jei.api.CmiGuiTextures;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
-import dev.celestiacraft.cmi.compat.jei.category.multiblock.WaterPumpMultiblock;
+import dev.celestiacraft.cmi.compat.jei.category.structure.WaterPumpStructure;
 import dev.celestiacraft.cmi.api.CmiLang;
 import dev.celestiacraft.libs.client.ClientRenderUtils;
 import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
@@ -21,7 +21,7 @@ import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 import java.util.Collections;
 
 public class WaterPumpCategory {
-	private static final WaterPumpMultiblock WATER_PUMP_MB = new WaterPumpMultiblock();
+	private static final WaterPumpStructure WATER_PUMP_MB = new WaterPumpStructure();
 
 	public static SimpleJeiCategory<WaterPumpRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.WATER_PUMP, helper)

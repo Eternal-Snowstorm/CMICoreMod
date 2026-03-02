@@ -9,14 +9,13 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpSeaWaterRecipe;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.compat.jei.api.CmiGuiTextures;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
-import dev.celestiacraft.cmi.compat.jei.category.multiblock.WaterPumpMultiblock;
+import dev.celestiacraft.cmi.compat.jei.category.structure.WaterPumpStructure;
 import dev.celestiacraft.cmi.api.CmiLang;
 import dev.celestiacraft.libs.client.ClientRenderUtils;
 import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
@@ -24,7 +23,7 @@ import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 import java.util.Collections;
 
 public class WaterPumpSeaWaterCategory {
-	private static final WaterPumpMultiblock WATER_PUMP_MB = new WaterPumpMultiblock();
+	private static final WaterPumpStructure WATER_PUMP_MB = new WaterPumpStructure();
 	private static final Fluid SEA_WATER = ForgeRegistries.FLUIDS.getValue(Cmi.loadResource("sea_water"));
 	private static final Item SEA_WATER_BUCKET = ForgeRegistries.ITEMS.getValue(Cmi.loadResource("sea_water_bucket"));
 
