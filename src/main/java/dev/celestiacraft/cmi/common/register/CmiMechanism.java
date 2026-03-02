@@ -102,7 +102,7 @@ public class CmiMechanism extends MechanismRegister {
 				.register();
 		BASIC_MEKANISM = registerMechanism("basic_mekanism", BasicMekanismItem::new)
 				.register();
-		ADVANCED_MEKANISM = registerMechanism("advancced_mekanism", AdvancedMekanismItem::new)
+		ADVANCED_MEKANISM = registerMechanism("advanced_mekanism", AdvancedMekanismItem::new)
 				.register();
 		ELITE_MEKANISM = registerMechanism("elite_mekanism", EliteMekanismItem::new)
 				.register();
