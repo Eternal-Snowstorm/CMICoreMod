@@ -1,76 +1,104 @@
 package dev.celestiacraft.cmi.common.item.mechanism;
 
+import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.item.MechanismItem;
+import dev.celestiacraft.cmi.common.register.CmiMechanism;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SculkItem extends MechanismItem {
+	private static final int SONIC_BOOM_RANGE = 10;
+	private static final double SONIC_BOOM_ANGLE = Math.PI / 13;
+	private static final int SONIC_BOOM_COOLDOWN = 100;
+
 	public SculkItem(Properties properties) {
 		super(properties);
 	}
 
 	@SubscribeEvent
 	public static void onRightClickEvent(PlayerInteractEvent.RightClickItem event) {
-		int sonicBoobRange = 10;
-		double sonicBoomAngle = Math.PI / 13;
 		Level level = event.getLevel();
 		Player player = event.getEntity();
 		ItemStack stack = event.getItemStack();
-		ServerLevel serverLevel = (ServerLevel) level;
 
 		if (level.isClientSide()) {
 			return;
 		}
 
-		if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+		if (stack.is(CmiMechanism.SCULK.get())) {
+			fireSonicBoom((ServerLevel) level, (ServerPlayer) player);
+		}
+	}
+
+	public static void onInteractEntity(PlayerInteractEvent.EntityInteractSpecific event) {
+		Level level = event.getLevel();
+		Player player = event.getEntity();
+
+		if (level.isClientSide()) {
 			return;
 		}
 
-		Vec3 sight = player.getEyePosition();
-		Vec3 startingPos = player.getEyePosition(1);
+		fireSonicBoom((ServerLevel) level, (ServerPlayer) player);
+		event.setCanceled(true);
+	}
 
-		serverLevel.playSound(
+	private static void fireSonicBoom(ServerLevel level, ServerPlayer player) {
+		if (player.getCooldowns().isOnCooldown(CmiMechanism.SCULK.get())) {
+			return;
+		}
+
+		Vec3 sight = player.getViewVector(1.0f).normalize();
+		Vec3 startingPosition = player.getEyePosition();
+
+		level.playSound(
 				null,
-				startingPos.x,
-				startingPos.y,
-				startingPos.z,
+				startingPosition.x(),
+				startingPosition.y(),
+				startingPosition.z(),
 				SoundEvents.WARDEN_SONIC_BOOM,
-				SoundSource.PLAYERS,
-				3.0f,
-				1.0f
+				SoundSource.HOSTILE,
+				3,
+				1
 		);
 
-		for (int i = 1; i <= sonicBoobRange; i++) {
-			Vec3 sonicBoomPos = startingPos.add(sight.scale(i));
-
-			serverLevel.sendParticles(
+		for (int i = 1; i < SONIC_BOOM_RANGE; i++) {
+			Vec3 pos = startingPosition.add(sight.scale(i));
+			level.sendParticles(
 					ParticleTypes.SONIC_BOOM,
-					sonicBoomPos.x,
-					sonicBoomPos.y,
-					sonicBoomPos.z,
+					pos.x(),
+					pos.y(),
+					pos.z(),
 					1,
-					0.5,
-					0.5,
-					0.5,
-					0.1
+					0,
+					0,
+					0,
+					0
 			);
 		}
 
-		serverLevel.getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(sonicBoobRange))
-				.forEach((entity) -> {
-					Vec3 direction = entity.getEyePosition().subtract(startingPos).normalize();
+		level.getEntitiesOfClass(
+				LivingEntity.class,
+				player.getBoundingBox().inflate(SONIC_BOOM_RANGE)
+		).forEach((entity) -> {
+			Vec3 direction = entity.getEyePosition().subtract(startingPosition).normalize();
 
-					if (Math.acos(direction.dot(sight)) <= sonicBoomAngle && entity.isAlive()) {
-						entity.hurt(level.damageSources().sonicBoom(player), 10);
-					}
-				});
+			if (Math.acos(direction.dot(sight)) <= SONIC_BOOM_ANGLE && entity.isAlive()) {
+				entity.hurt(player.damageSources().sonicBoom(player), 10);
+			}
+		});
+
+		player.getCooldowns().addCooldown(CmiMechanism.SCULK.get(), SONIC_BOOM_COOLDOWN);
 	}
 }
