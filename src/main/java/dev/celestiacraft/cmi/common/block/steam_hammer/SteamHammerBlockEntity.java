@@ -134,13 +134,25 @@ public class SteamHammerBlockEntity extends MechanicalPressBlockEntity {
 		return (ingredients.size() == 4 || ingredients.size() == 9) && ItemHelper.matchAllIngredients(ingredients);
 	}
 
+	private LazyOptional<IFluidHandler> fluidCapability = LazyOptional.of(() -> fluidHandler);
+
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
 		if (capability == ForgeCapabilities.FLUID_HANDLER) {
-			return LazyOptional.of(() -> {
-				return fluidHandler;
-			}).cast();
+			return fluidCapability.cast();
 		}
 		return super.getCapability(capability, side);
+	}
+
+	@Override
+	public void invalidateCaps() {
+		super.invalidateCaps();
+		fluidCapability.invalidate();
+	}
+
+	@Override
+	public void reviveCaps() {
+		super.reviveCaps();
+		fluidCapability = LazyOptional.of(() -> fluidHandler);
 	}
 }
