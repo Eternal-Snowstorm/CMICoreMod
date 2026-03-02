@@ -90,7 +90,7 @@ public class CmiMechanism extends MechanismRegister {
 				.register();
 		SMART = registerMechanism("smart", SmartItem::new)
 				.register();
-		COBALT = registerMechanism("gobalt", CobaltItem::new)
+		COBALT = registerMechanism("cobalt", CobaltItem::new)
 				.register();
 		PHOTOSENSITIVE = registerMechanism("photosensitive", Photosensitive::new)
 				.register();
