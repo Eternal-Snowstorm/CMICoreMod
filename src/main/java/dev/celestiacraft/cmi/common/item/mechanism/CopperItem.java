@@ -50,7 +50,7 @@ public class CopperItem extends MechanismItem {
 			// 创建投掷水瓶
 			ThrownPotion potion = new ThrownPotion(level, player);
 
-			ItemStack potionStack = new ItemStack(Items.SPLASH_POTION);
+			ItemStack potionStack = Items.SPLASH_POTION.getDefaultInstance();
 			PotionUtils.setPotion(potionStack, Potions.WATER);
 			potion.setItem(potionStack);
 
