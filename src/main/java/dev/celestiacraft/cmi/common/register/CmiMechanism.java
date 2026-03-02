@@ -19,6 +19,7 @@ public class CmiMechanism extends MechanismRegister {
 	public static final ItemEntry<PotionItem> POTION;
 	public static final ItemEntry<StoneItem> STONE;
 	public static final ItemEntry<IronItem> IRON;
+	public static final ItemEntry<SculkItem> SCULK;
 
 	static {
 		Cmi.REGISTRATE.defaultCreativeTab(ResourceKey.create(
@@ -48,8 +49,9 @@ public class CmiMechanism extends MechanismRegister {
 				.register();
 		IRON = registerMechanism("iron", IronItem::new)
 				.register();
+		SCULK = registerMechanism("sculk", SculkItem::new)
+				.register();
 	}
-
 
 
 	public static void register() {

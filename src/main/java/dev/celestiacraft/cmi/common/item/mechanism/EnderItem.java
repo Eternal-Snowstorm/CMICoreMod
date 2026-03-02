@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.common.item.mechanism;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.item.MechanismItem;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -29,6 +30,7 @@ public class EnderItem extends MechanismItem {
 		Player player = event.getEntity();
 		ItemStack stack = event.getItemStack();
 		BlockPos pos = player.blockPosition();
+		BlockPos positionClicked = event.getPos();
 
 		if (level.isClientSide()) {
 			return;
@@ -36,6 +38,48 @@ public class EnderItem extends MechanismItem {
 
 		if (stack.getItem() instanceof EnderItem item) {
 			ServerLevel serverLevel = (ServerLevel) level;
+
+			if (level.getBlockState(positionClicked) == CmiBlock.ACCELERATOR_BLOCK.getDefaultState()) {
+				CompoundTag tag = stack.getTag();
+				if (tag != null) {
+					float x = tag.getInt("x");
+					float y = tag.getInt("y");
+					float z = tag.getInt("z");
+					String dim = tag.getString("dim");
+					if (serverLevel.dimension().location().toString() == dim) {
+
+						player.teleportTo(x, y, z);
+						serverLevel.playSound(
+								null,
+								x,
+								y,
+								z,
+								SoundEvents.PORTAL_TRAVEL,
+								SoundSource.PLAYERS,
+								1.0F,
+								1.0F
+						);
+						serverLevel.sendParticles(
+								ParticleTypes.DRAGON_BREATH,
+								x,
+								y,
+								z,
+								50,
+								0.5,
+								0.5,
+								0.5,
+								0.1
+						);
+
+						tag.remove("x");
+						tag.remove("y");
+						tag.remove("z");
+						tag.remove("dim");
+					} else {
+						player.sendSystemMessage(Component.translatable("promp.cmi.ender_mechanism.different_dimension"));
+					}
+				}
+			}
 
 			if (player.isCrouching()) {
 				if (stack.hasTag()) {
