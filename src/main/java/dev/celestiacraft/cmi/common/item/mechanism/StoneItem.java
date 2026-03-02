@@ -22,7 +22,7 @@ public class StoneItem extends MechanismItem {
 	@SubscribeEvent
 	public static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
 		Level level = event.getLevel();
-		ItemStack item = event.getItemStack();
+		ItemStack stack = event.getItemStack();
 		Player player = event.getEntity();
 		BlockPos pos = event.getPos();
 		BlockState state = level.getBlockState(pos);
@@ -31,7 +31,7 @@ public class StoneItem extends MechanismItem {
 			return;
 		}
 
-		if (item.getItem() instanceof PotionItem stone) {
+		if (stack.getItem() instanceof PotionItem item) {
 			if (event.getHand() != InteractionHand.MAIN_HAND && !state.is(Blocks.COBBLESTONE)) {
 				level.setBlock(pos, Blocks.STONE.defaultBlockState(), 3);
 				player.swing(event.getHand());

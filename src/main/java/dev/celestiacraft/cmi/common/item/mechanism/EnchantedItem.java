@@ -22,7 +22,7 @@ public class EnchantedItem extends MechanismItem {
 	@SubscribeEvent
 	public static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
 		Level level = event.getLevel();
-		ItemStack item = event.getItemStack();
+		ItemStack stack = event.getItemStack();
 		Player player = event.getEntity();
 		BlockPos pos = event.getPos();
 		BlockState state = level.getBlockState(pos);
@@ -31,7 +31,7 @@ public class EnchantedItem extends MechanismItem {
 			return;
 		}
 
-		if (item.getItem() instanceof EnchantedItem enchanted) {
+		if (stack.getItem() instanceof EnchantedItem item) {
 			// 创建经验球
 			ExperienceOrb orb = new ExperienceOrb(
 					(ServerLevel) level,

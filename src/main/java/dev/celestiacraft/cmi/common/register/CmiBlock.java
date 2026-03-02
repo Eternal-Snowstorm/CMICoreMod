@@ -44,6 +44,9 @@ public class CmiBlock {
 	static {
 		ACCELERATOR_BLOCK = Cmi.REGISTRATE.block("accelerator", AcceleratorBlock::new)
 				.item(AcceleratorItem::new)
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/accelerator"));
+				})
 				.build()
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
@@ -53,7 +56,7 @@ public class CmiBlock {
 							.forAllStatesExcept((state) -> {
 								BlockModelProvider models = provider.models();
 								return ConfiguredModel.builder()
-										.modelFile(models.getExistingFile(Cmi.loadResource("block/accelerator")))
+										.modelFile(models.getExistingFile(provider.modLoc("block/accelerator")))
 										.build();
 							});
 				})
@@ -69,60 +72,140 @@ public class CmiBlock {
 				.build()
 				.register();
 		WATER_PUMP = Cmi.REGISTRATE.block("water_pump", WaterPumpBlock::new)
-				.blockstate(NonNullBiConsumer.noop())
 				.item()
-				.model(NonNullBiConsumer.noop())
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/water_pump"));
+				})
 				.build()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/water_pump")))
+										.build();
+							});
+				})
 				.register();
 		MARS_GEO = Cmi.REGISTRATE.block("mars_geothermal_vent", MarsGeothermalVentBlock::new)
-				.blockstate(NonNullBiConsumer.noop())
 				.item()
-				.model(NonNullBiConsumer.noop())
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/mars_geothermal_vent"));
+				})
 				.build()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/mars_geothermal_vent")))
+										.build();
+							});
+				})
 				.register();
 		MERCURY_GEO = Cmi.REGISTRATE.block("mercury_geothermal_vent", MercuryGeothermalVentBlock::new)
-				.blockstate(NonNullBiConsumer.noop())
 				.item()
-				.model(NonNullBiConsumer.noop())
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/mercury_geothermal_vent"));
+				})
 				.build()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/mercury_geothermal_vent")))
+										.build();
+							});
+				})
 				.register();
 		STEAM_HAMMER = Cmi.REGISTRATE.block("steam_hammer", SteamHammerBlock::new)
 				.initialProperties(SharedProperties::stone)
-				.blockstate(NonNullBiConsumer.noop())
 				.transform(BlockStressDefaults.setImpact(16.0))
 				.item(SteamHammerItem::new)
-				.model(NonNullBiConsumer.noop())
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/steam_hammer/item"));
+				})
 				.build()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/steam_hammer/block")))
+										.build();
+							});
+				})
 				.register();
 		ACCELERATOR_MOTOR = Cmi.REGISTRATE.block("accelerator_motor", AcceleratorMotorBlock::new)
 				.initialProperties(SharedProperties::stone)
-				.blockstate(NonNullBiConsumer.noop())
 				.transform(BlockStressDefaults.setCapacity(0))
 				.transform(BlockStressDefaults.setGeneratorSpeed(() -> Couple.create(0, 256)))
 				.item(AcceleratorMotorItem::new)
-				.model(NonNullBiConsumer.noop())
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/accelerator_motor/item"));
+				})
 				.build()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/accelerator_motor/block")))
+										.build();
+							});
+				})
 				.register();
 		ADVANCED_SPOUT = Cmi.REGISTRATE.block("advanced_spout", AdvancedSpoutBlock::new)
 				.initialProperties(SharedProperties::copperMetal)
-				.blockstate(NonNullBiConsumer.noop())
 				.item(AssemblyOperatorBlockItem::new)
-				.model(NonNullBiConsumer.noop())
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/advanced_spout/item"));
+				})
 				.build()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/advanced_spout/block")))
+										.build();
+							});
+				})
 				.register();
 		VOID_DUST_COLLECTOR = Cmi.REGISTRATE.block("void_dust_collector", VoidDustCollectorBlock::new)
-				.blockstate(NonNullBiConsumer.noop())
 				.item(VoidDustCollectorItem::new)
-				.model(NonNullBiConsumer.noop())
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/void_dust_collector/off"));
+				})
 				.build()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/void_dust_collector/off")))
+										.build();
+							});
+				})
 				.register();
 		BELT_GRINDER = Cmi.REGISTRATE.block("mechanical_belt_grinder", BeltGrinderBlock::new)
 				.initialProperties(SharedProperties::stone)
-				.blockstate(NonNullBiConsumer.noop())
 				.transform(BlockStressDefaults.setImpact(8.0))
 				.item()
-				.model(NonNullBiConsumer.noop())
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/mechanical_belt_grinder/item"));
+				})
 				.build()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/mechanical_belt_grinder/block")))
+										.build();
+							});
+				})
 				.register();
 	}
 

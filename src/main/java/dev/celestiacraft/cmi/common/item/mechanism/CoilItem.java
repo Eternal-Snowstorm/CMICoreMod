@@ -23,12 +23,12 @@ public class CoilItem extends MechanismItem {
 	@SubscribeEvent
 	public static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
 		Level level = event.getLevel();
-		ItemStack item = event.getItemStack();
+		ItemStack stack = event.getItemStack();
 		Player player = event.getEntity();
 		BlockPos pos = event.getPos();
 		BlockState state = level.getBlockState(pos);
 
-		if (!(item.getItem() instanceof CoilItem coil)) {
+		if (!(stack.getItem() instanceof CoilItem item)) {
 			if (state.is(CmiBlock.ACCELERATOR_BLOCK.get())) {
 				LightningBolt LIGHTNING = EntityType.LIGHTNING_BOLT.create(level);
 

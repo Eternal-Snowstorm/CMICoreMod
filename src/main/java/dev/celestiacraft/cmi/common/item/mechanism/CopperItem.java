@@ -30,13 +30,13 @@ public class CopperItem extends MechanismItem {
 	public static void onRightClick(PlayerInteractEvent.RightClickItem event) {
 		Level level = event.getLevel();
 		Player player = event.getEntity();
-		ItemStack item = event.getItemStack();
+		ItemStack stack = event.getItemStack();
 
 		if (level.isClientSide()) {
 			return;
 		}
 
-		if (item.getItem() instanceof CopperItem copper) {
+		if (stack.getItem() instanceof CopperItem item) {
 			// 射线检测
 			HitResult hitResult = player.pick(5.0D, 0.0F, false);
 			if (hitResult instanceof BlockHitResult blockHit) {

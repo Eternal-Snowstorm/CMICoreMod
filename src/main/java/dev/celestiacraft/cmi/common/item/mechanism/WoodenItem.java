@@ -23,7 +23,7 @@ public class WoodenItem extends MechanismItem {
 	@SubscribeEvent
 	public static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
 		Level level = event.getLevel();
-		ItemStack item = event.getItemStack();
+		ItemStack stack = event.getItemStack();
 		Player player = event.getEntity();
 		BlockPos pos = event.getPos();
 		BlockState state = level.getBlockState(pos);
@@ -32,7 +32,7 @@ public class WoodenItem extends MechanismItem {
 			return;
 		}
 
-		if (item.getItem() instanceof WoodenItem wooden) {
+		if (stack.getItem() instanceof WoodenItem item) {
 			BlockHitResult result = new BlockHitResult(
 					event.getHitVec().getLocation(),
 					event.getFace(),
@@ -44,7 +44,7 @@ public class WoodenItem extends MechanismItem {
 					level,
 					player,
 					event.getHand(),
-					wooden.getDefaultInstance(),
+					item.getDefaultInstance(),
 					result
 			);
 

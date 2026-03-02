@@ -34,7 +34,7 @@ public class EnderItem extends MechanismItem {
 			return;
 		}
 
-		if (stack.getItem() instanceof EnderItem ender) {
+		if (stack.getItem() instanceof EnderItem item) {
 			ServerLevel serverLevel = (ServerLevel) level;
 
 			if (player.isCrouching()) {

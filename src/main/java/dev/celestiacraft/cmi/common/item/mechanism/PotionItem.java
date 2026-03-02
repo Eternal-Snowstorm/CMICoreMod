@@ -27,14 +27,14 @@ public class PotionItem extends MechanismItem {
 	public static void onRightClick(PlayerInteractEvent.RightClickItem event) {
 		Level level = event.getLevel();
 		Player player = event.getEntity();
-		ItemStack item = event.getItemStack();
+		ItemStack stack = event.getItemStack();
 		BlockPos pos = player.blockPosition();
 
 		if (level.isClientSide()) {
 			return;
 		}
 
-		if (item.getItem() instanceof PotionItem potion) {
+		if (stack.getItem() instanceof PotionItem item) {
 			List<MobEffect> effects = List.of(
 					MobEffects.SATURATION,
 					MobEffects.FIRE_RESISTANCE,

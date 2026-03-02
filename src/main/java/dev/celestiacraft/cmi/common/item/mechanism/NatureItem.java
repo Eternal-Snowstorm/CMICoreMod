@@ -23,7 +23,7 @@ public class NatureItem extends MechanismItem {
 	@SubscribeEvent
 	public static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
 		Level level = event.getLevel();
-		ItemStack item = event.getItemStack();
+		ItemStack stack = event.getItemStack();
 		Player player = event.getEntity();
 		BlockPos pos = event.getPos();
 		BlockState state = level.getBlockState(pos);
@@ -32,7 +32,7 @@ public class NatureItem extends MechanismItem {
 			return;
 		}
 
-		if (item.getItem() instanceof NatureItem nature) {
+		if (stack.getItem() instanceof NatureItem item) {
 			BlockHitResult result = new BlockHitResult(
 					event.getHitVec().getLocation(),
 					event.getFace(),
@@ -44,7 +44,7 @@ public class NatureItem extends MechanismItem {
 					level,
 					player,
 					event.getHand(),
-					nature.getDefaultInstance(),
+					item.getDefaultInstance(),
 					result
 			);
 
