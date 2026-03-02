@@ -4,6 +4,9 @@ import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.datagen.language.LanguageGenerate;
 import dev.celestiacraft.cmi.datagen.language.locale.Chinese;
 import dev.celestiacraft.cmi.datagen.language.locale.English;
+import dev.celestiacraft.cmi.datagen.tags.ModBlockTagsProvider;
+import dev.celestiacraft.cmi.datagen.tags.ModFluidTagsProvider;
+import dev.celestiacraft.cmi.datagen.tags.ModItemTagsProvider;
 import dev.celestiacraft.cmi.worldgen.WorldGenProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -30,6 +33,15 @@ public class DataGenerators {
 		generator.addProvider(event.includeClient(), new Chinese(output));
 
 		// Server
-		generator.addProvider(event.includeServer(), new WorldGenProvider(output, provider));
+		ModBlockTagsProvider blockTags = new ModBlockTagsProvider(output, provider, helper);
+		ModItemTagsProvider itemTags = new ModItemTagsProvider(output, provider, blockTags, helper);
+		ModFluidTagsProvider fluidTags = new ModFluidTagsProvider(output, provider, helper);
+		WorldGenProvider worldGen = new WorldGenProvider(output, provider);
+
+		generator.addProvider(event.includeServer(), blockTags);
+		generator.addProvider(event.includeServer(), itemTags);
+		generator.addProvider(event.includeServer(), fluidTags);
+
+		generator.addProvider(event.includeServer(), worldGen);
 	}
 }

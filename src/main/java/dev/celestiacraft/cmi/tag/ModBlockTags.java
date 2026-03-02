@@ -7,13 +7,9 @@ import dev.celestiacraft.libs.tags.TagsBuilder;
 
 public class ModBlockTags {
 	public static final TagKey<Block> GRILL_SOURCES;
-	public static final TagKey<Block> SPOUT_ATTACHMENTS;
 
 	static {
 		GRILL_SOURCES = TagsBuilder.block("grill_sources")
-				.namespace(Cmi.MODID);
-
-		SPOUT_ATTACHMENTS = TagsBuilder.block("spout_attachments")
 				.namespace(Cmi.MODID);
 	}
 }
