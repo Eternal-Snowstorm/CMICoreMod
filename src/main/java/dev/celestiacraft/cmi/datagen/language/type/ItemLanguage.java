@@ -21,7 +21,7 @@ public class ItemLanguage extends LanguageGenerate {
 				setInfo("sculk", "Sculk", "幽匿"),
 				setInfo("ender", "Ender", "末影"),
 				setInfo("copper", "Fluid", "流体"),
-				setInfo("andesite", "kinetic", "动能"),
+				setInfo("andesite", "Kinetic", "动能"),
 				setInfo("bronze", "Steam", "蒸汽"),
 				setInfo("railway", "Railway", "铁路"),
 				setInfo("precision", "Precision", "精密"),

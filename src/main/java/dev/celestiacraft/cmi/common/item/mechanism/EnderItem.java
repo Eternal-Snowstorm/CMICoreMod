@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -39,9 +40,9 @@ public class EnderItem extends MechanismItem {
 		if (stack.getItem() instanceof EnderItem item) {
 			ServerLevel serverLevel = (ServerLevel) level;
 
-			if (level.getBlockState(positionClicked) == CmiBlock.ACCELERATOR_BLOCK.getDefaultState()) {
+			if (level.getBlockState(positionClicked).getBlock().defaultBlockState() == CmiBlock.ACCELERATOR_BLOCK.getDefaultState()) {
 				CompoundTag tag = stack.getTag();
-				if (tag != null) {
+				if (stack.hasTag()) {
 					float x = tag.getInt("x");
 					float y = tag.getInt("y");
 					float z = tag.getInt("z");
@@ -49,6 +50,7 @@ public class EnderItem extends MechanismItem {
 					if (serverLevel.dimension().location().toString() == dim) {
 
 						player.teleportTo(x, y, z);
+						player.swing(InteractionHand.MAIN_HAND, true);
 						serverLevel.playSound(
 								null,
 								x,
@@ -95,6 +97,8 @@ public class EnderItem extends MechanismItem {
 
 				stack.setTag(tag);
 
+				player.swing(InteractionHand.MAIN_HAND, true);
+
 				// 提示玩家已存储坐标
 				player.sendSystemMessage(Component.translatable("promp.cmi.ender_mechanism.location_stored"));
 
@@ -114,6 +118,7 @@ public class EnderItem extends MechanismItem {
 			double targetZ = player.getZ() + random.nextInt(range * 2 + 1) - range;
 
 			player.teleportTo(targetX, targetY, targetZ);
+			player.swing(InteractionHand.MAIN_HAND, true);
 
 			serverLevel.playSound(
 					null,
