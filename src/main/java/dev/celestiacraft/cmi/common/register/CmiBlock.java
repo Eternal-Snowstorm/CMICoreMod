@@ -77,6 +77,9 @@ public class CmiBlock {
 					provider.withExistingParent(context.getName(), provider.modLoc("block/water_pump"));
 				})
 				.build()
+				.tag(BlockTags.MINEABLE_WITH_AXE)
+				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.blockstate((context, provider) -> {
 					provider.getVariantBuilder(context.get())
 							.forAllStatesExcept((state) -> {
@@ -93,6 +96,8 @@ public class CmiBlock {
 					provider.withExistingParent(context.getName(), provider.modLoc("block/mars_geothermal_vent"));
 				})
 				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
 				.blockstate((context, provider) -> {
 					provider.getVariantBuilder(context.get())
 							.forAllStatesExcept((state) -> {
@@ -109,6 +114,8 @@ public class CmiBlock {
 					provider.withExistingParent(context.getName(), provider.modLoc("block/mercury_geothermal_vent"));
 				})
 				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
 				.blockstate((context, provider) -> {
 					provider.getVariantBuilder(context.get())
 							.forAllStatesExcept((state) -> {
@@ -127,6 +134,9 @@ public class CmiBlock {
 					provider.withExistingParent(context.getName(), provider.modLoc("block/steam_hammer/item"));
 				})
 				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.blockstate((context, provider) -> {
 					provider.getVariantBuilder(context.get())
 							.forAllStatesExcept((state) -> {
@@ -146,6 +156,9 @@ public class CmiBlock {
 					provider.withExistingParent(context.getName(), provider.modLoc("block/accelerator_motor/item"));
 				})
 				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.blockstate((context, provider) -> {
 					provider.getVariantBuilder(context.get())
 							.forAllStatesExcept((state) -> {
@@ -163,6 +176,9 @@ public class CmiBlock {
 					provider.withExistingParent(context.getName(), provider.modLoc("block/advanced_spout/item"));
 				})
 				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.blockstate((context, provider) -> {
 					provider.getVariantBuilder(context.get())
 							.forAllStatesExcept((state) -> {
@@ -179,6 +195,9 @@ public class CmiBlock {
 					provider.withExistingParent(context.getName(), provider.modLoc("block/void_dust_collector/off"));
 				})
 				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.blockstate((context, provider) -> {
 					provider.getVariantBuilder(context.get())
 							.forAllStatesExcept((state) -> {
@@ -197,6 +216,9 @@ public class CmiBlock {
 					provider.withExistingParent(context.getName(), provider.modLoc("block/mechanical_belt_grinder/item"));
 				})
 				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.blockstate((context, provider) -> {
 					provider.getVariantBuilder(context.get())
 							.forAllStatesExcept((state) -> {
