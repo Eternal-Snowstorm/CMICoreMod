@@ -40,14 +40,14 @@ public class EnderItem extends MechanismItem {
 		if (stack.getItem() instanceof EnderItem item) {
 			ServerLevel serverLevel = (ServerLevel) level;
 
-			if (level.getBlockState(positionClicked).getBlock().defaultBlockState() == CmiBlock.ACCELERATOR_BLOCK.getDefaultState()) {
+			if (level.getBlockState(positionClicked).getBlock().defaultBlockState() == CmiBlock.ACCELERATOR.getDefaultState()) {
 				CompoundTag tag = stack.getTag();
 				if (stack.hasTag()) {
 					float x = tag.getInt("x");
 					float y = tag.getInt("y");
 					float z = tag.getInt("z");
 					String dim = tag.getString("dim");
-					if (serverLevel.dimension().location().toString() == dim) {
+					if (serverLevel.dimension().location().toString().equals(dim)) {
 
 						player.teleportTo(x, y, z);
 						player.swing(InteractionHand.MAIN_HAND, true);

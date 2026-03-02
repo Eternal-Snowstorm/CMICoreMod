@@ -1,10 +1,14 @@
 package dev.celestiacraft.cmi.datagen.language.type;
 
-
 import dev.celestiacraft.cmi.datagen.language.LanguageGenerate;
 
 public class BlockLanguage extends LanguageGenerate {
 	public static void addLang() {
+		addBlockLanguage(
+				"accelerator",
+				"Mechanism Accelerator",
+				"构件催生器"
+		);
 		addBlockLanguage(
 				"water_pump",
 				"Water Pump",

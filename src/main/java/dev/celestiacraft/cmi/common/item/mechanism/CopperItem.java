@@ -41,7 +41,7 @@ public class CopperItem extends MechanismItem {
 			HitResult hitResult = player.pick(5.0D, 0.0F, false);
 			if (hitResult instanceof BlockHitResult blockHit) {
 				BlockState state = level.getBlockState(blockHit.getBlockPos());
-				if (state.is(CmiBlock.ACCELERATOR_BLOCK.get())) {
+				if (state.is(CmiBlock.ACCELERATOR.get())) {
 					player.swing(event.getHand());
 					return;
 				}

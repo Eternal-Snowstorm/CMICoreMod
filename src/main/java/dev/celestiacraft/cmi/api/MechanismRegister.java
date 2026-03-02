@@ -5,6 +5,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.item.MechanismItem;
 import dev.celestiacraft.cmi.tag.ModItemTags;
 import net.minecraft.world.item.Item;
 
@@ -20,7 +21,7 @@ public class MechanismRegister {
 	 * @param <T>
 	 * @return
 	 */
-	protected static <T extends Item> ItemBuilder<T, CreateRegistrate> registerMechanism(String name, NonNullFunction<Item.Properties, T> factory) {
+	protected static <T extends MechanismItem> ItemBuilder<T, CreateRegistrate> registerMechanism(String name, NonNullFunction<Item.Properties, T> factory) {
 		registerIncomplete(name).register();
 		return registerComplete(name, factory);
 	}
@@ -33,7 +34,7 @@ public class MechanismRegister {
 	 * @param <T>
 	 * @return
 	 */
-	private static <T extends Item> ItemBuilder<T, CreateRegistrate> registerComplete(String name, NonNullFunction<Item.Properties, T> factory) {
+	private static <T extends MechanismItem> ItemBuilder<T, CreateRegistrate> registerComplete(String name, NonNullFunction<Item.Properties, T> factory) {
 		String registryId = String.format("%s_mechanism", name);
 
 		ItemBuilder<T, CreateRegistrate> builder = Cmi.REGISTRATE.item(registryId, factory);

@@ -31,7 +31,7 @@ public class AcceleratorCategory {
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(
-							() -> CmiBlock.ACCELERATOR_BLOCK.get().asItem().getDefaultInstance(),
+							() -> CmiBlock.ACCELERATOR.get().asItem().getDefaultInstance(),
 							() -> PRECISION_MECHANISM.getDefaultInstance()
 					);
 				})
@@ -89,7 +89,7 @@ public class AcceleratorCategory {
 					pose.mulPose(Axis.XP.rotationDegrees(-15.5f));
 					pose.mulPose(Axis.YP.rotationDegrees(22.5f));
 
-					AnimatedKinetics.defaultBlockElement(CmiBlock.ACCELERATOR_BLOCK.get().defaultBlockState())
+					AnimatedKinetics.defaultBlockElement(CmiBlock.ACCELERATOR.get().defaultBlockState())
 							.rotateBlock(0, 180, 0)
 							.atLocal(0.0, 0.0, 0.0)
 							.scale(24.0)

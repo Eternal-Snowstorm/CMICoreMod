@@ -41,10 +41,10 @@ public class CmiBlock {
 	public static final BlockEntry<AdvancedSpoutBlock> ADVANCED_SPOUT;
 	public static final BlockEntry<VoidDustCollectorBlock> VOID_DUST_COLLECTOR;
 	public static final BlockEntry<BeltGrinderBlock> BELT_GRINDER;
-	public static final BlockEntry<AcceleratorBlock> ACCELERATOR_BLOCK;
+	public static final BlockEntry<AcceleratorBlock> ACCELERATOR;
 
 	static {
-		ACCELERATOR_BLOCK = Cmi.REGISTRATE.block("accelerator", AcceleratorBlock::new)
+		ACCELERATOR = Cmi.REGISTRATE.block("accelerator", AcceleratorBlock::new)
 				.item(AcceleratorItem::new)
 				.model((context, provider) -> {
 					provider.withExistingParent(context.getName(), provider.modLoc("block/accelerator"));
