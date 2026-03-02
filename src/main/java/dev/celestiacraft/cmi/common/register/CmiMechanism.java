@@ -28,7 +28,7 @@ public class CmiMechanism extends MechanismRegister {
 	public static final ItemEntry<CoilItem> COIL;
 	public static final ItemEntry<SmartItem> SMART;
 	public static final ItemEntry<CobaltItem> COBALT;
-	public static final ItemEntry<Photosensitive> PHOTOSENSITIVE;
+	public static final ItemEntry<PhotosensitiveItem> PHOTOSENSITIVE;
 	public static final ItemEntry<ThermalItem> THERMAL;
 	public static final ItemEntry<ReinforcedItem> REINFORCED;
 	public static final ItemEntry<GoldItem> GOLD;
@@ -92,7 +92,7 @@ public class CmiMechanism extends MechanismRegister {
 				.register();
 		COBALT = registerMechanism("cobalt", CobaltItem::new)
 				.register();
-		PHOTOSENSITIVE = registerMechanism("photosensitive", Photosensitive::new)
+		PHOTOSENSITIVE = registerMechanism("photosensitive", PhotosensitiveItem::new)
 				.register();
 		THERMAL = registerMechanism("thermal", ThermalItem::new)
 				.register();

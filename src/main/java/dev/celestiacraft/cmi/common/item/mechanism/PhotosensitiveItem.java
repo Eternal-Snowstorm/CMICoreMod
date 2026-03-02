@@ -14,8 +14,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class Photosensitive extends MechanismItem {
-	public Photosensitive(Properties properties) {
+public class PhotosensitiveItem extends MechanismItem {
+	public PhotosensitiveItem(Properties properties) {
 		super(properties);
 	}
 

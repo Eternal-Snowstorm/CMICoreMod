@@ -41,7 +41,7 @@ public class EnchantedItem extends MechanismItem {
 					5
 			);
 			level.addFreshEntity(orb);
-			player.swing(event.getHand());
+			player.swing(event.getHand(), true);
 		}
 	}
 }
