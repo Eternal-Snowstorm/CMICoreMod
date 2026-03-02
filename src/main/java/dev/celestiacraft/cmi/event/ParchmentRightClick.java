@@ -96,14 +96,14 @@ public class ParchmentRightClick {
 						0,
 						0
 				);
-				// 调用动画
-				NebulaLibs.useTotemAnimation(PARCHMEMT.get().getDefaultInstance());
-				// 挥手
-				player.swing(event.getHand());
-				// 消耗物品
-				if (!player.isCreative()) {
-					item.shrink(1);
-				}
+			}
+			// 调用动画
+			NebulaLibs.useTotemAnimation(PARCHMEMT.get().getDefaultInstance());
+			// 挥手
+			player.swing(event.getHand());
+			// 消耗物品
+			if (!player.isCreative()) {
+				item.shrink(1);
 			}
 		}
 	}

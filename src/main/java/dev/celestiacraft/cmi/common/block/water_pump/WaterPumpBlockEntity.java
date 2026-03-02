@@ -208,6 +208,8 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 		}
 	};
 
+	private LazyOptional<IFluidHandler> fluidCapability = LazyOptional.of(() -> fluidHandler);
+
 	private boolean isOcean() {
 		if (this.level != null) {
 			return this.level.getBiome(this.getBlockPos()).is(BiomeTags.IS_OCEAN) && this.getBlockPos().getY() == 62;
@@ -218,11 +220,21 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
 		if (capability == ForgeCapabilities.FLUID_HANDLER) {
-			return LazyOptional.of(() -> {
-				return fluidHandler;
-			}).cast();
+			return fluidCapability.cast();
 		}
 		return super.getCapability(capability, side);
+	}
+
+	@Override
+	public void invalidateCaps() {
+		super.invalidateCaps();
+		fluidCapability.invalidate();
+	}
+
+	@Override
+	public void reviveCaps() {
+		super.reviveCaps();
+		fluidCapability = LazyOptional.of(() -> fluidHandler);
 	}
 
 	@Override
