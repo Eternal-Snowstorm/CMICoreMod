@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.api;
+package dev.celestiacraft.cmi.api.client;
 
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;

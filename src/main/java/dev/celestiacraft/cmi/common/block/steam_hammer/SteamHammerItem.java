@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import dev.celestiacraft.cmi.config.CommonConfig;
-import dev.celestiacraft.cmi.api.CmiLang;
+import dev.celestiacraft.cmi.api.client.CmiLang;
 
 import javax.annotation.Nullable;
 import java.util.List;

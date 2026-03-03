@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraftforge.registries.ForgeRegistries;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
-import dev.celestiacraft.cmi.api.CmiLang;
+import dev.celestiacraft.cmi.api.client.CmiLang;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

@@ -18,7 +18,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
-import dev.celestiacraft.cmi.api.CmiLang;
+import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 
 public class AcceleratorCategory {

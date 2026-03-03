@@ -1,0 +1,13 @@
+{
+	"type": "cmi:freezing",
+	"ingredients": [
+		{
+			"item": "minecraft:potato"
+		}
+	],
+	"results": [
+		{
+			"item": "minecraft:apple"
+		}
+	]
+}

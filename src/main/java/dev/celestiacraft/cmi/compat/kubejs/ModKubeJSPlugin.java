@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.compat.kubejs;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.CmiLang;
+import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.AcceleratorSchema;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.GrindingSchema;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;

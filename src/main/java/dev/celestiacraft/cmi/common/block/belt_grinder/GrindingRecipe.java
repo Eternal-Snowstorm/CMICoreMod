@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
 import dev.celestiacraft.cmi.compat.jei.category.CmiSequencedAssemblySubCategory;
-import dev.celestiacraft.cmi.api.CmiLang;
+import dev.celestiacraft.cmi.api.client.CmiLang;
 
 import java.util.List;
 import java.util.Set;
