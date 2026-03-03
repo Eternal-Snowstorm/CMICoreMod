@@ -235,8 +235,10 @@ public class CmiBlock {
 					provider.getVariantBuilder(context.get())
 							.forAllStatesExcept((state) -> {
 								BlockModelProvider models = provider.models();
+								Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
 								return ConfiguredModel.builder()
 										.modelFile(models.getExistingFile(provider.modLoc("block/mechanical_belt_grinder/block")))
+										.rotationY((int) facing.toYRot())
 										.build();
 							});
 				})
