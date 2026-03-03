@@ -12,12 +12,16 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EnderItem extends MechanismItem {
@@ -31,7 +35,6 @@ public class EnderItem extends MechanismItem {
 		Player player = event.getEntity();
 		ItemStack stack = event.getItemStack();
 		BlockPos pos = player.blockPosition();
-		BlockPos positionClicked = event.getPos();
 
 		if (level.isClientSide()) {
 			return;
@@ -39,49 +42,6 @@ public class EnderItem extends MechanismItem {
 
 		if (stack.getItem() instanceof EnderItem item) {
 			ServerLevel serverLevel = (ServerLevel) level;
-
-			if (level.getBlockState(positionClicked).getBlock().defaultBlockState() == CmiBlock.ACCELERATOR.getDefaultState()) {
-				CompoundTag tag = stack.getTag();
-				if (stack.hasTag()) {
-					float x = tag.getInt("x");
-					float y = tag.getInt("y");
-					float z = tag.getInt("z");
-					String dim = tag.getString("dim");
-					if (serverLevel.dimension().location().toString().equals(dim)) {
-
-						player.teleportTo(x, y, z);
-						player.swing(InteractionHand.MAIN_HAND, true);
-						serverLevel.playSound(
-								null,
-								x,
-								y,
-								z,
-								SoundEvents.PORTAL_TRAVEL,
-								SoundSource.PLAYERS,
-								1.0F,
-								1.0F
-						);
-						serverLevel.sendParticles(
-								ParticleTypes.DRAGON_BREATH,
-								x,
-								y,
-								z,
-								50,
-								0.5,
-								0.5,
-								0.5,
-								0.1
-						);
-
-						tag.remove("x");
-						tag.remove("y");
-						tag.remove("z");
-						tag.remove("dim");
-					} else {
-						player.sendSystemMessage(Component.translatable("promp.cmi.ender_mechanism.different_dimension"));
-					}
-				}
-			}
 
 			if (player.isCrouching()) {
 				if (stack.hasTag()) {
@@ -146,4 +106,62 @@ public class EnderItem extends MechanismItem {
 			player.getCooldowns().addCooldown(stack.getItem(), 20);
 		}
 	}
+
+	@Override
+	public @NotNull InteractionResult useOn(UseOnContext context) {
+		ItemStack mechanism = context.getItemInHand();
+		BlockPos pos = context.getClickedPos();
+		Player player = context.getPlayer();
+		boolean hasTag = mechanism.hasTag();
+		BlockState state = context.getLevel().getBlockState(pos);
+
+		if (!context.getLevel().isClientSide()) {
+			Level level = null;
+			level = context.getPlayer().level();
+			if (hasTag && isAccelerator(state)) {
+				CompoundTag tag = mechanism.getTag();
+				double destinationX = tag.getInt("x");
+				double destinationY = tag.getInt("y");
+				double destinationZ = tag.getInt("z");
+				String destinationDim = tag.getString("dim");
+
+
+				if (player != null) {
+					if (level.dimension().location().toString().equals(destinationDim)) {
+						level.playSound(
+								null,
+								pos.getX(),
+								pos.getY(),
+								pos.getZ(),
+								SoundEvents.PORTAL_TRAVEL,
+								SoundSource.PLAYERS,
+								0.3F,
+								1.0F
+						);
+						level.addParticle(
+								ParticleTypes.DRAGON_BREATH,
+								pos.getX(),
+								pos.getY() + 1,
+								pos.getZ(),
+								0.5,
+								0.5,
+								0.5
+						);
+						player.teleportTo(destinationX + 0.5, destinationY, destinationZ + 0.5);
+						player.getCooldowns().addCooldown(mechanism.getItem(), 40);
+						mechanism.setTag(null);
+						return InteractionResult.SUCCESS;
+					} else {
+						player.sendSystemMessage(Component.translatable("promp.cmi.ender_mechanism.teleport_failed"));
+					}
+				}
+			}
+		}
+		return InteractionResult.PASS;
+	}
+
+	private boolean isAccelerator(BlockState self) {
+		return self.is(CmiBlock.ACCELERATOR.getDefaultState().getBlock());
+	}
+
 }
