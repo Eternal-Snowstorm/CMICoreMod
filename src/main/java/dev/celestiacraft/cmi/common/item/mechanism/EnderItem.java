@@ -15,13 +15,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EnderItem extends MechanismItem {
@@ -30,7 +28,7 @@ public class EnderItem extends MechanismItem {
 	}
 
 	@SubscribeEvent
-	public static void onRightClick(PlayerInteractEvent.RightClickItem event) {
+	public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
 		Level level = event.getLevel();
 		Player player = event.getEntity();
 		ItemStack stack = event.getItemStack();
@@ -107,62 +105,68 @@ public class EnderItem extends MechanismItem {
 		}
 	}
 
-	@Override
-	public @NotNull InteractionResult useOn(UseOnContext context) {
-		ItemStack mechanism = context.getItemInHand();
-		BlockPos pos = context.getClickedPos();
-		Player player = context.getPlayer();
+	@SubscribeEvent
+	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+		Level level = event.getLevel();
+
+		if (level.isClientSide()) {
+			return;
+		}
+
+		ServerLevel serverLevel = (ServerLevel) level;
+		Player player = event.getEntity();
+		BlockPos pos = event.getPos();
+		ItemStack mechanism = event.getItemStack();
+		BlockState state = level.getBlockState(pos);
+
 		boolean hasTag = mechanism.hasTag();
-		BlockState state = context.getLevel().getBlockState(pos);
 
-		if (!context.getLevel().isClientSide()) {
-			ServerLevel level = (ServerLevel) context.getLevel();
-			if (hasTag && isAccelerator(state)) {
-				CompoundTag tag = mechanism.getTag();
-				double destinationX = tag.getInt("x");
-				double destinationY = tag.getInt("y");
-				double destinationZ = tag.getInt("z");
-				String destinationDim = tag.getString("dim");
+		// 只处理主手
+		if (event.getHand() != InteractionHand.MAIN_HAND) {
+			return;
+		}
 
+		if (hasTag && state.is(CmiBlock.ACCELERATOR.getDefaultState().getBlock())) {
+			CompoundTag tag = mechanism.getTag();
 
-				if (player != null) {
-					if (level.dimension().location().toString().equals(destinationDim)) {
-						level.playSound(
-								null,
-								player.getX(),
-								player.getY(),
-								player.getZ(),
-								SoundEvents.PORTAL_TRAVEL,
-								SoundSource.PLAYERS,
-								0.3F,
-								1.0F
-						);
-						level.sendParticles(
-								ParticleTypes.DRAGON_BREATH,
-								pos.getX() + 0.5,
-								pos.getY() + 1,
-								pos.getZ() + 0.5,
-								50,
-								0.5,
-								0.5,
-								0.5,
-								0.1
-						);
-						player.teleportTo(destinationX + 0.5, destinationY, destinationZ + 0.5);
-						player.getCooldowns().addCooldown(mechanism.getItem(), 40);
-						mechanism.setTag(null);
-						return InteractionResult.SUCCESS;
-					} else {
-						player.sendSystemMessage(Component.translatable("promp.cmi.ender_mechanism.teleport_failed"));
-					}
-				}
+			double destinationX = tag.getInt("x");
+			double destinationY = tag.getInt("y");
+			double destinationZ = tag.getInt("z");
+			String destinationDim = tag.getString("dim");
+
+			if (level.dimension().location().toString().equals(destinationDim)) {
+				level.playSound(
+						null,
+						player.getX(),
+						player.getY(),
+						player.getZ(),
+						SoundEvents.PORTAL_TRAVEL,
+						SoundSource.PLAYERS,
+						0.3F,
+						1.0F
+				);
+
+				serverLevel.sendParticles(
+						ParticleTypes.DRAGON_BREATH,
+						pos.getX() + 0.5,
+						pos.getY() + 1,
+						pos.getZ() + 0.5,
+						50,
+						0.5,
+						0.5,
+						0.5,
+						0.1
+				);
+
+				player.teleportTo(destinationX + 0.5, destinationY, destinationZ + 0.5);
+				player.getCooldowns().addCooldown(mechanism.getItem(), 40);
+				mechanism.setTag(null);
+
+				event.setCanceled(true);
+				event.setCancellationResult(InteractionResult.SUCCESS);
+			} else {
+				player.sendSystemMessage(Component.translatable("promp.cmi.ender_mechanism.teleport_failed"));
 			}
 		}
-		return InteractionResult.PASS;
 	}
-
-	private boolean isAccelerator(BlockState self) {
-		return self.is(CmiBlock.ACCELERATOR.getDefaultState().getBlock());
-	}
-
 }
