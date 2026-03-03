@@ -5,6 +5,7 @@ import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.item.MechanismItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -48,7 +49,7 @@ public class PotionItem extends MechanismItem {
 				player.addEffect(instance);
 			});
 			player.playNotifySound(AllSoundEvents.CRAFTER_CRAFT.getMainEvent(), SoundSource.VOICE, 2, 1);
-			player.swing(event.getHand(), true);
+			player.swing(InteractionHand.MAIN_HAND, true);
 		}
 	}
 }
