@@ -77,14 +77,14 @@ public class FreezingType implements FanProcessingType {
 
 	@Override
 	public void morphAirFlow(AirFlowParticleAccess particleAccess, RandomSource random) {
-		particleAccess.setColor(Color.mixColors(0x4499FF, 0x2277FF, random.nextFloat()));
+		particleAccess.setColor(Color.mixColors(0xFFFFFF, 0xFAFEFF, random.nextFloat()));
 		particleAccess.setAlpha(1f);
 
 		if (random.nextFloat() < 1 / 32f) {
-			particleAccess.spawnExtraParticle(ParticleTypes.BUBBLE, .125f);
+			particleAccess.spawnExtraParticle(ParticleTypes.SNOWFLAKE, .125f);
 		}
 		if (random.nextFloat() < 1 / 32f) {
-			particleAccess.spawnExtraParticle(ParticleTypes.BUBBLE_POP, .125f);
+			particleAccess.spawnExtraParticle(ParticleTypes.SNOWFLAKE, .125f);
 		}
 	}
 
