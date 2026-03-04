@@ -65,9 +65,13 @@ public class Cmi {
 
 		bus.addListener(this::onCommonSetup);
 
-		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/cmi/common.toml");
+		registerConfig(context);
 
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> CmiClient.onCtorClient(bus));
+	}
+
+	private static void registerConfig(FMLJavaModLoadingContext context) {
+		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/cmi/common.toml");
 	}
 
 	private void onCommonSetup(FMLCommonSetupEvent event) {
