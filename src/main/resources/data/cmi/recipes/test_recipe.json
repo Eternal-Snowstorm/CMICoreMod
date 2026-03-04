@@ -2,12 +2,13 @@
 	"type": "cmi:freezing",
 	"ingredients": [
 		{
-			"item": "minecraft:potato"
+			"item": "minecraft:packed_ice"
 		}
 	],
 	"results": [
 		{
-			"item": "minecraft:apple"
+			"item": "minecraft:blue_ice",
+			"count": 1
 		}
 	]
 }
