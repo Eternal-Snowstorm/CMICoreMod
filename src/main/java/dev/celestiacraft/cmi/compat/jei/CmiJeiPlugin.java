@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.compat.jei;
 
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
 import com.simibubi.create.compat.jei.*;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
@@ -144,7 +145,7 @@ public class CmiJeiPlugin implements IModPlugin {
 				.catalyst(AllBlocks.ENCASED_FAN::asItem)
 				.catalyst(Items.POWDER_SNOW_BUCKET::asItem)
 				.catalyst(ModItems.CRYO_FUEL_BUCKET::get)
-				.doubleItemIcon(AllBlocks.ENCASED_FAN.asItem(), Items.POWDER_SNOW_BUCKET)
+				.doubleItemIcon(AllItems.PROPELLER.get(), Items.POWDER_SNOW_BUCKET)
 				.emptyBackground(178, 72)
 				.build("freezing", FanFreezingCategory::new);
 	}
