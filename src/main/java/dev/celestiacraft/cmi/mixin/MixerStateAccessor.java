@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(value = MixerLogic.State.class, remap = false)
 public interface MixerStateAccessor {
-
 	@Accessor("outputRef")
 	CapabilityReference<IFluidHandler> cmi$getOutputRef();
 }

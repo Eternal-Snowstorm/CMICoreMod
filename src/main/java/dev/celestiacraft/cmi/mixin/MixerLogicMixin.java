@@ -25,24 +25,23 @@ import java.util.List;
 
 /**
  * 修复 IE 搅拌机的神必流体输出 bug。
- *
+ * <p>
  * Bugs：MultiFluidTank 使用 List<FluidStack> 存储多种流体，
  * 新流体总是 append 到末尾。当输入流体被完全消耗后重新泵入时，
  * 它会被插入到产物流体之后，破坏了输出逻辑依赖的列表顺序。你会感觉刚抽进去的流体又被抽出来了。
- *
+ * <p>
  * 具体表现：
  * outputAll=false（仅输出底部流体）：getFluid() 取最后一个元素，
  * 拿到的是重新泵入的输入流体而非产物
  * outputAll=true（输出所有流体）：从 index 0 开始迭代，
  * 先输出的流体填满目标容器后，后续流体无法再输出
- *
+ * <p>
  * 对于IE的神必bug，只能替换 outputFluids 逻辑，使其感知活跃配方。
  * 只输出不匹配任何活跃配方输入的流体（即产物流体）。
  * 当没有活跃配方时，回退到原始行为输出所有流体。
  */
 @Mixin(value = MixerLogic.class, remap = false)
 public class MixerLogicMixin {
-
 	// 缓存logic上下文
 	@Unique
 	private IMultiblockContext<State> cmi$currentContext;
@@ -56,11 +55,11 @@ public class MixerLogicMixin {
 	 * 拦截 tickServer 中对 outputFluids 的调用，替换为配方的输出逻辑。
 	 */
 	@Redirect(
-		method = "tickServer",
-		at = @At(
-			value = "INVOKE",
-			target = "Lblusunrize/immersiveengineering/common/blocks/multiblocks/logic/mixer/MixerLogic;outputFluids(Lblusunrize/immersiveengineering/common/blocks/multiblocks/logic/mixer/MixerLogic$State;Z)Z"
-		)
+			method = "tickServer",
+			at = @At(
+					value = "INVOKE",
+					target = "Lblusunrize/immersiveengineering/common/blocks/multiblocks/logic/mixer/MixerLogic;outputFluids(Lblusunrize/immersiveengineering/common/blocks/multiblocks/logic/mixer/MixerLogic$State;Z)Z"
+			)
 	)
 	private boolean cmi$fixedOutputFluids(MixerLogic instance, State state, boolean foundRecipe) {
 		int fluidTypes = state.tank.getFluidTypes();
@@ -84,9 +83,9 @@ public class MixerLogicMixin {
 	 */
 	@Unique
 	private static boolean cmi$outputSingleFluid(
-		State state, IFluidHandler output,
-		List<MultiblockProcess<MixerRecipe, ProcessContextInMachine<MixerRecipe>>> queue,
-		Level level, boolean foundRecipe
+			State state, IFluidHandler output,
+			List<MultiblockProcess<MixerRecipe, ProcessContextInMachine<MixerRecipe>>> queue,
+			Level level, boolean foundRecipe
 	) {
 		FluidStack toOutput = null;
 		for (FluidStack fs : state.tank.fluids) {
@@ -122,9 +121,9 @@ public class MixerLogicMixin {
 	 */
 	@Unique
 	private static boolean cmi$outputAllFluids(
-		State state, IFluidHandler output,
-		List<MultiblockProcess<MixerRecipe, ProcessContextInMachine<MixerRecipe>>> queue,
-		Level level, boolean foundRecipe
+			State state, IFluidHandler output,
+			List<MultiblockProcess<MixerRecipe, ProcessContextInMachine<MixerRecipe>>> queue,
+			Level level, boolean foundRecipe
 	) {
 		int totalOut = 0;
 		// 优先级1 -> 只输出产物流体（不匹配任何活跃配方输入的流体）.
@@ -165,9 +164,9 @@ public class MixerLogicMixin {
 	 */
 	@Unique
 	private static boolean cmi$isRecipeInput(
-		FluidStack fluid,
-		List<MultiblockProcess<MixerRecipe, ProcessContextInMachine<MixerRecipe>>> queue,
-		Level level
+			FluidStack fluid,
+			List<MultiblockProcess<MixerRecipe, ProcessContextInMachine<MixerRecipe>>> queue,
+			Level level
 	) {
 		for (MultiblockProcess<MixerRecipe, ?> process : queue) {
 			MixerRecipe recipe = MixerRecipe.RECIPES.getById(level, process.getRecipeId());
