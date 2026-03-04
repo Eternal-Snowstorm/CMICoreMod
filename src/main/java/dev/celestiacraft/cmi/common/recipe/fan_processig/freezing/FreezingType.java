@@ -94,12 +94,10 @@ public class FreezingType implements FanProcessingType {
 			return;
 		}
 
-		if (entity.getType() == EntityType.BLAZE) {
-			entity.hurt(entity.damageSources().freeze(), 2);
-		} else if (entity.canFreeze()) {
+		if (entity.canFreeze()) {
 			entity.isInPowderSnow = true;
 			entity.setTicksFrozen(entity.getTicksRequiredToFreeze());
-			entity.hurt(entity.damageSources().freeze(), 1);
+			entity.hurt(entity.damageSources().freeze(), 2);
 		}
 
 		if (entity.isOnFire()) {
