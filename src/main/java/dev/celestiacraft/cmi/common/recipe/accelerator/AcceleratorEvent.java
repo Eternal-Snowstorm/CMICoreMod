@@ -1,9 +1,9 @@
 package dev.celestiacraft.cmi.common.recipe.accelerator;
 
 import com.simibubi.create.AllSoundEvents;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -12,9 +12,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,10 +21,6 @@ import dev.celestiacraft.cmi.Cmi;
 @SuppressWarnings("ALL")
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AcceleratorEvent {
-	public static final Lazy<Block> ACCELERATOR_BLOCK = Lazy.of(() -> {
-		return BuiltInRegistries.BLOCK.get(Cmi.loadResource("accelerator"));
-	});
-
 	@SubscribeEvent
 	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		Level level = event.getLevel();
@@ -41,7 +35,7 @@ public class AcceleratorEvent {
 
 		ServerLevel sl = (ServerLevel) level;
 
-		if (!state.is(ACCELERATOR_BLOCK.get())) {
+		if (!state.is(CmiBlock.ACCELERATOR.get())) {
 			return;
 		}
 

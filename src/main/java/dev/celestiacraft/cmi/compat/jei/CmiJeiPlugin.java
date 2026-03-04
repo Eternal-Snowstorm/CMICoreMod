@@ -37,6 +37,10 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
+import dev.celestiacraft.cmi.compat.jei.category.*;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
 import org.jetbrains.annotations.NotNull;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.block.belt_grinder.GrindingRecipe;
@@ -53,6 +57,8 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.List;
+import java.util.Map;
 
 @JeiPlugin
 public class CmiJeiPlugin implements IModPlugin {
