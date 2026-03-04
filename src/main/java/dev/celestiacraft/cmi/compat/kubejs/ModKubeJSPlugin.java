@@ -3,6 +3,7 @@ package dev.celestiacraft.cmi.compat.kubejs;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.AcceleratorSchema;
+import dev.celestiacraft.cmi.compat.kubejs.recipe.FreezingSchema;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.GrindingSchema;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
@@ -13,6 +14,7 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 	@Override
 	public void registerRecipeSchemas(RegisterRecipeSchemasEvent event) {
 		event.namespace(Cmi.MODID)
+				.register("freezing", FreezingSchema.SCHEMA)
 				.register("accelerator", AcceleratorSchema.SCHEMA)
 				.register("grinding", GrindingSchema.SCHEMA);
 	}

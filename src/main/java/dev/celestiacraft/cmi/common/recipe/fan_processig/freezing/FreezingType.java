@@ -26,16 +26,20 @@ public class FreezingType implements FanProcessingType {
 	public static final FreezingWrapper FREEZING_WRAPPER = new FreezingWrapper();
 
 	@Override
-
 	public boolean isValidAt(Level level, BlockPos pos) {
 		BlockState state = level.getBlockState(pos);
 
 		return state.is(ModBlockTags.FREEZING_CATALYST);
 	}
 
+	/**
+	 * 优先级不允许和别的Mod或Create自己的一样!
+	 *
+	 * @return
+	 */
 	@Override
 	public int getPriority() {
-		return 400;
+		return 500;
 	}
 
 	@Override
@@ -56,7 +60,6 @@ public class FreezingType implements FanProcessingType {
 		}).orElse(null);
 	}
 
-
 	@Override
 	public void spawnProcessingParticles(Level level, Vec3 pos) {
 		if (level.random.nextInt(8) != 0) {
@@ -72,7 +75,6 @@ public class FreezingType implements FanProcessingType {
 		);
 	}
 
-
 	@Override
 	public void morphAirFlow(AirFlowParticleAccess particleAccess, RandomSource random) {
 		particleAccess.setColor(Color.mixColors(0x4499FF, 0x2277FF, random.nextFloat()));
@@ -85,7 +87,6 @@ public class FreezingType implements FanProcessingType {
 			particleAccess.spawnExtraParticle(ParticleTypes.BUBBLE_POP, .125f);
 		}
 	}
-
 
 	@Override
 	public void affectEntity(Entity entity, Level level) {

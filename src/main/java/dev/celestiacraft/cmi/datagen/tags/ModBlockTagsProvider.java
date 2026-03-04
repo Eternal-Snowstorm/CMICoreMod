@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.datagen.tags;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.tag.ModBlockTags;
+import earth.terrarium.adastra.common.registry.ModBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
@@ -20,6 +21,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 	@Override
 	protected void addTags(HolderLookup.@NotNull Provider provider) {
 		tag(ModBlockTags.FREEZING_CATALYST)
+				.add(ModBlocks.CRYO_FUEL.get())
 				.add(Blocks.POWDER_SNOW)
 				.add(Blocks.POWDER_SNOW_CAULDRON);
 	}

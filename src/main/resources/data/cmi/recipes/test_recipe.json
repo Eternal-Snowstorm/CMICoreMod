@@ -2,12 +2,12 @@
 	"type": "cmi:freezing",
 	"ingredients": [
 		{
-			"item": "minecraft:packed_ice"
+			"item": "minecraft:iron_ingot"
 		}
 	],
 	"results": [
 		{
-			"item": "minecraft:blue_ice",
+			"item": "minecraft:diamond",
 			"count": 1
 		}
 	]
