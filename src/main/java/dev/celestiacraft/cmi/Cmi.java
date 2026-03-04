@@ -55,7 +55,6 @@ public class Cmi {
 		CmiRecipeType.register(bus);
 		CmiRecipeSerializer.register(bus);
 		CmiCreateRecipe.register(bus);
-		CmiFanProcessingTypes.register();
 
 		CmiCreativeTab.register(bus);
 
@@ -79,6 +78,7 @@ public class Cmi {
 
 			SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Cmi.MODID, ModSurfaceRuleData.makeRules());
 			SurfaceRuleManager.addToDefaultSurfaceRulesAtStage(SurfaceRuleManager.RuleCategory.OVERWORLD, SurfaceRuleManager.RuleStage.AFTER_BEDROCK, 0, ModSurfaceRuleData.makeInjections());
+			CmiFanProcessingTypes.register();
 		});
 	}
 }
