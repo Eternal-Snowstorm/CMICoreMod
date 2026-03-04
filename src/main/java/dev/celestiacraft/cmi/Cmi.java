@@ -5,7 +5,6 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipHelper.Palette;
 import com.simibubi.create.foundation.item.TooltipModifier;
-import dev.celestiacraft.cmi.common.recipe.fan.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import net.minecraft.resources.ResourceLocation;
@@ -55,7 +54,6 @@ public class Cmi {
 		CmiRecipeType.register(bus);
 		CmiRecipeSerializer.register(bus);
 		CmiCreateRecipe.register(bus);
-		CmiFanProcessingTypes.register();
 
 		CmiCreativeTab.register(bus);
 
