@@ -4,6 +4,7 @@ import com.simibubi.create.AllFluids;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
 import com.simibubi.create.compat.jei.*;
+import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.ProcessingViaFanCategory;
 import com.simibubi.create.content.equipment.blueprint.BlueprintScreen;
 import com.simibubi.create.content.fluids.potion.PotionFluid;
@@ -139,13 +140,13 @@ public class CmiJeiPlugin implements IModPlugin {
 
 		private static final ResourceLocation ID = Create.asResource("jei_plugin");
 
-		private final List<CmiRecipeCategory<?>> allCategories = new ArrayList<>();
+		private final List<CreateRecipeCategory<?>> allCategories = new ArrayList<>();
 		private IIngredientManager ingredientManager;
 
 		private void loadCategories() {
 			allCategories.clear();
 
-			CmiRecipeCategory<?>
+			CreateRecipeCategory<?>
 
 					freezing = builder(FreezingRecipe.class)
 					.addTypedRecipes(CmiCreateRecipe.FREEZING)
@@ -263,7 +264,7 @@ public class CmiJeiPlugin implements IModPlugin {
 				return this;
 			}
 
-			public CmiRecipeCategory<T> build(String name, CmiRecipeCategory.Factory<T> factory) {
+			public CreateRecipeCategory<T> build(String name, CreateRecipeCategory.Factory<T> factory) {
 				Supplier<List<T>> recipesSupplier;
 				if (predicate.test(AllConfigs.server().recipes)) {
 					recipesSupplier = () -> {
@@ -277,11 +278,11 @@ public class CmiJeiPlugin implements IModPlugin {
 					recipesSupplier = () -> Collections.emptyList();
 				}
 
-				CmiRecipeCategory.Info<T> info = new CmiRecipeCategory.Info<>(
+				CreateRecipeCategory.Info<T> info = new CreateRecipeCategory.Info<>(
 						new mezz.jei.api.recipe.RecipeType<>(Create.asResource(name), recipeClass),
 						Lang.translateDirect("recipe." + name), background, icon, recipesSupplier, catalysts
 				);
-				CmiRecipeCategory<T> category = factory.create(info);
+				CreateRecipeCategory<T> category = factory.create(info);
 				allCategories.add(category);
 				return category;
 			}
