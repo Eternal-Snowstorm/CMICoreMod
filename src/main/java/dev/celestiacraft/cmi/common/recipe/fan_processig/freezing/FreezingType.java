@@ -96,7 +96,7 @@ public class FreezingType implements FanProcessingType {
 
 		if (entity.canFreeze()) {
 			entity.isInPowderSnow = true;
-			entity.setTicksFrozen(Math.max(entity.getTicksRequiredToFreeze(), entity.getTicksFrozen() + 2));
+			entity.setTicksFrozen(entity.getTicksRequiredToFreeze());
 		}
 
 		if (entity.getType() == EntityType.BLAZE) {
