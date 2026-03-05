@@ -4,7 +4,6 @@ import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.compat.ModCompat;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
 import dev.celestiacraft.cmi.compat.create.CreateOxygenSupport;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingBreatheEvent;
@@ -12,11 +11,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class PlayerDrownInNether {
+public class NetherBreathingHandler {
 	@SubscribeEvent
 	public static void onLivingBreathe(LivingBreatheEvent event) {
-		LivingEntity entity = event.getEntity();
-		if (!(entity instanceof Player player)) {
+		if (!(event.getEntity() instanceof Player player)) {
 			return;
 		}
 
@@ -29,29 +27,28 @@ public class PlayerDrownInNether {
 			return;
 		}
 
-		boolean hasCreateBacktankSupport = CreateOxygenSupport.hasBacktankSupport(player);
-		boolean hasAdAstraSuitSupport = ModCompat.isAdAstraLoaded() && AdAstraOxygenCompat.hasAdAstraSpaceSuitSupport(player);
-		boolean hasOxygenSupport = hasCreateBacktankSupport || hasAdAstraSuitSupport;
+		boolean hasCreateSupport = CreateOxygenSupport.hasBacktankSupport(player);
+		boolean hasAdAstraSupport = ModCompat.isAdAstraLoaded() && AdAstraOxygenCompat.hasSpaceSuitSupport(player);
 
 		if (level.isClientSide()) {
-			if (hasCreateBacktankSupport) {
+			if (hasCreateSupport) {
 				player.getPersistentData().putInt("VisualBacktankAir", CreateOxygenSupport.getVisualBacktankAir(player));
 			} else {
 				player.getPersistentData().remove("VisualBacktankAir");
 			}
 		}
 
-		if (hasOxygenSupport) {
+		if (hasCreateSupport || hasAdAstraSupport) {
 			event.setCanBreathe(true);
 			event.setCanRefillAir(true);
 			event.setConsumeAirAmount(0);
 			event.setRefillAirAmount(player.getMaxAirSupply());
 
 			if (!level.isClientSide()) {
-				if (hasCreateBacktankSupport && level.getGameTime() % 20 == 0) {
+				if (hasCreateSupport && level.getGameTime() % 20 == 0) {
 					CreateOxygenSupport.consumeBacktankAir(player, 1);
-				} else if (hasAdAstraSuitSupport && level.getGameTime() % 12 == 0) {
-					AdAstraOxygenCompat.consumeAdAstraSuitOxygen(player, 1);
+				} else if (hasAdAstraSupport && level.getGameTime() % 12 == 0) {
+					AdAstraOxygenCompat.consumeSuitOxygen(player, 1);
 				}
 			}
 			return;
