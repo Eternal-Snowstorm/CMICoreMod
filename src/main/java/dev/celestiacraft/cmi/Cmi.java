@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import dev.celestiacraft.cmi.client.CmiClient;
 import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
+import dev.celestiacraft.cmi.compat.ModCompat;
 import dev.celestiacraft.cmi.compat.create.CmiStressValueProvider;
 import dev.celestiacraft.cmi.config.CommonConfig;
 import dev.celestiacraft.cmi.worldgen.region.ModOverworldRegion;
@@ -83,6 +84,7 @@ public class Cmi {
 			SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Cmi.MODID, ModSurfaceRuleData.makeRules());
 			SurfaceRuleManager.addToDefaultSurfaceRulesAtStage(SurfaceRuleManager.RuleCategory.OVERWORLD, SurfaceRuleManager.RuleStage.AFTER_BEDROCK, 0, ModSurfaceRuleData.makeInjections());
 			CmiFanProcessingTypes.register();
+			ModCompat.register();
 		});
 	}
 }
