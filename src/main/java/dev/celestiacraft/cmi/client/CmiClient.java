@@ -4,11 +4,13 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
+import dev.celestiacraft.cmi.client.overlay.NetherBacktankAirOverlay;
 import dev.celestiacraft.cmi.client.ponder.CmiPonderIndex;
 
 public class CmiClient {
 	public static void onCtorClient(IEventBus bus) {
 		bus.addListener(CmiClient::onClientSetup);
+		bus.addListener(NetherBacktankAirOverlay::register);
 	}
 
 	public static void onClientSetup(FMLClientSetupEvent event) {

@@ -33,6 +33,14 @@ public class PlayerDrownInNether {
 		boolean hasAdAstraSuitSupport = ModCompat.isAdAstraLoaded() && AdAstraOxygenCompat.hasAdAstraSpaceSuitSupport(player);
 		boolean hasOxygenSupport = hasCreateBacktankSupport || hasAdAstraSuitSupport;
 
+		if (level.isClientSide()) {
+			if (hasCreateBacktankSupport) {
+				player.getPersistentData().putInt("VisualBacktankAir", CreateOxygenSupport.getVisualBacktankAir(player));
+			} else {
+				player.getPersistentData().remove("VisualBacktankAir");
+			}
+		}
+
 		if (hasOxygenSupport) {
 			event.setCanBreathe(true);
 			event.setCanRefillAir(true);
