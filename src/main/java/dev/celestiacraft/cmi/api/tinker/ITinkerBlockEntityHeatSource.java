@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.api;
+package dev.celestiacraft.cmi.api.tinker;
 
 /**
  * 表示可作为热源的方块实体的接口

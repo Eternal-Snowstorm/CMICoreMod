@@ -2,7 +2,7 @@ package dev.celestiacraft.cmi.mixin;
 
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
-import dev.celestiacraft.cmi.api.IFanProcessingTarget;
+import dev.celestiacraft.cmi.api.create.IFanProcessingTarget;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;

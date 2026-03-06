@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.api;
+package dev.celestiacraft.cmi.api.create;
 
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;

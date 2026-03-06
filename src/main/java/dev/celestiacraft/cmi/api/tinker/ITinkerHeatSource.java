@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.api;
+package dev.celestiacraft.cmi.api.tinker;
 
 /**
  * 所有热源的基础接口

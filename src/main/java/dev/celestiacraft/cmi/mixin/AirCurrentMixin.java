@@ -3,7 +3,7 @@ package dev.celestiacraft.cmi.mixin;
 import com.simibubi.create.content.kinetics.fan.AirCurrent;
 import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
-import dev.celestiacraft.cmi.api.IFanProcessingTarget;
+import dev.celestiacraft.cmi.api.create.IFanProcessingTarget;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;

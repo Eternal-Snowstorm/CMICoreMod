@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.api;
+package dev.celestiacraft.cmi.api.tinker;
 
 import net.minecraft.core.BlockPos;
 
