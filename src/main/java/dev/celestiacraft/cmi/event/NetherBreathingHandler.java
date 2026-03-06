@@ -38,18 +38,27 @@ public class NetherBreathingHandler {
 			}
 		}
 
-		if (hasCreateSupport || hasAdAstraSupport) {
+		if (hasCreateSupport) {
+			event.setCanBreathe(true);
+			event.setCanRefillAir(false);
+			event.setConsumeAirAmount(0);
+			event.setRefillAirAmount(0);
+			player.setAirSupply(player.getMaxAirSupply() - 1);
+
+			if (!level.isClientSide() && level.getGameTime() % 20 == 0) {
+				CreateOxygenSupport.consumeBacktankAir(player, 1);
+			}
+			return;
+		}
+
+		if (hasAdAstraSupport) {
 			event.setCanBreathe(true);
 			event.setCanRefillAir(true);
 			event.setConsumeAirAmount(0);
 			event.setRefillAirAmount(player.getMaxAirSupply());
 
-			if (!level.isClientSide()) {
-				if (hasCreateSupport && level.getGameTime() % 20 == 0) {
-					CreateOxygenSupport.consumeBacktankAir(player, 1);
-				} else if (hasAdAstraSupport && level.getGameTime() % 12 == 0) {
-					AdAstraOxygenCompat.consumeSuitOxygen(player, 1);
-				}
+			if (!level.isClientSide() && level.getGameTime() % 12 == 0) {
+				AdAstraOxygenCompat.consumeSuitOxygen(player, 1);
 			}
 			return;
 		}

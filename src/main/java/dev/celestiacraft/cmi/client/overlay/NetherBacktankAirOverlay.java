@@ -55,7 +55,7 @@ public class NetherBacktankAirOverlay implements IGuiOverlay {
 		poseStack.pushPose();
 
 		ItemStack backtank = getDisplayedBacktank(player);
-		poseStack.translate((float) width / 2 + 90, height - 53 + (backtank.getItem().isFireResistant() ? 9 : 0), 0);
+		poseStack.translate((float) width / 2 + 90, height - 63 + (backtank.getItem().isFireResistant() ? 9 : 0), 0);
 
 		Component text = Components.literal(StringUtil.formatTickDuration(Math.max(0, timeLeft - 1) * 20));
 		GuiGameElement.of(backtank).at(0, 0).render(graphics);
