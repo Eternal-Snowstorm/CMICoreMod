@@ -7,8 +7,8 @@ public class CmiGuiTextures {
 	public static final CmiTextures.Guis WATER_PUMP_ARROW;
 
 	static {
-		WATER_PUMP_SEA_WATER_ARROW = addGuiTexture("arrows", 1, 1, 63, 24);
-		WATER_PUMP_ARROW = addGuiTexture("arrows", 1, 25, 63, 48);
+		WATER_PUMP_SEA_WATER_ARROW = addGuiTexture("jei/arrows", 1, 1, 63, 24);
+		WATER_PUMP_ARROW = addGuiTexture("jei/arrows", 1, 25, 63, 48);
 	}
 
 	public static CmiTextures.Guis addGuiTexture(String path, int startX, int startY, int width, int height) {

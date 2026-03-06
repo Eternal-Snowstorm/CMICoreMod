@@ -39,7 +39,7 @@ public class CmiTextures {
 		}
 
 		public Guis(String path, int startX, int startY, int width, int height) {
-			this.location = Cmi.loadResource(String.format("textures/gui/jei/%s.png", path));
+			this.location = Cmi.loadResource(String.format("textures/gui/%s.png", path));
 			this.startX = startX;
 			this.startY = startY;
 			this.width = width;
