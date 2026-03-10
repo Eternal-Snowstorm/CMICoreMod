@@ -42,16 +42,15 @@ public class ClientSeedHandler {
 	private static String getFileString(long abs) {
 		int[] segments = buildSegments(abs);
 
-		return """
-            $VALUE1$ %s
-            $VALUE2$ %s
-            
-            $VALUE3$ %s
-            $VALUE4$ %s
-            
-            $VALUE5$ %s
-            $VALUE6$ %s""".formatted(
-
+		return String.format("""
+						$VALUE1$ %s
+						$VALUE2$ %s
+						
+						$VALUE3$ %s
+						$VALUE4$ %s
+						
+						$VALUE5$ %s
+						$VALUE6$ %s""",
 				// 奇数位：十进制
 				segments[0],
 

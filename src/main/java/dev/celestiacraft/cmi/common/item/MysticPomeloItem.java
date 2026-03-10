@@ -138,17 +138,14 @@ public class MysticPomeloItem extends Item implements IUIHolder.ItemUI {
 		label.setSelfPosition(10, 10);
 
 		String text = String.format("""
-						1
-						x : %d + %d
-						y : %d - %d
+						$VALUE1$ %s
+						$VALUE2$ %s
 						
-						2
-						x : %d + %d
-						y : %d - %d
+						$VALUE3$ %s
+						$VALUE4$ %s
 						
-						3
-						x : %d + %d
-						y : %d - %d""",
+						$VALUE5$ %s
+						$VALUE6$ %s""",
 				getSeedSegment(level, 0), ClientSeedHandler.getValue(1),
 				getSeedSegment(level, 1), ClientSeedHandler.getValue(2),
 
