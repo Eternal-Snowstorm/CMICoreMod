@@ -1,5 +1,8 @@
 package dev.celestiacraft.cmi.compat.create;
 
+import lombok.Getter;
+
+@Getter
 public enum CmiHeatLevel {
 	GRILLED("grilled"),
 	HEATED("heated"),
@@ -11,11 +14,6 @@ public enum CmiHeatLevel {
 		this.id = id;
 	}
 
-	public String id() {
-		return id;
-	}
-
-	@Override
 	public String toString() {
 		return id;
 	}
