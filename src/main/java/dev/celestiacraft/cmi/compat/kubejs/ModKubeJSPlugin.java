@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.compat.kubejs;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
+import dev.celestiacraft.cmi.compat.create.CmiHeatLevel;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.AcceleratorSchema;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.FreezingSchema;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.GrindingSchema;
@@ -26,7 +27,8 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 				.simple(CmiLang.class)
 				.name("CmiCore", Cmi.class)
 				.name("CmiLang$JeiLang", CmiLang.JeiLang.class)
-				.simple(ClientSeedHandler.class);
+				.simple(ClientSeedHandler.class)
+				.simple(CmiHeatLevel.class);
 	}
 
 	private static class Binder {
