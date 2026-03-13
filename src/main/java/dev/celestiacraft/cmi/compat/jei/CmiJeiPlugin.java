@@ -198,12 +198,17 @@ public class CmiJeiPlugin implements IModPlugin {
 		}
 
 		public CmiCreateJeiPlugin<T> itemIcon(ItemLike item) {
-			icon(new ItemIcon(() -> item.asItem().getDefaultInstance()));
+			icon(new ItemIcon(() -> {
+				return item.asItem().getDefaultInstance();
+			}));
 			return this;
 		}
 
 		public CmiCreateJeiPlugin<T> doubleItemIcon(ItemLike item1, ItemLike item2) {
-			icon(new DoubleItemIcon(() -> new ItemStack(item1), () -> new ItemStack(item2)));
+			icon(new DoubleItemIcon(
+					() -> new ItemStack(item1),
+					() -> new ItemStack(item2)
+			));
 			return this;
 		}
 
