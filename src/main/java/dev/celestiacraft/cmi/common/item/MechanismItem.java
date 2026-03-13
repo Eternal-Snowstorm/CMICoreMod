@@ -10,13 +10,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public abstract class MechanismItem extends Item {
 	protected static final Random RANDOM = new Random();
-	private static final List<MechanismItem> MECHANISMS = new ArrayList<>();
 
 	public MechanismItem(Properties properties) {
 		super(properties);
