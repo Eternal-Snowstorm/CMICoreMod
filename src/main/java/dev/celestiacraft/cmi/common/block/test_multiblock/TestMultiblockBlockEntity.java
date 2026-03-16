@@ -2,7 +2,6 @@ package dev.celestiacraft.cmi.common.block.test_multiblock;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
-import dev.celestiacraft.cmi.tag.ModFluidTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -213,7 +212,11 @@ public class TestMultiblockBlockEntity extends BlockEntity implements IMultibloc
 				if (!isStructureValid() || !isFluidValid(0, stack)) {
 					return 0;
 				}
+				if (level != null) {
+					level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+				}
 				int filled = Math.min(stack.getAmount(), 32000 - fluid.getAmount());
+				fluid.setAmount(stack.getAmount() + filled);
 				return filled;
 			}
 
@@ -222,7 +225,11 @@ public class TestMultiblockBlockEntity extends BlockEntity implements IMultibloc
 				if (!isStructureValid() || !isFluidValid(0, stack)) {
 					return FluidStack.EMPTY;
 				}
+				if (level != null) {
+					level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+				}
 				int drained = Math.min(stack.getAmount(), fluid.getAmount());
+				fluid.setAmount(fluid.getAmount() - drained);
 				return new FluidStack(fluid, drained);
 			}
 
@@ -231,10 +238,10 @@ public class TestMultiblockBlockEntity extends BlockEntity implements IMultibloc
 				if (!isStructureValid()) {
 					return FluidStack.EMPTY;
 				}
-				int drained = Math.min(maxDrain, fluid.getAmount());
 				if (level != null) {
 					level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 				}
+				int drained = Math.min(maxDrain, fluid.getAmount());
 				return new FluidStack(fluid, drained);
 			}
 		};
