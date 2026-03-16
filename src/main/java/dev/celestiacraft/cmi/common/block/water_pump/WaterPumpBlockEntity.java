@@ -5,8 +5,8 @@ import blusunrize.immersiveengineering.common.register.IEBlocks;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.IMultiblockProvider;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockHandler;
-import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockStructureBuilder;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
+import dev.celestiacraft.libs.compat.patchouli.multiblock.StructureBuilder;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.Half;
@@ -49,32 +49,32 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 			ResourceLocation.parse("immersiveengineering:stairs_treated_wood_horizontal");
 
 	private static final Lazy<IMultiblock> STRUCTURE = Lazy.of(() -> {
-		return new MultiblockStructureBuilder(new String[][]{
-				{
-						// 四个角为脚手架, 四边为楼梯, 中心镂空
-						"DFD",
-						"G H",
-						"DID"
-				},
-				{
-						// 木栅栏
-						"C C",
-						"   ",
-						"C C"
-				},
-				{
-						// 木栅栏
-						"C C",
-						"   ",
-						"C C"
-				},
-				{
-						// 木板 + 水泵
-						"AAA",
-						"A0A",
-						"AAA"
-				}
-		})
+		return StructureBuilder.create(new String[][]{
+						{
+								// 四个角为脚手架, 四边为楼梯, 中心镂空
+								"DFD",
+								"G H",
+								"DID"
+						},
+						{
+								// 木栅栏
+								"C C",
+								"   ",
+								"C C"
+						},
+						{
+								// 木栅栏
+								"C C",
+								"   ",
+								"C C"
+						},
+						{
+								// 木板 + 水泵
+								"AAA",
+								"A0A",
+								"AAA"
+						}
+				})
 				// 木板
 				.define('A', (builder) -> {
 					builder.block(IEBlocks.WoodenDecoration.TREATED_WOOD.get(TreatedWoodStyles.HORIZONTAL).get());
@@ -97,7 +97,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 				})
 				// 北边楼梯(上方), 朝南
 				.define('F', (builder) -> {
-					builder.stateMap(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
+					builder.map(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
 							.add(StairBlock.FACING, Direction.WEST)
 							.add(StairBlock.HALF, Half.TOP)
 							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
@@ -105,7 +105,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 				})
 				// 西边楼梯(左边), 朝东
 				.define('G', (builder) -> {
-					builder.stateMap(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
+					builder.map(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
 							.add(StairBlock.FACING, Direction.NORTH)
 							.add(StairBlock.HALF, Half.TOP)
 							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
@@ -113,7 +113,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 				})
 				// 东边楼梯(右边), 朝西
 				.define('H', (builder) -> {
-					builder.stateMap(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
+					builder.map(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
 							.add(StairBlock.FACING, Direction.SOUTH)
 							.add(StairBlock.HALF, Half.TOP)
 							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
@@ -121,7 +121,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 				})
 				// 南边楼梯(下方), 朝北
 				.define('I', (builder) -> {
-					builder.stateMap(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
+					builder.map(ForgeRegistries.BLOCKS.getValue(STAIRS), PropertyImmutableMap.create()
 							.add(StairBlock.FACING, Direction.EAST)
 							.add(StairBlock.HALF, Half.TOP)
 							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
