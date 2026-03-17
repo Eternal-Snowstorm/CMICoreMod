@@ -6,6 +6,7 @@ import dev.celestiacraft.cmi.utils.ModResource;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.StructureBuilder;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.StairsShape;
@@ -15,6 +16,7 @@ import vazkii.patchouli.api.IMultiblock;
 
 public class CmiMultiblock {
 	public static final Lazy<IMultiblock> WATER_PUMP;
+	public static final Lazy<IMultiblock> TEST_MULTIBLOCK;
 
 	static {
 		WATER_PUMP = structure(StructureBuilder.create(new String[][]{
@@ -81,6 +83,31 @@ public class CmiMultiblock {
 							.add(StairBlock.HALF, Half.TOP)
 							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
 							.build());
+				}));
+
+		TEST_MULTIBLOCK = structure(StructureBuilder.create(new String[][]{
+						{
+								"AAA",
+								"AAA",
+								"AAA"
+						},
+						{
+								"A0A",
+								"AAA",
+								"AAA"
+						},
+						{
+								"AAA",
+								"AAA",
+								"AAA"
+						}
+				})
+				// 木板
+				.define('A', (builder) -> {
+					builder.block(Blocks.COBBLESTONE);
+				})
+				.define('0', (builder) -> {
+					builder.block(CmiBlock.TEST_MULTIBLOCK.get());
 				}));
 	}
 
