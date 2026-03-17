@@ -22,7 +22,6 @@ import dev.celestiacraft.libs.compat.patchouli.multiblock.*;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.awt.datatransfer.FlavorListener;
 
 public class TestMultiblockBlockEntity extends MultiblockControllerBlockEntity {
 	public TestMultiblockBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -283,20 +282,12 @@ public class TestMultiblockBlockEntity extends MultiblockControllerBlockEntity {
 
 			@Override
 			public boolean canExtract() {
-				if (isStructureValid()) {
-					return true;
-				} else {
-					return false;
-				}
+				return isStructureValid();
 			}
 
 			@Override
 			public boolean canReceive() {
-				if (isStructureValid()) {
-					return true;
-				} else {
-					return false;
-				}
+				return isStructureValid();
 			}
 		};
 
