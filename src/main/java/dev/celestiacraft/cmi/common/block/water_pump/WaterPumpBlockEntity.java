@@ -1,9 +1,9 @@
 package dev.celestiacraft.cmi.common.block.water_pump;
 
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import dev.celestiacraft.cmi.api.multiblock.MultiblockControllerBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
-import dev.celestiacraft.libs.compat.patchouli.multiblock.IMultiblockProvider;
-import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockHandler;
+import dev.celestiacraft.cmi.utils.ModResource;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ForgeRegistries;
 import dev.celestiacraft.cmi.Cmi;
@@ -12,13 +12,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -27,32 +24,19 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInformation, IMultiblockProvider {
+public class WaterPumpBlockEntity extends MultiblockControllerBlockEntity implements IHaveGoggleInformation {
 	public WaterPumpBlockEntity(BlockEntityType<? extends WaterPumpBlockEntity> type, BlockPos pos, BlockState state) {
-		super(type, pos, state);
-	}
-
-	private static final Lazy<Fluid> SEA_WATER = Lazy.of(() -> {
-		return ForgeRegistries.FLUIDS.getValue(Cmi.loadResource("sea_water"));
-	});
-
-	// 多方块处理器：封装验证缓存(20tick) + 渲染切换逻辑
-	private final MultiblockHandler MULTIBLOCK = MultiblockHandler.builder(this, CmiMultiblock.WATER_PUMP)
-			.translationKey(String.format("multiblock.building.%s.water_pump", Cmi.MODID))
-			.renderOffset(0, -1, 0)
-			.cacheTicks(20)
-			.build();
-
-	// 获取多方块处理器
-	@Override
-	public MultiblockHandler getMultiblockHandler() {
-		return MULTIBLOCK;
+		super(type, pos, state, CmiMultiblock.WATER_PUMP);
 	}
 
 	@Override
-	public void setRemoved() {
-		cancelShowMultiblock();
-		super.setRemoved();
+	protected String getMultiblockKey() {
+		return String.format("multiblock.building.%s.water_pump", Cmi.MODID);
+	}
+
+	@Override
+	protected int getRenderOffsetY() {
+		return -1;
 	}
 
 	private final IFluidHandler fluidHandler = new IFluidHandler() {
@@ -65,7 +49,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 		public @NotNull FluidStack getFluidInTank(int amount) {
 			if (isStructureValid()) {
 				if (isOcean()) {
-					return new FluidStack(SEA_WATER.get(), Integer.MAX_VALUE);
+					return new FluidStack(ForgeRegistries.FLUIDS.getValue(ModResource.SEA_WATER), Integer.MAX_VALUE);
 				}
 				return new FluidStack(Fluids.WATER, Integer.MAX_VALUE);
 			}
@@ -91,7 +75,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 		public @NotNull FluidStack drain(FluidStack fluidStack, FluidAction fluidAction) {
 			if (isStructureValid()) {
 				if (isOcean()) {
-					if (fluidStack.getFluid() == SEA_WATER.get()) {
+					if (fluidStack.getFluid() == ForgeRegistries.FLUIDS.getValue(ModResource.SEA_WATER)) {
 						return fluidStack;
 					}
 				} else if (fluidStack.getFluid() == Fluids.WATER) {
@@ -106,7 +90,7 @@ public class WaterPumpBlockEntity extends BlockEntity implements IHaveGoggleInfo
 		public @NotNull FluidStack drain(int amount, FluidAction fluidAction) {
 			if (isStructureValid()) {
 				if (isOcean()) {
-					return new FluidStack(SEA_WATER.get(), amount);
+					return new FluidStack(ForgeRegistries.FLUIDS.getValue(ModResource.SEA_WATER), amount);
 				}
 				return new FluidStack(Fluids.WATER, amount);
 			}
