@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  *
  * <ul>
  * <li>扳手右键显示多方块结构</li>
- * <li>自动获取 BlockEntity(基于 IBE)</li>
+ * <li>自动获取 BlockEntity(基于 {@link IBE})</li>
  * </ul>
  *
  * <p>
