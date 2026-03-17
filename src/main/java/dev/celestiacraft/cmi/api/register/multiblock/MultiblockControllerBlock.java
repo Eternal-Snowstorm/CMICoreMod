@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  * </ul>
  *
  * <p>
- * 子类无需处理事件注册，只需继承即可
+ * 子类无需处理事件注册, 只需继承即可
  * </p>
  */
 public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultiblockProvider> extends BaseBlock implements IBE<T> {
