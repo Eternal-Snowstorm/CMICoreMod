@@ -22,6 +22,7 @@ import dev.celestiacraft.libs.compat.patchouli.multiblock.*;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.awt.datatransfer.FlavorListener;
 
 public class TestMultiblockBlockEntity extends MultiblockControllerBlockEntity {
 	public TestMultiblockBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -96,7 +97,7 @@ public class TestMultiblockBlockEntity extends MultiblockControllerBlockEntity {
 	}
 
 	private class CapabilityHandler {
-		private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
+		private final ItemStackHandler itemHandler = new ItemStackHandler(32) {
 			@Override
 			protected void onContentsChanged(int slot) {
 				setChanged();
@@ -146,6 +147,7 @@ public class TestMultiblockBlockEntity extends MultiblockControllerBlockEntity {
 			};
 		});
 
+		// 流体
 		private final IFluidHandler fluidHandler = new IFluidHandler() {
 			@Override
 			public int getTanks() {
@@ -154,7 +156,11 @@ public class TestMultiblockBlockEntity extends MultiblockControllerBlockEntity {
 
 			@Override
 			public @NotNull FluidStack getFluidInTank(int tank) {
-				return fluid.copy();
+				if (isStructureValid()) {
+					return fluid.copy();
+				} else {
+					return FluidStack.EMPTY;
+				}
 			}
 
 			@Override
@@ -234,10 +240,11 @@ public class TestMultiblockBlockEntity extends MultiblockControllerBlockEntity {
 			}
 		};
 
+		// 能量
 		private final IEnergyStorage energyStorage = new IEnergyStorage() {
 			@Override
 			public int receiveEnergy(int maxReceive, boolean simulate) {
-				int received = Math.min(1000 - energyStored, maxReceive);
+				int received = Math.min(32000 - energyStored, maxReceive);
 
 				if (!simulate && received > 0) {
 					energyStored += received;
@@ -276,12 +283,20 @@ public class TestMultiblockBlockEntity extends MultiblockControllerBlockEntity {
 
 			@Override
 			public boolean canExtract() {
-				return true;
+				if (isStructureValid()) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 
 			@Override
 			public boolean canReceive() {
-				return true;
+				if (isStructureValid()) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		};
 
