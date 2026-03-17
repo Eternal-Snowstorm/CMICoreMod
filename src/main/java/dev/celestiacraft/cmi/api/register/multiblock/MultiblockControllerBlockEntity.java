@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.api.multiblock;
+package dev.celestiacraft.cmi.api.register.multiblock;
 
 import dev.celestiacraft.libs.compat.patchouli.multiblock.IMultiblockProvider;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockHandler;

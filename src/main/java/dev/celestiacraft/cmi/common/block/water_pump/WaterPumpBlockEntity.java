@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.block.water_pump;
 
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
-import dev.celestiacraft.cmi.api.multiblock.MultiblockControllerBlockEntity;
+import dev.celestiacraft.cmi.api.register.multiblock.MultiblockControllerBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import dev.celestiacraft.cmi.utils.ModResource;
 import net.minecraft.world.level.block.entity.BlockEntityType;

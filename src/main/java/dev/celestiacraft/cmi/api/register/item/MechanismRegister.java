@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.api.register;
+package dev.celestiacraft.cmi.api.register.item;
 
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;

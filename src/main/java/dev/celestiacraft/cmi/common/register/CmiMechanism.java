@@ -2,7 +2,7 @@ package dev.celestiacraft.cmi.common.register;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.register.MechanismRegister;
+import dev.celestiacraft.cmi.api.register.item.MechanismRegister;
 import dev.celestiacraft.cmi.common.item.mechanism.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
