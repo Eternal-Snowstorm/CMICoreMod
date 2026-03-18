@@ -12,7 +12,7 @@ public class TestMultiblockBlock extends MultiblockControllerBlock<TestMultibloc
 
 	@Override
 	protected FacingType useFacingType() {
-		return FacingType.FACING;
+		return FacingType.HORIZONTAL;
 	}
 
 	@Override
