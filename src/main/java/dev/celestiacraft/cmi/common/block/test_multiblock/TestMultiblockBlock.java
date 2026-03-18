@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.block.test_multiblock;
 
 import dev.celestiacraft.cmi.api.register.multiblock.MultiblockControllerBlock;
+import dev.celestiacraft.cmi.api.register.multiblock.MultiblockControllerBlockFacing;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntityTypes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -11,8 +12,8 @@ public class TestMultiblockBlock extends MultiblockControllerBlock<TestMultibloc
 	}
 
 	@Override
-	protected FacingType useFacingType() {
-		return FacingType.HORIZONTAL;
+	protected MultiblockControllerBlockFacing useFacingType() {
+		return MultiblockControllerBlockFacing.HORIZONTAL;
 	}
 
 	@Override

@@ -90,7 +90,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	/**
 	 * 用于定义核心方块的方向属性
 	 * <p>
-	 * 只提供 {@code NONE}, {@code FACING} 和 {@code HORIZONTAL} 三种方向属性
+	 * 只提供{@link MultiblockControllerBlockFacing}内的{@code NONE}, {@code FACING} 和 {@code HORIZONTAL} 三种方向属性
 	 * </p>
 	 * <pre>{@code
 	 * @Override
@@ -105,8 +105,8 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	 *
 	 * @return 方向属性
 	 */
-	protected FacingType useFacingType() {
-		return FacingType.NONE;
+	protected MultiblockControllerBlockFacing useFacingType() {
+		return MultiblockControllerBlockFacing.NONE;
 	}
 
 	protected Property<Direction> getFacingProperty() {
@@ -148,7 +148,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 
 		Direction facing = context.getHorizontalDirection().getOpposite();
 
-		if (useFacingType() == FacingType.FACING) {
+		if (useFacingType() == MultiblockControllerBlockFacing.FACING) {
 			if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) {
 				facing = context.getNearestLookingDirection().getOpposite();
 			}
@@ -186,11 +186,5 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 			return multiblockControllerBlock.getFacingPropertyForStructure();
 		}
 		return null;
-	}
-
-	public enum FacingType {
-		NONE,
-		FACING,
-		HORIZONTAL
 	}
 }
