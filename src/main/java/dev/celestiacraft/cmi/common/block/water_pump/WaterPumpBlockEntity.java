@@ -1,17 +1,16 @@
 package dev.celestiacraft.cmi.common.block.water_pump;
 
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.api.register.multiblock.MultiblockControllerBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import dev.celestiacraft.cmi.utils.ModResources;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.ForgeRegistries;
-import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.client.CmiLang;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,6 +18,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

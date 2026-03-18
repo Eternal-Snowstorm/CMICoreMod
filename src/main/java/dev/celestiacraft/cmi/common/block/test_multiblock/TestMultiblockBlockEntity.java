@@ -21,8 +21,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.*;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
-
 public class TestMultiblockBlockEntity extends MultiblockControllerBlockEntity {
 	public TestMultiblockBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state, CmiMultiblock.TEST_MULTIBLOCK);
@@ -38,7 +36,7 @@ public class TestMultiblockBlockEntity extends MultiblockControllerBlockEntity {
 	}
 
 	@Override
-	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction direction) {
+	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction direction) {
 		if (capability == ForgeCapabilities.ITEM_HANDLER) {
 			// 结构不全不给输入输出
 			if (!isStructureValid()) {
