@@ -8,10 +8,10 @@ import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.StructureBuilder;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.StairsShape;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.patchouli.api.IMultiblock;
@@ -106,7 +106,7 @@ public class CmiMultiblock {
 				})
 				// 木板
 				.define('A', (builder) -> {
-					builder.tag(Tags.Blocks.COBBLESTONE);
+					builder.block(Blocks.COBBLESTONE);
 				})
 				.define('0', (builder) -> {
 					TestMultiblockBlock block = CmiBlock.TEST_MULTIBLOCK.get();
