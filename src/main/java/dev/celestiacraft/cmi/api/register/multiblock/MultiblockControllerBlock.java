@@ -23,16 +23,37 @@ import org.jetbrains.annotations.NotNull;
  * 多方块控制器 Block 基类
  *
  * <p>
- * 提供:
+ * 作为多方块结构的核心控制方块, 负责交互入口与基础行为封装
  * </p>
  *
+ * <p>
+ * 提供功能:
+ * </p>
  * <ul>
- * <li>扳手右键显示多方块结构</li>
- * <li>自动获取 BlockEntity(基于 {@link IBE})</li>
+ *     <li>使用触发器(默认扳手)右键显示多方块结构预览</li>
+ *     <li>自动获取并绑定 {@link BlockEntity}(基于 {@link IBE})</li>
+ *     <li>内置方向系统(支持无方向 / 水平 / 六面)</li>
+ *     <li>统一处理旋转与镜像逻辑</li>
  * </ul>
  *
  * <p>
- * 子类无需处理事件注册, 只需继承即可
+ * 扩展点:
+ * </p>
+ * <ul>
+ *     <li>{@link #useFacingType()}: 定义方向类型</li>
+ *     <li>{@link #isTrigger(UseContext)}: 自定义触发工具</li>
+ * </ul>
+ *
+ * <p>
+ * 子类通常只需:
+ * </p>
+ * <ul>
+ *     <li>实现对应的 {@link BlockEntity}</li>
+ *     <li>选择合适的方向类型</li>
+ * </ul>
+ *
+ * <p>
+ * 无需手动处理事件注册或基础交互逻辑
  * </p>
  */
 public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultiblockProvider> extends BaseBlock implements IBE<T> {
@@ -91,7 +112,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	 * 定义该控制器使用的方向类型
 	 *
 	 * <p>
-	 * 用于决定: 
+	 * 用于决定:
 	 * </p>
 	 * <ul>
 	 *     <li>是否具有方向属性</li>
@@ -100,7 +121,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	 * </ul>
 	 *
 	 * <p>
-	 * 可选类型: 
+	 * 可选类型:
 	 * </p>
 	 * <ul>
 	 *     <li>{@code NONE}: 无方向(默认)</li>
@@ -109,7 +130,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	 * </ul>
 	 *
 	 * <p>
-	 * 行为影响: 
+	 * 行为影响:
 	 * </p>
 	 * <ul>
 	 *     <li>自动注册对应的 {@link Property}</li>
@@ -119,7 +140,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	 * </ul>
 	 *
 	 * <p>
-	 * 子类通常应根据机器类型选择: 
+	 * 子类通常应根据机器类型选择:
 	 * </p>
 	 * <ul>
 	 *     <li>简单机器: {@code HORIZONTAL}</li>
@@ -144,7 +165,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	 * 获取当前 Block 使用的方向属性
 	 *
 	 * <p>
-	 * 根据 {@link #useFacingType()} 返回对应的 {@link Property}: 
+	 * 根据 {@link #useFacingType()} 返回对应的 {@link Property}:
 	 * </p>
 	 *
 	 * <ul>
@@ -154,7 +175,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	 * </ul>
 	 *
 	 * <p>
-	 * 该方法主要用于: 
+	 * 该方法主要用于:
 	 * </p>
 	 * <ul>
 	 *     <li>注册 BlockState 属性</li>
@@ -218,11 +239,11 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	 * 方块放置时的状态初始化
 	 *
 	 * <p>
-	 * 默认行为: 
+	 * 默认行为:
 	 * </p>
 	 * <ul>
 	 *     <li>水平模式: 朝向玩家反方向</li>
-	 *     <li>六面模式: 
+	 *     <li>六面模式:
 	 *         <ul>
 	 *             <li>正常: 水平反方向</li>
 	 *             <li>潜行: 使用玩家视线方向</li>
@@ -299,7 +320,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	 * </p>
 	 *
 	 * <p>
-	 * 主要用于: 
+	 * 主要用于:
 	 * </p>
 	 * <ul>
 	 *     <li>多方块结构旋转</li>
