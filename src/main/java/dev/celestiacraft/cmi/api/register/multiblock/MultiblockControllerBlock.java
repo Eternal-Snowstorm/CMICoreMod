@@ -4,7 +4,7 @@ import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.block.IBE;
 import dev.celestiacraft.cmi.api.interaction.UseContext;
 import dev.celestiacraft.cmi.api.register.block.BaseBlock;
-import dev.celestiacraft.cmi.common.register.CmiItem;
+import dev.celestiacraft.libs.common.register.NebulaItem;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.IMultiblockProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -96,7 +96,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 
 		// 服务端: 调试结构
 		if (!context.isClient()) {
-			if (context.getItem().is(CmiItem.MULTIBLOCK_DEBUG_ITEM.get())
+			if (context.getItem().is(NebulaItem.GEOLOGICAL_HAMMER.get())
 					&& context.getHand() == InteractionHand.MAIN_HAND) {
 
 				T be = getBlockEntity(context.getLevel(), context.getPos());
