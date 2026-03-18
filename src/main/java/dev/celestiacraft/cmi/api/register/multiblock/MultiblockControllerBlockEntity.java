@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  * 多方块控制器 BlockEntity 基类
  *
  * <p>
- * 该类用于统一管理多方块结构的: 
+ * 该类用于统一管理多方块结构的:
  * </p>
  *
  * <ul>
@@ -25,12 +25,12 @@ import java.util.function.Supplier;
  * </ul>
  *
  * <p>
- * 子类只需提供结构定义及基础配置, 
+ * 子类只需提供结构定义及基础配置,
  * 无需重复编写 {@link MultiblockHandler} 的初始化逻辑
  * </p>
  *
  * <p>
- * 一般情况下, 你只需要重写以下方法: 
+ * 一般情况下, 你只需要重写以下方法:
  * </p>
  *
  * <ul>
@@ -61,7 +61,7 @@ public abstract class MultiblockControllerBlockEntity extends BlockEntity implem
 	 * 多方块处理器
 	 *
 	 * <p>
-	 * 负责: 
+	 * 负责:
 	 * </p>
 	 *
 	 * <ul>
@@ -76,8 +76,8 @@ public abstract class MultiblockControllerBlockEntity extends BlockEntity implem
 	 * 构造方法
 	 *
 	 * <p>
-	 * 内部会自动创建 {@link MultiblockHandler}, 
-	 * 并应用以下配置: 
+	 * 内部会自动创建 {@link MultiblockHandler},
+	 * 并应用以下配置:
 	 * </p>
 	 * <ul>
 	 * <li>{@link #getMultiblockKey()}</li>
@@ -123,7 +123,7 @@ public abstract class MultiblockControllerBlockEntity extends BlockEntity implem
 	 * BlockEntity 移除时调用
 	 *
 	 * <p>
-	 * 自动取消多方块结构显示, 
+	 * 自动取消多方块结构显示,
 	 * 防止客户端残留渲染
 	 * </p>
 	 *
