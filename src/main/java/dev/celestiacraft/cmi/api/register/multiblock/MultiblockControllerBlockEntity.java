@@ -68,11 +68,6 @@ import java.util.function.Supplier;
  *     protected String getMultiblockKey() {
  *         return "multiblock.building.modid.example";
  *     }
- *
- *     @Override
- *     protected int getRenderOffsetY() {
- *         return -1;
- *     }
  * }
  * }</pre>
  */
