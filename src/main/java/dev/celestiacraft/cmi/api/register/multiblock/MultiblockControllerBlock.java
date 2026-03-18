@@ -50,7 +50,7 @@ public abstract class MultiblockControllerBlock<T extends BlockEntity & IMultibl
 	 *
 	 * <p>
 	 * 默认行为:
-	 * 使用触发器右键 => 显示多方块结构
+	 * 使用触发器右键后显示多方块结构
 	 * </p>
 	 */
 	@Override
