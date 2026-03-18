@@ -20,11 +20,11 @@ public class AcceleratorBlock extends Block {
 	@Override
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
 		return Shapes.or(
-				Shapes.box(1 / 16D, 1 / 16D, 1 / 16D, 15 / 16D, 15 / 16D, 15 / 16D),
-				Shapes.box(0, 0, 0, 1, 1, 2 / 16D),
-				Shapes.box(0, 0, 14 / 16D, 1, 1, 1),
-				Shapes.box(0, 0, 2 / 16D, 2 / 16D, 1, 14 / 16D),
-				Shapes.box(14 / 16D, 0, 2 / 16D, 1, 1, 14 / 16D)
+				Block.box(1, 1, 1, 15, 15, 15),
+				Block.box(0, 0, 0, 16, 16, 2),
+				Block.box(0, 0, 14, 16, 16, 16),
+				Block.box(0, 0, 2, 2, 16, 14),
+				Block.box(14, 0, 2, 16, 16, 14)
 		);
 	}
 }
