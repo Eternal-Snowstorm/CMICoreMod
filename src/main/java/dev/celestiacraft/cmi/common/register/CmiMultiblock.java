@@ -17,6 +17,7 @@ import vazkii.patchouli.api.IMultiblock;
 public class CmiMultiblock {
 	public static final Lazy<IMultiblock> WATER_PUMP;
 	public static final Lazy<IMultiblock> TEST_MULTIBLOCK;
+	public static final Lazy<IMultiblock> TEST_COKE_OVEN;
 
 	static {
 		WATER_PUMP = structure(StructureBuilder.create(new String[][]{
@@ -108,6 +109,32 @@ public class CmiMultiblock {
 				})
 				.define('0', (builder) -> {
 					builder.block(CmiBlock.TEST_MULTIBLOCK.get());
+				}));
+
+		TEST_COKE_OVEN = structure(StructureBuilder.create(new String[][]{
+						{
+								"AAA",
+								"AAA",
+								"AAA"
+						},
+						{
+								"AAA",
+								"0AA",
+								"AAA"
+						},
+						{
+								"AAA",
+								"AAA",
+								"AAA"
+						}
+				})
+				// 外壳
+				.define('A', (builder) -> {
+					builder.block(Blocks.BRICKS);
+				})
+				// 控制器
+				.define('0', (builder) -> {
+					builder.block(CmiBlock.TEST_COKE_OVEN.get());
 				}));
 	}
 

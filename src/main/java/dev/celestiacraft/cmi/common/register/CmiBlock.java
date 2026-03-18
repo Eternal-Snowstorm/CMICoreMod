@@ -19,6 +19,7 @@ import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVen
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerItem;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlock;
 import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlock;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlock;
@@ -44,6 +45,7 @@ public class CmiBlock {
 	public static final BlockEntry<BeltGrinderBlock> BELT_GRINDER;
 	public static final BlockEntry<AcceleratorBlock> ACCELERATOR;
 	public static final BlockEntry<TestMultiblockBlock> TEST_MULTIBLOCK;
+	public static final BlockEntry<TestCokeOvenBlock> TEST_COKE_OVEN;
 
 	static {
 		ACCELERATOR = Cmi.REGISTRATE.block("accelerator", AcceleratorBlock::new)
@@ -264,6 +266,26 @@ public class CmiBlock {
 								boolean working = state.getValue(VoidDustCollectorBlock.WORKING);
 								return ConfiguredModel.builder()
 										.modelFile(models.getExistingFile(provider.modLoc(working ? "block/void_dust_collector/on" : "block/void_dust_collector/off")))
+										.rotationY((int) facing.toYRot())
+										.build();
+							});
+				})
+				.register();
+		TEST_COKE_OVEN = Cmi.REGISTRATE.block("test_coke_oven", TestCokeOvenBlock::new)
+				.initialProperties(SharedProperties::stone)
+				.item()
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/test_coke_oven"));
+				})
+				.build()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
+								boolean working = state.getValue(VoidDustCollectorBlock.WORKING);
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc(working ? "block/test_coke_oven/on" : "block/test_coke_oven/off")))
 										.rotationY((int) facing.toYRot())
 										.build();
 							});
