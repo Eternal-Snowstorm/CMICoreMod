@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.StairsShape;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.patchouli.api.IMultiblock;
@@ -105,7 +106,7 @@ public class CmiMultiblock {
 				})
 				// 外壳
 				.define('A', (builder) -> {
-					builder.block(Blocks.COBBLESTONE);
+					builder.tag(Tags.Blocks.COBBLESTONE);
 				})
 				.define('0', (builder) -> {
 					builder.block(CmiBlock.TEST_MULTIBLOCK.get());
