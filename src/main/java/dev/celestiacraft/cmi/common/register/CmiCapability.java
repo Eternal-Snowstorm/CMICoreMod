@@ -1,6 +1,9 @@
 package dev.celestiacraft.cmi.common.register;
 
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenFluidCapability;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenItemCapability;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenItemHandler;
 import dev.celestiacraft.cmi.common.block.test_multiblock.capability.TestEnergyCapability;
 import dev.celestiacraft.cmi.common.block.test_multiblock.capability.TestFluidCapability;
 import dev.celestiacraft.cmi.common.block.test_multiblock.capability.TestItemCapability;
@@ -28,5 +31,9 @@ public class CmiCapability {
 		event.register(TestFluidCapability.class);
 		event.register(TestItemCapability.class);
 		event.register(TestItemHandler.class);
+		// TestCokeOven
+		event.register(CokeOvenFluidCapability.class);
+		event.register(CokeOvenItemCapability.class);
+		event.register(CokeOvenItemHandler.class);
 	}
 }
