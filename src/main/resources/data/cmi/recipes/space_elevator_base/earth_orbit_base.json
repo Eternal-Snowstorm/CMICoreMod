@@ -1,22 +1,22 @@
 {
-  "type": "cmi:space_elevator_base",
-  "dimension": "ad_astra:earth_orbit",
-  "ingredients": [
-    {
-      "tag": "ad_astra:iron_plates",
-      "count": 64
-    },
-    {
-      "tag": "ad_astra:steel_ingots",
-      "count": 32
-    },
-    {
-      "tag": "ad_astra:desh_ingots",
-      "count": 32
-    },
-    {
-      "tag": "ad_astra:desh_plates",
-      "count": 32
-    }
-  ]
+	"type": "cmi:space_elevator_base",
+	"dimension": "ad_astra:earth_orbit",
+	"ingredients": [
+		{
+			"tag": "ad_astra:iron_plates",
+			"count": 64
+		},
+		{
+			"tag": "ad_astra:steel_ingots",
+			"count": 32
+		},
+		{
+			"tag": "ad_astra:desh_ingots",
+			"count": 32
+		},
+		{
+			"tag": "ad_astra:desh_plates",
+			"count": 32
+		}
+	]
 }
