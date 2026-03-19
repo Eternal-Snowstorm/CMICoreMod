@@ -40,8 +40,7 @@ public class AdAstraSpaceElevatorCompat {
 	}
 
 	public static void recordLaunchOrigin(ServerPlayer player, BlockPos pos, ResourceKey<Level> dimension) {
-		ResourceKey<Level> groundDimension = normalizeGroundDimension(dimension);
-		if (groundDimension == null) {
+		if (!Level.OVERWORLD.equals(dimension)) {
 			return;
 		}
 
@@ -49,7 +48,7 @@ public class AdAstraSpaceElevatorCompat {
 		CompoundTag rootTag = persistentData.getCompound(ROOT_TAG);
 		CompoundTag launchOriginTag = new CompoundTag();
 
-		launchOriginTag.putString("Dimension", groundDimension.location().toString());
+		launchOriginTag.putString("Dimension", dimension.location().toString());
 		launchOriginTag.putInt("X", pos.getX());
 		launchOriginTag.putInt("Y", pos.getY());
 		launchOriginTag.putInt("Z", pos.getZ());
@@ -61,6 +60,15 @@ public class AdAstraSpaceElevatorCompat {
 	public static boolean hasValidEarthLaunchOrigin(ServerPlayer player) {
 		LaunchOrigin launchOrigin = getLastLaunchOrigin(player);
 		return launchOrigin != null && Level.OVERWORLD.equals(launchOrigin.dimension());
+	}
+
+	@Nullable
+	public static BlockPos getLastEarthLaunchOrigin(ServerPlayer player) {
+		LaunchOrigin launchOrigin = getLastLaunchOrigin(player);
+		if (launchOrigin == null || !Level.OVERWORLD.equals(launchOrigin.dimension())) {
+			return null;
+		}
+		return launchOrigin.pos();
 	}
 
 	public static boolean buildEarthBaseFromLastLaunch(ServerPlayer player, ServerLevel orbitLevel) {
@@ -92,13 +100,13 @@ public class AdAstraSpaceElevatorCompat {
 		}
 
 		CompoundTag launchOriginTag = rootTag.getCompound(LAST_LAUNCH_TAG);
-		ResourceKey<Level> dimension = readGroundDimension(launchOriginTag.getString("Dimension"));
-		if (dimension == null) {
+		String dimensionId = launchOriginTag.getString("Dimension");
+		if (!Level.OVERWORLD.location().toString().equals(dimensionId)) {
 			return null;
 		}
 
 		return new LaunchOrigin(
-			dimension,
+			Level.OVERWORLD,
 			new BlockPos(
 				launchOriginTag.getInt("X"),
 				launchOriginTag.getInt("Y"),
@@ -161,22 +169,6 @@ public class AdAstraSpaceElevatorCompat {
 		for (int yOffset = 0; yOffset < height; yOffset++) {
 			level.setBlock(startPos.above(yOffset), pillarState, 3);
 		}
-	}
-
-	@Nullable
-	private static ResourceKey<Level> normalizeGroundDimension(ResourceKey<Level> dimension) {
-		if (Level.OVERWORLD.equals(dimension)) {
-			return dimension;
-		}
-		return null;
-	}
-
-	@Nullable
-	private static ResourceKey<Level> readGroundDimension(String dimensionId) {
-		if (Level.OVERWORLD.location().toString().equals(dimensionId)) {
-			return Level.OVERWORLD;
-		}
-		return null;
 	}
 
 	private record LaunchOrigin(ResourceKey<Level> dimension, BlockPos pos) {

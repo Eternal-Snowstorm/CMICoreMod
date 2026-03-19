@@ -6,6 +6,7 @@ import dev.celestiacraft.cmi.common.recipe.space_elevator_base.SpaceElevatorBase
 import dev.celestiacraft.cmi.mixin.PlanetsScreenAccessor;
 import dev.celestiacraft.cmi.network.BuildEarthSpaceElevatorBasePacket;
 import dev.celestiacraft.cmi.network.CmiNetwork;
+import dev.celestiacraft.cmi.network.RequestSpaceElevatorBaseStatePacket;
 import earth.terrarium.adastra.api.planets.Planet;
 import earth.terrarium.adastra.client.screens.PlanetsScreen;
 import earth.terrarium.adastra.common.constants.ConstantComponents;
@@ -21,7 +22,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -34,6 +37,7 @@ import java.util.WeakHashMap;
 @Mod.EventBusSubscriber(modid = Cmi.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlanetsScreenBaseBuildClientHandler {
 	private static final Map<PlanetsScreen, PopupState> POPUPS = new WeakHashMap<>();
+	private static final Map<StationKey, Boolean> BUILT_STATE_CACHE = new java.util.HashMap<>();
 	private static final int POPUP_WIDTH = 188;
 	private static final int POPUP_HEIGHT = 102;
 	private static final int BUILD_BUTTON_X = 10;
@@ -41,6 +45,12 @@ public class PlanetsScreenBaseBuildClientHandler {
 	private static final int BUTTON_WIDTH = 60;
 	private static final int BUTTON_HEIGHT = 16;
 	private static final int CANCEL_BUTTON_X = 118;
+
+	@SubscribeEvent
+	public static void onPlayerLogout(ClientPlayerNetworkEvent.LoggingOut event) {
+		BUILT_STATE_CACHE.clear();
+		POPUPS.clear();
+	}
 
 	@SubscribeEvent
 	public static void onMouseClick(ScreenEvent.MouseButtonPressed.Pre event) {
@@ -71,11 +81,14 @@ public class PlanetsScreenBaseBuildClientHandler {
 			Button button = buttons.get(i);
 			if (button.active && button.visible && button.isMouseOver(event.getMouseX(), event.getMouseY())) {
 				state.visible = true;
+				state.requestedState = false;
 				state.spaceStationPos = stations.get(i).getSecond().position();
+				state.orbitDimension = selectedPlanet.orbitIfPresent();
+				requestBuiltStateIfNeeded(state);
 				int screenWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
 				int screenHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 				state.x = screenWidth - POPUP_WIDTH - 8;
-				state.y = clamp(button.getY() - 4, 8, screenHeight - POPUP_HEIGHT - 8);
+				state.y = Mth.clamp(button.getY() - 4, 8, screenHeight - POPUP_HEIGHT - 8);
 				event.setCanceled(true);
 				return;
 			}
@@ -103,7 +116,7 @@ public class PlanetsScreenBaseBuildClientHandler {
 		double mouseX = event.getMouseX();
 		double mouseY = event.getMouseY();
 		if (isInside(mouseX, mouseY, state.x + BUILD_BUTTON_X, state.y + BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT)) {
-			PopupRenderState renderState = getRenderState(accessor, menu);
+			PopupRenderState renderState = getRenderState(state, accessor, menu);
 			if (renderState.canBuild() && renderState.orbitDimension() != null && state.spaceStationPos != null) {
 				CmiNetwork.CHANNEL.sendToServer(new BuildEarthSpaceElevatorBasePacket(renderState.orbitDimension(), state.spaceStationPos));
 				state.visible = false;
@@ -122,7 +135,7 @@ public class PlanetsScreenBaseBuildClientHandler {
 	}
 
 	private static void renderPopup(GuiGraphics graphics, PopupState state, PlanetsScreenAccessor accessor, PlanetsMenu menu, int mouseX, int mouseY) {
-		PopupRenderState renderState = getRenderState(accessor, menu);
+		PopupRenderState renderState = getRenderState(state, accessor, menu);
 		if (renderState.orbitDimension() == null) {
 			return;
 		}
@@ -155,7 +168,8 @@ public class PlanetsScreenBaseBuildClientHandler {
 		}
 	}
 
-	private static PopupRenderState getRenderState(PlanetsScreenAccessor accessor, PlanetsMenu menu) {
+	private static PopupRenderState getRenderState(PopupState state, PlanetsScreenAccessor accessor, PlanetsMenu menu) {
+		requestBuiltStateIfNeeded(state);
 		Planet selectedPlanet = accessor.cmi$getSelectedPlanet();
 		if (selectedPlanet == null) {
 			return new PopupRenderState(null, false, null, null);
@@ -164,15 +178,43 @@ public class PlanetsScreenBaseBuildClientHandler {
 		SpaceElevatorBaseRecipe recipe = SpaceElevatorBaseRecipe.getRecipe(menu.player().level(), selectedPlanet.orbitIfPresent());
 		boolean launchedFromEarth = Level.OVERWORLD.equals(menu.player().level().dimension());
 		boolean hasMaterials = recipe != null && SpaceElevatorBaseRecipe.hasIngredients(menu.player(), recipe);
-		boolean canBuild = launchedFromEarth && hasMaterials;
+		Boolean builtState = getBuiltState(state);
+		boolean alreadyBuilt = Boolean.TRUE.equals(builtState);
+		boolean canBuild = launchedFromEarth && hasMaterials && !alreadyBuilt;
 		Component statusMessage = null;
-		if (!launchedFromEarth) {
+		if (alreadyBuilt) {
+			statusMessage = Component.translatable("text.cmi.space_elevator_base.already_built").withStyle(ChatFormatting.RED);
+		} else if (!launchedFromEarth) {
 			statusMessage = Component.translatable("text.cmi.space_elevator_base.need_earth_launch").withStyle(ChatFormatting.RED);
 		} else if (recipe != null && !hasMaterials) {
 			statusMessage = Component.translatable("text.cmi.space_elevator_base.not_enough_materials").withStyle(ChatFormatting.RED);
 		}
 
 		return new PopupRenderState(selectedPlanet.orbitIfPresent(), canBuild, recipe, statusMessage);
+	}
+
+
+	public static void updateBuiltState(ResourceKey<Level> dimension, ChunkPos stationPos, boolean built) {
+		BUILT_STATE_CACHE.put(new StationKey(dimension, stationPos), built);
+	}
+
+	private static void requestBuiltStateIfNeeded(PopupState state) {
+		if (state.orbitDimension == null || state.spaceStationPos == null) {
+			return;
+		}
+		StationKey key = new StationKey(state.orbitDimension, state.spaceStationPos);
+		if (BUILT_STATE_CACHE.containsKey(key) || state.requestedState) {
+			return;
+		}
+		state.requestedState = true;
+		CmiNetwork.CHANNEL.sendToServer(new RequestSpaceElevatorBaseStatePacket(state.orbitDimension, state.spaceStationPos));
+	}
+
+	private static Boolean getBuiltState(PopupState state) {
+		if (state.orbitDimension == null || state.spaceStationPos == null) {
+			return null;
+		}
+		return BUILT_STATE_CACHE.get(new StationKey(state.orbitDimension, state.spaceStationPos));
 	}
 
 	private static List<Component> createRecipeTooltip(PlanetsMenu menu, SpaceElevatorBaseRecipe recipe) {
@@ -211,17 +253,18 @@ public class PlanetsScreenBaseBuildClientHandler {
 		return mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
 	}
 
-	private static int clamp(int value, int min, int max) {
-		return Math.max(min, Math.min(max, value));
-	}
-
 	private static class PopupState {
 		private boolean visible;
 		private ChunkPos spaceStationPos;
+		private ResourceKey<Level> orbitDimension;
+		private boolean requestedState;
 		private int x;
 		private int y;
 	}
 
 	private record PopupRenderState(ResourceKey<Level> orbitDimension, boolean canBuild, SpaceElevatorBaseRecipe recipe, Component statusMessage) {
+	}
+
+	private record StationKey(ResourceKey<Level> dimension, ChunkPos stationPos) {
 	}
 }

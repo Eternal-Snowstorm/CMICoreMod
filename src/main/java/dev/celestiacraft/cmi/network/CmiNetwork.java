@@ -31,5 +31,19 @@ public class CmiNetwork {
 				BuildEarthSpaceElevatorBasePacket::decode,
 				BuildEarthSpaceElevatorBasePacket::handle
 		);
+		CHANNEL.registerMessage(
+				id++,
+				RequestSpaceElevatorBaseStatePacket.class,
+				RequestSpaceElevatorBaseStatePacket::encode,
+				RequestSpaceElevatorBaseStatePacket::decode,
+				RequestSpaceElevatorBaseStatePacket::handle
+		);
+		CHANNEL.registerMessage(
+				id++,
+				SyncSpaceElevatorBaseStatePacket.class,
+				SyncSpaceElevatorBaseStatePacket::encode,
+				SyncSpaceElevatorBaseStatePacket::decode,
+				SyncSpaceElevatorBaseStatePacket::handle
+		);
 	}
 }

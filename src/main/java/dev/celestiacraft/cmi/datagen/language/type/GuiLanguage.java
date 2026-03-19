@@ -32,8 +32,8 @@ public class GuiLanguage extends LanguageGenerate {
 
 		addCustomLang(
 				"text.cmi.space_elevator_base.already_built",
-				"This space station already has a ground base.",
-				"这个空间站已经建立过地面基站了"
+				"This space station already has a ground base and docking station.",
+				"这个空间站已经建立过地面基站和对接站了"
 		);
 		addCustomLang(
 				"text.cmi.space_elevator_base.need_earth_launch",
@@ -52,8 +52,8 @@ public class GuiLanguage extends LanguageGenerate {
 		);
 		addCustomLang(
 				"text.cmi.space_elevator_base.success",
-				"Ground base built on Earth.",
-				"已在地球建立地面基站"
+				"Ground base and docking station built successfully.",
+				"地面基站和对接站已建立成功"
 		);
 	}
 }
