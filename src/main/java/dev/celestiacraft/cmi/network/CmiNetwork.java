@@ -24,5 +24,12 @@ public class CmiNetwork {
 				SeedPacket::decode,
 				SeedPacket::handle
 		);
+		CHANNEL.registerMessage(
+				id++,
+				BuildEarthSpaceElevatorBasePacket.class,
+				BuildEarthSpaceElevatorBasePacket::encode,
+				BuildEarthSpaceElevatorBasePacket::decode,
+				BuildEarthSpaceElevatorBasePacket::handle
+		);
 	}
 }
