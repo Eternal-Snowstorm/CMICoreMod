@@ -26,6 +26,8 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity {
 		super(type, pos, state, CmiMultiblock.TEST_COKE_OVEN);
 	}
 
+	private final CapabilityHandler capabilityHandler = new CapabilityHandler();
+
 	private int workTimer = 0;
 
 	public static void tick(Level level, BlockPos pos, BlockState state, TestCokeOvenBlockEntity entity) {
@@ -35,8 +37,6 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity {
 
 		entity.runRecipe();
 	}
-
-	private final CapabilityHandler capabilityHandler = new CapabilityHandler();
 
 	private void runRecipe() {
 		if (level == null || level.isClientSide()) {
