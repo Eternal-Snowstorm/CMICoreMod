@@ -124,7 +124,11 @@ public abstract class ControllerBlockEntity extends BlockEntity implements IMult
 	protected ControllerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, Supplier<IMultiblock> structure) {
 		super(type, pos, state);
 
-		this.multiblock = MultiblockHandler.builder(this, structure).translationKey(getMultiblockKey()).renderOffset(getRenderOffsetX(), getRenderOffsetY(), getRenderOffsetZ()).cacheTicks(getCacheTicks()).build();
+		this.multiblock = MultiblockHandler.builder(this, structure)
+				.translationKey(getMultiblockKey())
+				.renderOffset(getRenderOffsetX(), getRenderOffsetY(), getRenderOffsetZ())
+				.cacheTicks(getCacheTicks())
+				.build();
 	}
 
 	/**
