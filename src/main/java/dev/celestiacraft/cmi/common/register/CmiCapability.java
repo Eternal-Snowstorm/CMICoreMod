@@ -1,6 +1,10 @@
 package dev.celestiacraft.cmi.common.register;
 
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.block.test_multiblock.capability.TestEnergyCapability;
+import dev.celestiacraft.cmi.common.block.test_multiblock.capability.TestFluidCapability;
+import dev.celestiacraft.cmi.common.block.test_multiblock.capability.TestItemCapability;
+import dev.celestiacraft.cmi.common.block.test_multiblock.capability.TestItemHandler;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCEnergyStorage;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCItemHandler;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCItmeCapability;
@@ -19,5 +23,10 @@ public class CmiCapability {
 		event.register(VDCEnergyStorage.class);
 		event.register(VDCItemHandler.class);
 		event.register(VDCItmeCapability.class);
+		// TestMultiblock
+		event.register(TestEnergyCapability.class);
+		event.register(TestFluidCapability.class);
+		event.register(TestItemCapability.class);
+		event.register(TestItemHandler.class);
 	}
 }
