@@ -48,7 +48,9 @@ public class ParchmentRightClick {
 		ServerLevel sl = (ServerLevel) level;
 
 		Item parchment = getParchment();
-		if (parchment == null) return;
+		if (parchment == null) {
+			return;
+		}
 
 		// 只能主手触发
 		if (item.is(parchment) && event.getHand() == InteractionHand.MAIN_HAND) {
