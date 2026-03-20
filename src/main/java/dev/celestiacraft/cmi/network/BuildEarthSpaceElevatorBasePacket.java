@@ -2,11 +2,14 @@ package dev.celestiacraft.cmi.network;
 
 import dev.celestiacraft.cmi.common.recipe.space_elevator_base.SpaceElevatorBaseRecipe;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraSpaceElevatorCompat;
+import dev.celestiacraft.cmi.compat.adastra.AdAstraSpaceElevatorStationCompat;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorBaseHandler;
+import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorLinkHandler;
 import earth.terrarium.adastra.api.planets.Planet;
 import earth.terrarium.adastra.common.compat.argonauts.ArgonautsIntegration;
 import earth.terrarium.adastra.common.handlers.SpaceStationHandler;
 import earth.terrarium.adastra.common.handlers.base.SpaceStation;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -15,6 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -64,7 +68,8 @@ public class BuildEarthSpaceElevatorBasePacket {
 				return;
 			}
 
-			if (SpaceElevatorBaseHandler.hasBuiltBase(orbitLevel, msg.spaceStationPos)) {
+			if (SpaceElevatorBaseHandler.hasBuiltStructure(orbitLevel, msg.spaceStationPos)) {
+				CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorBaseStatePacket(msg.dimension, msg.spaceStationPos, true));
 				notifyPlayer(player, "text.cmi.space_elevator_base.already_built");
 				return;
 			}
@@ -84,6 +89,7 @@ public class BuildEarthSpaceElevatorBasePacket {
 				return;
 			}
 
+			BlockPos groundBasePos = AdAstraSpaceElevatorCompat.getLastEarthLaunchOrigin(player);
 			if (!AdAstraSpaceElevatorCompat.buildEarthBaseFromLastLaunch(player, orbitLevel)) {
 				notifyPlayer(player, "text.cmi.space_elevator_base.invalid_launch_position");
 				return;
@@ -91,6 +97,11 @@ public class BuildEarthSpaceElevatorBasePacket {
 
 			SpaceElevatorBaseRecipe.consumeIngredients(player, recipe);
 			SpaceElevatorBaseHandler.markBaseBuilt(orbitLevel, msg.spaceStationPos);
+			AdAstraSpaceElevatorStationCompat.decorateEarthOrbitStation(orbitLevel, msg.spaceStationPos);
+			if (groundBasePos != null) {
+				SpaceElevatorLinkHandler.setGroundBase(orbitLevel, msg.spaceStationPos, Level.OVERWORLD, groundBasePos);
+			}
+			CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorBaseStatePacket(msg.dimension, msg.spaceStationPos, true));
 			notifyPlayer(player, "text.cmi.space_elevator_base.success");
 		});
 		ctx.setPacketHandled(true);
@@ -98,8 +109,7 @@ public class BuildEarthSpaceElevatorBasePacket {
 
 	private static void notifyPlayer(ServerPlayer player, String translationKey) {
 		Component message = Component.translatable(translationKey);
-		player.displayClientMessage(message, true);
-		player.sendSystemMessage(message);
+		player.displayClientMessage(message, false);
 	}
 
 	private static boolean isAllowed(ServerPlayer player, ServerLevel level, ChunkPos targetPos) {

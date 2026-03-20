@@ -37,6 +37,10 @@ public class SpaceElevatorBaseHandler extends SaveHandler {
 		return read(level).builtStations.contains(stationPos.toLong());
 	}
 
+	public static boolean hasBuiltStructure(ServerLevel level, ChunkPos stationPos) {
+		return hasBuiltBase(level, stationPos) || SpaceElevatorLinkHandler.getGroundBase(level, stationPos) != null || SpaceElevatorLinkHandler.getOrbitAnchor(level, stationPos) != null;
+	}
+
 	public static void markBaseBuilt(ServerLevel level, ChunkPos stationPos) {
 		read(level).builtStations.add(stationPos.toLong());
 	}
