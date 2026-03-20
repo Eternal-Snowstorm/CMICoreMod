@@ -7,14 +7,16 @@ import net.minecraft.world.item.Item;
 public class ModItemTags {
 	public static final TagKey<Item> MECHANISMS;
 	public static final TagKey<Item> INCOMPLETE_MECHANISMS;
+	public static final TagKey<Item> MECHANISM_FLASH_DRIVES;
 
 	static {
-		MECHANISMS = TagsBuilder.item("mechanisms", "create");
-		INCOMPLETE_MECHANISMS = TagsBuilder.item("incomplete_mechanisms", "create");
+		MECHANISMS = TagsBuilder.item("mechanisms").create();
+		INCOMPLETE_MECHANISMS = TagsBuilder.item("incomplete_mechanisms").create();
+		MECHANISM_FLASH_DRIVES = TagsBuilder.item("mechanism_flash_drives").cmi();
 	}
 
 	public static TagKey<Item> mechanism(String name) {
 		String path = String.format("mechanisms/%s", name);
-		return TagsBuilder.item(path, "create");
+		return TagsBuilder.item(path).create();
 	}
 }

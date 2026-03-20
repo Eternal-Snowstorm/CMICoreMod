@@ -76,8 +76,12 @@ public class AdvancedSpoutRenderer extends SafeBlockEntityRenderer<AdvancedSpout
 			AABB bb = new AABB(0.5, .5, 0.5, 0.5, -1.2, 0.5).inflate(radius / 32f);
 			FluidRenderer.renderFluidBox(
 					fluidStack,
-					(float) bb.minX, (float) bb.minY, (float) bb.minZ,
-					(float) bb.maxX, (float) bb.maxY, (float) bb.maxZ,
+					(float) bb.minX,
+					(float) bb.minY,
+					(float) bb.minZ,
+					(float) bb.maxX,
+					(float) bb.maxY,
+					(float) bb.maxZ,
 					buffer,
 					ms,
 					light,

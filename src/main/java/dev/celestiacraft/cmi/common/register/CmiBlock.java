@@ -21,13 +21,12 @@ import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerItem;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlock;
 import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlock;
-import dev.celestiacraft.cmi.common.block.usb_socket.UsbSocketBlock;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlock;
+import dev.celestiacraft.cmi.common.block.usb_socket.UsbSocketBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorItem;
 import dev.celestiacraft.cmi.common.block.water_pump.WaterPumpBlock;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
@@ -257,6 +256,7 @@ public class CmiBlock {
 		USB_SOCKET = Cmi.REGISTRATE.block("usb_socket", UsbSocketBlock::new)
 				.item()
 				.build()
+				.register();
 		TEST_MULTIBLOCK = Cmi.REGISTRATE.block("test_multiblock_controller", TestMultiblockBlock::new)
 				.initialProperties(SharedProperties::stone)
 				.item()
