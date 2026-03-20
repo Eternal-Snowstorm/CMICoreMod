@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.register;
 
 import com.simibubi.create.content.kinetics.base.HalfShaftInstance;
+import com.simibubi.create.foundation.networking.BlockEntityDataPacket;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorBlockEntity;
@@ -17,6 +18,10 @@ import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerInstance;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerRenderer;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlockEntity;
+import dev.celestiacraft.cmi.common.block.usb_socket.UsbSocketBlockEntity;
+import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlockEnitiy;
+import dev.celestiacraft.cmi.common.block.water_pump.WaterPumpBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlockEntity;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlockEnitiy;
 import dev.celestiacraft.cmi.common.block.water_pump.WaterPumpBlockEntity;
@@ -32,6 +37,7 @@ public class CmiBlockEntityTypes {
 	public static final BlockEntityEntry<AdvancedSpoutBlockEntity> ADVANCED_SPOUT;
 	public static final BlockEntityEntry<VoidDustCollectorBlockEnitiy> VOID_DUST_COLLECTOR;
 	public static final BlockEntityEntry<BeltGrinderBlockEntity> BELT_GRINDER;
+	public static final BlockEntityEntry<UsbSocketBlockEntity> USB_SOCKET;
 	public static final BlockEntityEntry<TestMultiblockBlockEntity> TEST_MULTIBLOCK;
 	public static final BlockEntityEntry<TestCokeOvenBlockEntity> TEST_COKE_OVEN;
 
@@ -70,6 +76,8 @@ public class CmiBlockEntityTypes {
 				.validBlocks(CmiBlock.BELT_GRINDER)
 				.renderer(() -> BeltGrinderRenderer::new)
 				.register();
+		USB_SOCKET = Cmi.REGISTRATE.blockEntity("usb_socket", UsbSocketBlockEntity::new)
+				.validBlock(CmiBlock.USB_SOCKET)
 		TEST_MULTIBLOCK = Cmi.REGISTRATE.blockEntity("test_multiblock_controller", TestMultiblockBlockEntity::new)
 				.validBlock(CmiBlock.TEST_MULTIBLOCK)
 				.register();
