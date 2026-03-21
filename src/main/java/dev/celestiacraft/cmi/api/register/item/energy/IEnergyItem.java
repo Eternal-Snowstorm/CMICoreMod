@@ -17,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
  *     <li>能量的 NBT 存储与读取</li>
  *     <li>充能 / 放能逻辑</li>
  *     <li>容量与 IO 限制控制</li>
- *     <li>创造模式电池支持</li>
  * </ul>
  *
  * <p>
