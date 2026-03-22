@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.item;
 
-import dev.celestiacraft.cmi.api.register.item.energy.EnergyItemCapabilityProvider;
-import dev.celestiacraft.cmi.api.register.item.energy.IEnergyItem;
+import dev.celestiacraft.libs.common.item.energy.EnergyItemCapabilityProvider;
+import dev.celestiacraft.libs.common.item.energy.IEnergyItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
