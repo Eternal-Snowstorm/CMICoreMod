@@ -5,7 +5,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.client.CmiTextures;
+import dev.celestiacraft.cmi.api.client.textures.Items;
 import dev.celestiacraft.cmi.common.item.MechanismItem;
 import dev.celestiacraft.cmi.tag.ModItemTags;
 import net.minecraft.core.registries.Registries;
@@ -45,7 +45,7 @@ public class MechanismRegister {
 
 		ItemBuilder<T, CreateRegistrate> builder = Cmi.REGISTRATE.item(registryId, factory);
 
-		builder.model(CmiTextures.Items.setTexture(String.format("item/mechanism/complete/%s", name)));
+		builder.model(Items.simple(String.format("item/mechanism/complete/%s", name)));
 
 		builder.tag(ModItemTags.MECHANISMS);
 		builder.tag(ModItemTags.mechanism(name));
@@ -64,7 +64,7 @@ public class MechanismRegister {
 
 		ItemBuilder<SequencedAssemblyItem, CreateRegistrate> builder = Cmi.REGISTRATE.item(registryId, SequencedAssemblyItem::new);
 
-		builder.model(CmiTextures.Items.setTexture(String.format("item/mechanism/incomplete/%s", name)));
+		builder.model(Items.simple(String.format("item/mechanism/incomplete/%s", name)));
 
 		builder.tag(ModItemTags.INCOMPLETE_MECHANISMS);
 
