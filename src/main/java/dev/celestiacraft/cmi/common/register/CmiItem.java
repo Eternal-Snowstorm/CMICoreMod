@@ -16,10 +16,10 @@ public class CmiItem {
 		TEST_BRUSH = Cmi.REGISTRATE.item("test_brush", TestBrushItem::new)
 				.register();
 		MYSTIC_POMELO = Cmi.REGISTRATE.item("mystic_pomelo", MysticPomeloItem::new)
-				.model(Items.simple("item/mystic_pomelo"))
+				.model(Items.generated("item/mystic_pomelo"))
 				.register();
 		SIMPLE_BATTERY = Cmi.REGISTRATE.item("simple_battery", SimpleBatteryItem::new)
-				.model(Items.simple("item/simple_battery"))
+				.model(Items.generated("item/simple_battery"))
 				.register();
 	}
 

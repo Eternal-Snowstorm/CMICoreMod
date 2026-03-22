@@ -45,7 +45,7 @@ public class MechanismRegister {
 
 		ItemBuilder<T, CreateRegistrate> builder = Cmi.REGISTRATE.item(registryId, factory);
 
-		builder.model(Items.simple(String.format("item/mechanism/complete/%s", name)));
+		builder.model(Items.generated(String.format("item/mechanism/complete/%s", name)));
 
 		builder.tag(ModItemTags.MECHANISMS);
 		builder.tag(ModItemTags.mechanism(name));
@@ -64,7 +64,7 @@ public class MechanismRegister {
 
 		ItemBuilder<SequencedAssemblyItem, CreateRegistrate> builder = Cmi.REGISTRATE.item(registryId, SequencedAssemblyItem::new);
 
-		builder.model(Items.simple(String.format("item/mechanism/incomplete/%s", name)));
+		builder.model(Items.generated(String.format("item/mechanism/incomplete/%s", name)));
 
 		builder.tag(ModItemTags.INCOMPLETE_MECHANISMS);
 
