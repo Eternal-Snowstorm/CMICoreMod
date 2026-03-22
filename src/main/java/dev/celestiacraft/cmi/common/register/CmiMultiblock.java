@@ -135,7 +135,7 @@ public class CmiMultiblock {
 				})
 				// IO
 				.define('B', (builder) -> {
-					builder.block(CmiBlock.TEST_COKE_OVEN.get());
+					builder.block(CmiBlock.TEST_COKE_OVEN_IO.get());
 				})
 				// 控制器
 				.define('0', (builder) -> {
