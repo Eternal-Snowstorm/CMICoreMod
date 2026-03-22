@@ -278,5 +278,5 @@ public abstract class ControllerBlockEntity extends BlockEntity implements IMult
 		return 20;
 	}
 
-	protected abstract void runRecipe(MultiblockContext context);
+//	protected abstract void runRecipe(MultiblockContext context);
 }
