@@ -1,14 +1,15 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven.capability;
 
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlockEntity;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlockEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class CokeOvenFluidCapability implements IFluidHandler {
-	private final TestCokeOvenBlockEntity entity;
+	private final TestCokeOvenIOBlockEntity entity;
 
-	public CokeOvenFluidCapability(TestCokeOvenBlockEntity entity) {
+	public CokeOvenFluidCapability(TestCokeOvenIOBlockEntity entity) {
 		this.entity = entity;
 	}
 
@@ -19,7 +20,7 @@ public class CokeOvenFluidCapability implements IFluidHandler {
 
 	@Override
 	public @NotNull FluidStack getFluidInTank(int tank) {
-		return entity.isStructureValid() ? entity.getFluid().copy() : FluidStack.EMPTY;
+		return entity.getFluid().copy();
 	}
 
 	@Override
@@ -30,8 +31,7 @@ public class CokeOvenFluidCapability implements IFluidHandler {
 	@Override
 	public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
 		FluidStack fluid = entity.getFluid();
-		return entity.isStructureValid() &&
-				(fluid.isEmpty() || stack.isFluidEqual(fluid));
+		return (fluid.isEmpty() || stack.isFluidEqual(fluid));
 	}
 
 	@Override

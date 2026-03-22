@@ -125,13 +125,17 @@ public class CmiMultiblock {
 						},
 						{
 								"AAA",
-								"AAA",
+								"BAA",
 								"AAA"
 						}
 				})
 				// 外壳
 				.define('A', (builder) -> {
 					builder.block(Blocks.BRICKS);
+				})
+				// IO
+				.define('B', (builder) -> {
+					builder.block(CmiBlock.TEST_COKE_OVEN.get());
 				})
 				// 控制器
 				.define('0', (builder) -> {

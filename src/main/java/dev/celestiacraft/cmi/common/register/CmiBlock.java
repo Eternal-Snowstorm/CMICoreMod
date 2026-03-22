@@ -20,6 +20,7 @@ import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeother
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerItem;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlock;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlock;
 import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlock;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlock;
@@ -46,6 +47,7 @@ public class CmiBlock {
 	public static final BlockEntry<AcceleratorBlock> ACCELERATOR;
 	public static final BlockEntry<TestMultiblockBlock> TEST_MULTIBLOCK;
 	public static final BlockEntry<TestCokeOvenBlock> TEST_COKE_OVEN;
+	public static final BlockEntry<TestCokeOvenIOBlock> TEST_COKE_OVEN_IO;
 
 	static {
 		ACCELERATOR = Cmi.REGISTRATE.block("accelerator", AcceleratorBlock::new)
@@ -284,6 +286,14 @@ public class CmiBlock {
 										.build();
 							});
 				})
+				.register();
+		TEST_COKE_OVEN_IO = Cmi.REGISTRATE.block("test_coke_oven_io", TestCokeOvenIOBlock::new)
+				.initialProperties(SharedProperties::stone)
+				.item()
+				.model((context, provider) -> {
+					provider.withExistingParent(context.getName(), provider.modLoc("block/test_coke_oven_io"));
+				})
+				.build()
 				.register();
 	}
 

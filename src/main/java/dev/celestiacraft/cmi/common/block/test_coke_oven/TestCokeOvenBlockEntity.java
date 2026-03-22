@@ -9,7 +9,6 @@ import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenItem
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.ItemTags;
@@ -18,23 +17,29 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class TestCokeOvenBlockEntity extends ControllerBlockEntity {
 	public TestCokeOvenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state, CmiMultiblock.TEST_COKE_OVEN);
 	}
 
-	private final CokeOvenItemCapability itemHandler = new CokeOvenItemCapability(this);
+	private final CokeOvenItemCapability itemHandler;
+
+	{
+		assert level != null;
+		itemHandler = new CokeOvenItemCapability((TestCokeOvenIOBlockEntity) level.getBlockEntity(this.getBlockPos().below()));
+	}
+
 	private LazyOptional<IItemHandler> itemCap = LazyOptional.empty();
 
-	private final CokeOvenFluidCapability fluidHandler = new CokeOvenFluidCapability(this);
+	private final CokeOvenFluidCapability fluidHandler = new CokeOvenFluidCapability((TestCokeOvenIOBlockEntity) level.getBlockEntity(this.getBlockPos().below()));
 	private LazyOptional<IFluidHandler> fluidCap = LazyOptional.empty();
 
 	@Getter
@@ -116,35 +121,6 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity {
 	}
 
 	@Override
-	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction direction) {
-		if (!isStructureValid()) {
-			return LazyOptional.empty();
-		}
-		if (capability == ForgeCapabilities.ITEM_HANDLER) {
-			return itemCap.cast();
-		}
-		if (capability == ForgeCapabilities.FLUID_HANDLER) {
-			return fluidCap.cast();
-		}
-		return super.getCapability(capability, direction);
-	}
-
-	@Override
-	public void invalidateCaps() {
-		super.invalidateCaps();
-		itemCap.invalidate();
-		fluidCap.invalidate();
-	}
-
-	@Override
-	public void reviveCaps() {
-		super.reviveCaps();
-
-		this.itemCap = LazyOptional.of(() -> new CokeOvenItemHandler(itemHandler, this));
-		this.fluidCap = LazyOptional.of(() -> fluidHandler);
-	}
-
-	@Override
 	protected void saveAdditional(@NotNull CompoundTag tag) {
 		super.saveAdditional(tag);
 
@@ -167,14 +143,14 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity {
 
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
+		return ClientboundBlockEntityDataPacket.create(Objects.requireNonNull(level.getBlockEntity(this.getBlockPos().below())));
 	}
 
 	@Override
 	public void onLoad() {
 		super.onLoad();
 
-		this.itemCap = LazyOptional.of(() -> new CokeOvenItemHandler(itemHandler, this));
+		this.itemCap = LazyOptional.of(() -> new CokeOvenItemHandler(itemHandler, (TestCokeOvenIOBlockEntity) level.getBlockEntity(this.getBlockPos().below())));
 		this.fluidCap = LazyOptional.of(() -> fluidHandler);
 	}
 }

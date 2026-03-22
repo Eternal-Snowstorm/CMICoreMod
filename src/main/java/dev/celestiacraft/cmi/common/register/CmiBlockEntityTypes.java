@@ -16,6 +16,7 @@ import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlockEntity;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerInstance;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerRenderer;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlockEntity;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlockEntity;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlockEnitiy;
@@ -33,6 +34,7 @@ public class CmiBlockEntityTypes {
 	public static final BlockEntityEntry<BeltGrinderBlockEntity> BELT_GRINDER;
 	public static final BlockEntityEntry<TestMultiblockBlockEntity> TEST_MULTIBLOCK;
 	public static final BlockEntityEntry<TestCokeOvenBlockEntity> TEST_COKE_OVEN;
+	public static final BlockEntityEntry<TestCokeOvenIOBlockEntity> TEST_COKE_OVEN_IO;
 
 	static {
 		TEST_GRAVEL = Cmi.REGISTRATE.blockEntity("test_gravel", TestGravelBlockEntity::new)
@@ -74,6 +76,9 @@ public class CmiBlockEntityTypes {
 				.register();
 		TEST_COKE_OVEN = Cmi.REGISTRATE.blockEntity("test_coke_oven", TestCokeOvenBlockEntity::new)
 				.validBlock(CmiBlock.TEST_COKE_OVEN)
+				.register();
+		TEST_COKE_OVEN_IO = Cmi.REGISTRATE.blockEntity("test_coke_oven_io", TestCokeOvenIOBlockEntity::new)
+				.validBlock(CmiBlock.TEST_COKE_OVEN_IO)
 				.register();
 	}
 

@@ -1,12 +1,13 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven.capability;
 
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlockEntity;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlockEntity;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class CokeOvenItemCapability extends ItemStackHandler {
-	private final TestCokeOvenBlockEntity entity;
+	private final TestCokeOvenIOBlockEntity entity;
 
-	public CokeOvenItemCapability(TestCokeOvenBlockEntity entity) {
+	public CokeOvenItemCapability(TestCokeOvenIOBlockEntity entity) {
 		super(2);
 		this.entity = entity;
 	}

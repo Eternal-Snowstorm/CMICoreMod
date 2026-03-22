@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven.capability;
 
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlockEntity;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
@@ -9,7 +10,7 @@ public class CokeOvenItemHandler implements IItemHandler {
 	private final CokeOvenItemCapability handler;
 	private final TestCokeOvenBlockEntity entity;
 
-	public CokeOvenItemHandler(CokeOvenItemCapability handler, TestCokeOvenBlockEntity entity) {
+	public CokeOvenItemHandler(CokeOvenItemCapability handler, TestCokeOvenIOBlockEntity entity) {
 		this.handler = handler;
 		this.entity = entity;
 	}
