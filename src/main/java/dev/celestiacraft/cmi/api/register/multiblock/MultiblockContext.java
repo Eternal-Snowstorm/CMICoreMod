@@ -8,17 +8,20 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MultiblockContext<T extends ControllerBlockEntity> {
 	@Getter
-	private final T entity;
+	private T entity;
 	@Getter
-	private final Level level;
+	private Level level;
 	@Getter
-	private final ItemStack stack;
+	private ItemStack stack;
 	@Getter
-	private final int workTimes;
+	private int workTimes;
 	@Getter
-	private final BlockPos pos;
+	private BlockPos pos;
 	@Getter
-	private final BlockState state;
+	private BlockState state;
+
+	public MultiblockContext() {
+	}
 
 	public MultiblockContext(T entity, Level level, ItemStack stack, int workTimes, BlockPos pos, BlockState state) {
 		this.entity = entity;
