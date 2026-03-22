@@ -1,22 +1,38 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven;
 
+import blusunrize.immersiveengineering.common.register.IEFluids;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlockEntity;
-import dev.celestiacraft.cmi.api.register.multiblock.MultiblockContext;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenFluidCapability;
+import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenItemCapability;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class TestCokeOvenBlockEntity extends ControllerBlockEntity {
+	Level level = this.getLevel();
+
+	private final CokeOvenItemCapability itemHandler = new CokeOvenItemCapability(
+			(TestCokeOvenIOBlockEntity) level.getBlockEntity(this.getBlockPos().below())
+	);
+
+	private final CokeOvenFluidCapability fluidHandler = new CokeOvenFluidCapability(
+			(TestCokeOvenIOBlockEntity) level.getBlockEntity(this.getBlockPos().below())
+	);
+
+
+	private ItemStack input = itemHandler.getStackInSlot(0);
+	private ItemStack output = itemHandler.getStackInSlot(1);
 	private int workTimer = 0;
-	private ItemStack input = ItemStack.EMPTY;
-	private ItemStack output = ItemStack.EMPTY;
 
 	public TestCokeOvenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state, CmiMultiblock.TEST_COKE_OVEN);
@@ -33,7 +49,10 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity {
 			return;
 		}
 
+		ItemStack input = itemHandler.getStackInSlot(0);
+		ItemStack output = itemHandler.getStackInSlot(1);
 		int timeToWork = 20;
+
 		boolean canWork = isStructureValid() && input.is(ItemTags.LOGS) && output.getCount() < 64;
 
 		if (!canWork) {
@@ -42,14 +61,15 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity {
 		}
 
 		workTimer++;
+
 		setChanged();
 
 		if (workTimer >= timeToWork) {
 			workTimer = 0;
+
 			input.shrink(1);
-			output = output.copy();
-			output.grow(1);
-			setChanged();
+			itemHandler.insertItem(1, Items.CHARCOAL.getDefaultInstance(), false);
+			fluidHandler.fill(new FluidStack(IEFluids.CREOSOTE.getStill(), 125), IFluidHandler.FluidAction.EXECUTE);
 		}
 	}
 
