@@ -19,15 +19,25 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class TestCokeOvenBlockEntity extends ControllerBlockEntity {
-	Level level = this.getLevel();
 
-	private final CokeOvenItemCapability itemHandler = new CokeOvenItemCapability(
-			(TestCokeOvenIOBlockEntity) level.getBlockEntity(this.getBlockPos().below())
-	);
+	private CokeOvenItemCapability itemHandler;
 
-	private final CokeOvenFluidCapability fluidHandler = new CokeOvenFluidCapability(
-			(TestCokeOvenIOBlockEntity) level.getBlockEntity(this.getBlockPos().below())
-	);
+	private CokeOvenFluidCapability fluidHandler;
+
+	private void initHandlers() {
+		if (level == null) {
+			return;
+		}
+		if (itemHandler != null) {
+			return;
+		}
+		TestCokeOvenIOBlockEntity entity = (TestCokeOvenIOBlockEntity) level.getBlockEntity(this.getBlockPos().below());
+		if (entity == null) {
+			return;
+		}
+		itemHandler = new CokeOvenItemCapability(entity);
+		fluidHandler = new CokeOvenFluidCapability(entity);
+	}
 
 
 	private ItemStack input = itemHandler.getStackInSlot(0);
@@ -49,6 +59,10 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity {
 			return;
 		}
 
+		initHandlers();
+		if (itemHandler == null || fluidHandler == null) {
+			return;
+		}
 		ItemStack input = itemHandler.getStackInSlot(0);
 		ItemStack output = itemHandler.getStackInSlot(1);
 		int timeToWork = 20;
