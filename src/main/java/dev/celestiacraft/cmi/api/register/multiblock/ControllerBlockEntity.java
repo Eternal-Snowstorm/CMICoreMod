@@ -1,9 +1,11 @@
 package dev.celestiacraft.cmi.api.register.multiblock;
 
+import com.simibubi.create.foundation.block.IBE;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.IMultiblockProvider;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockHandler;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -330,7 +332,8 @@ public abstract class ControllerBlockEntity extends BlockEntity implements IMult
 	 * 注意事项:
 	 * </p>
 	 * <ul>
-	 *     <li></li>
+	 *     <li>在重写该方法后还需要在本类下重写 {@link #tick(MultiblockContext)} 方法, 详见 {@link #tick(MultiblockContext)}</p></li>
+	 *     <li>在重写该方法后还需要在 Block 类下重写 {@link IBE#getTicker(Level, BlockState, BlockEntityType)} 方法调用本类下的 {@link #tick(MultiblockContext)} 方法</li>
 	 * </ul>
 	 *
 	 * <pre>{@code
@@ -342,5 +345,12 @@ public abstract class ControllerBlockEntity extends BlockEntity implements IMult
 	 * @param context 多方块运行上下文, 提供当前 tick 的所有执行信息
 	 */
 	protected void runRecipe(MultiblockContext context) {
+	}
+
+	/**
+	 *
+	 * @param context 多方块运行上下文, 提供当前 tick 的所有执行信
+	 */
+	protected void tick(MultiblockContext context) {
 	}
 }
