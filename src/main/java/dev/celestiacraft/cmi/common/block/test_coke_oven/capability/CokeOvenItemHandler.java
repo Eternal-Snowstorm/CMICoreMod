@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven.capability;
 
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlockEntity;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
@@ -26,11 +27,17 @@ public class CokeOvenItemHandler implements IItemHandler {
 
 	@Override
 	public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-		// 只允许插入 input 槽
-		if (slot != 0) {
-			return stack;
+		// slot0：输入(限制)
+		if (slot == 0) {
+			return handler.insertItem(slot, stack, simulate);
 		}
-		return handler.insertItem(slot, stack, simulate);
+
+		// slot1：允许插入(给机器用)
+		if (slot == 1) {
+			return handler.insertItem(slot, stack, simulate);
+		}
+
+		return stack;
 	}
 
 	@Override
@@ -49,7 +56,9 @@ public class CokeOvenItemHandler implements IItemHandler {
 
 	@Override
 	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-		// ✔ 只允许 input
-		return slot == 0;
+		if (slot == 0) {
+			return stack.is(ItemTags.LOGS);
+		}
+		return slot == 1; // ✅ 允许输出插入
 	}
 }
