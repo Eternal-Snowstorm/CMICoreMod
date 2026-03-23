@@ -71,21 +71,21 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity implements IC
 				int insertCount = inputCache.getCount() - input.getCount();
 				itemHandler.insertItem(0, new ItemStack(inputCache.getItem(), insertCount), false);
 			} else {
-				inputCache = input;
+				inputCache = input.copy();
 			}
 
 			if (output.getCount() > outputCache.getCount()) {
 				int extractCount = output.getCount() - outputCache.getCount();
 				itemHandler.extractItem(1, extractCount, false);
 			} else {
-				outputCache = output;
+				outputCache = output.copy();
 			}
 
 			if (outputFluid.getAmount() > outputFluidCache.getAmount()) {
 				int drainAmount = outputFluid.getAmount() - outputFluidCache.getAmount();
 				fluidHandler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
 			} else {
-				outputFluidCache = outputFluid;
+				outputFluidCache = outputFluid.copy();
 			}
 		});
 
