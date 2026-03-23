@@ -24,7 +24,7 @@ public class TestCokeOvenBlock extends ControllerBlock<TestCokeOvenBlockEntity> 
 
 		return (lvl, pos, st, be) -> {
 			if (be instanceof TestCokeOvenBlockEntity entity) {
-				entity.tick(entity.tick(MultiblockContext.of(entity)));
+				entity.tick(MultiblockContext.of(entity));
 			}
 		};
 	}

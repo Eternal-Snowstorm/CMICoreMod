@@ -5,8 +5,6 @@ import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlockEntity;
 import dev.celestiacraft.cmi.api.register.multiblock.IControllerRecipe;
 import dev.celestiacraft.cmi.api.register.multiblock.MultiblockContext;
-import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenFluidCapability;
-import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenItemCapability;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -15,35 +13,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class TestCokeOvenBlockEntity extends ControllerBlockEntity implements IControllerRecipe {
-	private CokeOvenItemCapability itemHandler;
-	private CokeOvenFluidCapability fluidHandler;
-
 	private int workTimer = 0;
 
 	public TestCokeOvenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state, CmiMultiblock.TEST_COKE_OVEN);
-	}
-
-	/**
-	 * 延迟初始化
-	 */
-	private void initHandlers() {
-		if (level == null) {
-			return;
-		}
-		if (itemHandler != null) {
-			return;
-		}
-
-		if (level.getBlockEntity(this.getBlockPos().below()) instanceof TestCokeOvenIOBlockEntity entity) {
-			itemHandler = new CokeOvenItemCapability(entity);
-			fluidHandler = new CokeOvenFluidCapability(entity);
-		}
 	}
 
 	@Override
@@ -56,44 +36,60 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity implements IC
 
 	@Override
 	public void recipe(MultiblockContext context) {
-		if (context.getLevel() == null || context.isClient()) {
+		Cmi.LOGGER.info("tick start");
+
+		// ❌ 删掉 initHandlers()
+		// initHandlers();
+
+		// ❌ 删掉这段
+		// System.out.println("handler: " + itemHandler);
+		// if (itemHandler == null || fluidHandler == null) {
+		// 	System.out.println("handler null");
+		// 	return;
+		// }
+
+		TestCokeOvenIOBlockEntity io = (TestCokeOvenIOBlockEntity) level.getBlockEntity(worldPosition.below());
+
+		if (io == null) {
 			return;
 		}
 
-		initHandlers();
+		IItemHandler itemHandler = io.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+		IFluidHandler fluidHandler = io.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
+
 		if (itemHandler == null || fluidHandler == null) {
 			return;
 		}
 
 		ItemStack input = itemHandler.getStackInSlot(0);
-		ItemStack output = itemHandler.getStackInSlot(1);
+		Cmi.LOGGER.info("input: {}", input);
 
-		int timeToWork = 20;
+		boolean structure = isStructureValid();
+		Cmi.LOGGER.info("structure: {}", structure);
 
-		boolean canWork = isStructureValid()
-				&& input.is(ItemTags.LOGS)
-				&& output.getCount() < 64;
+		ItemStack result = Items.CHARCOAL.getDefaultInstance();
+		FluidStack fluidResult = new FluidStack(IEFluids.CREOSOTE.getStill(), 125);
 
-		if (!canWork) {
+		boolean canInsertItem = itemHandler.insertItem(1, result.copy(), true).isEmpty();
+		int canFillFluid = fluidHandler.fill(fluidResult.copy(), IFluidHandler.FluidAction.SIMULATE);
+
+		Cmi.LOGGER.info("canInsertItem: {}", canInsertItem);
+		Cmi.LOGGER.info("canFillFluid: {}", canFillFluid);
+
+		if (!structure || !input.is(ItemTags.LOGS)) {
+			Cmi.LOGGER.info("fail: input or structure");
+			workTimer = 0;
+			return;
+		}
+
+		if (!canInsertItem || canFillFluid < fluidResult.getAmount()) {
+			Cmi.LOGGER.info("fail: output");
 			workTimer = 0;
 			return;
 		}
 
 		workTimer++;
-		setChanged();
-
-		if (workTimer >= timeToWork) {
-			workTimer = 0;
-
-			input.shrink(1);
-
-			itemHandler.insertItem(1, new ItemStack(Items.CHARCOAL), false);
-
-			fluidHandler.fill(
-					new FluidStack(IEFluids.CREOSOTE.getStill(), 125),
-					IFluidHandler.FluidAction.EXECUTE
-			);
-		}
+		Cmi.LOGGER.info("workTimer: {}", workTimer);
 	}
 
 	@Override

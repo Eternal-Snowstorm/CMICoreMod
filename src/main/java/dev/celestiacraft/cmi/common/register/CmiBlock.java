@@ -257,7 +257,7 @@ public class CmiBlock {
 				.initialProperties(SharedProperties::stone)
 				.item()
 				.model((context, provider) -> {
-					provider.withExistingParent(context.getName(), provider.modLoc("block/test_multiblock_controller"));
+					provider.withExistingParent(context.getName(), provider.modLoc("block/mechanical_belt_grinder/item"));
 				})
 				.build()
 				.blockstate((context, provider) -> {
@@ -274,7 +274,7 @@ public class CmiBlock {
 				.initialProperties(SharedProperties::stone)
 				.item()
 				.model((context, provider) -> {
-					provider.withExistingParent(context.getName(), provider.modLoc("block/void_dust_collector/on"));
+					provider.withExistingParent(context.getName(), provider.modLoc("block/mechanical_belt_grinder/item"));
 				})
 				.build()
 				.blockstate((context, provider) -> {
@@ -290,10 +290,16 @@ public class CmiBlock {
 		TEST_COKE_OVEN_IO = Cmi.REGISTRATE.block("test_coke_oven_io", TestCokeOvenIOBlock::new)
 				.initialProperties(SharedProperties::stone)
 				.item()
-				.model((context, provider) -> {
-					provider.withExistingParent(context.getName(), provider.modLoc("block/test_coke_oven_io"));
-				})
 				.build()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/void_dust_collector/on")))
+										.build();
+							});
+				})
 				.register();
 	}
 
