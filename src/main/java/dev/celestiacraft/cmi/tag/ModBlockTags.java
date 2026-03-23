@@ -8,9 +8,11 @@ import dev.celestiacraft.libs.tags.TagsBuilder;
 public class ModBlockTags {
 	public static final TagKey<Block> GRILL_SOURCES;
 	public static final TagKey<Block> FREEZING_CATALYST;
+	public static final TagKey<Block> COKE_OVEN_STRUCTURE;
 
 	static {
 		GRILL_SOURCES = TagsBuilder.block("grill_sources", Cmi.MODID);
 		FREEZING_CATALYST = TagsBuilder.block("freezing_catalyst", Cmi.MODID);
+		COKE_OVEN_STRUCTURE = TagsBuilder.block("coke_oven_structure", Cmi.MODID);
 	}
 }

@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.common.register;
 
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles;
 import blusunrize.immersiveengineering.common.register.IEBlocks;
+import dev.celestiacraft.cmi.tag.ModBlockTags;
 import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.StructureBuilder;
@@ -115,7 +116,7 @@ public class CmiMultiblock {
 		TEST_COKE_OVEN = structure(StructureBuilder.create(new String[][]{
 						{
 								"AAA",
-								"BAA",
+								"AAA",
 								"AAA"
 						},
 						{
@@ -125,17 +126,13 @@ public class CmiMultiblock {
 						},
 						{
 								"AAA",
-								"BAA",
+								"AAA",
 								"AAA"
 						}
 				})
 				// 外壳
 				.define('A', (builder) -> {
-					builder.block(Blocks.BRICKS);
-				})
-				// IO
-				.define('B', (builder) -> {
-					builder.block(CmiBlock.TEST_COKE_OVEN_IO.get());
+					builder.tag(ModBlockTags.COKE_OVEN_STRUCTURE);
 				})
 				// 控制器
 				.define('0', (builder) -> {
