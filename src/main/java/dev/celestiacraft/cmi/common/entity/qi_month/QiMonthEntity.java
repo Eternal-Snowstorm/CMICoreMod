@@ -47,14 +47,15 @@ public class QiMonthEntity extends Animal implements GeoEntity {
 	}
 
 	private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+		AnimationController<T> controller = state.getController();
+		RawAnimation begin = RawAnimation.begin();
+
 		if (state.isMoving()) {
-			state.getController().setAnimation(RawAnimation.begin()
-					.then("move", Animation.LoopType.LOOP));
+			controller.setAnimation(begin.then("move", Animation.LoopType.LOOP));
 			return PlayState.CONTINUE;
 		}
 
-		state.getController().setAnimation(RawAnimation.begin()
-				.then("idle", Animation.LoopType.LOOP));
+		controller.setAnimation(begin.then("idle", Animation.LoopType.LOOP));
 
 		return PlayState.CONTINUE;
 	}
