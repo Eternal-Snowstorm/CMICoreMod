@@ -5,6 +5,7 @@ import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.client.overlay.NetherBacktankAirOverlay;
 import dev.celestiacraft.cmi.client.ponder.CmiPonderIndex;
 import dev.celestiacraft.cmi.common.entity.dev.qi_month.QiMonthRenderer;
+import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorRenderer;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -21,6 +22,7 @@ public class CmiClient {
 		CmiSpriteShiftEntry.init();
 
 		EntityRenderers.register(CmiEntity.QI_MONTH.get(), QiMonthRenderer::new);
+		EntityRenderers.register(CmiEntity.SPACE_ELEVATOR.get(), SpaceElevatorRenderer::new);
 
 		event.enqueueWork(() -> {
 			CmiPonderIndex.register();
