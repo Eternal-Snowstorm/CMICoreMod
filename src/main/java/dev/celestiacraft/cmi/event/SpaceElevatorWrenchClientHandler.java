@@ -38,18 +38,18 @@ public class SpaceElevatorWrenchClientHandler {
 	private static int[] syncedCounts = new int[0];
 
 	public static float getHoldProgress(@Nullable BlockPos anchorPos) {
-		if (anchorPos == null || trackedAnchor == null || !trackedAnchor.equals(anchorPos)) {
+		if (trackedAnchor == null || !trackedAnchor.equals(anchorPos)) {
 			return 0.0F;
 		}
 		return Mth.clamp(holdTicks / (float) HOLD_TICKS_REQUIRED, 0.0F, 1.0F);
 	}
 
 	public static boolean isCharging(@Nullable BlockPos anchorPos) {
-		return anchorPos != null && trackedAnchor != null && trackedAnchor.equals(anchorPos) && holdTicks > 0 && !packetSent;
+		return trackedAnchor != null && trackedAnchor.equals(anchorPos) && holdTicks > 0 && !packetSent;
 	}
 
 	public static int getStoredCount(@Nullable BlockPos anchorPos, int ingredientIndex) {
-		if (anchorPos == null || syncedAnchor == null || !syncedAnchor.equals(anchorPos)) {
+		if (syncedAnchor == null || !syncedAnchor.equals(anchorPos)) {
 			return 0;
 		}
 		return ingredientIndex >= 0 && ingredientIndex < syncedCounts.length ? syncedCounts[ingredientIndex] : 0;
@@ -104,7 +104,7 @@ public class SpaceElevatorWrenchClientHandler {
 			CmiNetwork.CHANNEL.sendToServer(new StoreSpaceElevatorMaterialsPacket(event.getPos()));
 		}
 
-		// Prevent instant use; construction is now driven by stored materials plus hold-to-build charging.
+		// 建造流程触发，阻止use使用，将流畅修改为存储->建造
 		event.setCanceled(true);
 		event.setCancellationResult(InteractionResult.SUCCESS);
 	}
