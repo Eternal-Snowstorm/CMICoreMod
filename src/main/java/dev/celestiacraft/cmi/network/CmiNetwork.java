@@ -5,6 +5,7 @@ import dev.celestiacraft.cmi.network.c2s.BuildEarthSpaceElevatorBasePacket;
 import dev.celestiacraft.cmi.network.c2s.ConstructSpaceElevatorPacket;
 import dev.celestiacraft.cmi.network.c2s.RequestSpaceElevatorBaseStatePacket;
 import dev.celestiacraft.cmi.network.c2s.RequestSpaceElevatorMaterialsPacket;
+import dev.celestiacraft.cmi.network.c2s.StartSpaceElevatorTransportPacket;
 import dev.celestiacraft.cmi.network.c2s.StoreSpaceElevatorMaterialsPacket;
 import dev.celestiacraft.cmi.network.s2c.SeedPacket;
 import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorBaseStatePacket;
@@ -80,6 +81,13 @@ public class CmiNetwork {
 				SyncSpaceElevatorMaterialsPacket::encode,
 				SyncSpaceElevatorMaterialsPacket::decode,
 				SyncSpaceElevatorMaterialsPacket::handle
+		);
+		CHANNEL.registerMessage(
+				id++,
+				StartSpaceElevatorTransportPacket.class,
+				StartSpaceElevatorTransportPacket::encode,
+				StartSpaceElevatorTransportPacket::decode,
+				StartSpaceElevatorTransportPacket::handle
 		);
 	}
 }

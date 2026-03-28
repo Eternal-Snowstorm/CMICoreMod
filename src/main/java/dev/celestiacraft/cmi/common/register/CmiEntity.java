@@ -20,7 +20,9 @@ public class CmiEntity {
 				.register();
 		SPACE_ELEVATOR = Cmi.REGISTRATE.entity("space_elevator", SpaceElevatorEntity::new, MobCategory.MISC)
 				.properties((builder) -> {
-					builder.sized(0.95f, 2.15f);
+					builder.sized(0.95f, 2.15f)
+							.clientTrackingRange(256)
+							.updateInterval(1);
 				})
 				.register();
 	}

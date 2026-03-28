@@ -22,6 +22,7 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 	private static final String STATION_POS_KEY = "StationPos";
 	private static final String ORBIT_ANCHOR_KEY = "OrbitAnchor";
 	private static final String GROUND_BASE_KEY = "GroundBase";
+	private static final String GROUND_ANCHOR_KEY = "GroundAnchor";
 	private static final String GROUND_DIMENSION_KEY = "GroundDimension";
 
 	private final Map<Long, SpaceElevatorLink> links = new HashMap<>();
@@ -39,6 +40,9 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 			}
 			if (linkTag.contains(GROUND_BASE_KEY, Tag.TAG_COMPOUND)) {
 				link.groundBase = NbtUtils.readBlockPos(linkTag.getCompound(GROUND_BASE_KEY));
+			}
+			if (linkTag.contains(GROUND_ANCHOR_KEY, Tag.TAG_COMPOUND)) {
+				link.groundAnchor = NbtUtils.readBlockPos(linkTag.getCompound(GROUND_ANCHOR_KEY));
 			}
 			if (linkTag.contains(GROUND_DIMENSION_KEY, Tag.TAG_STRING)) {
 				link.groundDimension = ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(linkTag.getString(GROUND_DIMENSION_KEY)));
@@ -59,6 +63,9 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 			}
 			if (link.groundBase != null) {
 				linkTag.put(GROUND_BASE_KEY, NbtUtils.writeBlockPos(link.groundBase));
+			}
+			if (link.groundAnchor != null) {
+				linkTag.put(GROUND_ANCHOR_KEY, NbtUtils.writeBlockPos(link.groundAnchor));
 			}
 			if (link.groundDimension != null) {
 				linkTag.putString(GROUND_DIMENSION_KEY, link.groundDimension.location().toString());
@@ -82,6 +89,10 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 		link.groundBase = groundBase.immutable();
 	}
 
+	public static void setGroundAnchor(ServerLevel level, ChunkPos stationPos, BlockPos groundAnchor) {
+		read(level).getOrCreate(stationPos).groundAnchor = groundAnchor.immutable();
+	}
+
 	@Nullable
 	public static BlockPos getOrbitAnchor(ServerLevel level, ChunkPos stationPos) {
 		SpaceElevatorLink link = read(level).links.get(stationPos.toLong());
@@ -100,8 +111,80 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 		return link == null ? null : link.groundDimension;
 	}
 
+	@Nullable
+	public static LinkTarget findByGroundAnchor(ServerLevel level, ResourceKey<Level> groundDimension, BlockPos groundAnchor) {
+		for (Map.Entry<Long, SpaceElevatorLink> entry : read(level).links.entrySet()) {
+			SpaceElevatorLink link = entry.getValue();
+			if (!groundDimension.equals(link.groundDimension) || link.groundAnchor == null || link.orbitAnchor == null) {
+				continue;
+			}
+			if (link.groundAnchor.equals(groundAnchor)) {
+				return new LinkTarget(new ChunkPos(entry.getKey()), link.orbitAnchor, link.groundBase, link.groundAnchor, link.groundDimension);
+			}
+		}
+		return null;
+	}
+
+	@Nullable
+	public static LinkTarget findByOrbitAnchor(ServerLevel level, BlockPos orbitAnchor) {
+		for (Map.Entry<Long, SpaceElevatorLink> entry : read(level).links.entrySet()) {
+			SpaceElevatorLink link = entry.getValue();
+			if (link.orbitAnchor == null || link.groundDimension == null) {
+				continue;
+			}
+			if (link.orbitAnchor.equals(orbitAnchor)) {
+				return new LinkTarget(new ChunkPos(entry.getKey()), link.orbitAnchor, link.groundBase, link.groundAnchor, link.groundDimension);
+			}
+		}
+		return null;
+	}
+
+	@Nullable
+	public static LinkTarget findByOrbitDockAnchor(ServerLevel level, BlockPos orbitDockAnchor) {
+		for (Map.Entry<Long, SpaceElevatorLink> entry : read(level).links.entrySet()) {
+			SpaceElevatorLink link = entry.getValue();
+			if (link.orbitAnchor == null || link.groundDimension == null) {
+				continue;
+			}
+			if (AdAstraSpaceElevatorTravelCompat.toOrbitDockAnchor(link.orbitAnchor).equals(orbitDockAnchor)) {
+				return new LinkTarget(new ChunkPos(entry.getKey()), link.orbitAnchor, link.groundBase, link.groundAnchor, link.groundDimension);
+			}
+		}
+		return null;
+	}
+
+	@Nullable
+	public static LinkTarget findNearestByGroundBase(ServerLevel level, ResourceKey<Level> groundDimension, BlockPos groundPos, double maxDistance) {
+		LinkTarget best = null;
+		double bestDistance = maxDistance * maxDistance;
+		for (Map.Entry<Long, SpaceElevatorLink> entry : read(level).links.entrySet()) {
+			SpaceElevatorLink link = entry.getValue();
+			if (!groundDimension.equals(link.groundDimension) || link.groundBase == null || link.orbitAnchor == null) {
+				continue;
+			}
+			double distance = link.groundBase.distSqr(groundPos);
+			if (distance > bestDistance) {
+				continue;
+			}
+			bestDistance = distance;
+			best = new LinkTarget(new ChunkPos(entry.getKey()), link.orbitAnchor, link.groundBase, link.groundAnchor, link.groundDimension);
+		}
+		return best;
+	}
+
 	private SpaceElevatorLink getOrCreate(ChunkPos stationPos) {
 		return links.computeIfAbsent(stationPos.toLong(), key -> new SpaceElevatorLink());
+	}
+
+	public static java.util.Collection<SpaceElevatorLink> getAllLinks(ServerLevel level) {
+		return read(level).links.values();
+	}
+
+	public static class SpaceElevatorLink {
+		public BlockPos orbitAnchor;
+		BlockPos groundBase;
+		public BlockPos groundAnchor;
+		ResourceKey<Level> groundDimension;
 	}
 
 	@Override
@@ -109,9 +192,6 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 		return true;
 	}
 
-	private static class SpaceElevatorLink {
-		private BlockPos orbitAnchor;
-		private BlockPos groundBase;
-		private ResourceKey<Level> groundDimension;
+	public record LinkTarget(ChunkPos stationPos, BlockPos orbitAnchor, @Nullable BlockPos groundBase, @Nullable BlockPos groundAnchor, @Nullable ResourceKey<Level> groundDimension) {
 	}
 }

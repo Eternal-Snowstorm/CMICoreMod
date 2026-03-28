@@ -101,6 +101,7 @@ public final class SpaceElevatorConstructionHandler {
 		if (!spawnElevator(level, anchorPos)) {
 			return ConstructResult.SPAWN_FAILED;
 		}
+		AdAstraSpaceElevatorTravelCompat.bindConstructedGroundAnchor(level, anchorPos);
 		SpaceElevatorMaterialStorage.clear(level, anchorPos);
 		playFeedback(level, anchorPos);
 		return ConstructResult.SUCCESS;

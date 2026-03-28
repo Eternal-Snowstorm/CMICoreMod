@@ -138,15 +138,14 @@ public class SpaceElevatorConstructionOverlay implements IGuiOverlay {
 			boolean hasRecipe
 	) {
 		boolean shaderReady = SpaceElevatorHudRenderer.isAvailable();
-		int panelTop = withAlpha(0x081119, 0.90F);
-		int panelBottom = withAlpha(0x0F1923, 0.96F);
-		int insetTop = withAlpha(0x101A24, 0.94F);
-		int insetBottom = withAlpha(0x141F2B, 0.98F);
-		int textMain = withAlpha(0xF4F8FC, 1.0F);
-		int textMuted = withAlpha(0x8FA3B8, 1.0F);
-		int textGood = withAlpha(0x73F0BE, 1.0F);
-		int textWarn = withAlpha(0xFFC769, 1.0F);
-		int buildColor = deployed ? withAlpha(0x73F0BE, 1.0F) : withAlpha(0xFF9E37, 1.0F);
+		int panelBg    = withAlpha(0x1B1B1B, 0.91F);
+		int borderCol  = withAlpha(0xC87828, 0.45F);
+		int sepCol     = withAlpha(0xB06820, 0.55F);
+		int textMain   = withAlpha(0xE8E0D0, 1.0F);
+		int textMuted  = withAlpha(0x887860, 1.0F);
+		int textGood   = withAlpha(0x78C878, 1.0F);
+		int textWarn   = withAlpha(0xE8883A, 1.0F);
+		int buildColor = deployed ? withAlpha(0x78C878, 1.0F) : withAlpha(0xE8883A, 1.0F);
 		int visibleRows = Math.min(ingredients.size(), SpaceElevatorWrenchClientHandler.maxVisibleRows());
 		int scrollOffset = SpaceElevatorWrenchClientHandler.getScrollOffset(ingredients.size());
 		List<SpaceElevatorConstructionRecipe.DisplayIngredient> visibleIngredients = ingredients.subList(scrollOffset, Math.min(ingredients.size(), scrollOffset + visibleRows));
@@ -154,24 +153,21 @@ public class SpaceElevatorConstructionOverlay implements IGuiOverlay {
 		int pillWidth = font.width(status) + 14;
 
 		if (shaderReady) {
-			SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), x, y, CARD_WIDTH, height, 18.0F, 0.9F, panelTop, panelBottom, withAlpha(0x5E7388, 0.34F), 0.9F);
-			SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), x + 6.0F, y + 6.0F, CARD_WIDTH - 12.0F, height - 12.0F, 14.0F, 0.75F, insetTop, insetBottom, withAlpha(0x2B3F52, 0.28F), 0.7F);
-			SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), x + 10.0F, y + 32.0F, CARD_WIDTH - 20.0F, 4.0F, 2.0F, 0.25F, withAlpha(0x345067, 0.44F), withAlpha(0x203244, 0.36F), 0, 0.0F);
-			if (holdProgress > 0.0F) {
-				SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), x + 10.0F, y + 32.0F, Math.max(3.0F, (CARD_WIDTH - 20.0F) * holdProgress), 4.0F, 2.0F, 0.2F, buildColor, withAlpha(buildColor & 0xFFFFFF, (((buildColor >>> 24) & 0xFF) / 255.0F) * 0.72F), 0, 0.0F);
-			}
+			SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), x, y, CARD_WIDTH, height, 6.0F, 0.0F, panelBg, panelBg, borderCol, 1.0F);
+			SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), x + 10.0F, y + 33.0F, CARD_WIDTH - 20.0F, 1.0F, 0.5F, 0.0F, sepCol, sepCol, 0, 0.0F);
 		} else {
-			graphics.fill(x, y, x + CARD_WIDTH, y + height, withAlpha(0x091018, 0.92F));
-			graphics.fill(x + 1, y + 1, x + CARD_WIDTH - 1, y + height - 1, withAlpha(0x142230, 0.96F));
-			graphics.fill(x, y + 32, x + CARD_WIDTH, y + 34, withAlpha(0x22384F, 0.75F));
-			if (holdProgress > 0.0F) {
-				graphics.fill(x + 10, y + 32, x + 10 + Math.max(1, Mth.floor((CARD_WIDTH - 20) * holdProgress)), y + 34, buildColor);
-			}
+			graphics.fill(x, y, x + CARD_WIDTH, y + height, panelBg);
+			graphics.fill(x, y, x + CARD_WIDTH, y + 1, borderCol);
+			graphics.fill(x, y + height - 1, x + CARD_WIDTH, y + height, borderCol);
+			graphics.fill(x, y, x + 1, y + height, borderCol);
+			graphics.fill(x + CARD_WIDTH - 1, y, x + CARD_WIDTH, y + height, borderCol);
+			graphics.fill(x + 10, y + 33, x + CARD_WIDTH - 10, y + 34, sepCol);
 		}
 
 		drawStatusPill(graphics, font, x + CARD_WIDTH - pillWidth - 14, y + 10, status, statusColor(deployed, ready, hasRecipe));
 		graphics.drawString(font, translation("gui.cmi.space_elevator.title"), x + 12, y + 10, textMain, false);
-		graphics.drawString(font, player.level().dimension().location().toString().toUpperCase(), x + 12, y + 21, textMuted, false);
+		String dimPath = player.level().dimension().location().getPath().toUpperCase().replace("_", " ");
+		graphics.drawString(font, dimPath, x + 12, y + 21, textMuted, false);
 		graphics.drawString(font, translation("gui.cmi.space_elevator.header.materials"), x + 12, y + 38, textMuted, false);
 		if (ingredients.size() > visibleRows) {
 			String scrollHint = (scrollOffset + 1) + "-" + (scrollOffset + visibleIngredients.size()) + "/" + ingredients.size();
@@ -182,48 +178,42 @@ public class SpaceElevatorConstructionOverlay implements IGuiOverlay {
 			int rowY = y + 48 + i * ROW_HEIGHT;
 			SpaceElevatorConstructionRecipe.DisplayIngredient ingredient = visibleIngredients.get(i);
 			boolean complete = ingredient.complete(bypassRequirements);
-			int rowTop = withAlpha(complete ? 0x132A22 : 0x2A1E16, 0.92F);
-			int rowBottom = withAlpha(complete ? 0x10211B : 0x231912, 0.96F);
-			if (shaderReady) {
-				SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), x + 8.0F, rowY, CARD_WIDTH - 16.0F, 18.0F, 6.0F, 0.65F, rowTop, rowBottom, withAlpha(complete ? 0x2EA879 : 0xD88443, 0.18F), 0.7F);
-			} else {
-				graphics.fill(x + 8, rowY, x + CARD_WIDTH - 8, rowY + 18, rowTop);
-			}
+			int accentColor = complete ? textGood : textWarn;
+			graphics.fill(x + 10, rowY + 2, x + 13, rowY + ROW_HEIGHT - 3, accentColor);
 			if (!ingredient.stack().isEmpty()) {
-				graphics.renderItem(ingredient.stack(), x + 12, rowY + 1);
+				graphics.renderItem(ingredient.stack(), x + 16, rowY + 1);
 			}
 			String itemName = ingredient.stack().isEmpty() ? translation("gui.cmi.space_elevator.material.unknown") : ingredient.stack().getHoverName().getString();
-			graphics.drawString(font, font.plainSubstrByWidth(itemName, 118), x + 32, rowY + 5, textMain, false);
+			graphics.drawString(font, font.plainSubstrByWidth(itemName, 114), x + 36, rowY + 5, textMain, false);
 			String countText = ingredient.owned() + "/" + ingredient.required();
-			graphics.drawString(font, countText, x + CARD_WIDTH - 34 - font.width(countText), rowY + 5, complete ? textGood : textWarn, false);
-			if (shaderReady) {
-				SpaceElevatorHudRenderer.drawGlowDot(graphics.pose(), x + CARD_WIDTH - 17.0F, rowY + 8.0F, 2.5F, complete ? textGood : textWarn);
-			} else {
-				graphics.fill(x + CARD_WIDTH - 20, rowY + 5, x + CARD_WIDTH - 14, rowY + 11, complete ? textGood : textWarn);
-			}
+			graphics.drawString(font, countText, x + CARD_WIDTH - 12 - font.width(countText), rowY + 5, complete ? textGood : textWarn, false);
 		}
 
 		String footerValue = charging ? holdFooterText(deployed, ready, hasRecipe) : footerText(deployed, ready, hasRecipe);
 		List<FormattedCharSequence> footerLines = font.split(Component.literal(footerValue), CARD_WIDTH - 24);
 		int renderedFooterLines = Math.max(1, Math.min(FOOTER_MAX_LINES, footerLines.size()));
-		int footerY = y + height - 68;
-		graphics.drawString(font, translation("gui.cmi.space_elevator.progress"), x + 12, footerY, textMuted, false);
-		String percentText = (int) (completion * 100.0F) + "%";
-		graphics.drawString(font, percentText, x + CARD_WIDTH - 12 - font.width(percentText), footerY, textMain, false);
+		int footerStartY = y + height - 10;
+		for (int i = renderedFooterLines - 1; i >= 0; i--) {
+			graphics.drawString(font, footerLines.get(i), x + 12, footerStartY - (renderedFooterLines - i) * font.lineHeight, textMuted, false);
+		}
 		int barX = x + 12;
 		int barY = y + height - 52;
 		int barWidth = CARD_WIDTH - 24;
-		int barFillWidth = Math.max(1, Mth.floor(barWidth * completion));
+		float barProgress = charging && holdProgress > 0.0F ? holdProgress : completion;
+		int barFillWidth = Math.max(1, Mth.floor(barWidth * barProgress));
+		int progressLabelY = y + height - 64;
+		String progressLabel = charging && holdProgress > 0.0F
+				? translation("gui.cmi.space_elevator.progress.holding")
+				: translation("gui.cmi.space_elevator.progress");
+		graphics.drawString(font, progressLabel, x + 12, progressLabelY, textMuted, false);
+		String percentText = (int) (barProgress * 100.0F) + "%";
+		graphics.drawString(font, percentText, x + CARD_WIDTH - 12 - font.width(percentText), progressLabelY, textMain, false);
 		if (shaderReady) {
-			SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), barX, barY, barWidth, 8.0F, 4.0F, 0.55F, withAlpha(0x172733, 0.96F), withAlpha(0x101C27, 0.96F), withAlpha(0x466073, 0.20F), 0.6F);
-			SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), barX, barY, barFillWidth, 8.0F, 4.0F, 0.45F, deployed ? withAlpha(0x7BF3C3, 1.0F) : withAlpha(0xFFB24C, 1.0F), deployed ? withAlpha(0x55DFA8, 1.0F) : withAlpha(0xFF8E2A, 1.0F), 0, 0.0F);
+			SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), barX, barY, barWidth, 6.0F, 3.0F, 0.0F, withAlpha(0x3A3228, 0.95F), withAlpha(0x3A3228, 0.95F), 0, 0.0F);
+			SpaceElevatorHudRenderer.drawRoundedRect(graphics.pose(), barX, barY, barFillWidth, 6.0F, 3.0F, 0.0F, buildColor, buildColor, 0, 0.0F);
 		} else {
-			graphics.fill(barX, barY, barX + barWidth, barY + 6, withAlpha(0x1A2B39, 0.95F));
-			graphics.fill(barX, barY, barX + barFillWidth, barY + 6, deployed ? withAlpha(0x73F0BE, 1.0F) : withAlpha(0xFF9E37, 1.0F));
-		}
-		int footerStartY = y + height - 20 - renderedFooterLines * font.lineHeight;
-		for (int i = 0; i < renderedFooterLines; i++) {
-			graphics.drawString(font, footerLines.get(i), x + 12, footerStartY + i * font.lineHeight, textMuted, false);
+			graphics.fill(barX, barY, barX + barWidth, barY + 6, withAlpha(0x3A3228, 0.95F));
+			graphics.fill(barX, barY, barX + barFillWidth, barY + 6, buildColor);
 		}
 	}
 
@@ -234,9 +224,9 @@ public class SpaceElevatorConstructionOverlay implements IGuiOverlay {
 	}
 
 	private static int statusColor(boolean deployed, boolean ready, boolean hasRecipe) {
-		if (deployed) return withAlpha(0x73F0BE, 1.0F);
-		if (!hasRecipe) return withAlpha(0x7DA2C6, 1.0F);
-		return ready ? withAlpha(0xFFB34D, 1.0F) : withAlpha(0xFF7D63, 1.0F);
+		if (deployed) return withAlpha(0x78C878, 1.0F);
+		if (!hasRecipe) return withAlpha(0x887860, 1.0F);
+		return ready ? withAlpha(0xE8883A, 1.0F) : withAlpha(0xC85030, 1.0F);
 	}
 
 	private static String footerText(boolean deployed, boolean ready, boolean hasRecipe) {
@@ -310,7 +300,7 @@ public class SpaceElevatorConstructionOverlay implements IGuiOverlay {
 	}
 
 	private static String translation(String key) {
-		return net.minecraft.network.chat.Component.translatable(key).getString();
+		return Component.translatable(key).getString();
 	}
 
 	private record ProjectedPoint(float x, float y) {

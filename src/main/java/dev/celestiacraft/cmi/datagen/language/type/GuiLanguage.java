@@ -143,6 +143,11 @@ public class GuiLanguage extends LanguageGenerate {
 				"这个发光铁柱不是有效的太空电梯锚点。"
 		);
 		addCustomLang(
+				"text.cmi.space_elevator.no_link",
+				"This elevator is not linked to a space station terminal yet.",
+				"这个太空电梯尚未连接到空间站终端。"
+		);
+		addCustomLang(
 				"text.cmi.space_elevator.no_recipe",
 				"No space elevator construction recipe is loaded for this dimension.",
 				"当前维度没有加载太空电梯建造配方。"
@@ -171,6 +176,11 @@ public class GuiLanguage extends LanguageGenerate {
 				"text.cmi.space_elevator.store_nothing",
 				"No matching construction materials were found in your inventory.",
 				"背包中没有可存入的匹配建造材料。"
+		);
+		addCustomLang(
+				"gui.cmi.space_elevator.progress.holding",
+				"Building...",
+				"正在建造..."
 		);
 	}
 }
