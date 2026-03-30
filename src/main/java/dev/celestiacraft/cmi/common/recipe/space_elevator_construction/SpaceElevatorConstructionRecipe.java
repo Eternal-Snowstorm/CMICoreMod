@@ -163,7 +163,7 @@ public class SpaceElevatorConstructionRecipe implements Recipe<SimpleContainer> 
 			return 1.0F;
 		}
 
-		return getCompletionRatio(recipe, ingredientIndex -> {
+		return getCompletionRatio(recipe, (ingredientIndex) -> {
 			IngredientEntry entry = recipe.ingredients().get(ingredientIndex);
 			int amountOwned = 0;
 			Inventory inventory = player.getInventory();
