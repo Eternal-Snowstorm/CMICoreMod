@@ -108,6 +108,10 @@ repositories {
         url "https://maven.firstdark.dev/snapshots"
     }
     maven {
+        name 'DVS1 Maven FS'
+        url 'https://dvs1.progwml6.com/files/maven'
+    }
+    maven {
         url = 'https://maven.minecraftforge.net/'
     }
     maven {
@@ -145,9 +149,9 @@ dependencies {
     // Curios
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
     // TCon
-    implementation fg.deobf("curse.maven:tinkers-construct-74072:6266282")
+    implementation fg.deobf("slimeknights.tconstruct:TConstruct:${minecraft_version}-${tinkers_build}")
     // Mantle
-    implementation fg.deobf("curse.maven:mantle-74924:7414488")
+    implementation fg.deobf("slimeknights.mantle:Mantle:${minecraft_version}-${mantle_build}")
     // IE
     implementation fg.deobf("curse.maven:immersive-engineering-231951:6206989")
     // II
