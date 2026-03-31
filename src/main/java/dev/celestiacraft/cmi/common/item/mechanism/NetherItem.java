@@ -21,4 +21,9 @@ public class NetherItem extends MechanismItem implements ICuriosHelper {
 				false
 		));
 	}
+
+	@Override
+	public int tickCheck() {
+		return 20 * 10;
+	}
 }
