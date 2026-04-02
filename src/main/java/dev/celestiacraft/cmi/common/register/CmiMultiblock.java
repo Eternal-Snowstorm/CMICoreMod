@@ -7,8 +7,10 @@ import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.StructureBuilder;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.properties.Half;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.Lazy;
@@ -23,9 +25,9 @@ public class CmiMultiblock {
 	static {
 		WATER_PUMP = structure(StructureBuilder.create(new String[][]{
 						{
-								"DFD",
-								"G H",
-								"DID"
+								"DED",
+								"E E",
+								"DED"
 						},
 						{
 								"C C",
@@ -58,32 +60,9 @@ public class CmiMultiblock {
 				.define(' ', (builder) -> {
 					builder.any();
 				})
-				.define('F', (builder) -> {
-					builder.map(ForgeRegistries.BLOCKS.getValue(ModResources.TREATED_WOOD_STAIRS), PropertyImmutableMap.create()
-							.add(StairBlock.FACING, Direction.WEST)
-							.add(StairBlock.HALF, Half.TOP)
-							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
-							.build());
-				})
-				.define('G', (builder) -> {
-					builder.map(ForgeRegistries.BLOCKS.getValue(ModResources.TREATED_WOOD_STAIRS), PropertyImmutableMap.create()
-							.add(StairBlock.FACING, Direction.NORTH)
-							.add(StairBlock.HALF, Half.TOP)
-							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
-							.build());
-				})
-				.define('H', (builder) -> {
-					builder.map(ForgeRegistries.BLOCKS.getValue(ModResources.TREATED_WOOD_STAIRS), PropertyImmutableMap.create()
-							.add(StairBlock.FACING, Direction.SOUTH)
-							.add(StairBlock.HALF, Half.TOP)
-							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
-							.build());
-				})
-				.define('I', (builder) -> {
-					builder.map(ForgeRegistries.BLOCKS.getValue(ModResources.TREATED_WOOD_STAIRS), PropertyImmutableMap.create()
-							.add(StairBlock.FACING, Direction.EAST)
-							.add(StairBlock.HALF, Half.TOP)
-							.add(StairBlock.SHAPE, StairsShape.STRAIGHT)
+				.define('E', (builder) -> {
+					builder.map(ForgeRegistries.BLOCKS.getValue(ModResources.TREATED_WOOD_SLAB), PropertyImmutableMap.create()
+							.add(SlabBlock.TYPE, SlabType.TOP)
 							.build());
 				}));
 
