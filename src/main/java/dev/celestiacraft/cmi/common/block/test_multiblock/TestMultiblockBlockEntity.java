@@ -8,7 +8,6 @@ import dev.celestiacraft.cmi.common.block.test_multiblock.capability.TestItemCap
 import dev.celestiacraft.cmi.common.block.test_multiblock.capability.TestItemHandler;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -24,7 +23,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-@Slf4j
 public class TestMultiblockBlockEntity extends ControllerBlockEntity {
 	public TestMultiblockBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state, CmiMultiblock.TEST_MULTIBLOCK);
