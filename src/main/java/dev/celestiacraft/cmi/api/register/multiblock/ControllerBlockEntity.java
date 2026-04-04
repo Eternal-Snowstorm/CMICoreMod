@@ -34,7 +34,7 @@ import java.util.function.Supplier;
  * </p>
  * <ul>
  *     <li>通过 {@link MultiblockHandler#builder} 构建处理器</li>
- *     <li>自动应用翻译键、渲染偏移与缓存策略</li>
+ *     <li>自动应用翻译键, 渲染偏移与缓存策略</li>
  *     <li>在 {@link #setRemoved()} 时自动清理客户端显示状态</li>
  * </ul>
  *
@@ -52,24 +52,30 @@ import java.util.function.Supplier;
  * </p>
  * <ul>
  *     <li>提供 {@link IMultiblock} 结构</li>
- *     <li>实现 {@link #getMultiblockKey()}</li>
+ *     <li>实现 {@link #getModId()}</li>
+ *     <li>实现 {@link #getMultiblockName()}</li>
  *     <li>根据需要调整渲染偏移</li>
  *     <li>若需要配方逻辑还需实现 {@link IControllerRecipe#recipe(MultiblockContext)} 和 {@link IControllerRecipe#tick(MultiblockContext)}</li>
  * </ul>
  *
  * <p>
- * 无需关心结构缓存、显示管理或 Handler 初始化逻辑
+ * 无需关心结构缓存, 显示管理或 Handler 初始化逻辑
  * </p>
  *
  * <pre>{@code
  * public class ExampleBlockEntity extends MultiblockControllerBlockEntity {
  *     public ExampleBlockEntity(...) {
- *         super(type, pos, state, CmiMultiblock.EXAMPLE);
+ *         super(type, pos, state, NebulaMultiblock.EXAMPLE);
  *     }
  *
  *     @Override
- *     protected String getMultiblockKey() {
- *         return "multiblock.building.modid.example";
+ *     protected String getModId() {
+ *         return NebulaLibs.MODID;
+ *     }
+ *
+ *     @Override
+ *     protected String getMultiblockName() {
+ *         return "example_multiblock";
  *     }
  * }
  * }</pre>
@@ -142,7 +148,7 @@ public abstract class ControllerBlockEntity extends BlockEntity implements IMult
 	 * 获取多方块处理器实例
 	 *
 	 * <p>
-	 * 用于访问结构匹配、缓存与显示相关功能
+	 * 用于访问结构匹配, 缓存与显示相关功能
 	 * </p>
 	 *
 	 * <p>
@@ -176,26 +182,68 @@ public abstract class ControllerBlockEntity extends BlockEntity implements IMult
 	}
 
 	/**
+	 * 获取该结构所属的 modid
+	 *
+	 * @return modid（如 "cmi"）
+	 */
+	protected abstract String getModId();
+
+	/**
+	 * 获取结构名称（用于拼接翻译键）
+	 *
+	 * <p>
+	 * 通常使用简短标识名, 例如 "water_pump"
+	 * </p>
+	 *
+	 * @return 结构名称
+	 */
+	protected abstract String getMultiblockName();
+
+	/**
+	 * 获取结构分类
+	 *
+	 * <p>
+	 * 用于拼接翻译键中的分类字段, 默认值为 "building"
+	 * </p>
+	 *
+	 * <p>
+	 * 子类可按需重写, 例如 "machine", "structure"
+	 * </p>
+	 *
+	 * @return 结构分类
+	 */
+	protected String getMultiblockCategory() {
+		return "building";
+	}
+
+	/**
 	 * 获取多方块结构的翻译键
 	 *
 	 * <p>
-	 * 用于客户端显示结构名称
+	 * 默认格式为：
+	 * <pre>{@code
+	 * multiblock.{category}.{modid}.{name}
+	 * }</pre>
 	 * </p>
 	 *
 	 * <p>
-	 * 子类必须实现该方法
+	 * 一般情况下无需重写, 只需实现 {@link #getModId()} 和 {@link #getMultiblockName()}
 	 * </p>
 	 *
-	 * <pre>{@code
-	 * @Override
-	 * protected String getMultiblockKey() {
-	 *     return "multiblock.building.modid.example";
-	 * }
-	 * }</pre>
+	 * <p>
+	 * 若需要自定义翻译键格式, 可在子类中重写该方法
+	 * </p>
 	 *
 	 * @return 结构对应的翻译键
 	 */
-	protected abstract String getMultiblockKey();
+	protected String getMultiblockKey() {
+		return String.format(
+				"multiblock.%s.%s.%s",
+				getMultiblockCategory(),
+				getModId(),
+				getMultiblockName()
+		);
+	}
 
 	/**
 	 * 获取结构渲染偏移(X 轴)

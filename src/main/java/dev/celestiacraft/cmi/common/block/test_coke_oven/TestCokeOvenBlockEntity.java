@@ -125,11 +125,6 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity implements IC
 		}
 	}
 
-	@Override
-	protected String getMultiblockKey() {
-		return String.format("multiblock.building.%s.test_coke_oven", Cmi.MODID);
-	}
-
 	/**
 	 * Controller 只存自己的数据
 	 *
@@ -147,5 +142,15 @@ public class TestCokeOvenBlockEntity extends ControllerBlockEntity implements IC
 		super.load(tag);
 
 		workTimer = tag.getInt("WorkTimer");
+	}
+
+	@Override
+	protected String getModId() {
+		return Cmi.MODID;
+	}
+
+	@Override
+	protected String getMultiblockName() {
+		return "test_coke_oven";
 	}
 }

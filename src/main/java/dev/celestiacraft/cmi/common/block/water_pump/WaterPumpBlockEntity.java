@@ -27,8 +27,13 @@ public class WaterPumpBlockEntity extends ControllerBlockEntity implements IHave
 	}
 
 	@Override
-	protected String getMultiblockKey() {
-		return String.format("multiblock.building.%s.water_pump", Cmi.MODID);
+	protected String getModId() {
+		return Cmi.MODID;
+	}
+
+	@Override
+	protected String getMultiblockName() {
+		return "water_pump";
 	}
 
 	private WaterPumpFluidCapability fluidHandler;

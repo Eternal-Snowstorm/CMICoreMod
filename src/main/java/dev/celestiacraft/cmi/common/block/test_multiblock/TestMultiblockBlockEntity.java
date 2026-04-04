@@ -45,11 +45,6 @@ public class TestMultiblockBlockEntity extends ControllerBlockEntity {
 	private LazyOptional<IEnergyStorage> energyCap = LazyOptional.empty();
 
 	@Override
-	protected String getMultiblockKey() {
-		return String.format("multiblock.building.%s.test_multiblock", Cmi.MODID);
-	}
-
-	@Override
 	public void onLoad() {
 		super.onLoad();
 
@@ -174,5 +169,15 @@ public class TestMultiblockBlockEntity extends ControllerBlockEntity {
 		}
 
 		return extracted;
+	}
+
+	@Override
+	protected String getModId() {
+		return Cmi.MODID;
+	}
+
+	@Override
+	protected String getMultiblockName() {
+		return "test_multiblock";
 	}
 }
