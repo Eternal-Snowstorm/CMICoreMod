@@ -15,7 +15,7 @@ public class FluidBurnerFluidHandler implements IFluidHandler {
 
 	@Override
 	public int getTanks() {
-		return entity.getFluidTankCapacity();
+		return 1;
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class FluidBurnerFluidHandler implements IFluidHandler {
 
 	@Override
 	public int getTankCapacity(int tank) {
-		return 10000;
+		return entity.getFluidTankCapacity();
 	}
 
 	@Override
