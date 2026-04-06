@@ -11,7 +11,12 @@ public class CastIronFluidBurnerBlockEntity extends FluidBurnerBlockEntity {
 	}
 
 	@Override
+	public int getFluidTankCapacity() {
+		return 8000;
+	}
+
+	@Override
 	protected double getEfficiency() {
-		return  1.67;
+		return 1.67;
 	}
 }

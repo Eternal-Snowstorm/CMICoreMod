@@ -32,9 +32,7 @@ public abstract class FluidBurnerBlockEntity extends SmartBlockEntity implements
 		super(type, pos, state);
 	}
 
-	public int getFluidTankCapacity() {
-		return capacity;
-	}
+	public abstract int getFluidTankCapacity();
 
 	protected abstract double getEfficiency();
 

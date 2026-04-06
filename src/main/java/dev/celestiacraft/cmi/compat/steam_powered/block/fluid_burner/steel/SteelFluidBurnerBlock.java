@@ -17,6 +17,6 @@ public class SteelFluidBurnerBlock extends FluidBurnerBlock {
 
 	@Override
 	public BlockEntityType<? extends FluidBurnerBlockEntity> getBlockEntityType() {
-		return CmiBlockEntity.BRONZE_FLUID_BURNER.get();
+		return CmiBlockEntity.STEEL_FLUID_BURNER.get();
 	}
 }

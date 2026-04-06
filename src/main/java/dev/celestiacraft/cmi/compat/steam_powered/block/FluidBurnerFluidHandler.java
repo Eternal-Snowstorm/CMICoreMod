@@ -13,13 +13,9 @@ public class FluidBurnerFluidHandler implements IFluidHandler {
 		this.entity = entity;
 	}
 
-	private int getCapacity() {
-		return getTankCapacity(10000);
-	}
-
 	@Override
 	public int getTanks() {
-		return 1;
+		return entity.getFluidTankCapacity();
 	}
 
 	@Override
@@ -47,7 +43,7 @@ public class FluidBurnerFluidHandler implements IFluidHandler {
 			return 0;
 		}
 
-		int fillAmount = Math.min(getCapacity() - entity.fluid.getAmount(), resource.getAmount());
+		int fillAmount = Math.min(entity.getFluidTankCapacity() - entity.fluid.getAmount(), resource.getAmount());
 
 		if (action.execute() && fillAmount > 0) {
 			if (entity.fluid.isEmpty()) {
