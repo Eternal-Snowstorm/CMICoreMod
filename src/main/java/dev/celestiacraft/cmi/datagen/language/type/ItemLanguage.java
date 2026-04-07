@@ -13,6 +13,11 @@ public class ItemLanguage extends LanguageGenerate {
 				"Mystic Pomelo",
 				"神秘的柚子"
 		);
+		addItemLanguage(
+				"initial_item_kit",
+				"Initial Item Kit",
+				"初始套件"
+		);
 	}
 
 	private static @NotNull List<String> info(String id, String en, String zh) {

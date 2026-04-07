@@ -1,8 +1,10 @@
 package dev.celestiacraft.cmi.common.register;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.textures.Items;
+import dev.celestiacraft.cmi.common.item.InitialItemKitItem;
 import dev.celestiacraft.cmi.common.item.MysticPomeloItem;
 import dev.celestiacraft.cmi.common.item.SimpleBatteryItem;
 import dev.celestiacraft.cmi.common.item.TestBrushItem;
@@ -13,6 +15,7 @@ public class CmiItem {
 	public static final ItemEntry<MysticPomeloItem> MYSTIC_POMELO;
 	public static final ItemEntry<SimpleBatteryItem> SIMPLE_BATTERY;
 	public static final ItemEntry<ForgeSpawnEggItem> QI_MONTH_EGG;
+	public static final ItemEntry<InitialItemKitItem> INITIAL_ITEM_KIT;
 
 	static {
 		TEST_BRUSH = Cmi.REGISTRATE.item("test_brush", TestBrushItem::new)
@@ -22,6 +25,9 @@ public class CmiItem {
 				.register();
 		SIMPLE_BATTERY = Cmi.REGISTRATE.item("simple_battery", SimpleBatteryItem::new)
 				.model(Items.generated("item/simple_battery"))
+				.register();
+		INITIAL_ITEM_KIT = Cmi.REGISTRATE.item("initial_item_kit", InitialItemKitItem::new)
+				.model(NonNullBiConsumer.noop())
 				.register();
 		QI_MONTH_EGG = Cmi.REGISTRATE.item("qi_month_spawn_egg", (properties) -> {
 					return new ForgeSpawnEggItem(

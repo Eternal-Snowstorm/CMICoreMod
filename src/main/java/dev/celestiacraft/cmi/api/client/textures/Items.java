@@ -30,4 +30,18 @@ public class Items {
 			provider.handheld(context::getEntry, provider.modLoc(texture));
 		};
 	}
+
+	public static <T extends Item> NonNullBiConsumer<DataGenContext<Item, T>, RegistrateItemModelProvider> customModel(ResourceLocation model) {
+		return (context, provider) -> {
+			provider.getBuilder(context.getName())
+					.parent(provider.getExistingFile(model));
+		};
+	}
+
+	public static <T extends Item> NonNullBiConsumer<DataGenContext<Item, T>, RegistrateItemModelProvider> customModel(String model) {
+		return (context, provider) -> {
+			provider.getBuilder(context.getName())
+					.parent(provider.getExistingFile(provider.modLoc(model)));
+		};
+	}
 }

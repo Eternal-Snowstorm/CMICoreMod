@@ -79,5 +79,30 @@ public class TooltipLanguage extends LanguageGenerate {
 				"Consumes _%s FE_ per Tick",
 				"每Tick消耗 _%s FE_"
 		);
+		addTooltipLang(
+				"initial_item_kit.usage",
+				"Sneak and Right-click on _any block_ to use",
+				"潜行对着_任意方块_右键使用"
+		);
+		addTooltipLang(
+				"initial_item_kit",
+				"Make sure you have_%s_free slots",
+				"请确保物品栏内有_%s_个空位"
+		);
+		addTooltipLang(
+				"initial_item_kit.list",
+				"You will receive:",
+				"打开可获得以下物品:"
+		);
+		addTooltipLang(
+				"initial_item_kit.entry",
+				"{%s, %s}%s",
+				"{%s, %s}%s"
+		);
+		addTooltipLang(
+				"initial_item_kit.hold_shift",
+				"Hold _Shift_ for details",
+				"按住 _Shift_ 查看列表"
+		);
 	}
 }
