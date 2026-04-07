@@ -67,7 +67,7 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 						boolean lit = state.getValue(FluidBurnerBlock.LIT);
 						Direction facing = state.getValue(FluidBurnerBlock.FACING);
 						String stateName = lit ? "on" : "off";
-						String path = "block/fluid_burner/" + material + "/" + stateName;
+						String path = String.format("block/fluid_burner/%s/%s", material, stateName);
 						BlockModelProvider models = provider.models();
 
 						BlockModelBuilder modelFile = models.withExistingParent(path, "block/orientable")
