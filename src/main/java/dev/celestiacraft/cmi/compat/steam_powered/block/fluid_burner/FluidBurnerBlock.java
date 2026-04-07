@@ -72,6 +72,7 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 
 						BlockModelBuilder modelFile = models.withExistingParent(path, "block/orientable")
 								.texture("top", Cmi.loadResource("block/fluid_burner/" + material + "/top"))
+								.texture("bottom", Cmi.loadResource("block/fluid_burner/" + material + "/down"))
 								.texture("side", Cmi.loadResource("block/fluid_burner/" + material + "/side"))
 								.texture("front", Cmi.loadResource("block/fluid_burner/" + material + (lit ? "/on" : "/off")));
 
