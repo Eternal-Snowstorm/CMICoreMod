@@ -1,5 +1,7 @@
 package dev.celestiacraft.cmi.api.register.multiblock;
 
+import dev.celestiacraft.cmi.api.register.multiblock.machine.IControllerRecipe;
+import dev.celestiacraft.cmi.api.register.multiblock.machine.MultiblockContext;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.IMultiblockProvider;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockHandler;
 import lombok.Getter;

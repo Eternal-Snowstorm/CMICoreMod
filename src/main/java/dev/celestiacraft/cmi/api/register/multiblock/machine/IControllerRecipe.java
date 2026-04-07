@@ -1,11 +1,12 @@
-package dev.celestiacraft.cmi.api.register.multiblock;
+package dev.celestiacraft.cmi.api.register.multiblock.machine;
 
 import com.simibubi.create.foundation.block.IBE;
+import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlockEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public interface IControllerRecipe {
+public interface IControllerRecipe<T extends ControllerBlockEntity> {
 	/**
 	 * 执行多方块配方逻辑
 	 *
@@ -58,18 +59,18 @@ public interface IControllerRecipe {
 	 *
 	 * <pre>{@code
 	 * @Override
-	 * protected void recipe(MultiblockContext context) {
+	 * protected void recipe(MultiblockContext<T> context) {
 	 * }
 	 * }</pre>
 	 *
 	 * @param context 多方块运行上下文, 提供当前 tick 的所有执行信息
 	 */
-	void recipe(MultiblockContext context);
+	void recipe(MultiblockContext<T> context);
 
 	/**
 	 *
 	 * @param context 多方块运行上下文, 提供当前 tick 的所有执行信
 	 * @return
 	 */
-	MultiblockContext tick(MultiblockContext context);
+	MultiblockContext<T> tick(MultiblockContext<T> context);
 }

@@ -2,9 +2,11 @@ package dev.celestiacraft.cmi.common.block.test_coke_oven;
 
 import blusunrize.immersiveengineering.common.register.IEFluids;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlockEntity;
-import dev.celestiacraft.cmi.api.register.multiblock.IControllerRecipe;
-import dev.celestiacraft.cmi.api.register.multiblock.MultiblockContext;
+import dev.celestiacraft.cmi.api.register.multiblock.machine.FluidSlots;
+import dev.celestiacraft.cmi.api.register.multiblock.machine.IControllerRecipe;
+import dev.celestiacraft.cmi.api.register.multiblock.machine.IOMode;
+import dev.celestiacraft.cmi.api.register.multiblock.machine.MachineControllerBlockEntity;
+import dev.celestiacraft.cmi.api.register.multiblock.machine.MultiblockContext;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import net.minecraft.core.BlockPos;
@@ -14,134 +16,136 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implements IControllerRecipe<TestCokeOvenBlockEntity> {
+	private static final int MAX_WORK_TIME = 20;
 
-public class TestCokeOvenBlockEntity extends ControllerBlockEntity implements IControllerRecipe {
 	private int workTimer = 0;
-	private ItemStack inputCache = ItemStack.EMPTY;
-	private ItemStack outputCache = ItemStack.EMPTY;
-	private FluidStack outputFluidCache = FluidStack.EMPTY;
 
 	public TestCokeOvenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state, CmiMultiblock.TEST_COKE_OVEN);
 	}
 
 	@Override
-	public MultiblockContext tick(MultiblockContext context) {
-		if (!context.isClient() && isStructureValid()) {
+	public MultiblockContext<TestCokeOvenBlockEntity> tick(MultiblockContext<TestCokeOvenBlockEntity> context) {
+		if (!context.isClient() && isMachineStructureValid()) {
 			recipe(context);
 		}
 		return context;
 	}
 
 	@Override
-	public void recipe(MultiblockContext context) {
-		List<BlockPos> blockPosList = context.getEntity().getMultiblockHandler().findBlock(CmiBlock.TEST_COKE_OVEN_IO.get());
+	public void recipe(MultiblockContext<TestCokeOvenBlockEntity> context) {
+		TestCokeOvenIOBlockEntity ioBlock = findFirstMatchedBlockEntity(CmiBlock.TEST_COKE_OVEN_IO.get(), TestCokeOvenIOBlockEntity.class);
+		if (ioBlock == null) {
+			workTimer = 0;
+			return;
+		}
+
+		ItemStack input = ioBlock.getInternalStackInSlot(0);
 		ItemStack result = Items.CHARCOAL.getDefaultInstance();
 		FluidStack fluidResult = new FluidStack(IEFluids.CREOSOTE.getStill(), 125);
 
-		blockPosList.forEach((pos) -> {
-			TestCokeOvenIOBlockEntity testCokeOvenIOBlockEntity = (TestCokeOvenIOBlockEntity) level.getBlockEntity(pos);
-			if (testCokeOvenIOBlockEntity == null) {
-				return;
-			}
+		boolean validInput = input.is(ItemTags.LOGS);
+		boolean canInsertItem = ioBlock.insertItemInternal(1, result.copy(), true).isEmpty();
+		int canFillFluid = ioBlock.fillFluid(fluidResult.copy(), IFluidHandler.FluidAction.SIMULATE);
 
-			IItemHandler itemHandler = testCokeOvenIOBlockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-			IFluidHandler fluidHandler = testCokeOvenIOBlockEntity.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
-
-			if (itemHandler == null || fluidHandler == null) {
-				return;
-			}
-
-			ItemStack input = itemHandler.getStackInSlot(0);
-			ItemStack output = itemHandler.getStackInSlot(1);
-			FluidStack outputFluid = fluidHandler.getFluidInTank(0);
-
-			// 同步IO方块
-			if (input.getCount() < inputCache.getCount()) {
-				int insertCount = inputCache.getCount() - input.getCount();
-				itemHandler.insertItem(0, new ItemStack(inputCache.getItem(), insertCount), false);
-			} else {
-				inputCache = input.copy();
-			}
-
-			if (output.getCount() > outputCache.getCount()) {
-				int extractCount = output.getCount() - outputCache.getCount();
-				itemHandler.extractItem(1, extractCount, false);
-			} else {
-				outputCache = output.copy();
-			}
-
-			if (outputFluid.getAmount() > outputFluidCache.getAmount()) {
-				int drainAmount = outputFluid.getAmount() - outputFluidCache.getAmount();
-				fluidHandler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
-			} else {
-				outputFluidCache = outputFluid.copy();
-			}
-		});
+		if (!validInput || !canInsertItem || canFillFluid < fluidResult.getAmount()) {
+			workTimer = 0;
+			return;
+		}
 
 		workTimer++;
-
-		// 执行配方
-		if (workTimer > 20) {
-			blockPosList.forEach((pos) -> {
-				TestCokeOvenIOBlockEntity testCokeOvenIOBlockEntity = (TestCokeOvenIOBlockEntity) level.getBlockEntity(pos);
-
-				if (testCokeOvenIOBlockEntity == null) {
-					return;
-				}
-
-				IItemHandler itemHandler = testCokeOvenIOBlockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-				IFluidHandler fluidHandler = testCokeOvenIOBlockEntity.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
-				ItemStack input = itemHandler.getStackInSlot(0);
-
-				boolean canInsertItem = itemHandler.insertItem(1, result.copy(), true).isEmpty();
-				int canFillFluid = fluidHandler.fill(fluidResult.copy(), IFluidHandler.FluidAction.SIMULATE);
-
-				if (!input.is(ItemTags.LOGS)) {
-					workTimer = 0;
-					return;
-				}
-
-				if (!canInsertItem || canFillFluid < fluidResult.getAmount()) {
-					workTimer = 0;
-					return;
-				}
-
-				input.shrink(1);
-				itemHandler.insertItem(1, result.copy(), false);
-				fluidHandler.fill(fluidResult.copy(), IFluidHandler.FluidAction.EXECUTE);
-				inputCache = itemHandler.getStackInSlot(0);
-				outputCache = itemHandler.getStackInSlot(1);
-				outputFluidCache = fluidHandler.getFluidInTank(0);
-				workTimer = 0;
-			});
+		if (workTimer <= MAX_WORK_TIME) {
+			return;
 		}
+
+		ioBlock.extractItemInternal(0, 1, false);
+		ioBlock.insertItemInternal(1, result.copy(), false);
+		ioBlock.fillFluid(fluidResult.copy(), IFluidHandler.FluidAction.EXECUTE);
+		workTimer = 0;
 	}
 
-	/**
-	 * Controller 只存自己的数据
-	 *
-	 * @param tag
-	 */
 	@Override
 	protected void saveAdditional(@NotNull CompoundTag tag) {
 		super.saveAdditional(tag);
-
 		tag.putInt("WorkTimer", workTimer);
 	}
 
 	@Override
 	public void load(@NotNull CompoundTag tag) {
 		super.load(tag);
-
 		workTimer = tag.getInt("WorkTimer");
+	}
+
+	@Override
+	protected boolean supportsControllerItemIO() {
+		return false;
+	}
+
+	@Override
+	protected boolean supportsControllerFluidIO() {
+		return false;
+	}
+
+	@Override
+	protected boolean useInternalItemStorage() {
+		return false;
+	}
+
+	@Override
+	protected boolean useInternalFluidStorage() {
+		return false;
+	}
+
+	@Override
+	protected IOMode getItemIO(int slot) {
+		return slot == 0 ? IOMode.INPUT : IOMode.OUTPUT;
+	}
+
+	@Override
+	protected int getMinItemIO() {
+		return 1;
+	}
+
+	@Override
+	protected int getMaxItemIO() {
+		return 1;
+	}
+
+	@Override
+	protected int getMinFluidIO() {
+		return 1;
+	}
+
+	@Override
+	protected int getMaxFluidIO() {
+		return 1;
+	}
+
+	@Override
+	protected int getActualItemIOCount() {
+		return countMatchedBlocks(CmiBlock.TEST_COKE_OVEN_IO.get());
+	}
+
+	@Override
+	protected int getActualFluidIOCount() {
+		return countMatchedBlocks(CmiBlock.TEST_COKE_OVEN_IO.get());
+	}
+
+	@Override
+	protected int getItemSlots() {
+		return 2;
+	}
+
+	@Override
+	protected FluidSlots[] getFluidSlots() {
+		return new FluidSlots[]{
+				new FluidSlots(4000, IOMode.OUTPUT)
+		};
 	}
 
 	@Override

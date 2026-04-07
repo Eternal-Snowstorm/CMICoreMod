@@ -1,5 +1,6 @@
-package dev.celestiacraft.cmi.api.register.multiblock;
+package dev.celestiacraft.cmi.api.register.multiblock.machine;
 
+import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlockEntity;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;

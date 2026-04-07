@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,6 +18,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class TestCokeOvenIOBlockEntity extends BlockEntity {
@@ -32,6 +34,22 @@ public class TestCokeOvenIOBlockEntity extends BlockEntity {
 
 	private final CokeOvenFluidCapability fluidHandler = new CokeOvenFluidCapability(this);
 	private LazyOptional<IFluidHandler> fluidCap = LazyOptional.empty();
+
+	public ItemStackHandler getInternalItemHandler() {
+		return itemHandler;
+	}
+
+	public ItemStack getInternalStackInSlot(int slot) {
+		return itemHandler.getStackInSlot(slot);
+	}
+
+	public ItemStack insertItemInternal(int slot, ItemStack stack, boolean simulate) {
+		return itemHandler.insertItem(slot, stack, simulate);
+	}
+
+	public ItemStack extractItemInternal(int slot, int amount, boolean simulate) {
+		return itemHandler.extractItem(slot, amount, simulate);
+	}
 
 	public int fillFluid(FluidStack stack, IFluidHandler.FluidAction action) {
 		if (stack.isEmpty()) return 0;
