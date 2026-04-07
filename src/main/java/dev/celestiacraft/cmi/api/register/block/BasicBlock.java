@@ -47,7 +47,7 @@ public class BasicBlock extends Block {
 		return useOn(new UseContext(state, level, pos, player, hand, result));
 	}
 
-	protected InteractionResult useOn(UseContext context) {
+	public InteractionResult useOn(UseContext context) {
 		return InteractionResult.PASS;
 	}
 
@@ -285,5 +285,22 @@ public class BasicBlock extends Block {
 	 */
 	protected boolean useLitState() {
 		return false;
+	}
+
+	public static int getYRotFromFacing(Direction direction) {
+		return switch (direction) {
+			case EAST -> 90;
+			case SOUTH -> 180;
+			case WEST -> 270;
+			default -> 0;
+		};
+	}
+
+	public static int getXRotFromFacing(Direction direction) {
+		return switch (direction) {
+			case DOWN -> 90;
+			case UP -> -90;
+			default -> 0;
+		};
 	}
 }

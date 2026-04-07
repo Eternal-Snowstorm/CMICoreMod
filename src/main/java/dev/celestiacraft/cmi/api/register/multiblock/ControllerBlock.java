@@ -69,7 +69,7 @@ public abstract class ControllerBlock<T extends BlockEntity & IMultiblockProvide
 	 * </p>
 	 */
 	@Override
-	protected InteractionResult useOn(UseContext context) {
+	public InteractionResult useOn(UseContext context) {
 		// 客户端: 渲染结构
 		if (context.isClient()) {
 			if (isTrigger(context)
