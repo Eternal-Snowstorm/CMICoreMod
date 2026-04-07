@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.common.recipe.accelerator;
 
 import com.simibubi.create.AllSoundEvents;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.CmiRecipeType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -42,7 +43,7 @@ public class AcceleratorEvent {
 		container.setItem(0, item);
 
 		level.getRecipeManager()
-				.getRecipesFor(AcceleratorRecipe.Type.INSTANCE, container, level)
+				.getAllRecipesFor(CmiRecipeType.ACCELERATOR.get())
 				.forEach((recipe) -> {
 					int required = 24;
 					int matched = 0;
