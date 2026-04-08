@@ -175,6 +175,32 @@ public abstract class MachineControllerBlockEntity extends ControllerBlockEntity
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
+	protected final boolean canWork(MultiblockContext<? extends MachineControllerBlockEntity> context) {
+		return isMachineStructureValid() && getWorkCondition(context).pass();
+	}
+
+	protected final boolean prepareRecipeTick(MultiblockContext<? extends MachineControllerBlockEntity> context) {
+		if (context.isClient() || !isMachineStructureValid()) {
+			return false;
+		}
+
+		WorkConditionResult result = getWorkCondition(context);
+		if (!result.pass()) {
+			onWorkConditionFailed(context, result);
+			return false;
+		}
+
+		return true;
+	}
+
+	protected final WorkConditionResult getCurrentWorkCondition() {
+		if (level == null) {
+			return WorkConditionResult.fail("level_unavailable");
+		}
+
+		return getWorkCondition(MultiblockContext.of(this));
+	}
+
 	protected final boolean isMachineStructureValid() {
 		return isStructureValid() && hasRequiredIOCounts();
 	}
@@ -388,6 +414,13 @@ public abstract class MachineControllerBlockEntity extends ControllerBlockEntity
 
 	protected boolean isItemAllowed(int slot, @NotNull ItemStack stack) {
 		return true;
+	}
+
+	protected WorkConditionResult getWorkCondition(MultiblockContext<? extends MachineControllerBlockEntity> context) {
+		return WorkConditionResult.success();
+	}
+
+	protected void onWorkConditionFailed(MultiblockContext<? extends MachineControllerBlockEntity> context, WorkConditionResult result) {
 	}
 
 	private int configuredItemSlotsHint() {

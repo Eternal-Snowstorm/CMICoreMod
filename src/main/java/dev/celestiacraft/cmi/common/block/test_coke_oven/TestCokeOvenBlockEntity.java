@@ -31,7 +31,7 @@ public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implem
 
 	@Override
 	public MultiblockContext<TestCokeOvenBlockEntity> tick(MultiblockContext<TestCokeOvenBlockEntity> context) {
-		if (!context.isClient() && isMachineStructureValid()) {
+		if (prepareRecipeTick(context)) {
 			recipe(context);
 		}
 		return context;
