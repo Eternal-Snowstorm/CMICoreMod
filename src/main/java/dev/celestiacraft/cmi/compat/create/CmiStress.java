@@ -6,7 +6,7 @@ import dev.celestiacraft.cmi.Cmi;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import net.createmod.catnip.config.ConfigBase;
-import net.createmod.catnip.platform.services.RegisteredObjectsHelper;
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -48,13 +48,13 @@ public class CmiStress extends ConfigBase {
 
 	@Nullable
 	public DoubleSupplier getImpact(Block block) {
-		ForgeConfigSpec.ConfigValue<Double> value = impacts.get(RegisteredObjectsHelper.getKeyOrThrow(block));
+		ForgeConfigSpec.ConfigValue<Double> value = impacts.get(CatnipServices.REGISTRIES.getKeyOrThrow(block));
 		return value == null ? null : value::get;
 	}
 
 	@Nullable
 	public DoubleSupplier getCapacity(Block block) {
-		ForgeConfigSpec.ConfigValue<Double> value = capacities.get(RegisteredObjectsHelper.getKeyOrThrow(block));
+		ForgeConfigSpec.ConfigValue<Double> value = capacities.get(CatnipServices.REGISTRIES.getKeyOrThrow(block));
 		return value == null ? null : value::get;
 	}
 

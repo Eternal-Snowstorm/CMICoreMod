@@ -1,6 +1,9 @@
 package dev.celestiacraft.cmi.common.block.void_dust_collector;
 
-import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.item.FontHelper;
+import dev.celestiacraft.cmi.api.client.CmiLang;
+import dev.celestiacraft.cmi.config.CommonConfig;
+import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -12,8 +15,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
-import dev.celestiacraft.cmi.config.CommonConfig;
-import dev.celestiacraft.cmi.api.client.CmiLang;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -34,9 +35,9 @@ public class VoidDustCollectorItem extends BlockItem {
 
 			tooltip.add(Component.empty());
 
-			tooltip.addAll(TooltipHelper.cutStringTextComponent(
+			tooltip.addAll(FontHelper.cutStringTextComponent(
 					CmiLang.translateDirect("tooltip.void_dust_collector.summary").getString(),
-					TooltipHelper.Palette.STANDARD_CREATE
+					FontHelper.Palette.STANDARD_CREATE
 			));
 
 			tooltip.add(Component.empty());
@@ -45,17 +46,17 @@ public class VoidDustCollectorItem extends BlockItem {
 					.style(ChatFormatting.GRAY)
 					.addTo(tooltip);
 
-			tooltip.addAll(TooltipHelper.cutStringTextComponent(
+			tooltip.addAll(FontHelper.cutStringTextComponent(
 					CmiLang.translateDirect("tooltip.void_dust_collector.workTime", workTime).getString(),
-					TooltipHelper.Palette.STANDARD_CREATE.primary(),
-					TooltipHelper.Palette.STANDARD_CREATE.highlight(),
+					FontHelper.Palette.STANDARD_CREATE.primary(),
+					FontHelper.Palette.STANDARD_CREATE.highlight(),
 					1
 			));
 
-			tooltip.addAll(TooltipHelper.cutStringTextComponent(
+			tooltip.addAll(FontHelper.cutStringTextComponent(
 					CmiLang.translateDirect("tooltip.void_dust_collector.energyConsumption", energyConsumption).getString(),
-					TooltipHelper.Palette.STANDARD_CREATE.primary(),
-					TooltipHelper.Palette.STANDARD_CREATE.highlight(),
+					FontHelper.Palette.STANDARD_CREATE.primary(),
+					FontHelper.Palette.STANDARD_CREATE.highlight(),
 					1
 			));
 		}

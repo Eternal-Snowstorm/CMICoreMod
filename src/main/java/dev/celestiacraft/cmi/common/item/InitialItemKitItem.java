@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.item;
 
 import com.simibubi.create.foundation.item.TooltipHelper;
+import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -76,7 +77,7 @@ public class InitialItemKitItem extends Item {
 			// 使用方法
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					Component.translatable("cmi.tooltip.initial_item_kit.usage").getString(),
-					TooltipHelper.Palette.STANDARD_CREATE
+					FontHelper.Palette.STANDARD_CREATE
 			));
 			// 需要的格子数
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
@@ -84,14 +85,14 @@ public class InitialItemKitItem extends Item {
 							"cmi.tooltip.initial_item_kit",
 							ITEM_LIST.size()
 					).withStyle(ChatFormatting.AQUA).getString(),
-					TooltipHelper.Palette.STANDARD_CREATE
+					FontHelper.Palette.STANDARD_CREATE
 			));
 
 			// 标题
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					Component.translatable("cmi.tooltip.initial_item_kit.list")
 							.withStyle(ChatFormatting.GRAY).getString(),
-					TooltipHelper.Palette.STANDARD_CREATE
+					FontHelper.Palette.STANDARD_CREATE
 			));
 
 			// 列表
@@ -116,7 +117,7 @@ public class InitialItemKitItem extends Item {
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					Component.translatable("cmi.tooltip.initial_item_kit.hold_shift")
 							.withStyle(ChatFormatting.DARK_GRAY).getString(),
-					TooltipHelper.Palette.STANDARD_CREATE
+					FontHelper.Palette.STANDARD_CREATE
 			));
 		}
 	}

@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.register;
 
 import com.simibubi.create.AllTags;
+import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
@@ -26,6 +27,7 @@ import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorItem;
 import dev.celestiacraft.cmi.common.block.water_pump.WaterPumpBlock;
+import dev.celestiacraft.cmi.compat.create.CmiStress;
 import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.FluidBurnerBlock;
 import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.bronze.BronzeFluidBurnerBlock;
 import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.cast_iron.CastIronFluidBurnerBlock;
@@ -154,7 +156,7 @@ public class CmiBlock {
 				.register();
 		STEAM_HAMMER = Cmi.REGISTRATE.block("steam_hammer", SteamHammerBlock::new)
 				.initialProperties(SharedProperties::stone)
-				.transform(BlockStressDefaults.setImpact(16.0))
+				.transform(CmiStress.setImpact(16.0))
 				.item(SteamHammerItem::new)
 				.model((context, provider) -> {
 					provider.withExistingParent(
@@ -180,8 +182,8 @@ public class CmiBlock {
 				.register();
 		ACCELERATOR_MOTOR = Cmi.REGISTRATE.block("accelerator_motor", AcceleratorMotorBlock::new)
 				.initialProperties(SharedProperties::stone)
-				.transform(BlockStressDefaults.setCapacity(0))
-				.transform(BlockStressDefaults.setGeneratorSpeed(() -> Couple.create(0, 256)))
+				.transform(CmiStress.setCapacity(0))
+				.onRegister(BlockStressValues.setGeneratorSpeed(256, true))
 				.item(AcceleratorMotorItem::new)
 				.model((context, provider) -> {
 					provider.withExistingParent(
@@ -262,7 +264,7 @@ public class CmiBlock {
 				.register();
 		BELT_GRINDER = Cmi.REGISTRATE.block("mechanical_belt_grinder", BeltGrinderBlock::new)
 				.initialProperties(SharedProperties::stone)
-				.transform(BlockStressDefaults.setImpact(8.0))
+				.transform(CmiStress.setImpact(8.0))
 				.item()
 				.model((context, provider) -> {
 					provider.withExistingParent(

@@ -10,7 +10,6 @@ import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
-import dev.celestiacraft.cmi.compat.create.CmiStressValueProvider;
 import dev.celestiacraft.cmi.config.CommonConfig;
 import dev.celestiacraft.cmi.datagen.worldgen.region.ModOverworldRegion;
 import dev.celestiacraft.cmi.datagen.worldgen.surfacerule.ModSurfaceRuleData;
@@ -79,8 +78,6 @@ public class Cmi {
 
 	private void onCommonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
-			CmiStressValueProvider.register();
-
 			Regions.register(new ModOverworldRegion(5));
 
 			SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Cmi.MODID, ModSurfaceRuleData.makeRules());
