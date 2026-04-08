@@ -1,29 +1,25 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven;
 
-import blusunrize.immersiveengineering.common.register.IEFluids;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.register.multiblock.machine.FluidSlots;
 import dev.celestiacraft.cmi.api.register.multiblock.machine.IControllerRecipe;
 import dev.celestiacraft.cmi.api.register.multiblock.machine.IOMode;
 import dev.celestiacraft.cmi.api.register.multiblock.machine.MachineControllerBlockEntity;
 import dev.celestiacraft.cmi.api.register.multiblock.machine.MultiblockContext;
+import dev.celestiacraft.cmi.common.recipe.machine.MachineRecipe;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
+import dev.celestiacraft.cmi.common.register.CmiRecipeType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implements IControllerRecipe<TestCokeOvenBlockEntity> {
-	private static final int MAX_WORK_TIME = 20;
-
 	private int workTimer = 0;
 
 	public TestCokeOvenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -51,27 +47,37 @@ public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implem
 			return;
 		}
 
-		ItemStack input = ioBlock.getInternalStackInSlot(0);
-		ItemStack result = Items.CHARCOAL.getDefaultInstance();
-		FluidStack fluidResult = new FluidStack(IEFluids.CREOSOTE.getStill(), 125);
+		if (level == null) {
+			workTimer = 0;
+			return;
+		}
 
-		boolean validInput = input.is(ItemTags.LOGS);
-		boolean canInsertItem = ioBlock.insertItemInternal(1, result.copy(), true).isEmpty();
-		int canFillFluid = ioBlock.fillFluid(fluidResult.copy(), IFluidHandler.FluidAction.SIMULATE);
+		IFluidHandler fluidHandler = ioBlock.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
+		if (fluidHandler == null) {
+			workTimer = 0;
+			return;
+		}
 
-		if (!validInput || !canInsertItem || canFillFluid < fluidResult.getAmount()) {
+		MachineRecipe recipe = level.getRecipeManager().getAllRecipesFor(CmiRecipeType.TEST_COKE_OVEN.get()).stream()
+				.filter(candidate -> candidate.matchesItemInputs(ioBlock.getInternalItemHandler(), 0))
+				.filter(candidate -> candidate.canOutputItems(ioBlock.getInternalItemHandler(), 1))
+				.filter(candidate -> candidate.canOutputFluids(fluidHandler))
+				.findFirst()
+				.orElse(null);
+
+		if (recipe == null) {
 			workTimer = 0;
 			return;
 		}
 
 		workTimer++;
-		if (workTimer <= MAX_WORK_TIME) {
+		if (workTimer < recipe.getDuration()) {
 			return;
 		}
 
-		ioBlock.extractItemInternal(0, 1, false);
-		ioBlock.insertItemInternal(1, result.copy(), false);
-		ioBlock.fillFluid(fluidResult.copy(), IFluidHandler.FluidAction.EXECUTE);
+		recipe.consumeItemInputs(ioBlock.getInternalItemHandler(), 0);
+		recipe.produceItemOutputs(level, ioBlock.getInternalItemHandler(), 1);
+		recipe.produceFluidOutputs(level, fluidHandler);
 		workTimer = 0;
 	}
 

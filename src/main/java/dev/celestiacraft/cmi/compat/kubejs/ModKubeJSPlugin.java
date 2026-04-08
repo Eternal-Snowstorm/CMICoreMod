@@ -17,6 +17,7 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 				.register("space_elevator_base", SpaceElevatorBaseSchema.SCHEMA)
 				.register("space_elevator_construction", SpaceElevatorConstructionSchema.SCHEMA)
 				.register("accelerator", AcceleratorSchema.SCHEMA)
+				.register("test_coke_oven", MachineRecipeSchema.SCHEMA)
 				.register("grinding", GrindingSchema.SCHEMA)
 				.register("fluid_burn", FluidBurnSchema.SCHEMA);
 	}

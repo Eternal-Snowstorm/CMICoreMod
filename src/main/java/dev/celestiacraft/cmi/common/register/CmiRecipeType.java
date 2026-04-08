@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.register;
 
 import dev.celestiacraft.cmi.common.recipe.fluid_burn.FluidBurnRecipe;
+import dev.celestiacraft.cmi.common.recipe.machine.MachineRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -19,7 +20,7 @@ public class CmiRecipeType {
 	public static final Supplier<RecipeType<SpaceElevatorBaseRecipe>> SPACE_ELEVATOR_BASE;
 	public static final Supplier<RecipeType<SpaceElevatorConstructionRecipe>> SPACE_ELEVATOR_CONSTRUCTION;
 	public static final Supplier<RecipeType<FluidBurnRecipe>> FLUID_BURN;
-	public static final Supplier<RecipeType<?>> TEST_COKE_OVEN;
+	public static final Supplier<RecipeType<MachineRecipe>> TEST_COKE_OVEN;
 
 	static {
 		RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Cmi.MODID);
@@ -35,7 +36,7 @@ public class CmiRecipeType {
 		return RECIPE_TYPES.register(path, supplier);
 	}
 
-	private static Supplier<RecipeType<?>> registerSimple(String path) {
+	private static <T extends Recipe<?>> Supplier<RecipeType<T>> registerSimple(String path) {
 		return RECIPE_TYPES.register(path, () -> RecipeType.simple(Cmi.loadResource(path)));
 	}
 
