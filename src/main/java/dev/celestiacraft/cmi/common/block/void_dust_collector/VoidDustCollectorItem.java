@@ -1,6 +1,5 @@
 package dev.celestiacraft.cmi.common.block.void_dust_collector;
 
-import com.simibubi.create.foundation.item.FontHelper;
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.config.CommonConfig;
 import net.createmod.catnip.lang.FontHelper;

@@ -54,7 +54,7 @@ public class FreezingType implements FanProcessingType {
 		Optional<FreezingRecipe> recipe = CmiCreateRecipe.FREEZING.find(FREEZING_WRAPPER, level);
 
 		return recipe.map((freezing) -> {
-			return RecipeApplier.applyRecipeOn(level, stack, freezing);
+			return RecipeApplier.applyRecipeOn(level, stack, freezing, true);
 		}).orElse(null);
 	}
 
