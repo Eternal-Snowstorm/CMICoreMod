@@ -31,31 +31,33 @@ import java.util.Objects;
 public class MachineRecipe implements Recipe<Container> {
 	private final ResourceLocation id;
 	@Getter
-    private final ResourceLocation recipeTypeId;
+	private final ResourceLocation recipeTypeId;
 	@Getter
-    private final List<ItemInput> inputItems;
+	private final List<ItemInput> inputItems;
 	@Getter
-    private final List<ItemOutput> outputItems;
+	private final List<ItemOutput> outputItems;
 	@Getter
-    private final List<FluidInput> inputFluids;
+	private final List<FluidInput> inputFluids;
 	@Getter
-    private final List<FluidOutput> outputFluids;
+	private final List<FluidOutput> outputFluids;
 	@Getter
-    private final int inputEnergy;
+	private final int inputEnergy;
 	@Getter
-    private final int outputEnergy;
+	private final int outputEnergy;
 	@Getter
-    private final int duration;
+	private final int duration;
 
-	public MachineRecipe(ResourceLocation id,
-						 ResourceLocation recipeTypeId,
-						 List<ItemInput> inputItems,
-						 List<ItemOutput> outputItems,
-						 List<FluidInput> inputFluids,
-						 List<FluidOutput> outputFluids,
-						 int inputEnergy,
-						 int outputEnergy,
-						 int duration) {
+	public MachineRecipe(
+			ResourceLocation id,
+			ResourceLocation recipeTypeId,
+			List<ItemInput> inputItems,
+			List<ItemOutput> outputItems,
+			List<FluidInput> inputFluids,
+			List<FluidOutput> outputFluids,
+			int inputEnergy,
+			int outputEnergy,
+			int duration
+	) {
 		this.id = id;
 		this.recipeTypeId = recipeTypeId;
 		this.inputItems = List.copyOf(inputItems);
@@ -232,7 +234,7 @@ public class MachineRecipe implements Recipe<Container> {
 		}
 	}
 
-    @Override
+	@Override
 	public boolean matches(@NotNull Container container, @NotNull Level level) {
 		return false;
 	}
