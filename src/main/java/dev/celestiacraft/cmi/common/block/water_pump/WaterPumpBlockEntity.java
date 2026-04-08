@@ -34,7 +34,8 @@ public class WaterPumpBlockEntity extends MachineControllerBlockEntity implement
 
 	public boolean isOcean() {
 		if (level != null) {
-			return level.getBiome(getBlockPos()).is(BiomeTags.IS_OCEAN) && getBlockPos().getY() == 62;
+			return level.getBiome(getBlockPos()).is(BiomeTags.IS_OCEAN)
+					&& getBlockPos().getY() == 62;
 		}
 		return false;
 	}
@@ -61,7 +62,7 @@ public class WaterPumpBlockEntity extends MachineControllerBlockEntity implement
 
 	@Override
 	protected FluidSlots[] getFluidSlots() {
-		return new FluidSlots[]{
+		return new FluidSlots[] {
 				new FluidSlots(Integer.MAX_VALUE, IOMode.OUTPUT)
 		};
 	}
