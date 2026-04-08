@@ -10,6 +10,7 @@ import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeConfigSpec;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,6 +24,16 @@ public class CmiStress extends ConfigBase {
 
 	protected final Map<ResourceLocation, ForgeConfigSpec.ConfigValue<Double>> capacities = new HashMap<>();
 	protected final Map<ResourceLocation, ForgeConfigSpec.ConfigValue<Double>> impacts = new HashMap<>();
+
+	public static Pair<CmiStress, ForgeConfigSpec> createConfig() {
+		Pair<CmiStress, ForgeConfigSpec> pair = new ForgeConfigSpec.Builder().configure(builder -> {
+			CmiStress stress = new CmiStress();
+			stress.registerAll(builder);
+			return stress;
+		});
+		pair.getLeft().specification = pair.getRight();
+		return pair;
+	}
 
 	@Override
 	public void registerAll(ForgeConfigSpec.Builder builder) {

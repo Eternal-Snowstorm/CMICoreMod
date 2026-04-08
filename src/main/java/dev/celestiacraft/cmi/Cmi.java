@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi;
 
+import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
@@ -10,6 +11,7 @@ import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
+import dev.celestiacraft.cmi.compat.create.CmiStress;
 import dev.celestiacraft.cmi.config.CommonConfig;
 import dev.celestiacraft.cmi.datagen.worldgen.region.ModOverworldRegion;
 import dev.celestiacraft.cmi.datagen.worldgen.surfacerule.ModSurfaceRuleData;
@@ -17,12 +19,15 @@ import dev.celestiacraft.cmi.network.CmiNetwork;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.RegisterEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import terrablender.api.Regions;
@@ -33,6 +38,8 @@ public class Cmi {
 	public static final String MODID = "cmi";
 	public static final String NAME = "CMI";
 	public static final Logger LOGGER = LogManager.getLogger(NAME);
+	private static CmiStress STRESS_VALUES;
+	private static ForgeConfigSpec STRESS_VALUES_SPEC;
 	public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
 			.setTooltipModifierFactory((item) -> {
 				return new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
@@ -66,6 +73,9 @@ public class Cmi {
 		CmiNetwork.register();
 
 		bus.addListener(this::onCommonSetup);
+		bus.addListener(this::onRegister);
+		bus.addListener(this::onConfigLoad);
+		bus.addListener(this::onConfigReload);
 
 		registerConfig(context);
 
@@ -74,6 +84,16 @@ public class Cmi {
 
 	private static void registerConfig(FMLJavaModLoadingContext context) {
 		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/cmi/common.toml");
+
+		if (STRESS_VALUES == null) {
+			var stressConfig = CmiStress.createConfig();
+			STRESS_VALUES = stressConfig.getLeft();
+			STRESS_VALUES_SPEC = stressConfig.getRight();
+			BlockStressValues.IMPACTS.registerProvider(STRESS_VALUES::getImpact);
+			BlockStressValues.CAPACITIES.registerProvider(STRESS_VALUES::getCapacity);
+		}
+
+		context.registerConfig(ModConfig.Type.SERVER, STRESS_VALUES_SPEC, "nebula/cmi/stressValues.toml");
 	}
 
 	private void onCommonSetup(FMLCommonSetupEvent event) {
@@ -82,8 +102,23 @@ public class Cmi {
 
 			SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Cmi.MODID, ModSurfaceRuleData.makeRules());
 			SurfaceRuleManager.addToDefaultSurfaceRulesAtStage(SurfaceRuleManager.RuleCategory.OVERWORLD, SurfaceRuleManager.RuleStage.AFTER_BEDROCK, 0, ModSurfaceRuleData.makeInjections());
-			CmiFanProcessingTypes.register();
 			AdAstraOxygenCompat.register();
 		});
+	}
+
+	private void onRegister(RegisterEvent event) {
+		CmiFanProcessingTypes.register();
+	}
+
+	private void onConfigLoad(ModConfigEvent.Loading event) {
+		if (STRESS_VALUES != null && event.getConfig().getSpec() == STRESS_VALUES_SPEC) {
+			STRESS_VALUES.onLoad();
+		}
+	}
+
+	private void onConfigReload(ModConfigEvent.Reloading event) {
+		if (STRESS_VALUES != null && event.getConfig().getSpec() == STRESS_VALUES_SPEC) {
+			STRESS_VALUES.onReload();
+		}
 	}
 }

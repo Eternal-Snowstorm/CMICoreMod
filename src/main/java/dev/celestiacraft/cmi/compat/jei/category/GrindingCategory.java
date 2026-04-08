@@ -38,7 +38,7 @@ public class GrindingCategory {
 						builder.addSlot(RecipeIngredientRole.OUTPUT, 118 + xOffset, 48 + yOffset)
 								.setBackground(CreateRecipeCategory.getRenderedSlot(output), -1, -1)
 								.addItemStack(output.getStack())
-								.addTooltipCallback(CreateRecipeCategory.addStochasticTooltip(output));
+								.addRichTooltipCallback(CreateRecipeCategory.addStochasticTooltip(output));
 						i++;
 					}
 				})
