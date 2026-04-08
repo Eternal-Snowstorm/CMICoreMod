@@ -2,11 +2,45 @@ package dev.celestiacraft.cmi.api.register.multiblock.machine;
 
 import com.simibubi.create.foundation.block.IBE;
 import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlockEntity;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 public interface IControllerRecipe<T extends ControllerBlockEntity> {
+	/**
+	 * 返回该控制器对应的配方类型 ID
+	 *
+	 * <p>
+	 * 这个 ID 主要用于:
+	 * </p>
+	 * <ul>
+	 *     <li>显示或记录当前机器对应的配方类型</li>
+	 *     <li>在已经注册 RecipeType 时解析对应的 {@link RecipeType}</li>
+	 * </ul>
+	 *
+	 * <p>
+	 * 即使当前配方类型尚未注册, 也应该返回稳定的 ID
+	 * </p>
+	 */
+	ResourceLocation getRecipeTypeId();
+
+	/**
+	 * 解析当前控制器的配方类型
+	 *
+	 * <p>
+	 * 若该 ID 尚未注册到 {@link ForgeRegistries#RECIPE_TYPES},
+	 * 则返回 {@code null}
+	 * </p>
+	 */
+	@Nullable
+	default RecipeType<?> getRecipeType() {
+		return ForgeRegistries.RECIPE_TYPES.getValue(getRecipeTypeId());
+	}
+
 	/**
 	 * 执行多方块配方逻辑
 	 *

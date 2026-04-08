@@ -11,6 +11,7 @@ import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -27,6 +28,11 @@ public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implem
 
 	public TestCokeOvenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state, CmiMultiblock.TEST_COKE_OVEN);
+	}
+
+	@Override
+	public ResourceLocation getRecipeTypeId() {
+		return Cmi.loadResource("test_coke_oven");
 	}
 
 	@Override
