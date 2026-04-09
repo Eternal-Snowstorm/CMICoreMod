@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.common.register;
 
+import dev.celestiacraft.cmi.Cmi;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
@@ -64,7 +65,7 @@ public class CmiArmorMaterial implements ArmorMaterial {
 
 	@Override
 	public @NotNull String getName() {
-		return "cmi:%s".formatted(name);
+		return Cmi.loadResource(name).toString();
 	}
 
 	@Override
