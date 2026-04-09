@@ -58,10 +58,18 @@ public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implem
 			return;
 		}
 
-		MachineRecipe recipe = level.getRecipeManager().getAllRecipesFor(CmiRecipeType.TEST_COKE_OVEN.get()).stream()
-				.filter(candidate -> candidate.matchesItemInputs(ioBlock.getInternalItemHandler(), 0))
-				.filter(candidate -> candidate.canOutputItems(ioBlock.getInternalItemHandler(), 1))
-				.filter(candidate -> candidate.canOutputFluids(fluidHandler))
+		MachineRecipe recipe = level.getRecipeManager()
+				.getAllRecipesFor(CmiRecipeType.TEST_COKE_OVEN.get())
+				.stream()
+				.filter((candidate) -> {
+					return candidate.matchesItemInputs(ioBlock.getInternalItemHandler(), 0);
+				})
+				.filter((candidate) -> {
+					return candidate.canOutputItems(ioBlock.getInternalItemHandler(), 1);
+				})
+				.filter((candidate) -> {
+					return candidate.canOutputFluids(fluidHandler);
+				})
 				.findFirst()
 				.orElse(null);
 
@@ -155,7 +163,7 @@ public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implem
 
 	@Override
 	protected FluidSlots[] getFluidSlots() {
-		return new FluidSlots[]{
+		return new FluidSlots[] {
 				new FluidSlots(4000, IOMode.OUTPUT)
 		};
 	}
