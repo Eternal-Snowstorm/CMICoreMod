@@ -18,7 +18,6 @@ public class AdvancedSpoutItem extends AssemblyOperatorBlockItem {
 		super(block, properties);
 	}
 
-	// TODO 注液器顶部可以防止红石部件, 到时候记得在Tooltip内说明一下
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
