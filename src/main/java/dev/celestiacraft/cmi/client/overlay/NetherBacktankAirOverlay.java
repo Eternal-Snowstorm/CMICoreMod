@@ -3,6 +3,7 @@ package dev.celestiacraft.cmi.client.overlay;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.armor.BacktankUtil;
+import dev.celestiacraft.cmi.compat.create.CreateOxygenSupport;
 import net.createmod.catnip.gui.element.GuiGameElement;
 import net.createmod.catnip.theme.Color;
 import net.minecraft.client.Minecraft;
@@ -44,11 +45,11 @@ public class NetherBacktankAirOverlay implements IGuiOverlay {
 		if (player.isEyeInFluidType(ForgeMod.WATER_TYPE.get()) || player.isInLava()) {
 			return;
 		}
-		if (!player.getPersistentData().contains("VisualBacktankAir")) {
+		if (!CreateOxygenSupport.hasBacktankSupport(player)) {
 			return;
 		}
 
-		int timeLeft = player.getPersistentData().getInt("VisualBacktankAir");
+		int timeLeft = CreateOxygenSupport.getVisualBacktankAir(player);
 
 		PoseStack poseStack = graphics.pose();
 		poseStack.pushPose();

@@ -29,14 +29,6 @@ public class NetherBreathingHandler {
 		boolean hasCreateSupport = CreateOxygenSupport.hasBacktankSupport(player);
 		boolean hasAdAstraSupport = AdAstraOxygenCompat.hasSpaceSuitSupport(player);
 
-		if (level.isClientSide()) {
-			if (hasCreateSupport) {
-				player.getPersistentData().putInt("VisualBacktankAir", CreateOxygenSupport.getVisualBacktankAir(player));
-			} else {
-				player.getPersistentData().remove("VisualBacktankAir");
-			}
-		}
-
 		if (hasCreateSupport) {
 			event.setCanBreathe(true);
 			event.setCanRefillAir(false);
