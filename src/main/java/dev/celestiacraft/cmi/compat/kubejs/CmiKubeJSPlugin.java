@@ -5,6 +5,7 @@ import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.compat.create.CmiHeatLevel;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.*;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
+import dev.celestiacraft.cmi.utils.CmiGlobal;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
@@ -28,5 +29,6 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		event.add("CmiLang$JeiLang", CmiLang.JeiLang.class);
 		event.add("ClientSeedHandler", ClientSeedHandler.class);
 		event.add("CmiHeatLevel", CmiHeatLevel.class);
+		event.add("CmiGlobal", CmiGlobal.class);
 	}
 }
