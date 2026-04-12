@@ -9,7 +9,7 @@ import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
 
-public class ModKubeJSPlugin extends KubeJSPlugin {
+public class CmiKubeJSPlugin extends KubeJSPlugin {
 	@Override
 	public void registerRecipeSchemas(RegisterRecipeSchemasEvent event) {
 		event.namespace(Cmi.MODID)
