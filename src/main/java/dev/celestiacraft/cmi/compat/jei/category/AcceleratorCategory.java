@@ -2,29 +2,24 @@ package dev.celestiacraft.cmi.compat.jei.category;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import com.simibubi.create.Create;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
+import dev.celestiacraft.cmi.api.client.CmiLang;
+import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
+import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.registries.ForgeRegistries;
-import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
-import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
-import dev.celestiacraft.cmi.api.client.CmiLang;
-import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
 
 public class AcceleratorCategory {
-	private static final Item PRECISION_MECHANISM = ForgeRegistries.ITEMS.getValue(Create.asResource("precision_mechanism"));
-
-	@SuppressWarnings("removal")
 	public static SimpleJeiCategory<AcceleratorRecipe> builder(IGuiHelper helper) {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.ACCELERATOR, helper)
 				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("accelerator"))
@@ -32,7 +27,7 @@ public class AcceleratorCategory {
 				.setIcon(() -> {
 					return new DoubleItemIcon(
 							() -> CmiBlock.ACCELERATOR.get().asItem().getDefaultInstance(),
-							() -> PRECISION_MECHANISM.getDefaultInstance()
+							() -> AllItems.PRECISION_MECHANISM.asStack()
 					);
 				})
 				.setBackground(0, 0)
