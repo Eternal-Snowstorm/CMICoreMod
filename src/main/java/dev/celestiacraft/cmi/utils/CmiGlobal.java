@@ -1,10 +1,13 @@
 package dev.celestiacraft.cmi.utils;
 
+import com.simibubi.create.Create;
 import dev.celestiacraft.cmi.utils.metal.CmiMetalRegistry;
 import dev.latvian.mods.kubejs.fluid.FluidStackJS;
 import dev.latvian.mods.kubejs.util.ConsoleJS;
+import lombok.Getter;
+import lombok.Setter;
+import net.minecraft.resources.ResourceLocation;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,20 +20,28 @@ public class CmiGlobal {
 	/**
 	 * 整合包最终版本号
 	 */
+	@Getter
+	@Setter
 	public static String modPackMainVersion;
 	/**
 	 * 整合包状态
 	 */
+
+	@Getter
+	@Setter
 	public static String modPackState = "Beta";
 
-	/**
-	 * 是否为热修复版本
-	 */
+
+	@Getter
+	@Setter
 	public static boolean isHotfix = false;
 
 	/**
 	 * Modpack数字版本号
 	 */
+
+	@Getter
+	@Setter
 	public static String modpackNumberVersion = "2.5.0";
 
 	/**
@@ -46,33 +57,45 @@ public class CmiGlobal {
 		ConsoleJS.STARTUP.info(modPackMainVersion);
 	}
 
+	private void init() {
+		// ToolType
+		setToolType("sword", ResourceLocation.parse("forge:mineable/sword"));
+		setToolType("pickaxe", ResourceLocation.parse("minecraft:mineable/pickaxe"));
+		setToolType("axe", ResourceLocation.parse("minecraft:mineable/axe"));
+		setToolType("shovel", ResourceLocation.parse("minecraft:mineable/shovel"));
+		setToolType("hoe", ResourceLocation.parse("minecraft:mineable/hoe"));
+
+		// MiningLevel
+		setMiningLevel("wooden", ResourceLocation.parse("forge:needs_wooden_tool"));
+		setMiningLevel("stone", ResourceLocation.parse("minecraft:needs_stone_tool"));
+		setMiningLevel("iron", ResourceLocation.parse("minecraft:needs_iron_tool"));
+		setMiningLevel("glod", ResourceLocation.parse("forge:needs_gold_tool"));
+		setMiningLevel("diamond", ResourceLocation.parse("minecraft:needs_diamond_tool"));
+		setMiningLevel("nether", ResourceLocation.parse("forge:needs_netherite_tool"));
+	}
+
 	/**
 	 * 扳手Tag
 	 */
-	public static final String WRENCH_PICKUP = "create:wrench_pickup";
+	public static final ResourceLocation WRENCH_PICKUP = Create.asResource("wrench_pickup");
 
 	/**
 	 * 挖掘工具类型
 	 */
-	public static final Map<String, String> TOOL_TYPE = Map.of(
-			"sword", "forge:mineable/sword",
-			"pickaxe", "minecraft:mineable/pickaxe",
-			"axe", "minecraft:mineable/axe",
-			"shovel", "minecraft:mineable/shovel",
-			"hoe", "minecraft:mineable/hoe"
-	);
+	public static final Map<String, ResourceLocation> TOOL_TYPE = new HashMap<>();
+
+	public static void setToolType(String key, ResourceLocation location) {
+		TOOL_TYPE.put(key, location);
+	}
 
 	/**
 	 * 挖掘等级
 	 */
-	public static final Map<String, String> MINING_LEVEL = Map.of(
-			"wooden", "minecraft:needs_wooden_tool",
-			"stone", "minecraft:needs_stone_tool",
-			"iron", "minecraft:needs_iron_tool",
-			"gold", "forge:needs_gold_tool",
-			"diamond", "minecraft:needs_diamond_tool",
-			"nether", "forge:needs_netherite_tool"
-	);
+	public static final Map<String, ResourceLocation> MINING_LEVEL = new HashMap<>();
+
+	public static void setMiningLevel(String key, ResourceLocation location) {
+		MINING_LEVEL.put(key, location);
+	}
 
 	public static final Map<FluidStackJS, Integer> FUEL_TEMPERATURES = new HashMap<>();
 
@@ -145,9 +168,4 @@ public class CmiGlobal {
 			"antimatter",
 			"creative"
 	);
-
-	/**
-	 * 金属材料ID List
-	 */
-	public static final List<String> METAL_GROUP = new ArrayList<>();
 }
