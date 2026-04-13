@@ -24,12 +24,12 @@ public class AdAstraOxygenCompat {
 			return true;
 		}
 
-        return entity instanceof Player player && player.level().dimension() == Level.NETHER;
-    }
+		return entity instanceof Player player && player.level().dimension() == Level.NETHER;
+	}
 
 	private static boolean onOxygenTick(ServerLevel level, LivingEntity entity) {
-        return level.dimension() != Level.NETHER || !(entity instanceof Player);
-    }
+		return level.dimension() != Level.NETHER || !(entity instanceof Player);
+	}
 
 	public static boolean hasSpaceSuitSupport(LivingEntity entity) {
 		if (!SpaceSuitItem.hasFullSet(entity)) {
