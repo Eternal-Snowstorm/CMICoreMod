@@ -3,7 +3,6 @@ package dev.celestiacraft.cmi.client;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
-import dev.celestiacraft.cmi.client.key.CmiKeyBindings;
 import dev.celestiacraft.cmi.client.overlay.NetherBacktankAirOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorConstructionOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorFlightOverlay;
@@ -15,7 +14,6 @@ import dev.celestiacraft.cmi.common.register.CmiEntity;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,7 +23,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class CmiClient {
 	public static void onCtorClient(IEventBus bus) {
 		bus.addListener(CmiClient::onClientSetup);
-		bus.addListener(CmiClient::registerKeys);
 		bus.addListener(SpaceElevatorHudRenderer::registerShaders);
 		bus.addListener(NetherBacktankAirOverlay::register);
 		bus.addListener(SpaceElevatorFlightOverlay::register);
@@ -41,10 +38,5 @@ public class CmiClient {
 		EntityRenderers.register(CmiEntity.SPACE_ELEVATOR.get(), SpaceElevatorRenderer::new);
 
 		PonderIndex.addPlugin(new CmiPonderPlugin());
-	}
-
-	@SubscribeEvent
-	public static void registerKeys(RegisterKeyMappingsEvent event) {
-		event.register(CmiKeyBindings.SNEAKY_LINK);
 	}
 }

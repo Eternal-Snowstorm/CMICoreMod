@@ -84,12 +84,5 @@ public class CmiNetwork {
 				StartSpaceElevatorTransportPacket::decode,
 				StartSpaceElevatorTransportPacket::handle
 		);
-		CHANNEL.registerMessage(
-				id++,
-				CmiKeyPacket.class,
-				CmiKeyPacket::encode,
-				CmiKeyPacket::decode,
-				CmiKeyPacket::handle
-		);
 	}
 }

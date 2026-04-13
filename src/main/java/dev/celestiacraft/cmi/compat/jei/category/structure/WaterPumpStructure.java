@@ -8,13 +8,9 @@ import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.utils.ModResources;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
-import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -118,9 +114,7 @@ public class WaterPumpStructure extends AnimatedKinetics {
 				.scale(scale)
 				.render(graphics);
 		defaultBlockElement(SLAB.get().defaultBlockState()
-				.setValue(StairBlock.FACING, Direction.NORTH)
-				.setValue(StairBlock.HALF, Half.TOP)
-				.setValue(StairBlock.SHAPE, StairsShape.STRAIGHT))
+				.setValue(SlabBlock.TYPE, SlabType.TOP))
 				.atLocal(0.0F, 1.0F, -1.0F)
 				.scale(scale)
 				.render(graphics);

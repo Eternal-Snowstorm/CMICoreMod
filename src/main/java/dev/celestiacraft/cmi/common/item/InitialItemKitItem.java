@@ -5,6 +5,7 @@ import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -32,9 +33,19 @@ public class InitialItemKitItem extends Item {
 			"create:goggles",
 			"create:super_glue",
 			"create:stressometer",
+			"create:item_hatch",
+			"create:packager",
+			"create:stock_link",
+			"create:stock_ticker",
+			"create:red_seat",
+			"63x create:item_vault",
 
 			"tiab:time_in_a_bottle"
 	);
+
+	private static final List<Parsed> PARSED_LIST = ITEM_LIST.stream()
+			.map(InitialItemKitItem::parseStatic)
+			.toList();
 
 	@Override
 	public @NotNull InteractionResult useOn(@NotNull UseOnContext context) {
@@ -48,12 +59,13 @@ public class InitialItemKitItem extends Item {
 			return InteractionResult.PASS;
 		}
 
-		ITEM_LIST.forEach((id) -> {
-			ResourceLocation resources = ResourceLocation.parse(id);
-			Item item = ForgeRegistries.ITEMS.getValue(resources);
+		PARSED_LIST.forEach((parsed) -> {
+			ResourceLocation rl = ResourceLocation.parse(parsed.id);
+			Item item = ForgeRegistries.ITEMS.getValue(rl);
 
 			if (item != null) {
-				player.addItem(item.getDefaultInstance());
+				player.addItem(new ItemStack(item, parsed.count));
+
 				level.playSound(
 						null,
 						player.getX(),
@@ -65,8 +77,8 @@ public class InitialItemKitItem extends Item {
 						1
 				);
 			}
-			context.getItemInHand().shrink(1);
 		});
+		context.getItemInHand().shrink(1);
 
 		return InteractionResult.SUCCESS;
 	}
@@ -96,21 +108,25 @@ public class InitialItemKitItem extends Item {
 			));
 
 			// 列表
-			ITEM_LIST.forEach((id) -> {
-				ResourceLocation resources = ResourceLocation.parse(id);
-				Item item = ForgeRegistries.ITEMS.getValue(resources);
+			PARSED_LIST.forEach((parsed) -> {
+				ResourceLocation location = ResourceLocation.parse(parsed.id);
+				Item item = ForgeRegistries.ITEMS.getValue(location);
 
 				if (item != null) {
 					Component itemName = item.getDescription();
 
-					Component line = Component.translatable(
+					MutableComponent line = Component.translatable(
 							"cmi.tooltip.initial_item_kit.entry",
-							id,
+							parsed.id,
 							0.5,
 							itemName
-					).withStyle(ChatFormatting.DARK_GRAY);
+					);
 
-					tooltip.add(line);
+					if (parsed.count > 1) {
+						line.append(Component.literal(" x" + parsed.count));
+					}
+
+					tooltip.add(line.withStyle(ChatFormatting.AQUA));
 				}
 			});
 		} else {
@@ -122,8 +138,33 @@ public class InitialItemKitItem extends Item {
 		}
 	}
 
+	private static Parsed parseStatic(String entry) {
+		entry = entry.trim();
+
+		if (entry.contains("x ")) {
+			String[] split = entry.split("x ", 2);
+			try {
+				int count = Integer.parseInt(split[0]);
+				return new Parsed(split[1], count);
+			} catch (NumberFormatException ignored) {
+			}
+		}
+
+		return new Parsed(entry, 1);
+	}
+
 	@Override
 	public boolean isFoil(@NotNull ItemStack stack) {
 		return true;
+	}
+
+	private static class Parsed {
+		String id;
+		int count;
+
+		Parsed(String id, int count) {
+			this.id = id;
+			this.count = count;
+		}
 	}
 }
