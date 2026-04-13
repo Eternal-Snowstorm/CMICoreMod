@@ -23,15 +23,17 @@ public class CmiGlobal {
 	@Getter
 	@Setter
 	public static String modPackMainVersion;
+
 	/**
 	 * 整合包状态
 	 */
-
 	@Getter
 	@Setter
 	public static String modPackState = "Beta";
 
-
+	/**
+	 * 是否为热修复版本
+	 */
 	@Getter
 	@Setter
 	public static boolean isHotfix = false;
