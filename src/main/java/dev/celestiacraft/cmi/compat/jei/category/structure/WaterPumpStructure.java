@@ -5,22 +5,23 @@ import blusunrize.immersiveengineering.common.register.IEBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.utils.ModResources;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.properties.Half;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
 
 public class WaterPumpStructure extends AnimatedKinetics {
-	private static final Lazy<Block> STAIRS = Lazy.of(() -> {
-		String stair = "immersiveengineering:stairs_treated_wood_horizontal";
-		return ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(stair));
+	private static final Lazy<Block> SLAB = Lazy.of(() -> {
+		return ForgeRegistries.BLOCKS.getValue(ModResources.TREATED_WOOD_SLAB);
 	});
 
 	@Override
@@ -116,31 +117,25 @@ public class WaterPumpStructure extends AnimatedKinetics {
 				.atLocal(1.0F, 1.0F, 1.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(STAIRS.get().defaultBlockState()
+		defaultBlockElement(SLAB.get().defaultBlockState()
 				.setValue(StairBlock.FACING, Direction.NORTH)
 				.setValue(StairBlock.HALF, Half.TOP)
 				.setValue(StairBlock.SHAPE, StairsShape.STRAIGHT))
 				.atLocal(0.0F, 1.0F, -1.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(STAIRS.get().defaultBlockState()
-				.setValue(StairBlock.FACING, Direction.SOUTH)
-				.setValue(StairBlock.HALF, Half.TOP)
-				.setValue(StairBlock.SHAPE, StairsShape.STRAIGHT))
+		defaultBlockElement(SLAB.get().defaultBlockState()
+				.setValue(SlabBlock.TYPE, SlabType.TOP))
 				.atLocal(0.0F, 1.0F, 1.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(STAIRS.get().defaultBlockState()
-				.setValue(StairBlock.FACING, Direction.WEST)
-				.setValue(StairBlock.HALF, Half.TOP)
-				.setValue(StairBlock.SHAPE, StairsShape.STRAIGHT))
+		defaultBlockElement(SLAB.get().defaultBlockState()
+				.setValue(SlabBlock.TYPE, SlabType.TOP))
 				.atLocal(-1.0F, 1.0F, 0.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(STAIRS.get().defaultBlockState()
-				.setValue(StairBlock.FACING, Direction.EAST)
-				.setValue(StairBlock.HALF, Half.TOP)
-				.setValue(StairBlock.SHAPE, StairsShape.STRAIGHT))
+		defaultBlockElement(SLAB.get().defaultBlockState()
+				.setValue(SlabBlock.TYPE, SlabType.TOP))
 				.atLocal(1.0F, 1.0F, 0.0F)
 				.scale(scale)
 				.render(graphics);
