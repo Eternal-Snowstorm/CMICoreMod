@@ -4,8 +4,8 @@ import com.jesz.createdieselgenerators.CreateDieselGenerators;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.compat.create.CmiHeatLevel;
-import dev.celestiacraft.cmi.compat.kubejs.custom.item.CuttersItemBuilder;
-import dev.celestiacraft.cmi.compat.kubejs.custom.item.HammerItemBuilder;
+import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgCuttersItemBuilder;
+import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgHammerItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.*;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.cdg.CdgRecipesSchema;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
@@ -49,13 +49,13 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 	public void init() {
 		RegistryInfo.ITEM.addType(
 				"createdieselgenerators:hammer",
-				HammerItemBuilder.class,
-				HammerItemBuilder::new
+				CdgHammerItemBuilder.class,
+				CdgHammerItemBuilder::new
 		);
 		RegistryInfo.ITEM.addType(
 				"createdieselgenerators:wire_cutter",
-				CuttersItemBuilder.class,
-				CuttersItemBuilder::new
+				CdgCuttersItemBuilder.class,
+				CdgCuttersItemBuilder::new
 		);
 	}
 }

@@ -5,8 +5,8 @@ import dev.latvian.mods.kubejs.item.custom.HandheldItemBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
-public class HammerItemBuilder extends HandheldItemBuilder {
-	public HammerItemBuilder(ResourceLocation location) {
+public class CdgHammerItemBuilder extends HandheldItemBuilder {
+	public CdgHammerItemBuilder(ResourceLocation location) {
 		super(location, 0.0F, -2.0F);
 	}
 

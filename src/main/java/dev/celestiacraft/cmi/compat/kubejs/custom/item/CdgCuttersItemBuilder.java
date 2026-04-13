@@ -5,8 +5,8 @@ import dev.latvian.mods.kubejs.item.ItemBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
-public class CuttersItemBuilder extends ItemBuilder {
-	public CuttersItemBuilder(ResourceLocation location) {
+public class CdgCuttersItemBuilder extends ItemBuilder {
+	public CdgCuttersItemBuilder(ResourceLocation location) {
 		super(location);
 	}
 
