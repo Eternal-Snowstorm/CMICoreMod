@@ -1,9 +1,9 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven;
 
-import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlock;
-import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlockFacing;
-import dev.celestiacraft.cmi.api.register.multiblock.machine.MultiblockContext;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
+import dev.celestiacraft.libs.api.register.multiblock.ControllerBlock;
+import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockFacing;
+import dev.celestiacraft.libs.api.register.multiblock.machine.MultiblockContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;

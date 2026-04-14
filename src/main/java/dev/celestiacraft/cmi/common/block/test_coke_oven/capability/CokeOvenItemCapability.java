@@ -1,6 +1,5 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven.capability;
 
-import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlockEntity;
 import net.minecraftforge.items.ItemStackHandler;
 

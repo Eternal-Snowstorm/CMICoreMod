@@ -1,8 +1,8 @@
 package dev.celestiacraft.cmi.common.block.pump.water;
 
-import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlock;
-import net.minecraft.world.level.block.Blocks;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
+import dev.celestiacraft.libs.api.register.multiblock.ControllerBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class WaterPumpBlock extends ControllerBlock<WaterPumpBlockEntity> {

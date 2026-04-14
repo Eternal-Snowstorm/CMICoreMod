@@ -1,15 +1,11 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.register.multiblock.machine.FluidSlots;
-import dev.celestiacraft.cmi.api.register.multiblock.machine.IControllerRecipe;
-import dev.celestiacraft.cmi.api.register.multiblock.machine.IOMode;
-import dev.celestiacraft.cmi.api.register.multiblock.machine.MachineControllerBlockEntity;
-import dev.celestiacraft.cmi.api.register.multiblock.machine.MultiblockContext;
-import dev.celestiacraft.cmi.common.recipe.machine.MachineRecipe;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import dev.celestiacraft.cmi.common.register.CmiRecipeType;
+import dev.celestiacraft.libs.api.register.multiblock.machine.*;
+import dev.celestiacraft.libs.common.recipe.machine.MachineRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;

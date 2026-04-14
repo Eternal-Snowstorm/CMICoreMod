@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.register;
 
 import dev.celestiacraft.cmi.common.recipe.fluid_burn.FluidBurnRecipe;
-import dev.celestiacraft.cmi.common.recipe.machine.MachineRecipe;
+import dev.celestiacraft.libs.common.recipe.machine.MachineRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;

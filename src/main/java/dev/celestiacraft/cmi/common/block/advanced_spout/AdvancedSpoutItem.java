@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.block.advanced_spout;
 
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
-import dev.celestiacraft.cmi.api.register.block.BasicBlock;
+import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;

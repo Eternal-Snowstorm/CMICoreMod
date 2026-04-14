@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.compat.kubejs.recipe;
 
-import dev.celestiacraft.cmi.common.recipe.machine.MachineRecipe;
+import dev.celestiacraft.libs.common.recipe.machine.MachineRecipe;
 import dev.latvian.mods.kubejs.fluid.FluidStackJS;
 import dev.latvian.mods.kubejs.item.InputItem;
 import dev.latvian.mods.kubejs.item.OutputItem;

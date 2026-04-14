@@ -1,10 +1,10 @@
 package dev.celestiacraft.cmi.common.block.test_multiblock;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.register.multiblock.machine.FluidSlots;
-import dev.celestiacraft.cmi.api.register.multiblock.machine.IOMode;
-import dev.celestiacraft.cmi.api.register.multiblock.machine.MachineControllerBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
+import dev.celestiacraft.libs.api.register.multiblock.machine.FluidSlots;
+import dev.celestiacraft.libs.api.register.multiblock.machine.IOMode;
+import dev.celestiacraft.libs.api.register.multiblock.machine.MachineControllerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;

@@ -1,8 +1,8 @@
 package dev.celestiacraft.cmi.common.block.test_multiblock;
 
-import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlock;
-import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlockFacing;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
+import dev.celestiacraft.libs.api.register.multiblock.ControllerBlock;
+import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockFacing;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 

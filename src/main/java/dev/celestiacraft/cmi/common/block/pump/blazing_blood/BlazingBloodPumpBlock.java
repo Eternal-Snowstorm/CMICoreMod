@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.block.pump.blazing_blood;
 
-import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlock;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
+import dev.celestiacraft.libs.api.register.multiblock.ControllerBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
