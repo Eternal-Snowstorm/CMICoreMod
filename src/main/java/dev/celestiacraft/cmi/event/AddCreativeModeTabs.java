@@ -27,10 +27,12 @@ public class AddCreativeModeTabs {
 			ResourceLocation.parse("kubejs:tab")
 	);
 
-	private static final Item REDSTONE_MECHANISM = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(
-			"vintageimprovements",
-			"redstone_module"
-	));
+	private static final Item REDSTONE_MECHANISM = ForgeRegistries.ITEMS.getValue(
+			ResourceLocation.fromNamespaceAndPath(
+					"vintageimprovements",
+					"redstone_module"
+			)
+	);
 
 	@SubscribeEvent
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
