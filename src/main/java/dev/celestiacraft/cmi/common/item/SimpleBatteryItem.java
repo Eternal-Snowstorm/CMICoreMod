@@ -45,7 +45,7 @@ public class SimpleBatteryItem extends Item implements IEnergyItem {
 
 	@Override
 	public int getEnergyBarColor(ItemStack stack) {
-		float ratio = (float) getEnergyStored(stack) / getCapacity(stack);
+		float ratio = getRatioBar(stack);
 
 		if (ratio >= 0.6f) {
 			return 0x00FFFF;
