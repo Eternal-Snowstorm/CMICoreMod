@@ -5,7 +5,6 @@ import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.blockEntity.ComparatorUtil;
 import dev.celestiacraft.cmi.api.interaction.IFluidInteractable;
-import dev.celestiacraft.cmi.api.interaction.UseContext;
 import dev.celestiacraft.cmi.api.register.block.BasicBlock;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -38,12 +37,12 @@ public class AdvancedSpoutBlock extends BasicBlock implements IFluidInteractable
 	}
 
 	@Override
-	public boolean creativeUseFluidInteraction(UseContext context) {
+	public boolean creativeUseFluidInteraction() {
 		return true;
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
 		builder.add(POWERED);
 	}
 
@@ -86,6 +85,7 @@ public class AdvancedSpoutBlock extends BasicBlock implements IFluidInteractable
 	public BlockEntityType<? extends AdvancedSpoutBlockEntity> getBlockEntityType() {
 		return CmiBlockEntity.ADVANCED_SPOUT.get();
 	}
+
 	@Override
 	public @NotNull VoxelShape getBlockSupportShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
 		return SUPPORT_SHAPE;

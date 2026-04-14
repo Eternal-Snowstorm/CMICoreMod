@@ -6,7 +6,6 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.interaction.IFluidInteractable;
-import dev.celestiacraft.cmi.api.interaction.UseContext;
 import dev.celestiacraft.cmi.api.register.block.BasicBlock;
 import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlockFacing;
 import net.minecraft.core.Direction;
@@ -38,7 +37,7 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 	}
 
 	@Override
-	public boolean creativeUseFluidInteraction(UseContext context) {
+	public boolean creativeUseFluidInteraction() {
 		return true;
 	}
 

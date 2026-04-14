@@ -9,37 +9,34 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fluids.FluidUtil;
 
 public interface IFluidInteractable {
-	default boolean useFluidInteraction(UseContext context) {
+	default boolean useFluidInteraction() {
 		return false;
 	}
 
-	default	boolean creativeUseFluidInteraction(UseContext context) {
+	default boolean creativeUseFluidInteraction() {
 		return false;
 	}
 
-	default	boolean canUseFluidInteraction(UseContext context) {
-		Player player = context.getPlayer();
+	default boolean canUseFluidInteraction(Player player) {
 		if (player == null) {
 			return false;
 		}
 
-		return useFluidInteraction(context)
-				|| (player.isCreative()
-				&& creativeUseFluidInteraction(context));
+		return useFluidInteraction() || (player.isCreative() && creativeUseFluidInteraction());
 	}
 
-	default InteractionResult tryFluidInteraction(UseContext context) {
-		Player player = context.getPlayer();
-		InteractionHand hand = context.getHand();
-		Level level = context.getLevel();
-		BlockPos pos = context.getPos();
-		BlockHitResult result = context.getResult();
-
+	default InteractionResult tryFluidInteraction(
+			Player player,
+			InteractionHand hand,
+			Level level,
+			BlockPos pos,
+			BlockHitResult result
+	) {
 		if (player == null) {
 			return InteractionResult.PASS;
 		}
 
-		if (canUseFluidInteraction(context) && FluidUtil.interactWithFluidHandler(
+		if (canUseFluidInteraction(player) && FluidUtil.interactWithFluidHandler(
 				player,
 				hand,
 				level,

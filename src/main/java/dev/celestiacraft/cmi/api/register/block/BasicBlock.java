@@ -49,7 +49,13 @@ public class BasicBlock extends Block implements IFluidInteractable {
 	}
 
 	public InteractionResult useOn(UseContext context) {
-		InteractionResult result = tryFluidInteraction(context);
+		InteractionResult result = tryFluidInteraction(
+				context.getPlayer(),
+				context.getHand(),
+				context.getLevel(),
+				context.getPos(),
+				context.getResult()
+		);
 		if (result.consumesAction()) {
 			return result;
 		}
