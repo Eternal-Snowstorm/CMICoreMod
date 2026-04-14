@@ -7,7 +7,7 @@ import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenItem
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCEnergyStorage;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCItemHandler;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCItmeCapability;
-import dev.celestiacraft.cmi.common.block.water_pump.capability.WaterPumpFluidCapability;
+import dev.celestiacraft.cmi.common.block.pump.water.capability.WaterPumpFluidCapability;
 import dev.celestiacraft.cmi.compat.steam_powered.block.FluidBurnerFluidHandler;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

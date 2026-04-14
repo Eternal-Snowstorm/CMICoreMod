@@ -1,6 +1,6 @@
-package dev.celestiacraft.cmi.common.block.water_pump.capability;
+package dev.celestiacraft.cmi.common.block.pump.water.capability;
 
-import dev.celestiacraft.cmi.common.block.water_pump.WaterPumpBlockEntity;
+import dev.celestiacraft.cmi.common.block.pump.water.WaterPumpBlockEntity;
 import dev.celestiacraft.cmi.utils.ModResources;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;

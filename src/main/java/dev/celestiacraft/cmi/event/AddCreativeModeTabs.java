@@ -39,6 +39,8 @@ public class AddCreativeModeTabs {
 					CmiBlock.MARS_GEO,
 					CmiBlock.MERCURY_GEO,
 					CmiBlock.WATER_PUMP,
+					CmiBlock.BLAZING_BLOOD_PUMP,
+					CmiBlock.LAVA_PUMP,
 					CmiBlock.ACCELERATOR,
 					CmiBlock.ACCELERATOR_MOTOR,
 					CmiBlock.STEAM_HAMMER,

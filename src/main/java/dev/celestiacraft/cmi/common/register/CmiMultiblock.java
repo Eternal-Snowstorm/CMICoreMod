@@ -11,15 +11,18 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
+import slimeknights.tconstruct.shared.TinkerMaterials;
 import vazkii.patchouli.api.IMultiblock;
 
 public class CmiMultiblock {
 	public static final Lazy<IMultiblock> WATER_PUMP;
+	public static final Lazy<IMultiblock> LAVA_PUMP;
+	public static final Lazy<IMultiblock> BLAZING_BLOOD_PUMP;
 	public static final Lazy<IMultiblock> TEST_MULTIBLOCK;
 	public static final Lazy<IMultiblock> TEST_COKE_OVEN;
 
 	static {
-		WATER_PUMP = structure(StructureBuilder.create(new String[][]{
+		WATER_PUMP = structure(StructureBuilder.create(new String[][] {
 						{
 								"DED",
 								"E E",
@@ -62,7 +65,93 @@ public class CmiMultiblock {
 							.build());
 				}));
 
-		TEST_MULTIBLOCK = structure(StructureBuilder.create(new String[][]{
+		LAVA_PUMP = structure(StructureBuilder.create(new String[][] {
+						{
+								"DED",
+								"E E",
+								"DED"
+						},
+						{
+								"C C",
+								"   ",
+								"C C"
+						},
+						{
+								"C C",
+								"   ",
+								"C C"
+						},
+						{
+								"AAA",
+								"A0A",
+								"AAA"
+						}
+				})
+				.define('A', (builder) -> {
+					builder.block(TinkerMaterials.nahuatl.get());
+				})
+				.define('0', (builder) -> {
+					builder.block(CmiBlock.LAVA_PUMP.get());
+				})
+				.define('C', (builder) -> {
+					builder.block(ForgeRegistries.BLOCKS.getValue(ModResources.NAHUATL_FENCE));
+				})
+				.define('D', (builder) -> {
+					builder.block(CmiBlock.NAHUATL_SCAFFOLD.get());
+				})
+				.define(' ', (builder) -> {
+					builder.any();
+				})
+				.define('E', (builder) -> {
+					builder.map(ForgeRegistries.BLOCKS.getValue(ModResources.NAHUATL_SLAB), PropertyImmutableMap.create()
+							.add(SlabBlock.TYPE, SlabType.TOP)
+							.build());
+				}));
+
+		BLAZING_BLOOD_PUMP = structure(StructureBuilder.create(new String[][] {
+						{
+								"DED",
+								"E E",
+								"DED"
+						},
+						{
+								"C C",
+								"   ",
+								"C C"
+						},
+						{
+								"C C",
+								"   ",
+								"C C"
+						},
+						{
+								"AAA",
+								"A0A",
+								"AAA"
+						}
+				})
+				.define('A', (builder) -> {
+					builder.block(TinkerMaterials.blazewood.get());
+				})
+				.define('0', (builder) -> {
+					builder.block(CmiBlock.BLAZING_BLOOD_PUMP.get());
+				})
+				.define('C', (builder) -> {
+					builder.block(ForgeRegistries.BLOCKS.getValue(ModResources.BLAZEWOOD_FENCE));
+				})
+				.define('D', (builder) -> {
+					builder.block(CmiBlock.BLAZEWOOD_SCAFFOLD.get());
+				})
+				.define(' ', (builder) -> {
+					builder.any();
+				})
+				.define('E', (builder) -> {
+					builder.map(ForgeRegistries.BLOCKS.getValue(ModResources.BLAZEWOOD_SLAB), PropertyImmutableMap.create()
+							.add(SlabBlock.TYPE, SlabType.TOP)
+							.build());
+				}));
+
+		TEST_MULTIBLOCK = structure(StructureBuilder.create(new String[][] {
 						{
 								"AAA",
 								"AAA",
@@ -87,7 +176,7 @@ public class CmiMultiblock {
 					builder.block(CmiBlock.TEST_MULTIBLOCK.get());
 				}));
 
-		TEST_COKE_OVEN = structure(StructureBuilder.create(new String[][]{
+		TEST_COKE_OVEN = structure(StructureBuilder.create(new String[][] {
 						{
 								"AAA",
 								"AAA",

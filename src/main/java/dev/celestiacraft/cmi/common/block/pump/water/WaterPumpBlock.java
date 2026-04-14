@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.common.block.water_pump;
+package dev.celestiacraft.cmi.common.block.pump.water;
 
 import dev.celestiacraft.cmi.api.register.multiblock.ControllerBlock;
 import net.minecraft.world.level.block.Blocks;

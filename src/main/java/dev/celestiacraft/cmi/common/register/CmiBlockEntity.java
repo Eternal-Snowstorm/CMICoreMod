@@ -12,6 +12,8 @@ import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderInstance;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderRenderer;
 import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlockEntity;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlockEntity;
+import dev.celestiacraft.cmi.common.block.pump.blazing_blood.BlazingBloodPumpBlockEntity;
+import dev.celestiacraft.cmi.common.block.pump.lava.LavaPumpBlockEntity;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlockEntity;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerInstance;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerRenderer;
@@ -20,7 +22,7 @@ import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlockEnti
 import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlockEntity;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlockEnitiy;
-import dev.celestiacraft.cmi.common.block.water_pump.WaterPumpBlockEntity;
+import dev.celestiacraft.cmi.common.block.pump.water.WaterPumpBlockEntity;
 import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.bronze.BronzeFluidBurnerBlockEntity;
 import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.cast_iron.CastIronFluidBurnerBlockEntity;
 import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.steel.SteelFluidBurnerBlockEntity;
@@ -30,6 +32,8 @@ public class CmiBlockEntity {
 	public static final BlockEntityEntry<MarsGeothermalVentBlockEntity> MARS_GEO;
 	public static final BlockEntityEntry<MercuryGeothermalVentBlockEntity> MERCURY_GEO;
 	public static final BlockEntityEntry<WaterPumpBlockEntity> WATER_PUMP;
+	public static final BlockEntityEntry<BlazingBloodPumpBlockEntity> BLAZING_BLOOD_PUMP;
+	public static final BlockEntityEntry<LavaPumpBlockEntity> LAVA_PUMP;
 	public static final BlockEntityEntry<SteamHammerBlockEntity> STEAM_HAMMER;
 	public static final BlockEntityEntry<AcceleratorMotorBlockEntity> ACCELERATOR_MOTOR;
 	public static final BlockEntityEntry<AdvancedSpoutBlockEntity> ADVANCED_SPOUT;
@@ -54,6 +58,12 @@ public class CmiBlockEntity {
 				.register();
 		WATER_PUMP = Cmi.REGISTRATE.blockEntity("water_pump", WaterPumpBlockEntity::new)
 				.validBlock(CmiBlock.WATER_PUMP)
+				.register();
+		BLAZING_BLOOD_PUMP = Cmi.REGISTRATE.blockEntity("blazing_blood_pump", BlazingBloodPumpBlockEntity::new)
+				.validBlock(CmiBlock.BLAZING_BLOOD_PUMP)
+				.register();
+		LAVA_PUMP = Cmi.REGISTRATE.blockEntity("lava_pump", LavaPumpBlockEntity::new)
+				.validBlock(CmiBlock.LAVA_PUMP)
 				.register();
 		STEAM_HAMMER = Cmi.REGISTRATE.blockEntity("steam_hammer", SteamHammerBlockEntity::new)
 				.visual(() -> SteamHammerInstance::new)

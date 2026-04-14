@@ -56,7 +56,7 @@ public abstract class MachineControllerBlockEntity extends ControllerBlockEntity
 	private LazyOptional<IFluidHandler> fluidCapability = LazyOptional.empty();
 	private LazyOptional<IEnergyStorage> energyCapability = LazyOptional.empty();
 
-	protected MachineControllerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, Supplier<IMultiblock> structure) {
+	public MachineControllerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, Supplier<IMultiblock> structure) {
 		super(type, pos, state, structure);
 
 		this.controllerItemIOEnabled = supportsControllerItemIO();
