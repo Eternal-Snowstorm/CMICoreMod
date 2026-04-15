@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
-import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
+import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
@@ -12,9 +12,10 @@ import java.util.List;
 
 public class FoundryScene {
 	public static void building(SceneBuilder builder, SceneBuildingUtil util) {
-		builder.title("foundry_building", "Building the Foundry");
+		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
+		scene.title("foundry_building", "Building the Foundry");
 
-		CmiPonderPlugin.init9x9(builder, util);
+		NebulaSceneBuilder.init9x9(scene, util);
 
 		BlockPos bottomCenter = util.grid().at(4, 1, 4);
 
@@ -23,34 +24,34 @@ public class FoundryScene {
 		Selection foundry = second.copy().add(bottom);
 		Selection cast = util.select().fromTo(1, 1, 4, 1, 2, 5);
 
-		builder.idle(5);
-		builder.world().showSection(foundry, Direction.DOWN);
+		scene.idle(5);
+		scene.world().showSection(foundry, Direction.DOWN);
 
-		builder.idle(20);
-		builder.overlay().showOutline(PonderPalette.GREEN, foundry, foundry, 130);
-		builder.overlay().showText(35)
+		scene.idle(20);
+		scene.overlay().showOutline(PonderPalette.GREEN, foundry, foundry, 130);
+		scene.overlay().showText(35)
 				.colored(PonderPalette.GREEN)
 				.text("The Foundry is very similar to The Smeltery")
 				.pointAt(util.vector().topOf(bottomCenter.above()))
 				.attachKeyFrame();
-		builder.idle(45);
-		builder.overlay().showText(35)
+		scene.idle(45);
+		scene.overlay().showText(35)
 				.colored(PonderPalette.GREEN)
 				.text("But it uses scorched blocks and its edges must be filled")
 				.pointAt(util.vector().topOf(bottomCenter.above()))
 				.attachKeyFrame();
-		builder.idle(60);
+		scene.idle(60);
 
-		CmiPonderPlugin.rotateAround(builder, 60, 90);
+		NebulaSceneBuilder.rotateAround(scene, 60, 90);
 
-		builder.idle(20);
+		scene.idle(20);
 
-		builder.overlay().showText(100)
+		scene.overlay().showText(100)
 				.colored(PonderPalette.GREEN)
 				.text("The outer wall can also be extended upwards by up to 63 blocks")
 				.attachKeyFrame();
 
-		builder.idle(10);
+		scene.idle(10);
 
 		List<BlockPos> bricks1 = List.of(
 				util.grid().at(2, 3, 3), util.grid().at(2, 3, 4), util.grid().at(2, 3, 5), util.grid().at(2, 3, 6),
@@ -89,22 +90,22 @@ public class FoundryScene {
 				util.grid().at(5, 9, 2), util.grid().at(4, 9, 2), util.grid().at(3, 9, 2), util.grid().at(2, 9, 2)
 		);
 		for (BlockPos brick : bricks1) {
-			builder.world().showSection(util.select().position(brick), Direction.DOWN);
-			builder.idle(1);
+			scene.world().showSection(util.select().position(brick), Direction.DOWN);
+			scene.idle(1);
 		}
 
-		builder.idle(20);
-		builder.addLazyKeyframe();
-		builder.world().showSection(cast, Direction.NORTH);
+		scene.idle(20);
+		scene.addLazyKeyframe();
+		scene.world().showSection(cast, Direction.NORTH);
 
-		builder.idle(30);
+		scene.idle(30);
 
-		builder.overlay().showText(100)
+		scene.overlay().showText(100)
 				.text("The Foundry has unique features:\nIt will produce some by-products when smelting\nAnd it can't be used to make alloys")
 				.colored(PonderPalette.MEDIUM);
-		builder.idle(120);
+		scene.idle(120);
 
-		builder.idle(60);
-		builder.markAsFinished();
+		scene.idle(60);
+		scene.markAsFinished();
 	}
 }

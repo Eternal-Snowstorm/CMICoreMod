@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
-import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
+import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
@@ -12,44 +12,46 @@ import net.minecraftforge.fluids.FluidStack;
 import slimeknights.tconstruct.smeltery.block.entity.FluidCannonBlockEntity;
 
 public class CannonScene {
-	public static void using(SceneBuilder builder, SceneBuildingUtil util) {
-		builder.title("fluid_cannon_using", "Using Fluid Cannons");
+	public static void using(SceneBuilder scene, SceneBuildingUtil util) {
+		NebulaSceneBuilder builder = new NebulaSceneBuilder(scene);
 
-		CmiPonderPlugin.init5x5(builder, util);
+		scene.title("fluid_cannon_using", "Using Fluid Cannons");
+
+		NebulaSceneBuilder.init5x5(scene, util);
 
 		BlockPos copper = util.grid().at(1, 1, 2);
 		BlockPos cobalt = util.grid().at(3, 1, 2);
 
-		builder.idle(15);
-		builder.world().showSection(util.select().fromTo(cobalt, cobalt.above()), Direction.NORTH);
-		builder.world().showSection(util.select().fromTo(copper, copper.above()), Direction.NORTH);
+		scene.idle(15);
+		scene.world().showSection(util.select().fromTo(cobalt, cobalt.above()), Direction.NORTH);
+		scene.world().showSection(util.select().fromTo(copper, copper.above()), Direction.NORTH);
 
-		builder.idle(30);
+		scene.idle(30);
 
-		builder.world().modifyBlockEntity(copper, FluidCannonBlockEntity.class, (entity) -> {
+		scene.world().modifyBlockEntity(copper, FluidCannonBlockEntity.class, (entity) -> {
 			entity.updateFluidTo(new FluidStack(Fluids.LAVA, 2000));
 		});
 
-		builder.world().modifyBlockEntity(cobalt, FluidCannonBlockEntity.class, (entity) -> {
+		scene.world().modifyBlockEntity(cobalt, FluidCannonBlockEntity.class, (entity) -> {
 			entity.updateFluidTo(new FluidStack(Fluids.WATER, 2000));
 		});
 
-		builder.idle(20);
-		builder.overlay().showText(55)
+		scene.idle(20);
+		scene.overlay().showText(55)
 				.text("Fluid Cannon can shoot fluid and different fluids have different effects")
 				.colored(PonderPalette.MEDIUM)
 				.attachKeyFrame();
-		builder.idle(60);
+		scene.idle(60);
 
-		builder.world().modifyBlock(copper.above(), (state) -> {
+		scene.world().modifyBlock(copper.above(), (state) -> {
 			return state.setValue(LeverBlock.POWERED, true);
 		}, false);
-		builder.world().modifyBlock(cobalt.above(), (state) -> {
+		scene.world().modifyBlock(cobalt.above(), (state) -> {
 			return state.setValue(LeverBlock.POWERED, true);
 		}, false);
-		builder.idle(25);
+		scene.idle(25);
 
-		builder.idle(60);
-		builder.markAsFinished();
+		scene.idle(60);
+		scene.markAsFinished();
 	}
 }

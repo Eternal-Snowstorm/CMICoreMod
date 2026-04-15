@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
-import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
+import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;
@@ -31,9 +31,10 @@ import java.util.List;
 
 public class SmelteryScene {
 	public static void building(SceneBuilder builder, SceneBuildingUtil util) {
-		builder.title("smeltery_building", "Build the Smeltery");
+		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
+		scene.title("smeltery_building", "Build the Smeltery");
 
-		CmiPonderPlugin.init9x9(builder, util);
+		NebulaSceneBuilder.init9x9(scene, util);
 
 		BlockPos bottomCenter = util.grid().at(4, 1, 4);
 		BlockPos controllerPos = util.grid().at(4, 2, 2);
@@ -45,96 +46,96 @@ public class SmelteryScene {
 		Selection controller = util.select().position(4, 2, 2);
 		Selection drain = util.select().position(3, 2, 2);
 
-		builder.idle(5);
-		builder.world().showSection(bottom, Direction.DOWN);
+		scene.idle(5);
+		scene.world().showSection(bottom, Direction.DOWN);
 
-		builder.idle(20);
-		builder.overlay().showOutline(PonderPalette.GREEN, bottom, bottom, 100);
-		builder.overlay().showText(35)
+		scene.idle(20);
+		scene.overlay().showOutline(PonderPalette.GREEN, bottom, bottom, 100);
+		scene.overlay().showText(35)
 				.colored(PonderPalette.GREEN)
 				.text("The bottom of the Smelter is a rectangle composed of seared blocks")
 				.pointAt(util.vector().topOf(bottomCenter))
 				.attachKeyFrame();
-		builder.idle(50);
-		builder.overlay().showText(35)
+		scene.idle(50);
+		scene.overlay().showText(35)
 				.colored(PonderPalette.GREEN)
 				.text("The maximum size of a rectangle is 14x14 blocks")
 				.pointAt(util.vector().topOf(bottomCenter));
-		builder.idle(100);
+		scene.idle(100);
 
-		builder.world().showSection(controllers, Direction.SOUTH);
-		builder.idle(20);
+		scene.world().showSection(controllers, Direction.SOUTH);
+		scene.idle(20);
 
-		builder.overlay().showOutline(PonderPalette.BLUE, controller, controller, 30);
-		builder.overlay().showText(35)
+		scene.overlay().showOutline(PonderPalette.BLUE, controller, controller, 30);
+		scene.overlay().showText(35)
 				.colored(PonderPalette.BLUE)
 				.text("You need place a controller outside the second layer")
 				.pointAt(util.vector().topOf(controllerPos))
 				.attachKeyFrame();
-		builder.idle(40);
+		scene.idle(40);
 
-		builder.overlay().showOutline(PonderPalette.BLUE, fluidFuelTank, fluidFuelTank, 30);
-		builder.overlay().showText(35)
+		scene.overlay().showOutline(PonderPalette.BLUE, fluidFuelTank, fluidFuelTank, 30);
+		scene.overlay().showText(35)
 				.colored(PonderPalette.BLUE)
 				.text("You need to place at least one tank for fuel")
 				.pointAt(util.vector().topOf(controllerPos.east()))
 				.attachKeyFrame();
-		builder.idle(40);
+		scene.idle(40);
 
-		builder.overlay().showOutline(PonderPalette.BLUE, drain, drain, 30);
-		builder.overlay().showText(35)
+		scene.overlay().showOutline(PonderPalette.BLUE, drain, drain, 30);
+		scene.overlay().showText(35)
 				.colored(PonderPalette.BLUE)
 				.text("To cast, you need plate a drain")
 				.pointAt(util.vector().topOf(controllerPos.west()))
 				.attachKeyFrame();
-		builder.idle(40);
+		scene.idle(40);
 
-		builder.idle(20);
+		scene.idle(20);
 		List<BlockPos> bricks0 = List.of(
 				util.grid().at(2, 2, 3), util.grid().at(2, 2, 4), util.grid().at(2, 2, 5),
 				util.grid().at(3, 2, 6), util.grid().at(4, 2, 6), util.grid().at(5, 2, 6),
 				util.grid().at(6, 2, 5), util.grid().at(6, 2, 4), util.grid().at(6, 2, 3)
 		);
 		for (BlockPos brick : bricks0) {
-			builder.world().showSection(util.select().position(brick), Direction.DOWN);
-			builder.idle(1);
+			scene.world().showSection(util.select().position(brick), Direction.DOWN);
+			scene.idle(1);
 		}
-		builder.idle(20);
+		scene.idle(20);
 
-		builder.overlay().showText(35)
+		scene.overlay().showText(35)
 				.colored(PonderPalette.GREEN)
 				.text("The second layer should be closed")
 				.pointAt(util.vector().topOf(util.grid().at(4, 2, 6)));
-		builder.idle(45);
+		scene.idle(45);
 
-		builder.overlay().showOutline(PonderPalette.GREEN, second, second, 40);
-		builder.overlay().showText(45)
+		scene.overlay().showOutline(PonderPalette.GREEN, second, second, 40);
+		scene.overlay().showText(45)
 				.colored(PonderPalette.GREEN)
 				.text("Forming a open-top hollow cuboid")
 				.pointAt(util.vector().topOf(bottomCenter.above()))
 				.attachKeyFrame();
-		builder.idle(60);
+		scene.idle(60);
 
-		CmiPonderPlugin.rotateAround(builder, 60, 90);
+		NebulaSceneBuilder.rotateAround(scene, 60, 90);
 
-		builder.idle(30);
+		scene.idle(30);
 
 		BlockPos basin = util.grid().at(2, 1, 2);
 		BlockPos table = util.grid().at(3, 1, 1);
 
-		builder.world().showSection(util.select().position(basin.above()), Direction.EAST);
-		builder.world().showSection(util.select().position(table.above()), Direction.SOUTH);
-		builder.idle(10);
-		builder.world().showSection(util.select().position(basin), Direction.DOWN);
-		builder.world().showSection(util.select().position(table), Direction.DOWN);
-		builder.idle(40);
+		scene.world().showSection(util.select().position(basin.above()), Direction.EAST);
+		scene.world().showSection(util.select().position(table.above()), Direction.SOUTH);
+		scene.idle(10);
+		scene.world().showSection(util.select().position(basin), Direction.DOWN);
+		scene.world().showSection(util.select().position(table), Direction.DOWN);
+		scene.idle(40);
 
-		builder.overlay().showText(100)
+		scene.overlay().showText(100)
 				.colored(PonderPalette.GREEN)
 				.text("The outer wall can be extended upwards by up to 63 blocks")
 				.attachKeyFrame();
 
-		builder.idle(10);
+		scene.idle(10);
 
 		List<BlockPos> bricks1 = List.of(
 				util.grid().at(2, 3, 3), util.grid().at(2, 3, 4), util.grid().at(2, 3, 5),
@@ -173,34 +174,34 @@ public class SmelteryScene {
 				util.grid().at(5, 9, 2), util.grid().at(4, 9, 2), util.grid().at(3, 9, 2)
 		);
 		for (BlockPos brick : bricks1) {
-			builder.world().showSection(util.select().position(brick), Direction.DOWN);
-			builder.idle(1);
+			scene.world().showSection(util.select().position(brick), Direction.DOWN);
+			scene.idle(1);
 		}
 
-		builder.idle(30);
-		builder.overlay().showText(30)
+		scene.idle(30);
+		scene.overlay().showText(30)
 				.colored(PonderPalette.MEDIUM)
 				.text("Don’t forget to add fuel such as Lava")
 				.pointAt(util.vector().blockSurface(controllerPos.east(), Direction.NORTH))
 				.attachKeyFrame();
 
-		builder.idle(45);
-		builder.overlay().showControls(util.vector().blockSurface(controllerPos.east(), Direction.NORTH), Pointing.RIGHT, 20).rightClick()
+		scene.idle(45);
+		scene.overlay().showControls(util.vector().blockSurface(controllerPos.east(), Direction.NORTH), Pointing.RIGHT, 20).rightClick()
 				.withItem(new ItemStack(Items.LAVA_BUCKET));
-		builder.world().modifyBlockEntity(controllerPos.east(), TankBlockEntity.class, (entity) -> {
+		scene.world().modifyBlockEntity(controllerPos.east(), TankBlockEntity.class, (entity) -> {
 			entity.getCapability(ForgeCapabilities.FLUID_HANDLER).ifPresent((handler) -> {
 				handler.fill(new FluidStack(Fluids.LAVA, 4000), IFluidHandler.FluidAction.EXECUTE);
 			});
 		});
 
-		builder.idle(60);
-		builder.markAsFinished();
+		scene.idle(60);
+		scene.markAsFinished();
 	}
 
 	public static void using(SceneBuilder builder, SceneBuildingUtil util) {
 		builder.title("smeltery_using", "Use the Smeltery");
 
-		CmiPonderPlugin.init9x9(builder, util);
+		NebulaSceneBuilder.init9x9(builder, util);
 
 		BlockPos controllerPos = util.grid().at(4, 2, 2);
 		BlockPos tankPos = util.grid().at(3, 2, 2);
@@ -234,7 +235,7 @@ public class SmelteryScene {
 				.colored(PonderPalette.MEDIUM);
 		builder.idle(15);
 
-		CmiPonderPlugin.rotate(builder, 15, -90);
+		NebulaSceneBuilder.rotate(builder, 15, -90);
 
 		builder.idle(30);
 		builder.overlay().showOutline(PonderPalette.GREEN, chute, chute, 30);
@@ -347,14 +348,14 @@ public class SmelteryScene {
 	public static void mini(SceneBuilder builder, SceneBuildingUtil util) {
 		builder.title("smeltery_mini", "Mini Smeltery");
 
-		CmiPonderPlugin.init7x7(builder, util);
+		NebulaSceneBuilder.init7x7(builder, util);
 
 		builder.idle(5);
 		builder.world().showSection(util.select().layers(1, 2), Direction.UP);
 
 		builder.idle(25);
 
-		CmiPonderPlugin.rotateAround(builder, 100, 90);
+		NebulaSceneBuilder.rotateAround(builder, 100, 90);
 
 		builder.idle(60);
 		builder.markAsFinished();

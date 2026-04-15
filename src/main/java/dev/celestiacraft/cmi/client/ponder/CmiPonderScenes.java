@@ -1,93 +1,55 @@
 package dev.celestiacraft.cmi.client.ponder;
 
+import dev.celestiacraft.cmi.client.ponder.scene.cmi.CrucibleScene;
+import dev.celestiacraft.cmi.client.ponder.scene.cmi.WaterPumpScene;
 import dev.celestiacraft.cmi.client.ponder.scene.tconstruct.*;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
-import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
 public class CmiPonderScenes {
-	public static void register(@NotNull PonderSceneRegistrationHelper<ResourceLocation> helper) {
-		ResourceLocation[] melter = new ResourceLocation[] {
-				TinkerSmeltery.searedMelter.getId()
-		};
+	public static void register(@NotNull PonderSceneRegistrationHelper<Item> helper) {
+		cmi(helper);
+		tconstruct(helper);
+	}
 
-		helper.forComponents(melter)
+	private static void cmi(@NotNull PonderSceneRegistrationHelper<Item> helper) {
+		helper.forComponents(CmiPonderItems.Cmi.SEA_WATER)
+				.addStoryBoard("cmi/sea_water", WaterPumpScene::seaWater);
+
+		helper.forComponents(CmiPonderItems.Cmi.CRUCIBLE)
+				.addStoryBoard("cmi/crucible_usage", CrucibleScene::usage);
+	}
+
+	private static void tconstruct(@NotNull PonderSceneRegistrationHelper<Item> helper) {
+		helper.forComponents(CmiPonderItems.TConstruct.MELTER)
 				.addStoryBoard("tconstruct/melter_building", MelterScene::building, CmiPonderTags.SMELTERY)
 				.addStoryBoard("tconstruct/melter_using", MelterScene::using, CmiPonderTags.SMELTERY);
 
-		ResourceLocation[] alloyer = new ResourceLocation[] {
-				TinkerSmeltery.scorchedAlloyer.getId(),
-		};
-
-		helper.forComponents(alloyer)
+		helper.forComponents(CmiPonderItems.TConstruct.ALLOYER)
 				.addStoryBoard("tconstruct/alloyer_building", AlloyerScene::building, CmiPonderTags.SMELTERY);
 
-		ResourceLocation[] heater = new ResourceLocation[] {
-				TinkerSmeltery.searedHeater.getId(),
-		};
-
-		helper.forComponents(heater)
+		helper.forComponents(CmiPonderItems.TConstruct.HEATER)
 				.addStoryBoard("tconstruct/heater_using", HeaterScene::using, CmiPonderTags.SMELTERY);
 
-		ResourceLocation[] casting = new ResourceLocation[] {
-				TinkerSmeltery.searedTable.getId(),
-				TinkerSmeltery.searedBasin.getId(),
-				TinkerSmeltery.scorchedTable.getId(),
-				TinkerSmeltery.scorchedBasin.getId(),
-				TinkerSmeltery.searedFaucet.getId(),
-				TinkerSmeltery.scorchedFaucet.getId(),
-				TinkerSmeltery.searedChannel.getId(),
-				TinkerSmeltery.scorchedChannel.getId(),
-		};
-
-		helper.forComponents(casting)
+		helper.forComponents(CmiPonderItems.TConstruct.CASTING)
 				.addStoryBoard("tconstruct/casting", CastingScene::cast, CmiPonderTags.SMELTERY);
 
-		ResourceLocation[] sand = new ResourceLocation[] {
-				TinkerSmeltery.blankSandCast.getId(),
-				TinkerSmeltery.blankRedSandCast.getId()
-		};
-
-		helper.forComponents(sand)
+		helper.forComponents(CmiPonderItems.TConstruct.SAND)
 				.addStoryBoard("tconstruct/sand_casting", CastingScene::sand, CmiPonderTags.SMELTERY);
 
-		ResourceLocation[] smeltery = new ResourceLocation[] {
-				TinkerSmeltery.smelteryController.getId(),
-				TinkerSmeltery.searedDrain.getId(),
-				TinkerSmeltery.searedDuct.getId(),
-				TinkerSmeltery.searedChute.getId()
-		};
-
-		helper.forComponents(smeltery)
+		helper.forComponents(CmiPonderItems.TConstruct.SMELTERY)
 				.addStoryBoard("tconstruct/smeltery_building", SmelteryScene::building, CmiPonderTags.SMELTERY)
 				.addStoryBoard("tconstruct/smeltery_using", SmelteryScene::using, CmiPonderTags.SMELTERY)
 				.addStoryBoard("tconstruct/smeltery_mini", SmelteryScene::mini, CmiPonderTags.SMELTERY);
 
-		ResourceLocation[] foundry = new ResourceLocation[] {
-				TinkerSmeltery.foundryController.getId(),
-				TinkerSmeltery.scorchedDrain.getId(),
-				TinkerSmeltery.scorchedDuct.getId(),
-				TinkerSmeltery.scorchedChute.getId()
-		};
-
-		helper.forComponents(foundry)
+		helper.forComponents(CmiPonderItems.TConstruct.FOUNDRY)
 				.addStoryBoard("tconstruct/foundry_building", FoundryScene::building, CmiPonderTags.SMELTERY);
 
-		ResourceLocation[] tank = new ResourceLocation[] {
-				TinkerSmeltery.searedCastingTank.getId(),
-				TinkerSmeltery.scorchedProxyTank.getId()
-		};
-
-		helper.forComponents(tank)
+		helper.forComponents(CmiPonderItems.TConstruct.TANK)
 				.addStoryBoard("tconstruct/tank", TankScene::tank, CmiPonderTags.SMELTERY);
 
-		ResourceLocation[] cannons = new ResourceLocation[] {
-				TinkerSmeltery.searedFluidCannon.getId(),
-				TinkerSmeltery.scorchedFluidCannon.getId()
-		};
-
-		helper.forComponents(cannons)
+		helper.forComponents(CmiPonderItems.TConstruct.CANNONS)
 				.addStoryBoard("tconstruct/fluid_cannon", CannonScene::using, CmiPonderTags.SMELTERY);
 	}
 }

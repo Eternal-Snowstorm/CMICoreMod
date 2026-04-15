@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
-import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
+import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;
@@ -29,97 +29,98 @@ import slimeknights.tconstruct.smeltery.block.entity.controller.MelterBlockEntit
 
 public class MelterScene {
 	public static void building(SceneBuilder builder, SceneBuildingUtil util) {
-		builder.title("melter_building", "Building the Melter");
+		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
+		scene.title("melter_building", "Building the Melter");
 
-		CmiPonderPlugin.init5x5(builder, util);
+		NebulaSceneBuilder.init5x5(scene, util);
 
 		Selection smeltery = util.select().fromTo(2, 1, 2, 2, 2, 2);
 		Selection basin = util.select().fromTo(1, 1, 2, 1, 2, 2);
 		Selection table = util.select().fromTo(3, 1, 2, 3, 2, 2);
 		BlockPos melter = util.grid().at(2, 2, 2);
 
-		builder.idle(5);
-		builder.world().showSection(util.select().position(melter.below()), Direction.DOWN);
-		builder.idle(5);
-		builder.world().showSection(util.select().position(melter), Direction.DOWN);
+		scene.idle(5);
+		scene.world().showSection(util.select().position(melter.below()), Direction.DOWN);
+		scene.idle(5);
+		scene.world().showSection(util.select().position(melter), Direction.DOWN);
 
-		builder.idle(20);
-		builder.overlay().showOutline(PonderPalette.GREEN, smeltery, util.select().fromTo(2, 1, 2, 2, 2, 2), 80);
+		scene.idle(20);
+		scene.overlay().showOutline(PonderPalette.GREEN, smeltery, util.select().fromTo(2, 1, 2, 2, 2, 2), 80);
 
-		builder.idle(25);
-		builder.overlay().showText(40)
+		scene.idle(25);
+		scene.overlay().showText(40)
 				.text("The Melter is your first device as a tinker")
 				.attachKeyFrame()
 				.colored(PonderPalette.GREEN)
 				.pointAt(util.vector().topOf(melter));
 
-		builder.idle(25);
-		builder.overlay().showText(40)
+		scene.idle(25);
+		scene.overlay().showText(40)
 				.text("It requires a heater for heat")
 				.colored(PonderPalette.MEDIUM)
 				.pointAt(util.vector().blockSurface(melter.below(), Direction.WEST));
 
-		builder.idle(60);
-		builder.overlay().showText(40)
+		scene.idle(60);
+		scene.overlay().showText(40)
 				.text("The Heater needs fuel to work")
 				.attachKeyFrame()
 				.colored(PonderPalette.MEDIUM)
 				.pointAt(util.vector().blockSurface(melter.below(), Direction.WEST));
-		builder.idle(45);
+		scene.idle(45);
 
-		builder.overlay().showControls(util.vector().blockSurface(melter.below(), Direction.NORTH), Pointing.RIGHT, 20)
+		scene.overlay().showControls(util.vector().blockSurface(melter.below(), Direction.NORTH), Pointing.RIGHT, 20)
 				.withItem(new ItemStack(Items.COAL));
-		builder.world().modifyBlock(melter.below(), (state) -> {
+		scene.world().modifyBlock(melter.below(), (state) -> {
 			return state.setValue(ControllerBlock.ACTIVE, true);
 		}, false);
 
-		builder.idle(40);
-		builder.overlay().showText(40)
+		scene.idle(40);
+		scene.overlay().showText(40)
 				.text("Or you can use fuel tank")
 				.attachKeyFrame()
 				.colored(PonderPalette.GREEN)
 				.pointAt(util.vector().blockSurface(melter.below(), Direction.WEST));
 
-		builder.idle(25);
-		builder.world().destroyBlock(melter.below());
-		builder.idle(5);
-		builder.world().setBlock(melter.below(), TinkerSmeltery.searedTank.get(SearedTankBlock.TankType.FUEL_TANK).defaultBlockState(), false);
+		scene.idle(25);
+		scene.world().destroyBlock(melter.below());
+		scene.idle(5);
+		scene.world().setBlock(melter.below(), TinkerSmeltery.searedTank.get(SearedTankBlock.TankType.FUEL_TANK).defaultBlockState(), false);
 
-		builder.idle(30);
-		builder.overlay().showControls(util.vector().blockSurface(melter.below(), Direction.NORTH), Pointing.RIGHT, 20).rightClick()
+		scene.idle(30);
+		scene.overlay().showControls(util.vector().blockSurface(melter.below(), Direction.NORTH), Pointing.RIGHT, 20).rightClick()
 				.withItem(new ItemStack(Items.LAVA_BUCKET));
-		builder.world().modifyBlockEntity(melter.below(), TankBlockEntity.class, (entity) -> {
+		scene.world().modifyBlockEntity(melter.below(), TankBlockEntity.class, (entity) -> {
 			entity.getCapability(ForgeCapabilities.FLUID_HANDLER).ifPresent((handler) -> {
 				handler.fill(new FluidStack(Fluids.LAVA, 4000), IFluidHandler.FluidAction.EXECUTE);
 			});
 		});
 
-		builder.overlay().showText(25)
+		scene.overlay().showText(25)
 				.text("Also, don’t forget to add fuel such as Lava")
 				.attachKeyFrame()
 				.colored(PonderPalette.MEDIUM)
 				.pointAt(util.vector().blockSurface(melter.below(), Direction.WEST));
-		builder.idle(60);
+		scene.idle(60);
 
-		builder.overlay().showText(20)
+		scene.overlay().showText(20)
 				.text("Finally, install the casting parts")
 				.attachKeyFrame()
 				.colored(PonderPalette.MEDIUM)
 				.pointAt(util.vector().blockSurface(melter, Direction.UP));
 
-		builder.idle(30);
-		builder.world().showSection(basin, Direction.DOWN);
-		builder.idle(5);
-		builder.world().showSection(table, Direction.DOWN);
-		builder.idle(40);
+		scene.idle(30);
+		scene.world().showSection(basin, Direction.DOWN);
+		scene.idle(5);
+		scene.world().showSection(table, Direction.DOWN);
+		scene.idle(40);
 
-		builder.markAsFinished();
+		scene.markAsFinished();
 	}
 
 	public static void using(SceneBuilder builder, SceneBuildingUtil util) {
 		builder.title("melter_using", "Melting and Casting");
 
-		CmiPonderPlugin.init5x5(builder, util);
+		NebulaSceneBuilder.init5x5(builder, util);
 
 		BlockPos table = util.grid().at(1, 1, 2);
 		BlockPos basin = util.grid().at(3, 1, 2);

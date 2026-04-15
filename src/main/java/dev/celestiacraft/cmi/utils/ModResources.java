@@ -15,14 +15,25 @@ public class ModResources {
 	public static final ResourcesEntry NAHUATL_FENCE;
 	public static final ResourcesEntry BLAZEWOOD_SLAB;
 	public static final ResourcesEntry BLAZEWOOD_FENCE;
+	public static final ResourcesEntry COAL_COKE;
+	public static final ResourcesEntry STEEL_INGOT;
+	public static final ResourcesEntry CRUCIBLE_BASE;
+	public static final ResourcesEntry CRUCIBLE_TUYERE;
 
 	static {
-		TREATED_WOOD_SLAB = loadIE("slab_treated_wood_horizontal");
+		STEEL_INGOT = loadCmi("steel_ingot");
 		SEA_WATER = loadCmi("sea_water");
+		CRUCIBLE_BASE = loadCmi("crucible_base");
+		CRUCIBLE_TUYERE = loadCmi("crucible_tuyere");
+
 		NAHUATL_SLAB = loadTCon("nahuatl_slab");
 		NAHUATL_FENCE = loadTCon("nahuatl_fence");
 		BLAZEWOOD_SLAB = loadTCon("blazewood_slab");
 		BLAZEWOOD_FENCE = loadTCon("blazewood_fence");
+
+		TREATED_WOOD_SLAB = loadIE("slab_treated_wood_horizontal");
+
+		COAL_COKE = loadThermal("coal_coke");
 	}
 
 	public static ResourcesEntry loadResource(ResourceLocation id) {
@@ -51,5 +62,9 @@ public class ModResources {
 
 	public static ResourcesEntry loadAd(String path) {
 		return loadResource(ResourceLocation.fromNamespaceAndPath(AdAstra.MOD_ID, path));
+	}
+
+	public static ResourcesEntry loadThermal(String path) {
+		return loadResource(ResourceLocation.fromNamespaceAndPath("thermal", path));
 	}
 }

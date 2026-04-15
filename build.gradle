@@ -167,9 +167,9 @@ dependencies {
 	// Curios
 	implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
 	// TCon
-	implementation fg.deobf("slimeknights.tconstruct:TConstruct:${minecraft_version}-${tinkers_build}")
+	implementation fg.deobf("slimeknights.tconstruct:TConstruct:${minecraft_version}-${tinkers_version}")
 	// Mantle
-	implementation fg.deobf("slimeknights.mantle:Mantle:${minecraft_version}-${mantle_build}")
+	implementation fg.deobf("slimeknights.mantle:Mantle:${minecraft_version}-${mantle_verison}")
 	// IE
 	implementation fg.deobf("curse.maven:immersive-engineering-231951:6206989")
 	// II

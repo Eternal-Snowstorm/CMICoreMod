@@ -72,6 +72,10 @@ public class ResourcesEntry {
 		return new FluidStack(getFluid(), amount);
 	}
 
+	public Item getBucket() {
+		return getFluid().getBucket();
+	}
+
 	public boolean hasItem() {
 		return ForgeRegistries.ITEMS.containsKey(location);
 	}
