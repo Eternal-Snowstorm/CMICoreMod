@@ -13,6 +13,7 @@ public class WaterPumpScene {
 	public static void seaWater(SceneBuilder builder, SceneBuildingUtil util) {
 		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
 
+		scene.title("sea_water", "海水井");
 		scene.scaleSceneView(0.5f);
 		scene.idle(20);
 

@@ -13,6 +13,7 @@ public class CrucibleScene {
 	public static void usage(SceneBuilder builder, SceneBuildingUtil util) {
 		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
 
+		scene.title("crucible_usage", "坩埚使用");
 		scene.showBasePlate();
 		scene.idle(20);
 
