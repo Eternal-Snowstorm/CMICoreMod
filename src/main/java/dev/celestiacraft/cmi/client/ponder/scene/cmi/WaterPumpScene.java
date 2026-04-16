@@ -51,7 +51,14 @@ public class WaterPumpScene {
 
 		scene.text(
 				40,
-				"如你所示, 这是一个水井",
+				"如你所见, 这是一个水井",
+				util.vector().topOf(2, 4, 2)
+		);
+		scene.idle(55);
+
+		scene.text(
+				40,
+				"当结构成型时, 它会无限量的产出水",
 				util.vector().topOf(2, 4, 2)
 		);
 
@@ -78,7 +85,7 @@ public class WaterPumpScene {
 
 		scene.text(
 				50,
-				"当放置在海平面(Y=62)的海洋生物群系中时...",
+				"而当放置在海平面(Y=62)的海洋生物群系中时...",
 				util.vector().of(2, 4.5, 2)
 		);
 

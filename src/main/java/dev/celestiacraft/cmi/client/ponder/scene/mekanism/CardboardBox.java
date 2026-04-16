@@ -11,7 +11,6 @@ import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.api.element.EntityElement;
-import net.createmod.ponder.api.element.WorldSectionElement;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.minecraft.core.Direction;
@@ -33,16 +32,13 @@ public class CardboardBox {
 
 		scene.world().setBlock(util.grid().at(2, 1, 2), CARDBOARD_BOX.getBlock().defaultBlockState(), false);
 		scene.world().showSection(util.select().position(2, 1, 2), Direction.DOWN);
-		ElementLink<WorldSectionElement> hide = scene.world().showIndependentSection(
-				util.select().position(2, 1, 2),
-				Direction.DOWN
-		);
+		scene.idle(20);
 		scene.text(40, "集装箱可以用于方块的转移", util.vector().centerOf(2, 1, 2));
 		scene.idle(50);
 
 		scene.text(40, "接下来我们演示一个例子", util.vector().centerOf(2, 1, 2));
 		scene.idle(50);
-		scene.world().hideIndependentSection(hide, Direction.UP);
+		scene.world().hideSection(util.select().position(2, 1, 2), Direction.UP);
 		scene.idle(30);
 
 		scene.addKeyframe();
@@ -54,7 +50,7 @@ public class CardboardBox {
 		scene.overlay().showOutline(
 				PonderPalette.BLUE,
 				NebulaSceneBuilder.OBJECT,
-				util.select().fromTo(2, 1, 2, 2, 1, 2),
+				util.select().position(2, 1, 2),
 				40
 		);
 		scene.idle(50);
@@ -62,7 +58,7 @@ public class CardboardBox {
 		scene.addKeyframe();
 		scene.text(40, "拿集装箱右键一下...");
 		scene.idle(50);
-		scene.showControls(20, util.vector().of(2, 2, 2), Pointing.DOWN)
+		scene.showControls(20, util.vector().of(2.5, 2, 2.5), Pointing.DOWN)
 				.builder()
 				.rightClick()
 				.withItem(CARDBOARD_BOX.getItemStack());
@@ -80,15 +76,15 @@ public class CardboardBox {
 				40
 		);
 		scene.idle(50);
-		scene.showControls(20, util.vector().of(2, 2, 2), Pointing.DOWN)
+		scene.showControls(20, util.vector().of(2.5, 2, 2.5), Pointing.DOWN)
 				.builder()
 				.rightClick()
 				.whileSneaking();
 		scene.idle(20);
 
-		scene.world().setBlock(util.grid().at(2, 1, 2), Blocks.AIR.defaultBlockState(), false);
+		scene.world().setBlock(util.grid().at(2, 1, 2), Blocks.SPAWNER.defaultBlockState(), false);
 		ElementLink<EntityElement> containerItem2 = scene.world().createItemEntity(
-				util.vector().centerOf(2, 1, 2),
+				util.vector().centerOf(2, 2, 2),
 				util.vector().of(0, -0.1, 0),
 				CARDBOARD_BOX.getItemStack()
 		);
@@ -106,7 +102,7 @@ public class CardboardBox {
 		scene.idle(50);
 		scene.text(60, "会有部分的方块无法被包裹在其中");
 		scene.idle(70);
-		scene.showControls(20, util.vector().of(2, 2, 2), Pointing.DOWN)
+		scene.showControls(20, util.vector().of(2.5, 2, 2.5), Pointing.DOWN)
 				.builder()
 				.rightClick()
 				.withItem(Blocks.BARRIER.asItem().getDefaultInstance());

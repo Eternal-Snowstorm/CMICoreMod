@@ -7,102 +7,116 @@ import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
 public class AcceleratorScene {
 	public static void usage(SceneBuilder builder, SceneBuildingUtil util) {
-		builder.title("accelerator", "如何使用催生器");
+		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
 
-		builder.showBasePlate();
-		builder.idle(20);
+		scene.title("accelerator", "如何使用催生器");
+		scene.showBasePlate();
+		scene.idle(20);
 
-		builder.world().setBlock(util.grid().at(3, 0, 3), CmiBlock.ACCELERATOR.getDefaultState(), false);
-		builder.idle(10);
+		scene.world().setBlock(util.grid().at(3, 1, 3), CmiBlock.ACCELERATOR.getDefaultState(), false);
+		scene.world().showSection(
+				util.select().position(3, 1, 3),
+				Direction.DOWN
+		);
+		scene.idle(10);
 
-		builder.overlay().showOutline(
+		scene.overlay().showOutline(
 				PonderPalette.BLUE,
 				NebulaSceneBuilder.OBJECT,
-				util.select().position(3, 0, 3),
+				util.select().position(3, 1, 3),
 				35
 		);
 
-		builder.overlay().showText(30)
+		scene.overlay().showText(30)
 				.text("这是一个构件催生器")
-				.pointAt(util.vector().topOf(3, 1, 3))
+				.pointAt(util.vector().of(3.5, 2, 3.5))
 				.placeNearTarget();
-		builder.idle(40);
+		scene.idle(40);
+		scene.world().hideSection(
+				util.select().position(3, 1, 3),
+				Direction.UP
+		);
+		scene.idle(40);
 
-		builder.overlay().showText(30)
+		scene.world().showSection(util.select().fromTo(1, 1, 1, 5, 1, 5), Direction.DOWN);
+		scene.idle(30);
+
+		scene.overlay().showText(30)
 				.text("右键对它使用一个磁力构件...")
-				.pointAt(util.vector().topOf(3, 1, 3))
+				.pointAt(util.vector().of(3.5, 2, 3.5))
 				.placeNearTarget();
-		builder.idle(20);
+		scene.idle(20);
 
-		builder.overlay().showControls(
-						util.vector().topOf(3, 1, 3),
+		scene.overlay().showControls(
+						util.vector().of(3.5, 2, 3.5),
 						Pointing.DOWN,
 						40
 				).rightClick()
 				.withItem(CmiMechanism.IRON.get().getDefaultInstance());
 
-		builder.idle(40);
+		scene.idle(40);
 
-		builder.world().setBlock(util.grid().at(3, 0, 4), Blocks.IRON_ORE.defaultBlockState(), false);
-		builder.world().setBlock(util.grid().at(4, 0, 3), Blocks.IRON_ORE.defaultBlockState(), false);
-		builder.world().setBlock(util.grid().at(3, 0, 5), Blocks.REDSTONE_ORE.defaultBlockState(), false);
-		builder.world().setBlock(util.grid().at(3, 0, 2), Blocks.IRON_ORE.defaultBlockState(), false);
-		builder.world().setBlock(util.grid().at(2, 0, 5), Blocks.IRON_ORE.defaultBlockState(), false);
-		builder.world().setBlock(util.grid().at(1, 0, 1), Blocks.IRON_ORE.defaultBlockState(), false);
+		scene.world().setBlock(util.grid().at(3, 1, 4), Blocks.IRON_ORE.defaultBlockState(), false);
+		scene.world().setBlock(util.grid().at(4, 1, 3), Blocks.IRON_ORE.defaultBlockState(), false);
+		scene.world().setBlock(util.grid().at(3, 1, 5), Blocks.REDSTONE_ORE.defaultBlockState(), false);
+		scene.world().setBlock(util.grid().at(3, 1, 2), Blocks.IRON_ORE.defaultBlockState(), false);
+		scene.world().setBlock(util.grid().at(2, 1, 5), Blocks.IRON_ORE.defaultBlockState(), false);
+		scene.world().setBlock(util.grid().at(1, 1, 1), Blocks.IRON_ORE.defaultBlockState(), false);
 
-		builder.overlay().showText(30)
+		scene.overlay().showText(30)
 				.text("...随后它周围的石头便会变成矿石!")
-				.pointAt(util.vector().topOf(3, 1, 3))
+				.pointAt(util.vector().of(3.5, 2, 3.5))
 				.placeNearTarget();
 
-		builder.idle(40);
+		scene.idle(40);
 
-		builder.overlay().showText(30)
+		scene.overlay().showText(30)
 				.text("催生器也支持其它构件")
 				.placeNearTarget();
 
 		Vec3 motion = util.vector().of(0, -0.08, 0);
 
-		builder.world().createItemEntity(
-				util.vector().centerOf(2, 1, 2),
+		scene.world().createItemEntity(
+				util.vector().centerOf(2, 2, 2),
 				motion,
 				CmiMechanism.STONE.get().getDefaultInstance()
 		);
-		builder.world().createItemEntity(
-				util.vector().centerOf(3, 1, 2),
+		scene.world().createItemEntity(
+				util.vector().centerOf(3, 2, 2),
 				motion,
 				CmiMechanism.COPPER.get().getDefaultInstance()
 		);
-		builder.world().createItemEntity(
-				util.vector().centerOf(4, 1, 2),
+		scene.world().createItemEntity(
+				util.vector().centerOf(4, 2, 2),
 				motion,
 				CmiMechanism.ANDESITE.get().getDefaultInstance()
 		);
-		builder.world().createItemEntity(
-				util.vector().centerOf(5, 1, 2),
+		scene.world().createItemEntity(
+				util.vector().centerOf(5, 2, 2),
 				motion,
 				CmiMechanism.GOLD.get().getDefaultInstance()
 		);
 
-		builder.idle(40);
+		scene.idle(40);
 
-		builder.overlay().showOutline(
+		scene.overlay().showOutline(
 				PonderPalette.RED,
 				NebulaSceneBuilder.OBJECT,
-				util.select().fromTo(1, 0, 1, 5, 0, 5),
+				util.select().fromTo(1, 1, 1, 5, 1, 5),
 				45
 		);
 
-		builder.overlay().showText(45)
+		scene.overlay().showText(45)
 				.text("只有周围5x5范围内的方块才能被转换")
-				.pointAt(util.vector().topOf(3, 1, 3))
+				.pointAt(util.vector().of(3.5, 2, 3.5))
 				.placeNearTarget();
 
-		builder.markAsFinished();
+		scene.markAsFinished();
 	}
 }

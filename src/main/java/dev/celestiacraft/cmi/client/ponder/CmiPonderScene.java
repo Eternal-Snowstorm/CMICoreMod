@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder;
 
+import dev.celestiacraft.cmi.client.ponder.scene.cmi.AcceleratorScene;
 import dev.celestiacraft.cmi.client.ponder.scene.cmi.CrucibleScene;
 import dev.celestiacraft.cmi.client.ponder.scene.cmi.WaterPumpScene;
 import dev.celestiacraft.cmi.client.ponder.scene.mekanism.CardboardBox;
@@ -24,6 +25,9 @@ public class CmiPonderScene {
 
 		helper.forComponents(CmiPonderItem.Cmi.CRUCIBLE)
 				.addStoryBoard("cmi/crucible_usage", CrucibleScene::usage, CmiPonderTags.CMI);
+
+		helper.forComponents(CmiPonderItem.Cmi.ACCELERATOR)
+				.addStoryBoard("cmi/accelerator", AcceleratorScene::usage, CmiPonderTags.CMI);
 	}
 
 	private static void mekanism(@NotNull PonderSceneRegistrationHelper<Item> helper) {
