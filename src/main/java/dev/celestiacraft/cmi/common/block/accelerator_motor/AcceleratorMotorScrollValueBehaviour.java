@@ -15,6 +15,7 @@ import net.minecraft.world.phys.BlockHitResult;
 public class AcceleratorMotorScrollValueBehaviour extends KineticScrollValueBehaviour {
 	public AcceleratorMotorScrollValueBehaviour(Component label, SmartBlockEntity be, ValueBoxTransform slot) {
 		super(label, be, slot);
+		withFormatter(v -> String.valueOf(Math.abs(v)));
 	}
 
 	@Override

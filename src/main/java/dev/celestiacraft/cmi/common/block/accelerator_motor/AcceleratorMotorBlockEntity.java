@@ -100,7 +100,7 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 			if (getSide() != Direction.UP) {
 				return;
 			}
-			TransformStack.of(ms).rotateZ(-AngleHelper.horizontalAngle(facing) + 180);
+			TransformStack.of(ms).rotateZDegrees(-AngleHelper.horizontalAngle(facing) + 180);
 		}
 
 		@Override
