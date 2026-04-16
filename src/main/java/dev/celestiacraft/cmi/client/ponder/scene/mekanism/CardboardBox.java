@@ -90,6 +90,7 @@ public class CardboardBox {
 		);
 		scene.idle(20);
 		scene.world().removeEntity(containerItem2);
+		scene.world().hideSection(util.select().position(2, 1, 2), Direction.UP);
 		scene.idle(20);
 
 		scene.addKeyframe();
@@ -98,7 +99,7 @@ public class CardboardBox {
 		scene.world().setBlock(util.grid().at(1, 1, 2), Blocks.IRON_ORE.defaultBlockState(), false);
 		scene.world().setBlock(util.grid().at(3, 1, 1), Blocks.IRON_ORE.defaultBlockState(), false);
 		scene.world().setBlock(util.grid().at(2, 1, 3), Blocks.RAW_IRON_BLOCK.defaultBlockState(), false);
-		scene.world().showIndependentSectionImmediately(util.select().fromTo(3, 1, 1, 1, 1, 3));
+		scene.world().showIndependentSection(util.select().fromTo(3, 1, 1, 1, 1, 3), Direction.DOWN);
 		scene.idle(50);
 		scene.text(60, "会有部分的方块无法被包裹在其中");
 		scene.idle(70);
