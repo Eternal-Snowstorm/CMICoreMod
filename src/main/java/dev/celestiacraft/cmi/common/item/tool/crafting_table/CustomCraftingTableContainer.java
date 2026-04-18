@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.common.item.handheld;
+package dev.celestiacraft.cmi.common.item.tool.crafting_table;
 
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

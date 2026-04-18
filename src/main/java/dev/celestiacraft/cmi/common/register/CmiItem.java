@@ -8,7 +8,7 @@ import dev.celestiacraft.cmi.common.item.InitialItemKitItem;
 import dev.celestiacraft.cmi.common.item.MysticPomeloItem;
 import dev.celestiacraft.cmi.common.item.SimpleBatteryItem;
 import dev.celestiacraft.cmi.common.item.TestBrushItem;
-import dev.celestiacraft.cmi.common.item.handheld.HandheleCraftingTableItem;
+import dev.celestiacraft.cmi.common.item.tool.crafting_table.HandheleCraftingTableItem;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 
 public class CmiItem {

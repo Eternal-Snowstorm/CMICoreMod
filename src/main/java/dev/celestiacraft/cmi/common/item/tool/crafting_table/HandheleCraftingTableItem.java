@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.common.item.handheld;
+package dev.celestiacraft.cmi.common.item.tool.crafting_table;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
