@@ -47,7 +47,7 @@ public class CmiMultiblock {
 					builder.block(IEBlocks.WoodenDecoration.TREATED_WOOD.get(TreatedWoodStyles.HORIZONTAL).get());
 				})
 				.define('0', (builder) -> {
-					builder.block(CmiBlock.WATER_PUMP.get());
+					builder.block(CmiBlock.WATER_WELL.get());
 				})
 				.define('C', (builder) -> {
 					builder.block(IEBlocks.WoodenDecoration.TREATED_FENCE.get());
@@ -90,7 +90,7 @@ public class CmiMultiblock {
 					builder.block(TinkerMaterials.nahuatl.get());
 				})
 				.define('0', (builder) -> {
-					builder.block(CmiBlock.LAVA_PUMP.get());
+					builder.block(CmiBlock.LAVA_WELL.get());
 				})
 				.define('C', (builder) -> {
 					builder.block(ModResources.NAHUATL_FENCE.getBlock());
@@ -133,7 +133,7 @@ public class CmiMultiblock {
 					builder.block(TinkerMaterials.blazewood.get());
 				})
 				.define('0', (builder) -> {
-					builder.block(CmiBlock.BLAZING_BLOOD_PUMP.get());
+					builder.block(CmiBlock.BLAZING_BLOOD_WELL.get());
 				})
 				.define('C', (builder) -> {
 					builder.block(ModResources.BLAZEWOOD_FENCE.getBlock());

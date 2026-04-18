@@ -10,9 +10,19 @@ public class BlockLanguage extends LanguageGenerate {
 				"构件催生器"
 		);
 		addBlockLanguage(
-				"water_pump",
-				"Water Pump",
-				"水泵"
+				"water_well",
+				"Water Well",
+				"多方块水井"
+		);
+		addBlockLanguage(
+				"lava_well",
+				"Lava Well",
+				"多方块熔岩井"
+		);
+		addBlockLanguage(
+				"blazing_blood_well",
+				"Blazing Blood Well",
+				"多方块烈焰血井"
 		);
 		addBlockLanguage(
 				"mars_geothermal_vent",

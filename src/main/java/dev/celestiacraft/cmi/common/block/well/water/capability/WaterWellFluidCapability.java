@@ -1,15 +1,16 @@
-package dev.celestiacraft.cmi.common.block.pump.lava.capability;
+package dev.celestiacraft.cmi.common.block.well.water.capability;
 
-import dev.celestiacraft.cmi.common.block.pump.lava.LavaPumpBlockEntity;
+import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlockEntity;
+import dev.celestiacraft.cmi.utils.ModResources;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class LavaPumpFluidCapability implements IFluidHandler {
-	private final LavaPumpBlockEntity entity;
+public class WaterWellFluidCapability implements IFluidHandler {
+	private final WaterWellBlockEntity entity;
 
-	public LavaPumpFluidCapability(LavaPumpBlockEntity entity) {
+	public WaterWellFluidCapability(WaterWellBlockEntity entity) {
 		this.entity = entity;
 	}
 
@@ -20,8 +21,11 @@ public class LavaPumpFluidCapability implements IFluidHandler {
 
 	@Override
 	public @NotNull FluidStack getFluidInTank(int amount) {
-		if (entity.isStructureValid() && entity.isWorkConditions()) {
-			return new FluidStack(Fluids.LAVA, Integer.MAX_VALUE);
+		if (entity.isStructureValid()) {
+			if (entity.isOcean()) {
+				return ModResources.SEA_WATER.getFluidStack(Integer.MAX_VALUE);
+			}
+			return new FluidStack(Fluids.WATER, Integer.MAX_VALUE);
 		}
 		return FluidStack.EMPTY;
 	}
@@ -43,8 +47,12 @@ public class LavaPumpFluidCapability implements IFluidHandler {
 
 	@Override
 	public @NotNull FluidStack drain(FluidStack fluidStack, FluidAction fluidAction) {
-		if (entity.isStructureValid() && entity.isWorkConditions()) {
-			if (fluidStack.getFluid() == Fluids.LAVA) {
+		if (entity.isStructureValid()) {
+			if (entity.isOcean()) {
+				if (fluidStack.getFluid() == ModResources.SEA_WATER.getFluid()) {
+					return fluidStack;
+				}
+			} else if (fluidStack.getFluid() == Fluids.WATER) {
 				return fluidStack;
 			}
 			return FluidStack.EMPTY;
@@ -54,8 +62,11 @@ public class LavaPumpFluidCapability implements IFluidHandler {
 
 	@Override
 	public @NotNull FluidStack drain(int amount, FluidAction fluidAction) {
-		if (entity.isStructureValid() && entity.isWorkConditions()) {
-			return new FluidStack(Fluids.LAVA, amount);
+		if (entity.isStructureValid()) {
+			if (entity.isOcean()) {
+				return ModResources.SEA_WATER.getFluidStack(amount);
+			}
+			return new FluidStack(Fluids.WATER, amount);
 		}
 		return FluidStack.EMPTY;
 	}

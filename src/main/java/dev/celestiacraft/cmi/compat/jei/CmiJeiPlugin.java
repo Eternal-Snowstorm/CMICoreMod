@@ -100,11 +100,11 @@ public class CmiJeiPlugin implements IModPlugin {
 				CmiJeiRecipeType.ACCELERATOR
 		);
 		registration.addRecipeCatalyst(
-				CmiBlock.WATER_PUMP.asStack(),
+				CmiBlock.WATER_WELL.asStack(),
 				CmiJeiRecipeType.WATER_PUMP
 		);
 		registration.addRecipeCatalyst(
-				CmiBlock.WATER_PUMP.asStack(),
+				CmiBlock.WATER_WELL.asStack(),
 				CmiJeiRecipeType.SEA_WATER_PUMP
 		);
 		registration.addRecipeCatalyst(

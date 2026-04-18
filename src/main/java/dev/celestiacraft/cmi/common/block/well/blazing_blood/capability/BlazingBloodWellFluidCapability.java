@@ -1,15 +1,15 @@
-package dev.celestiacraft.cmi.common.block.pump.blazing_blood.capability;
+package dev.celestiacraft.cmi.common.block.well.blazing_blood.capability;
 
-import dev.celestiacraft.cmi.common.block.pump.blazing_blood.BlazingBloodPumpBlockEntity;
+import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlockEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.fluids.TinkerFluids;
 
-public class BlazingBloodPumpFluidCapability implements IFluidHandler {
-	private final BlazingBloodPumpBlockEntity entity;
+public class BlazingBloodWellFluidCapability implements IFluidHandler {
+	private final BlazingBloodWellBlockEntity entity;
 
-	public BlazingBloodPumpFluidCapability(BlazingBloodPumpBlockEntity entity) {
+	public BlazingBloodWellFluidCapability(BlazingBloodWellBlockEntity entity) {
 		this.entity = entity;
 	}
 

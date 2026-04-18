@@ -40,9 +40,9 @@ public class AddCreativeModeTabs {
 			List<? extends BlockEntry<? extends Block>> blockList = List.of(
 					CmiBlock.MARS_GEO,
 					CmiBlock.MERCURY_GEO,
-					CmiBlock.WATER_PUMP,
-					CmiBlock.BLAZING_BLOOD_PUMP,
-					CmiBlock.LAVA_PUMP,
+					CmiBlock.WATER_WELL,
+					CmiBlock.BLAZING_BLOOD_WELL,
+					CmiBlock.LAVA_WELL,
 					CmiBlock.ACCELERATOR,
 					CmiBlock.ACCELERATOR_MOTOR,
 					CmiBlock.STEAM_HAMMER,

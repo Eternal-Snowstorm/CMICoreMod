@@ -11,7 +11,7 @@ import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 public class CmiPonderItem {
 	public static class Cmi {
 		public static final Item[] SEA_WATER = new Item[] {
-				CmiBlock.WATER_PUMP.asItem(),
+				CmiBlock.WATER_WELL.asItem(),
 				ModResources.SEA_WATER.getBucket()
 		};
 

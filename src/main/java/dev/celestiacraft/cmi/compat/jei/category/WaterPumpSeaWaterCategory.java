@@ -28,7 +28,7 @@ public class WaterPumpSeaWaterCategory {
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(
-							() -> CmiBlock.WATER_PUMP.get().asItem().getDefaultInstance(),
+							() -> CmiBlock.WATER_WELL.get().asItem().getDefaultInstance(),
 							() -> ModResources.SEA_WATER.getFluid().getBucket().getDefaultInstance()
 					);
 				})

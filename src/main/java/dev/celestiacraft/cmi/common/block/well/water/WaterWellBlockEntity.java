@@ -1,25 +1,25 @@
-package dev.celestiacraft.cmi.common.block.pump.lava;
+package dev.celestiacraft.cmi.common.block.well.water;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
-import dev.celestiacraft.cmi.common.block.pump.lava.capability.LavaPumpFluidCapability;
+import dev.celestiacraft.cmi.common.block.well.water.capability.WaterWellFluidCapability;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import dev.celestiacraft.libs.api.register.multiblock.machine.FluidSlots;
 import dev.celestiacraft.libs.api.register.multiblock.machine.IOMode;
 import dev.celestiacraft.libs.api.register.multiblock.machine.MachineControllerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.Level;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.List;
 
-public class LavaPumpBlockEntity extends MachineControllerBlockEntity implements IHaveGoggleInformation {
-	public LavaPumpBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-		super(type, pos, state, CmiMultiblock.LAVA_PUMP);
+public class WaterWellBlockEntity extends MachineControllerBlockEntity implements IHaveGoggleInformation {
+	public WaterWellBlockEntity(BlockEntityType<? extends WaterWellBlockEntity> type, BlockPos pos, BlockState state) {
+		super(type, pos, state, CmiMultiblock.WATER_PUMP);
 	}
 
 	@Override
@@ -29,14 +29,15 @@ public class LavaPumpBlockEntity extends MachineControllerBlockEntity implements
 
 	@Override
 	protected String getMultiblockName() {
-		return "lava_pump";
+		return "water_well";
 	}
 
-	public boolean isWorkConditions() {
-		if (level == null) {
-			return false;
+	public boolean isOcean() {
+		if (level != null) {
+			return level.getBiome(getBlockPos()).is(BiomeTags.IS_OCEAN)
+					&& getBlockPos().getY() == 62;
 		}
-		return level.dimension() == Level.NETHER;
+		return false;
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class LavaPumpBlockEntity extends MachineControllerBlockEntity implements
 
 	@Override
 	protected IFluidHandler createFluidCapability() {
-		return new LavaPumpFluidCapability(this);
+		return new WaterWellFluidCapability(this);
 	}
 
 	@Override
@@ -70,11 +71,11 @@ public class LavaPumpBlockEntity extends MachineControllerBlockEntity implements
 	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
 		if (isMachineStructureValid()) {
 			CmiLang.builder()
-					.translate("tooltip.lava_pump.functional")
+					.translate("tooltip.water_pump.functional")
 					.forGoggles(tooltip);
 		} else {
 			CmiLang.builder()
-					.translate("tooltip.lava_pump.non_functional")
+					.translate("tooltip.water_pump.non_functional")
 					.forGoggles(tooltip);
 		}
 		return true;

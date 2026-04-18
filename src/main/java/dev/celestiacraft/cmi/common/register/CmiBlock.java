@@ -19,8 +19,8 @@ import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderBlock;
 import dev.celestiacraft.cmi.common.block.golden_sapling.GoldenSaplingBlock;
 import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
-import dev.celestiacraft.cmi.common.block.pump.blazing_blood.BlazingBloodPumpBlock;
-import dev.celestiacraft.cmi.common.block.pump.lava.LavaPumpBlock;
+import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlock;
+import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerItem;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlock;
@@ -29,7 +29,7 @@ import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlock;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorItem;
-import dev.celestiacraft.cmi.common.block.pump.water.WaterPumpBlock;
+import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlock;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
 import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.FluidBurnerBlock;
 import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.bronze.BronzeFluidBurnerBlock;
@@ -48,9 +48,9 @@ public class CmiBlock {
 	public static final BlockEntry<GoldenSaplingBlock> GOLD_SAPLING;
 	public static final BlockEntry<MarsGeothermalVentBlock> MARS_GEO;
 	public static final BlockEntry<MercuryGeothermalVentBlock> MERCURY_GEO;
-	public static final BlockEntry<WaterPumpBlock> WATER_PUMP;
-	public static final BlockEntry<BlazingBloodPumpBlock> BLAZING_BLOOD_PUMP;
-	public static final BlockEntry<LavaPumpBlock> LAVA_PUMP;
+	public static final BlockEntry<WaterWellBlock> WATER_WELL;
+	public static final BlockEntry<BlazingBloodWellBlock> BLAZING_BLOOD_WELL;
+	public static final BlockEntry<LavaWellBlock> LAVA_WELL;
 	public static final BlockEntry<SteamHammerBlock> STEAM_HAMMER;
 	public static final BlockEntry<AcceleratorMotorBlock> ACCELERATOR_MOTOR;
 	public static final BlockEntry<AdvancedSpoutBlock> ADVANCED_SPOUT;
@@ -98,12 +98,12 @@ public class CmiBlock {
 				.item()
 				.build()
 				.register();
-		WATER_PUMP = Cmi.REGISTRATE.block("water_pump", WaterPumpBlock::new)
+		WATER_WELL = Cmi.REGISTRATE.block("water_well", WaterWellBlock::new)
 				.item(ControllerBlockItem::new)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
-							provider.modLoc("block/water_pump")
+							provider.modLoc("block/well/water")
 					);
 				})
 				.build()
@@ -115,17 +115,17 @@ public class CmiBlock {
 							.forAllStatesExcept((state) -> {
 								BlockModelProvider models = provider.models();
 								return ConfiguredModel.builder()
-										.modelFile(models.getExistingFile(provider.modLoc("block/water_pump")))
+										.modelFile(models.getExistingFile(provider.modLoc("block/well/water")))
 										.build();
 							});
 				})
 				.register();
-		BLAZING_BLOOD_PUMP = Cmi.REGISTRATE.block("blazing_blood_pump", BlazingBloodPumpBlock::new)
+		BLAZING_BLOOD_WELL = Cmi.REGISTRATE.block("blazing_blood_well", BlazingBloodWellBlock::new)
 				.item(ControllerBlockItem::new)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
-							provider.modLoc("block/blazing_blood_pump")
+							provider.modLoc("block/well/blazing_blood")
 					);
 				})
 				.build()
@@ -137,17 +137,17 @@ public class CmiBlock {
 							.forAllStatesExcept((state) -> {
 								BlockModelProvider models = provider.models();
 								return ConfiguredModel.builder()
-										.modelFile(models.getExistingFile(provider.modLoc("block/blazing_blood_pump")))
+										.modelFile(models.getExistingFile(provider.modLoc("block/well/blazing_blood")))
 										.build();
 							});
 				})
 				.register();
-		LAVA_PUMP = Cmi.REGISTRATE.block("lava_pump", LavaPumpBlock::new)
+		LAVA_WELL = Cmi.REGISTRATE.block("lava_well", LavaWellBlock::new)
 				.item(ControllerBlockItem::new)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
-							provider.modLoc("block/lava_pump")
+							provider.modLoc("block/well/lava")
 					);
 				})
 				.build()
@@ -159,7 +159,7 @@ public class CmiBlock {
 							.forAllStatesExcept((state) -> {
 								BlockModelProvider models = provider.models();
 								return ConfiguredModel.builder()
-										.modelFile(models.getExistingFile(provider.modLoc("block/lava_pump")))
+										.modelFile(models.getExistingFile(provider.modLoc("block/well/lava")))
 										.build();
 							});
 				})

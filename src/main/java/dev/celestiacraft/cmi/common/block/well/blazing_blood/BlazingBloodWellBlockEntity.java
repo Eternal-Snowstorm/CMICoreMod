@@ -1,9 +1,9 @@
-package dev.celestiacraft.cmi.common.block.pump.blazing_blood;
+package dev.celestiacraft.cmi.common.block.well.blazing_blood;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
-import dev.celestiacraft.cmi.common.block.pump.blazing_blood.capability.BlazingBloodPumpFluidCapability;
+import dev.celestiacraft.cmi.common.block.well.blazing_blood.capability.BlazingBloodWellFluidCapability;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import dev.celestiacraft.libs.api.register.multiblock.machine.FluidSlots;
 import dev.celestiacraft.libs.api.register.multiblock.machine.IOMode;
@@ -17,8 +17,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.List;
 
-public class BlazingBloodPumpBlockEntity extends MachineControllerBlockEntity implements IHaveGoggleInformation {
-	public BlazingBloodPumpBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+public class BlazingBloodWellBlockEntity extends MachineControllerBlockEntity implements IHaveGoggleInformation {
+	public BlazingBloodWellBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state, CmiMultiblock.BLAZING_BLOOD_PUMP);
 	}
 
@@ -29,7 +29,7 @@ public class BlazingBloodPumpBlockEntity extends MachineControllerBlockEntity im
 
 	@Override
 	protected String getMultiblockName() {
-		return "blazing_blood_pump";
+		return "blazing_blood_well";
 	}
 
 	public boolean isWorkConditions() {
@@ -46,7 +46,7 @@ public class BlazingBloodPumpBlockEntity extends MachineControllerBlockEntity im
 
 	@Override
 	protected IFluidHandler createFluidCapability() {
-		return new BlazingBloodPumpFluidCapability(this);
+		return new BlazingBloodWellFluidCapability(this);
 	}
 
 	@Override

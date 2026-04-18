@@ -29,7 +29,7 @@ public class WaterPumpCategory {
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(
-							() -> CmiBlock.WATER_PUMP.get().asItem().getDefaultInstance(),
+							() -> CmiBlock.WATER_WELL.get().asItem().getDefaultInstance(),
 							() -> Items.WATER_BUCKET.getDefaultInstance()
 					);
 				})
