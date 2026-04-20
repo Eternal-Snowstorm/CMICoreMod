@@ -3,6 +3,8 @@ package dev.celestiacraft.cmi.client;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
+import dev.celestiacraft.cmi.client.ley.CmiKeyMapping;
+import dev.celestiacraft.cmi.client.menu.CmiRadialMenu;
 import dev.celestiacraft.cmi.client.overlay.NetherBacktankAirOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorConstructionOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorFlightOverlay;
@@ -12,6 +14,7 @@ import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorRenderer;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -21,10 +24,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class CmiClient {
 	public static void onCtorClient(IEventBus bus) {
 		bus.addListener(CmiClient::onClientSetup);
+		bus.addListener(CmiClient::onRegisterKeys);
 		bus.addListener(SpaceElevatorHudRenderer::registerShaders);
 		bus.addListener(NetherBacktankAirOverlay::register);
 		bus.addListener(SpaceElevatorFlightOverlay::register);
 		bus.addListener(SpaceElevatorConstructionOverlay::register);
+
+		CmiRadialMenu.register();
 	}
 
 	@SubscribeEvent
@@ -34,5 +40,10 @@ public class CmiClient {
 
 		EntityRenderers.register(CmiEntity.QI_MONTH.get(), QiMonthRenderer::new);
 		EntityRenderers.register(CmiEntity.SPACE_ELEVATOR.get(), SpaceElevatorRenderer::new);
+	}
+
+	@SubscribeEvent
+	public static void onRegisterKeys(RegisterKeyMappingsEvent event) {
+		event.register(CmiKeyMapping.OPEN_RADIAL);
 	}
 }

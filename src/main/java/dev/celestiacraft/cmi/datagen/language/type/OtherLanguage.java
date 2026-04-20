@@ -56,5 +56,15 @@ public class OtherLanguage extends LanguageGenerate {
 				"Freezing",
 				"冷冻"
 		);
+		addKeyLang(
+				"categories",
+				"CMI",
+				"机械动力: 构件与革新"
+		);
+		addKeyLang(
+				"open_radial",
+				"Open Radial",
+				"打开轮盘"
+		);
 	}
 }

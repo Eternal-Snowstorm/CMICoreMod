@@ -1,0 +1,32 @@
+package dev.celestiacraft.cmi.client.menu;
+
+import cc.sighs.auratip.api.action.Actions;
+import cc.sighs.auratip.api.radiamenu.RadialMenuBuilder;
+import cc.sighs.auratip.api.radiamenu.RadialMenuRegistry;
+import cc.sighs.auratip.data.RadialMenuData;
+import dev.celestiacraft.cmi.Cmi;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+
+import java.util.List;
+
+public class CmiRadialMenu {
+	public static ResourceLocation MENU = Cmi.loadResource("cmi_radial");
+
+	public static void register() {
+		RadialMenuData menu = new RadialMenuBuilder(MENU)
+				.radii(55, 100)
+				.animationSpeed(1.0F)
+				.ringColors(List.of("#1A071B10", "#D91A6B3A"))
+				.slot(
+						"Open Quests",
+						ResourceLocation.fromNamespaceAndPath("ftbquests", "textures/item/book.png"),
+						Actions.runCommand("ftbquests open_book"),
+						Component.literal("Open Quests"),
+						"#77FFFFFF"
+				)
+				.build();
+
+		RadialMenuRegistry.setMenus(Cmi.MODID, List.of(menu));
+	}
+}
