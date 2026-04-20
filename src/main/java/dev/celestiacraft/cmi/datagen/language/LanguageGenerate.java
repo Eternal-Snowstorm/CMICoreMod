@@ -81,4 +81,8 @@ public class LanguageGenerate {
 	protected static void addKeyLang(String key, String english, String chinese) {
 		addLanguage("key", key, english, chinese);
 	}
+
+	protected static void addRadialLang(String key, String english, String chinese) {
+		addLanguage("radial", key, english, chinese);
+	}
 }

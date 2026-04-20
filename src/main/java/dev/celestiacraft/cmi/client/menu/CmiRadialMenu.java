@@ -22,7 +22,7 @@ public class CmiRadialMenu {
 						"Open Quests",
 						ResourceLocation.fromNamespaceAndPath("ftbquests", "textures/item/book.png"),
 						Actions.runCommand("ftbquests open_book"),
-						Component.literal("Open Quests"),
+						Component.translatable("radial.cmi.open_quest"),
 						"#77FFFFFF"
 				)
 				.build();

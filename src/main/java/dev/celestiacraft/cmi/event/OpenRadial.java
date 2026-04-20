@@ -2,7 +2,7 @@ package dev.celestiacraft.cmi.event;
 
 import cc.sighs.auratip.api.client.RadialMenuClientApi;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.client.ley.CmiKeyMapping;
+import dev.celestiacraft.cmi.client.key.CmiKeyMapping;
 import dev.celestiacraft.cmi.client.menu.CmiRadialMenu;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, value = Dist.CLIENT)
-public class InputKeys {
+public class OpenRadial {
 	private static boolean wasDown = false;
 
 	@SubscribeEvent

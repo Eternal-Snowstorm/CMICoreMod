@@ -66,5 +66,10 @@ public class OtherLanguage extends LanguageGenerate {
 				"Open Radial",
 				"打开轮盘"
 		);
+		addRadialLang(
+				"open_quest",
+				"Open Quests",
+				"打开任务书"
+		);
 	}
 }

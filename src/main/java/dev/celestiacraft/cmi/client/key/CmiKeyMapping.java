@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.client.ley;
+package dev.celestiacraft.cmi.client.key;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;

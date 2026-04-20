@@ -3,7 +3,7 @@ package dev.celestiacraft.cmi.client;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
-import dev.celestiacraft.cmi.client.ley.CmiKeyMapping;
+import dev.celestiacraft.cmi.client.key.CmiKeyMapping;
 import dev.celestiacraft.cmi.client.menu.CmiRadialMenu;
 import dev.celestiacraft.cmi.client.overlay.NetherBacktankAirOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorConstructionOverlay;
@@ -29,8 +29,6 @@ public class CmiClient {
 		bus.addListener(NetherBacktankAirOverlay::register);
 		bus.addListener(SpaceElevatorFlightOverlay::register);
 		bus.addListener(SpaceElevatorConstructionOverlay::register);
-
-		CmiRadialMenu.register();
 	}
 
 	@SubscribeEvent
@@ -40,6 +38,8 @@ public class CmiClient {
 
 		EntityRenderers.register(CmiEntity.QI_MONTH.get(), QiMonthRenderer::new);
 		EntityRenderers.register(CmiEntity.SPACE_ELEVATOR.get(), SpaceElevatorRenderer::new);
+
+		CmiRadialMenu.register();
 	}
 
 	@SubscribeEvent
