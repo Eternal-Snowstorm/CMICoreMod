@@ -1,7 +1,6 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import dev.celestiacraft.cmi.common.register.CmiRecipeType;
 import dev.celestiacraft.libs.api.register.multiblock.machine.*;
@@ -11,8 +10,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implements IControllerRecipe<TestCokeOvenBlockEntity> {
@@ -37,19 +36,14 @@ public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implem
 
 	@Override
 	public void recipe(MultiblockContext<TestCokeOvenBlockEntity> context) {
-		TestCokeOvenIOBlockEntity ioBlock = findFirstMatchedBlockEntity(CmiBlock.TEST_COKE_OVEN_IO.get(), TestCokeOvenIOBlockEntity.class);
-		if (ioBlock == null) {
-			workTimer = 0;
-			return;
-		}
-
 		if (level == null) {
 			workTimer = 0;
 			return;
 		}
 
-		IFluidHandler fluidHandler = ioBlock.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
-		if (fluidHandler == null) {
+		IItemHandler itemHandler = findFirstMatchedItemHandler();
+		IFluidHandler fluidHandler = findFirstMatchedFluidHandler();
+		if (itemHandler == null || fluidHandler == null) {
 			workTimer = 0;
 			return;
 		}
@@ -58,10 +52,10 @@ public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implem
 				.getAllRecipesFor(CmiRecipeType.TEST_COKE_OVEN.get())
 				.stream()
 				.filter((candidate) -> {
-					return candidate.matchesItemInputs(ioBlock.getInternalItemHandler(), 0);
+					return candidate.matchesItemInputs(itemHandler, 0);
 				})
 				.filter((candidate) -> {
-					return candidate.canOutputItems(ioBlock.getInternalItemHandler(), 1);
+					return candidate.canOutputItems(itemHandler, 1);
 				})
 				.filter((candidate) -> {
 					return candidate.canOutputFluids(fluidHandler);
@@ -79,8 +73,8 @@ public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implem
 			return;
 		}
 
-		recipe.consumeItemInputs(ioBlock.getInternalItemHandler(), 0);
-		recipe.produceItemOutputs(level, ioBlock.getInternalItemHandler(), 1);
+		recipe.consumeItemInputs(itemHandler, 0);
+		recipe.produceItemOutputs(level, itemHandler, 1);
 		recipe.produceFluidOutputs(level, fluidHandler);
 		workTimer = 0;
 	}
@@ -144,12 +138,12 @@ public class TestCokeOvenBlockEntity extends MachineControllerBlockEntity implem
 
 	@Override
 	protected int getActualItemIOCount() {
-		return countMatchedBlocks(CmiBlock.TEST_COKE_OVEN_IO.get());
+		return countMatchedItemIOBlockEntities();
 	}
 
 	@Override
 	protected int getActualFluidIOCount() {
-		return countMatchedBlocks(CmiBlock.TEST_COKE_OVEN_IO.get());
+		return countMatchedFluidIOBlockEntities();
 	}
 
 	@Override

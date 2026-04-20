@@ -3,13 +3,13 @@ package dev.celestiacraft.cmi.common.block.test_coke_oven;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenFluidCapability;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenItemCapability;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenItemHandler;
+import dev.celestiacraft.libs.api.register.multiblock.machine.IOBlockEntity;
+import dev.celestiacraft.libs.api.register.multiblock.machine.MachineControllerBlockEntity;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -21,9 +21,16 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class TestCokeOvenIOBlockEntity extends BlockEntity {
+import java.util.List;
+
+public class TestCokeOvenIOBlockEntity extends IOBlockEntity {
 	public TestCokeOvenIOBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
+	}
+
+	@Override
+	protected @NotNull List<Class<? extends MachineControllerBlockEntity>> supportedControllers() {
+		return List.of(TestCokeOvenBlockEntity.class);
 	}
 
 	@Getter
@@ -123,16 +130,6 @@ public class TestCokeOvenIOBlockEntity extends BlockEntity {
 
 		itemHandler.deserializeNBT(tag.getCompound("Inventory"));
 		fluid = FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid"));
-	}
-
-	@Override
-	public @NotNull CompoundTag getUpdateTag() {
-		return saveWithoutMetadata();
-	}
-
-	@Override
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override
