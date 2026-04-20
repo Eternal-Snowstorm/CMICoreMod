@@ -20,7 +20,7 @@ public class TestMultiblockBlockEntity extends MachineControllerBlockEntity {
 	}
 
 	@Override
-	protected int getMaxItemIO()	 {
+	protected int getMaxItemIO() {
 		return 1;
 	}
 
@@ -51,7 +51,7 @@ public class TestMultiblockBlockEntity extends MachineControllerBlockEntity {
 
 	@Override
 	protected FluidSlots[] getFluidSlots() {
-		return new FluidSlots[]{
+		return new FluidSlots[] {
 				new FluidSlots(32000, IOMode.BOTH)
 		};
 	}
