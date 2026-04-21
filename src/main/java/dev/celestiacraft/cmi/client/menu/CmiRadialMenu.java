@@ -20,7 +20,14 @@ public class CmiRadialMenu {
 				.ringColors(List.of("#1A071B10", "#D91A6B3A"))
 				.slot(
 						"Open Quests",
-						ResourceLocation.fromNamespaceAndPath("ftbquests", "textures/item/book.png"),
+						ResourceLocation.parse("ftbquests:textures/item/book.png"),
+						Actions.runCommand("ftbquests open_book"),
+						Component.translatable("radial.cmi.open_quest"),
+						"#77FFFFFF"
+				)
+				.slot(
+						"Open Quests",
+						ResourceLocation.parse("ftbquests:textures/item/book.png"),
 						Actions.runCommand("ftbquests open_book"),
 						Component.translatable("radial.cmi.open_quest"),
 						"#77FFFFFF"
