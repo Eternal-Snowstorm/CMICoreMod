@@ -71,5 +71,10 @@ public class OtherLanguage extends LanguageGenerate {
 				"Open Quests",
 				"打开任务书"
 		);
+		addRadialLang(
+				"claim_chunk",
+				"Claim Chunk",
+				"认领区块"
+		);
 	}
 }
