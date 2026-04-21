@@ -17,7 +17,7 @@ public class CmiRadialMenu {
 		RadialMenuData menu = new RadialMenuBuilder(MENU)
 				.radii(55, 100)
 				.animationSpeed(1.0F)
-				.ringColors(List.of("#1A071B10", "#D91A6B3A"))
+				.ringColors(List.of("#1A366699", "#D93A6EA5"))
 				.slot(
 						"Open Quests",
 						ResourceLocation.parse("ftbquests:textures/item/book.png"),
