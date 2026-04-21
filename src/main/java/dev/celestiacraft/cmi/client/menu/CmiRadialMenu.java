@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.List;
 
 public class CmiRadialMenu {
-	public static ResourceLocation MENU = Cmi.loadResource("cmi_radial");
+	public static ResourceLocation MENU = Cmi.loadResource("radial");
 
 	public static void register() {
 		RadialMenuData menu = new RadialMenuBuilder(MENU)
