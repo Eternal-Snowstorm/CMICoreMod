@@ -65,45 +65,10 @@ public class CmiGlobal {
 		return modPackMainVersion;
 	}
 
-	private void init() {
-		// ToolType
-		setToolType("sword", ResourceLocation.parse("forge:mineable/sword"));
-		setToolType("pickaxe", ResourceLocation.parse("minecraft:mineable/pickaxe"));
-		setToolType("axe", ResourceLocation.parse("minecraft:mineable/axe"));
-		setToolType("shovel", ResourceLocation.parse("minecraft:mineable/shovel"));
-		setToolType("hoe", ResourceLocation.parse("minecraft:mineable/hoe"));
-
-		// MiningLevel
-		setMiningLevel("wooden", ResourceLocation.parse("forge:needs_wooden_tool"));
-		setMiningLevel("stone", ResourceLocation.parse("minecraft:needs_stone_tool"));
-		setMiningLevel("iron", ResourceLocation.parse("minecraft:needs_iron_tool"));
-		setMiningLevel("glod", ResourceLocation.parse("forge:needs_gold_tool"));
-		setMiningLevel("diamond", ResourceLocation.parse("minecraft:needs_diamond_tool"));
-		setMiningLevel("nether", ResourceLocation.parse("forge:needs_netherite_tool"));
-	}
-
 	/**
 	 * 扳手Tag
 	 */
 	public static final ResourceLocation WRENCH_PICKUP = Create.asResource("wrench_pickup");
-
-	/**
-	 * 挖掘工具类型
-	 */
-	public static final Map<String, ResourceLocation> TOOL_TYPE = new HashMap<>();
-
-	public static void setToolType(String key, ResourceLocation location) {
-		TOOL_TYPE.put(key, location);
-	}
-
-	/**
-	 * 挖掘等级
-	 */
-	public static final Map<String, ResourceLocation> MINING_LEVEL = new HashMap<>();
-
-	public static void setMiningLevel(String key, ResourceLocation location) {
-		MINING_LEVEL.put(key, location);
-	}
 
 	public static final Map<FluidStackJS, Integer> FUEL_TEMPERATURES = new HashMap<>();
 
@@ -112,7 +77,11 @@ public class CmiGlobal {
 	}
 
 	public static int getFuelTemp(FluidStackJS id) {
-		return FUEL_TEMPERATURES.getOrDefault(id, 0);
+		try {
+			return FUEL_TEMPERATURES.getOrDefault(id, 0);
+		} catch (Exception exception) {
+			throw new IllegalArgumentException("Unknown Fuel: " + id);
+		}
 	}
 
 	public static final List<String> DYE_COLOR_GROUP = List.of(
@@ -176,4 +145,8 @@ public class CmiGlobal {
 			"antimatter",
 			"creative"
 	);
+
+	public static void addMechanismToGroup(String name) {
+		mechanismGroup.add(name);
+	}
 }
