@@ -38,6 +38,7 @@ import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.steel.Steel
 import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockItem;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -449,14 +450,46 @@ public class CmiBlock {
 				.transform(TagGen.axeOnly())
 				.tag(BlockTags.MINEABLE_WITH_AXE)
 				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
-				.simpleItem()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStates((BlockState state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/scaffold/nahuatl")))
+										.build();
+							});
+				})
+				.item()
+				.model((context, provider) -> {
+					provider.withExistingParent(
+							context.getName(),
+							provider.modLoc("block/scaffold/nahuatl")
+					);
+				})
+				.build()
 				.register();
 		BLAZEWOOD_SCAFFOLD = Cmi.REGISTRATE.block("blazewood_scaffold", ScaffoldingBlock::new)
 				.initialProperties(SharedProperties::wooden)
 				.transform(TagGen.axeOnly())
 				.tag(BlockTags.MINEABLE_WITH_AXE)
 				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
-				.simpleItem()
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStates((BlockState state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/scaffold/blazewood")))
+										.build();
+							});
+				})
+				.item()
+				.model((context, provider) -> {
+					provider.withExistingParent(
+							context.getName(),
+							provider.modLoc("block/scaffold/blazewood")
+					);
+				})
+				.build()
 				.register();
 	}
 

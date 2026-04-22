@@ -4,8 +4,6 @@ import cc.sighs.auratip.api.action.Actions;
 import cc.sighs.auratip.api.radiamenu.RadialMenuBuilder;
 import cc.sighs.auratip.api.radiamenu.RadialMenuRegistry;
 import cc.sighs.auratip.data.RadialMenuData;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.Create;
 import dev.celestiacraft.cmi.Cmi;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

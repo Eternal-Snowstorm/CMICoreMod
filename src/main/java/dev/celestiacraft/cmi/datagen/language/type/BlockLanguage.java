@@ -74,5 +74,15 @@ public class BlockLanguage extends LanguageGenerate {
 				"Steel Fluid Burner",
 				"钢制流体燃烧室"
 		);
+		addBlockLanguage(
+				"nahuatl_scaffold",
+				"Nahuatl Scaffold",
+				"纳瓦特尔脚手架"
+		);
+		addBlockLanguage(
+				"blazewood_scaffold",
+				"Blazewood Scaffold",
+				"烈焰木脚手架"
+		);
 	}
 }

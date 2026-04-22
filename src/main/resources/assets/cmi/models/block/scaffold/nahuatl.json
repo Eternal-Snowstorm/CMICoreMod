@@ -1,0 +1,9 @@
+{
+  "parent": "immersiveengineering:block/ie_scaffolding",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bottom": "cmi:block/scaffold/nahuatl_scaffold",
+    "side": "cmi:block/scaffold/nahuatl_scaffold",
+    "top": "cmi:block/scaffold/nahuatl_top"
+  }
+}

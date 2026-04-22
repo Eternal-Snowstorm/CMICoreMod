@@ -1,0 +1,9 @@
+{
+  "parent": "immersiveengineering:block/ie_scaffolding",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bottom": "cmi:block/scaffold/blazewood_scaffold",
+    "side": "cmi:block/scaffold/blazewood_scaffold",
+    "top": "cmi:block/scaffold/blazewood_top"
+  }
+}
