@@ -28,7 +28,7 @@ public class CmiRadialMenu {
 				.slot(
 						"Claim Chunk",
 						ResourceLocation.parse("ftblibrary:textures/icons/map.png"),
-						Actions.runCommand("/ftbchunks claim"),
+						Actions.runCommand("ftbchunks claim"),
 						Component.translatable("radial.cmi.claim_chunk"),
 						"#77FFFFFF"
 				)
