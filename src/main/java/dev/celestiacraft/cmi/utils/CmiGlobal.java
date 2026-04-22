@@ -147,4 +147,16 @@ public class CmiGlobal {
 			"antimatter",
 			"creative"
 	);
+
+	public static final Map<String, String> SPECIAL_MECHANISMS = Map.of(
+			"precision", "create:precision_mechanism",
+			"redstone", "vintageimprovements:redstone_module"
+	);
+
+	public static String getMechanism(String name) {
+		return SPECIAL_MECHANISMS.getOrDefault(
+				name,
+				"cmi:%s_mechanism".formatted(name)
+		);
+	}
 }
