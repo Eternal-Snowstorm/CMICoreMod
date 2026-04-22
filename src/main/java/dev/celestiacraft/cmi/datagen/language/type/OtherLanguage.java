@@ -76,5 +76,11 @@ public class OtherLanguage extends LanguageGenerate {
 				"Claim Chunk",
 				"认领区块"
 		);
+
+		addRadialLang(
+				"wrench_pickup",
+				"Pickup A Wrench",
+				"拿起扳手"
+		);
 	}
 }

@@ -4,11 +4,14 @@ import cc.sighs.auratip.api.action.Actions;
 import cc.sighs.auratip.api.radiamenu.RadialMenuBuilder;
 import cc.sighs.auratip.api.radiamenu.RadialMenuRegistry;
 import cc.sighs.auratip.data.RadialMenuData;
+import com.simibubi.create.compat.trainmap.FTBChunksTrainMap;
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.client.event.CmiRadialAction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
+import java.util.Map;
 
 public class CmiRadialMenu {
 	public static ResourceLocation MENU = Cmi.loadResource("radial");
@@ -30,6 +33,16 @@ public class CmiRadialMenu {
 						ResourceLocation.parse("ftblibrary:textures/icons/map.png"),
 						Actions.runCommand("ftbchunks claim"),
 						Component.translatable("radial.cmi.claim_chunk"),
+						"#77FFFFFF"
+				)
+				.slot(
+						"Pickup A Wrench",
+						ResourceLocation.parse("ae2:textures/item/certus_quartz_wrench.png"),
+						Actions.script(
+								CmiRadialAction.WRENCH_PICKUP,
+								Map.of("wrench_pickup", "wrench")
+						),
+						Component.translatable("radial.cmi.wrench_pickup"),
 						"#77FFFFFF"
 				)
 				.build();
