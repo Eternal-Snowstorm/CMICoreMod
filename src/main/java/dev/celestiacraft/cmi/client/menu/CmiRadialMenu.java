@@ -4,7 +4,6 @@ import cc.sighs.auratip.api.action.Actions;
 import cc.sighs.auratip.api.radiamenu.RadialMenuBuilder;
 import cc.sighs.auratip.api.radiamenu.RadialMenuRegistry;
 import cc.sighs.auratip.data.RadialMenuData;
-import com.simibubi.create.compat.trainmap.FTBChunksTrainMap;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.event.CmiRadialAction;
 import net.minecraft.network.chat.Component;
