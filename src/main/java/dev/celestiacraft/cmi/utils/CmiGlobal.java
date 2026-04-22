@@ -121,6 +121,8 @@ public class CmiGlobal {
 			"copper",
 			"andesite",
 			"bronze",
+			"precision",
+			"redstone",
 			"railway",
 			"light_engineering",
 			"heavy_engineering",
@@ -145,8 +147,4 @@ public class CmiGlobal {
 			"antimatter",
 			"creative"
 	);
-
-	public static void addMechanismToGroup(String name) {
-		mechanismGroup.add(name);
-	}
 }
