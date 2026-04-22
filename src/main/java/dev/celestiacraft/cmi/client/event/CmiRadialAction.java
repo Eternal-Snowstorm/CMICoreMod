@@ -13,7 +13,11 @@ import net.minecraft.world.item.Items;
 public class CmiRadialAction {
 	public static final ResourceLocation WRENCH_PICKUP = Cmi.loadResource("wrench_pickup");
 
-	public static void WrenchPickup() {
+	public static void register() {
+		wrenchPickup();
+	}
+
+	public static void wrenchPickup() {
 		Actions.register(WRENCH_PICKUP, (params) -> {
 			Minecraft instance = Minecraft.getInstance();
 			if (instance.player == null) {

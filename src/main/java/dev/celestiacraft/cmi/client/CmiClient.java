@@ -41,8 +41,7 @@ public class CmiClient {
 		EntityRenderers.register(CmiEntity.SPACE_ELEVATOR.get(), SpaceElevatorRenderer::new);
 
 		CmiRadialMenu.register();
-
-		CmiRadialAction.WrenchPickup();
+		CmiRadialAction.register();
 	}
 
 	@SubscribeEvent
