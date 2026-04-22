@@ -5,6 +5,7 @@ import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.key.CmiKeyMapping;
 import dev.celestiacraft.cmi.client.menu.CmiRadialMenu;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,12 +17,18 @@ public class OpenRadial {
 
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent event) {
+		Minecraft minecraft = Minecraft.getInstance();
+
 		if (event.phase != TickEvent.Phase.END) {
 			return;
 		}
 
 		KeyMapping key = CmiKeyMapping.OPEN_RADIAL;
 		boolean isDown = key.isDown();
+
+		if (minecraft.screen != null) {
+			return;
+		}
 
 		if (isDown && !wasDown) {
 			RadialMenuClientApi.open(CmiRadialMenu.MENU);
