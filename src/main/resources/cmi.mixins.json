@@ -1,36 +1,34 @@
 {
-    "required": true,
-    "minVersion": "0.8",
-    "package": "dev.celestiacraft.cmi.mixin",
-    "compatibilityLevel": "JAVA_17",
-    "refmap": "cmi.refmap.json",
-    "mixins": [
-        "WrenchItemMixin",
-        "ItemMixin",
-        "AnimatedBlazeBurnerMixin",
-        "BasinBlockEntityMixin",
-        "BasinCategoryMixin",
-        "HeatConditionMixin",
-        "HeatLevelMixin",
-        "ClassFilterMixin",
-        "CryoFreezingCategoryMixin",
-        "MixerLogicMixin",
-        "MixerStateAccessor",
-        "ChemicalLogicAccessor",
-        "ChemicalStateAccessor",
-        "ChemicalStateMixin",
-        "AirCurrentMixin",
-        "RocketMixin",
-        "PlanetsScreenAccessor",
-        "CastingBlockEntityMixin",
-        "RoverMixin",
-        "VehicleItemMixin",
-        "IngredientWrapperMixin",
-        "FluidStackJSMixin",
-        "FluidWrapperMixin"
-    ],
-    "client": [],
-    "injectors": {
-        "defaultRequire": 1
-    }
+	"required": true,
+	"minVersion": "0.8",
+	"package": "dev.celestiacraft.cmi.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"refmap": "cmi.refmap.json",
+	"mixins": [
+		"WrenchItemMixin",
+		"ItemMixin",
+		"AnimatedBlazeBurnerMixin",
+		"BasinBlockEntityMixin",
+		"BasinCategoryMixin",
+		"HeatConditionMixin",
+		"HeatLevelMixin",
+		"ClassFilterMixin",
+		"CryoFreezingCategoryMixin",
+		"MixerLogicMixin",
+		"MixerStateAccessor",
+		"ChemicalLogicAccessor",
+		"ChemicalStateAccessor",
+		"ChemicalStateMixin",
+		"AirCurrentMixin",
+		"RocketMixin",
+		"PlanetsScreenAccessor",
+		"CastingBlockEntityMixin",
+		"RoverMixin",
+		"VehicleItemMixin",
+		"IngredientWrapperMixin"
+	],
+	"client": [],
+	"injectors": {
+		"defaultRequire": 1
+	}
 }
