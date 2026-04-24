@@ -1,6 +1,6 @@
-package dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.steel;
+package dev.celestiacraft.cmi.common.block.fluid_burner.steel;
 
-import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.FluidBurnerBlockEntity;
+import dev.celestiacraft.cmi.common.block.fluid_burner.FluidBurnerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;

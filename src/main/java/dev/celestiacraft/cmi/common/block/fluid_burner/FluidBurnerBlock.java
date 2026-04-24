@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner;
+package dev.celestiacraft.cmi.common.block.fluid_burner;
 
 import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;

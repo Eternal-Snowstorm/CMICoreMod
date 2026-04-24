@@ -23,9 +23,9 @@ import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlockEntity;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlockEnitiy;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlockEntity;
-import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.bronze.BronzeFluidBurnerBlockEntity;
-import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.cast_iron.CastIronFluidBurnerBlockEntity;
-import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.steel.SteelFluidBurnerBlockEntity;
+import dev.celestiacraft.cmi.common.block.fluid_burner.bronze.BronzeFluidBurnerBlockEntity;
+import dev.celestiacraft.cmi.common.block.fluid_burner.cast_iron.CastIronFluidBurnerBlockEntity;
+import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlockEntity;
 
 public class CmiBlockEntity {
 	public static final BlockEntityEntry<TestGravelBlockEntity> TEST_GRAVEL;

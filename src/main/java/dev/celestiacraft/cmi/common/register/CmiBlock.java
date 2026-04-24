@@ -31,10 +31,10 @@ import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorB
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorItem;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlock;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
-import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.FluidBurnerBlock;
-import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.bronze.BronzeFluidBurnerBlock;
-import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.cast_iron.CastIronFluidBurnerBlock;
-import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.steel.SteelFluidBurnerBlock;
+import dev.celestiacraft.cmi.common.block.fluid_burner.FluidBurnerBlock;
+import dev.celestiacraft.cmi.common.block.fluid_burner.bronze.BronzeFluidBurnerBlock;
+import dev.celestiacraft.cmi.common.block.fluid_burner.cast_iron.CastIronFluidBurnerBlock;
+import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlock;
 import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockItem;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;

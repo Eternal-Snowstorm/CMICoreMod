@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner;
+package dev.celestiacraft.cmi.common.block.fluid_burner;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
@@ -6,7 +6,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
 import dev.celestiacraft.cmi.common.recipe.fluid_burn.FluidBurnRecipe;
 import dev.celestiacraft.cmi.common.register.CmiRecipeType;
-import dev.celestiacraft.cmi.compat.steam_powered.block.FluidBurnerFluidHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

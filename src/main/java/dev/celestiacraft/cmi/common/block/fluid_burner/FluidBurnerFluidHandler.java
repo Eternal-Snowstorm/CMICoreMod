@@ -1,6 +1,5 @@
-package dev.celestiacraft.cmi.compat.steam_powered.block;
+package dev.celestiacraft.cmi.common.block.fluid_burner;
 
-import dev.celestiacraft.cmi.compat.steam_powered.block.fluid_burner.FluidBurnerBlockEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
