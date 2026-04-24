@@ -24,7 +24,10 @@
         "PlanetsScreenAccessor",
         "CastingBlockEntityMixin",
         "RoverMixin",
-        "VehicleItemMixin"
+        "VehicleItemMixin",
+        "IngredientWrapperMixin",
+        "FluidStackJSMixin",
+        "FluidWrapperMixin"
     ],
     "client": [],
     "injectors": {
