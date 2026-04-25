@@ -6,8 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 public interface FluidStackJSUtils {
 	String kjs$tagType = null;
 
-	static FluidStackJS tag(String key, ResourceLocation id, long amount) {
-		UnboundFluidStackJS fs = new UnboundFluidStackJS(id, key);
+	static FluidStackJS tag(String key, String tag, long amount) {
+		UnboundFluidStackJS fs = new UnboundFluidStackJS(ResourceLocation.tryParse(tag), key);
 		fs.setAmount(amount);
 		return fs;
 	}

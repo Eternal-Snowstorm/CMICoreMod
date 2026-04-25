@@ -39,7 +39,7 @@ public class CmiRadialMenu {
 						ResourceLocation.parse("ae2:textures/item/certus_quartz_wrench.png"),
 						Actions.script(
 								CmiRadialAction.WRENCH_PICKUP,
-								Map.of("wrench_pickup", "wrench")
+								Map.of()
 						),
 						Component.translatable("radial.cmi.wrench_pickup"),
 						"#77FFFFFF"
