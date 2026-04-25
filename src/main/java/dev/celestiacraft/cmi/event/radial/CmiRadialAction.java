@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.client.event;
+package dev.celestiacraft.cmi.event.radial;
 
 import cc.sighs.auratip.api.action.Actions;
 import com.simibubi.create.AllItems;

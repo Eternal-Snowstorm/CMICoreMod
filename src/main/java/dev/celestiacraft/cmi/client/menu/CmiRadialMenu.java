@@ -5,7 +5,7 @@ import cc.sighs.auratip.api.radiamenu.RadialMenuBuilder;
 import cc.sighs.auratip.api.radiamenu.RadialMenuRegistry;
 import cc.sighs.auratip.data.RadialMenuData;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.client.event.CmiRadialAction;
+import dev.celestiacraft.cmi.event.radial.CmiRadialAction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 

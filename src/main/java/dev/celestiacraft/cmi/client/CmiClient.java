@@ -3,7 +3,7 @@ package dev.celestiacraft.cmi.client;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
-import dev.celestiacraft.cmi.client.event.CmiRadialAction;
+import dev.celestiacraft.cmi.event.radial.CmiRadialAction;
 import dev.celestiacraft.cmi.client.key.CmiKeyMapping;
 import dev.celestiacraft.cmi.client.menu.CmiRadialMenu;
 import dev.celestiacraft.cmi.client.overlay.NetherBacktankAirOverlay;
