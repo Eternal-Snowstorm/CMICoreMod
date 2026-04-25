@@ -76,11 +76,20 @@ public class OtherLanguage extends LanguageGenerate {
 				"Claim Chunk",
 				"认领区块"
 		);
-
 		addRadialLang(
-				"wrench_pickup",
+				"wrench",
 				"Pickup A Wrench",
 				"拿起扳手"
+		);
+		addRadialLang(
+				"net_tool",
+				"Pickup A Network Tool",
+				"拿起网络工具"
+		);
+		addRadialLang(
+				"configurator",
+				"Pickup A Configurator",
+				"拿起配置器"
 		);
 	}
 }

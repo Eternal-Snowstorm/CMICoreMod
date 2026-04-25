@@ -38,10 +38,30 @@ public class CmiRadialMenu {
 						"Pickup A Wrench",
 						ResourceLocation.parse("ae2:textures/item/certus_quartz_wrench.png"),
 						Actions.script(
-								CmiRadialAction.WRENCH_PICKUP,
+								CmiRadialAction.WRENCH,
 								Map.of()
 						),
-						Component.translatable("radial.cmi.wrench_pickup"),
+						Component.translatable("radial.cmi.wrench"),
+						"#77FFFFFF"
+				)
+				.slot(
+						"Pickup A Network Tool",
+						ResourceLocation.parse("ae2:textures/item/network_tool.png"),
+						Actions.script(
+								CmiRadialAction.NETTOOL,
+								Map.of()
+						),
+						Component.translatable("radial.cmi.net_tool"),
+						"#77FFFFFF"
+				)
+				.slot(
+						"Pickup A Configurator",
+						ResourceLocation.parse("mekanism:textures/item/configurator.png"),
+						Actions.script(
+								CmiRadialAction.CONFIGURATOR,
+								Map.of()
+						),
+						Component.translatable("radial.cmi.configurator"),
 						"#77FFFFFF"
 				)
 				.build();
