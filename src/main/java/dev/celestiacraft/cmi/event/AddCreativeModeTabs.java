@@ -1,8 +1,6 @@
 package dev.celestiacraft.cmi.event;
 
 import com.simibubi.create.AllItems;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiCreativeTab;
 import dev.celestiacraft.cmi.common.register.CmiItem;
@@ -11,7 +9,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -36,7 +33,7 @@ public class AddCreativeModeTabs {
 	@SubscribeEvent
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == KUBEJS_TAB) {
-			List<BlockEntry<? extends Block>> blockList = List.of(
+			List.of(
 					CmiBlock.MARS_GEO,
 					CmiBlock.MERCURY_GEO,
 					CmiBlock.WATER_WELL,
@@ -48,15 +45,13 @@ public class AddCreativeModeTabs {
 					CmiBlock.ADVANCED_SPOUT,
 					CmiBlock.VOID_DUST_COLLECTOR,
 					CmiBlock.BELT_GRINDER
-			);
-			blockList.forEach((block) -> {
+			).forEach((block) -> {
 				event.accept(block.asItem());
 			});
 
-			List<ItemEntry<? extends Item>> itemList = List.of(
+			List.of(
 					CmiItem.INITIAL_ITEM_KIT
-			);
-			itemList.forEach((item) -> {
+			).forEach((item) -> {
 				event.accept(item.asItem());
 			});
 		}
