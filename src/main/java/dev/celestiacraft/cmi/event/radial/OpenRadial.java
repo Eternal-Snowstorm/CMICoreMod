@@ -43,10 +43,13 @@ public class OpenRadial {
 				|| (selfKey != GLFW.GLFW_KEY_RIGHT_SHIFT && InputConstants.isKeyDown(window, GLFW.GLFW_KEY_RIGHT_SHIFT));
 
 		while (key.consumeClick()) {
+			if (isMenuActive && !hasOtherModifier) {
+				isMenuActive = false;
+			}
 			if (!isMenuActive && !hasOtherModifier) {
 				RadialMenuClientApi.open(CmiRadialMenu.MENU);
+				isMenuActive = true;
 			}
-			isMenuActive = !isMenuActive;
 		}
 	}
 }
