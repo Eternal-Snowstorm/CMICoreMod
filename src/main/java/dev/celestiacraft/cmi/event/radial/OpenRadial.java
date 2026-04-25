@@ -16,9 +16,6 @@ import org.lwjgl.glfw.GLFW;
 @Mod.EventBusSubscriber(modid = Cmi.MODID, value = Dist.CLIENT)
 public class OpenRadial {
 	private static boolean isMenuActive = false;
-	private static boolean wasDown = false;
-	private static long lastPressTime = 0;
-	private static final long MIN_PRESS_DELAY = 500;
 
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent event) {
