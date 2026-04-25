@@ -25,7 +25,10 @@
 		"CastingBlockEntityMixin",
 		"RoverMixin",
 		"VehicleItemMixin",
-		"IngredientWrapperMixin"
+		"IngredientWrapperMixin",
+		"FluidStackJSMixin",
+		"FluidWrapperMixin",
+		"IngredientListOverlayMixin"
 	],
 	"client": [],
 	"injectors": {

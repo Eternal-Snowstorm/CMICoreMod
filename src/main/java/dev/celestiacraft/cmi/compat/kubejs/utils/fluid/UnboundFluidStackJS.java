@@ -32,6 +32,7 @@ public class UnboundFluidStackJS extends FluidStackJS {
 		this.tagType = null;
 	}
 
+	// tag 构造
 	public UnboundFluidStackJS(ResourceLocation location, @Nullable String tagType) {
 		this.fluidRL = location;
 		this.fluid = location.toString();
@@ -70,8 +71,8 @@ public class UnboundFluidStackJS extends FluidStackJS {
 	}
 
 	@Override
-	public void setAmount(long amount) {
-		this.amount = amount;
+	public void setAmount(long a) {
+		amount = a;
 		cached = null;
 	}
 
@@ -82,8 +83,8 @@ public class UnboundFluidStackJS extends FluidStackJS {
 	}
 
 	@Override
-	public void setNbt(@Nullable CompoundTag nbt) {
-		this.nbt = nbt;
+	public void setNbt(@Nullable CompoundTag n) {
+		nbt = n;
 		cached = null;
 	}
 
@@ -104,19 +105,19 @@ public class UnboundFluidStackJS extends FluidStackJS {
 
 	@Override
 	public JsonObject toJson() {
-		JsonObject object = new JsonObject();
-		object.addProperty("amount", amount);
+		JsonObject o = new JsonObject();
+		o.addProperty("amount", amount);
 
 		if (isTag) {
-			object.addProperty("tag", fluidRL.toString());
+			o.addProperty("tag", fluidRL.toString());
 		} else {
-			object.addProperty("fluid", fluidRL.toString());
+			o.addProperty("fluid", fluidRL.toString());
 		}
 
 		if (nbt != null && !nbt.isEmpty()) {
-			object.addProperty("nbt", nbt.toString());
+			o.addProperty("nbt", nbt.toString());
 		}
 
-		return object;
+		return o;
 	}
 }
