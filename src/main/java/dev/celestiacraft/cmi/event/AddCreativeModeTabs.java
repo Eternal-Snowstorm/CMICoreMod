@@ -3,7 +3,6 @@ package dev.celestiacraft.cmi.event;
 import com.simibubi.create.AllItems;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import dev.celestiacraft.cmi.common.item.InitialItemKitItem;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiCreativeTab;
 import dev.celestiacraft.cmi.common.register.CmiItem;
@@ -37,7 +36,7 @@ public class AddCreativeModeTabs {
 	@SubscribeEvent
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == KUBEJS_TAB) {
-			List<? extends BlockEntry<? extends Block>> blockList = List.of(
+			List<BlockEntry<? extends Block>> blockList = List.of(
 					CmiBlock.MARS_GEO,
 					CmiBlock.MERCURY_GEO,
 					CmiBlock.WATER_WELL,
@@ -54,7 +53,7 @@ public class AddCreativeModeTabs {
 				event.accept(block.asItem());
 			});
 
-			List<ItemEntry<InitialItemKitItem>> itemList = List.of(
+			List<ItemEntry<? extends Item>> itemList = List.of(
 					CmiItem.INITIAL_ITEM_KIT
 			);
 			itemList.forEach((item) -> {
