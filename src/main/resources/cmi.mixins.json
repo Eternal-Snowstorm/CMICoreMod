@@ -27,7 +27,8 @@
 		"VehicleItemMixin",
 		"IngredientWrapperMixin",
 		"FluidStackJSMixin",
-		"FluidWrapperMixin"
+		"FluidWrapperMixin",
+		"IngredientListOverlayMixin"
 	],
 	"client": [],
 	"injectors": {
