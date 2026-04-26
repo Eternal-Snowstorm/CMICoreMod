@@ -20,6 +20,7 @@ import dev.celestiacraft.cmi.common.block.golden_sapling.GoldenSaplingBlock;
 import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlock;
+import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlockItem;
 import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerItem;
@@ -29,7 +30,9 @@ import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlock;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorItem;
+import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlockItem;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlock;
+import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlockItem;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
 import dev.celestiacraft.cmi.common.block.fluid_burner.FluidBurnerBlock;
 import dev.celestiacraft.cmi.common.block.fluid_burner.bronze.BronzeFluidBurnerBlock;
@@ -50,8 +53,8 @@ public class CmiBlock {
 	public static final BlockEntry<MarsGeothermalVentBlock> MARS_GEO;
 	public static final BlockEntry<MercuryGeothermalVentBlock> MERCURY_GEO;
 	public static final BlockEntry<WaterWellBlock> WATER_WELL;
-	public static final BlockEntry<BlazingBloodWellBlock> BLAZING_BLOOD_WELL;
 	public static final BlockEntry<LavaWellBlock> LAVA_WELL;
+	public static final BlockEntry<BlazingBloodWellBlock> BLAZING_BLOOD_WELL;
 	public static final BlockEntry<SteamHammerBlock> STEAM_HAMMER;
 	public static final BlockEntry<AcceleratorMotorBlock> ACCELERATOR_MOTOR;
 	public static final BlockEntry<AdvancedSpoutBlock> ADVANCED_SPOUT;
@@ -100,7 +103,7 @@ public class CmiBlock {
 				.build()
 				.register();
 		WATER_WELL = Cmi.REGISTRATE.block("water_well", WaterWellBlock::new)
-				.item(ControllerBlockItem::new)
+				.item(WaterWellBlockItem::new)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -121,30 +124,8 @@ public class CmiBlock {
 							});
 				})
 				.register();
-		BLAZING_BLOOD_WELL = Cmi.REGISTRATE.block("blazing_blood_well", BlazingBloodWellBlock::new)
-				.item(ControllerBlockItem::new)
-				.model((context, provider) -> {
-					provider.withExistingParent(
-							context.getName(),
-							provider.modLoc("block/well/blazing_blood")
-					);
-				})
-				.build()
-				.tag(BlockTags.MINEABLE_WITH_AXE)
-				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
-				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.blockstate((context, provider) -> {
-					provider.getVariantBuilder(context.get())
-							.forAllStatesExcept((state) -> {
-								BlockModelProvider models = provider.models();
-								return ConfiguredModel.builder()
-										.modelFile(models.getExistingFile(provider.modLoc("block/well/blazing_blood")))
-										.build();
-							});
-				})
-				.register();
 		LAVA_WELL = Cmi.REGISTRATE.block("lava_well", LavaWellBlock::new)
-				.item(ControllerBlockItem::new)
+				.item(LavaWellBlockItem::new)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -161,6 +142,28 @@ public class CmiBlock {
 								BlockModelProvider models = provider.models();
 								return ConfiguredModel.builder()
 										.modelFile(models.getExistingFile(provider.modLoc("block/well/lava")))
+										.build();
+							});
+				})
+				.register();
+		BLAZING_BLOOD_WELL = Cmi.REGISTRATE.block("blazing_blood_well", BlazingBloodWellBlock::new)
+				.item(BlazingBloodWellBlockItem::new)
+				.model((context, provider) -> {
+					provider.withExistingParent(
+							context.getName(),
+							provider.modLoc("block/well/blazing_blood")
+					);
+				})
+				.build()
+				.tag(BlockTags.MINEABLE_WITH_AXE)
+				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStatesExcept((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/well/blazing_blood")))
 										.build();
 							});
 				})
