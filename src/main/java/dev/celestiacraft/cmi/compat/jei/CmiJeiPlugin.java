@@ -3,12 +3,24 @@ package dev.celestiacraft.cmi.compat.jei;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
-import com.simibubi.create.compat.jei.*;
+import com.simibubi.create.compat.jei.CreateJEI;
+import com.simibubi.create.compat.jei.DoubleItemIcon;
+import com.simibubi.create.compat.jei.EmptyBackground;
+import com.simibubi.create.compat.jei.ItemIcon;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.simibubi.create.infrastructure.config.CRecipes;
+import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.block.belt_grinder.GrindingRecipe;
+import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.freezing.FreezingRecipe;
+import dev.celestiacraft.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
+import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpRecipe;
+import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpSeaWaterRecipe;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
+import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.*;
 import earth.terrarium.adastra.common.registry.ModItems;
 import mezz.jei.api.IModPlugin;
@@ -17,6 +29,9 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,23 +39,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
-import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.block.belt_grinder.GrindingRecipe;
-import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
-import dev.celestiacraft.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
-import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpRecipe;
-import dev.celestiacraft.cmi.common.recipe.water_pump.WaterPumpSeaWaterRecipe;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
-import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
-import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -95,6 +99,18 @@ public class CmiJeiPlugin implements IModPlugin {
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
 		IJeiHelpers helpers = registration.getJeiHelpers();
 
+		Map<String, ItemStack> createCatalysts = Map.of(
+				"pressing", CmiBlock.STEAM_HAMMER.asStack(),
+				"spout_filling", CmiBlock.ADVANCED_SPOUT.asStack()
+		);
+
+		createCatalysts.forEach((recipeId, stack) -> {
+			helpers.getRecipeType(Create.asResource(recipeId), Recipe.class)
+					.ifPresent((type) -> {
+						registration.addRecipeCatalyst(stack, type);
+					});
+		});
+
 		registration.addRecipeCatalyst(
 				CmiBlock.ACCELERATOR.asItem().getDefaultInstance(),
 				CmiJeiRecipeType.ACCELERATOR
@@ -119,18 +135,6 @@ public class CmiJeiPlugin implements IModPlugin {
 				CmiBlock.BELT_GRINDER.asStack(),
 				CmiJeiRecipeType.GRINDING
 		);
-
-		Map<String, ItemStack> createCatalysts = Map.of(
-				"pressing", CmiBlock.STEAM_HAMMER.asStack(),
-				"spout_filling", CmiBlock.ADVANCED_SPOUT.asStack()
-		);
-
-		createCatalysts.forEach((recipeId, stack) -> {
-			helpers.getRecipeType(Create.asResource(recipeId), Recipe.class)
-					.ifPresent((type) -> {
-						registration.addRecipeCatalyst(stack, type);
-					});
-		});
 
 		ALL_CATEGORIES.forEach((category) -> {
 			category.registerCatalysts(registration);

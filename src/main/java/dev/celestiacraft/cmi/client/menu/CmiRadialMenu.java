@@ -6,6 +6,7 @@ import cc.sighs.auratip.api.radiamenu.RadialMenuRegistry;
 import cc.sighs.auratip.data.RadialMenuData;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.event.radial.CmiRadialAction;
+import mekanism.common.Mekanism;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -56,7 +57,7 @@ public class CmiRadialMenu {
 				)
 				.slot(
 						"Pickup A Configurator",
-						ResourceLocation.parse("mekanism:textures/item/configurator.png"),
+						Mekanism.rl("textures/item/configurator.png"),
 						Actions.script(
 								CmiRadialAction.CONFIGURATOR,
 								Map.of()
