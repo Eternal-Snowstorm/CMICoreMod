@@ -59,8 +59,8 @@ public class CmiRadialAction {
 		int slot = findItemIgnoringNBT(inventory, stack);
 		if (slot == -1) {
 			player.displayClientMessage(
-					Component.literal("NOT!"),
-					true
+					Component.translatable("message.cmi.notFindItem"),
+					false
 			);
 			return;
 		}
