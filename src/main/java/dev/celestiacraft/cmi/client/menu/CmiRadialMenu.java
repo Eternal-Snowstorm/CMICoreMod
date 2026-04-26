@@ -39,7 +39,6 @@ public class CmiRadialMenu {
 				Component.translatable("radial.cmi.wrench"),
 				"#77FFFFFF"
 		);
-
 		builder.slot(
 				"Pickup A Network Tool",
 				ResourceLocation.parse("cmi:textures/gui/network_tool.png"),
