@@ -20,6 +20,7 @@ public class ModResources {
 	public static final ResourcesEntry CRUCIBLE_BASE;
 	public static final ResourcesEntry CRUCIBLE_TUYERE;
 	public static final ResourcesEntry IRON_DEPOSIT_BLOCK;
+	public static final ResourcesEntry NETWORK_TOOL;
 
 	static {
 		STEEL_INGOT = loadCmi("steel_ingot");
@@ -37,6 +38,8 @@ public class ModResources {
 		COAL_COKE = loadThermal("coal_coke");
 
 		IRON_DEPOSIT_BLOCK = loadResource("create_rns:iron_deposit_block");
+
+		NETWORK_TOOL = loadResource(ResourceLocation.parse("ae:network_tool"));
 	}
 
 	public static ResourcesEntry loadResource(ResourceLocation location) {

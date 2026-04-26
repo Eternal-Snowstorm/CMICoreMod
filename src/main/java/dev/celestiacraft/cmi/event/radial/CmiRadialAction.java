@@ -4,16 +4,12 @@ import cc.sighs.auratip.api.action.Actions;
 import com.simibubi.create.AllItems;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.utils.ModResources;
-import earth.terrarium.adastra.AdAstra;
 import mekanism.common.registries.MekanismItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-
-import static dev.celestiacraft.cmi.utils.ModResources.loadResource;
 
 public class CmiRadialAction {
 	public static final ResourceLocation WRENCH = Cmi.loadResource("wrench");
@@ -21,24 +17,30 @@ public class CmiRadialAction {
 	public static final ResourceLocation CONFIGURATOR = Cmi.loadResource("configurator");
 
 	public static void register() {
-		Actions();
+		pickupWrench();
+		pickupNetworkTool();
+		pickupNetworkTool();
 	}
 
-	public static void Actions() {
+	private static void pickupWrench() {
 		Actions.register(WRENCH, (params) -> {
-			Pickup(AllItems.WRENCH.asStack());
-		});
-
-		Actions.register(NETTOOL, (params) -> {
-			Pickup(loadResource(ResourceLocation.fromNamespaceAndPath("ae2", "network_tool")).getItemStack());
-		});
-
-		Actions.register(CONFIGURATOR, (params) -> {
-			Pickup(ModResources.loadResource("mekanism:configurator").getItemStack());
+			pickup(AllItems.WRENCH.asStack());
 		});
 	}
 
-	private static void Pickup(ItemStack stack) {
+	private static void pickupNetworkTool() {
+		Actions.register(NETTOOL, (params) -> {
+			pickup(ModResources.NETWORK_TOOL.getItemStack());
+		});
+	}
+
+	private static void pickupConfigurator() {
+		Actions.register(CONFIGURATOR, (params) -> {
+			pickup(MekanismItems.CONFIGURATOR.getItemStack());
+		});
+	}
+
+	private static void pickup(ItemStack stack) {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (minecraft.player == null) {
 			return;
