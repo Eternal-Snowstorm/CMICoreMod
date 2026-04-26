@@ -29,15 +29,8 @@ public class CmiRadialMenu {
 						"#77FFFFFF"
 				)
 				.slot(
-						"Claim Chunk",
-						ResourceLocation.parse("ftblibrary:textures/icons/map.png"),
-						Actions.runCommand("ftbchunks claim"),
-						Component.translatable("radial.cmi.claim_chunk"),
-						"#77FFFFFF"
-				)
-				.slot(
 						"Pickup A Wrench",
-						ResourceLocation.parse("ae2:textures/item/certus_quartz_wrench.png"),
+						ResourceLocation.parse("cmi:textures/gui/wrench.png"),
 						Actions.script(
 								CmiRadialAction.WRENCH,
 								Map.of()
@@ -47,7 +40,7 @@ public class CmiRadialMenu {
 				)
 				.slot(
 						"Pickup A Network Tool",
-						ResourceLocation.parse("ae2:textures/item/network_tool.png"),
+						ResourceLocation.parse("cmi:textures/gui/network_tool.png"),
 						Actions.script(
 								CmiRadialAction.NETTOOL,
 								Map.of()

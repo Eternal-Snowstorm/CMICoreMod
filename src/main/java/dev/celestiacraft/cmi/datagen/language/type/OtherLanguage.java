@@ -72,11 +72,6 @@ public class OtherLanguage extends LanguageGenerate {
 				"打开任务书"
 		);
 		addRadialLang(
-				"claim_chunk",
-				"Claim Chunk",
-				"认领区块"
-		);
-		addRadialLang(
 				"wrench",
 				"Pickup A Wrench",
 				"拿起扳手"
