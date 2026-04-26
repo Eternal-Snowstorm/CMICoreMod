@@ -17,49 +17,51 @@ public class CmiRadialMenu {
 	public static ResourceLocation MENU = Cmi.loadResource("radial");
 
 	public static void register() {
-		RadialMenuData menu = new RadialMenuBuilder(MENU)
+		RadialMenuBuilder builder = new RadialMenuBuilder(MENU)
 				.radii(55, 100)
 				.animationSpeed(1.0F)
-				.ringColors(List.of("#1A366699", "#D93A6EA5"))
-				.slot(
-						"Open Quests",
-						ResourceLocation.parse("ftbquests:textures/item/book.png"),
-						Actions.runCommand("ftbquests open_book"),
-						Component.translatable("radial.cmi.open_quest"),
-						"#77FFFFFF"
-				)
-				.slot(
-						"Pickup A Wrench",
-						ResourceLocation.parse("cmi:textures/gui/wrench.png"),
-						Actions.script(
-								CmiRadialAction.WRENCH,
-								Map.of()
-						),
-						Component.translatable("radial.cmi.wrench"),
-						"#77FFFFFF"
-				)
-				.slot(
-						"Pickup A Network Tool",
-						ResourceLocation.parse("cmi:textures/gui/network_tool.png"),
-						Actions.script(
-								CmiRadialAction.NETTOOL,
-								Map.of()
-						),
-						Component.translatable("radial.cmi.net_tool"),
-						"#77FFFFFF"
-				)
-				.slot(
-						"Pickup A Configurator",
-						Mekanism.rl("textures/item/configurator.png"),
-						Actions.script(
-								CmiRadialAction.CONFIGURATOR,
-								Map.of()
-						),
-						Component.translatable("radial.cmi.configurator"),
-						"#77FFFFFF"
-				)
-				.build();
+				.ringColors(List.of("#1A366699", "#D93A6EA5"));
 
+		builder.slot(
+				"Open Quests",
+				ResourceLocation.parse("ftbquests:textures/item/book.png"),
+				Actions.runCommand("ftbquests open_book"),
+				Component.translatable("radial.cmi.open_quest"),
+				"#77FFFFFF"
+		);
+		builder.slot(
+				"Pickup A Wrench",
+				ResourceLocation.parse("cmi:textures/gui/wrench.png"),
+				Actions.script(
+						CmiRadialAction.WRENCH,
+						Map.of()
+				),
+				Component.translatable("radial.cmi.wrench"),
+				"#77FFFFFF"
+		);
+
+		builder.slot(
+				"Pickup A Network Tool",
+				ResourceLocation.parse("cmi:textures/gui/network_tool.png"),
+				Actions.script(
+						CmiRadialAction.NETTOOL,
+						Map.of()
+				),
+				Component.translatable("radial.cmi.net_tool"),
+				"#77FFFFFF"
+		);
+		builder.slot(
+				"Pickup A Configurator",
+				Mekanism.rl("textures/item/configurator.png"),
+				Actions.script(
+						CmiRadialAction.CONFIGURATOR,
+						Map.of()
+				),
+				Component.translatable("radial.cmi.configurator"),
+				"#77FFFFFF"
+		);
+
+		RadialMenuData menu = builder.build();
 		RadialMenuRegistry.setMenus(Cmi.MODID, List.of(menu));
 	}
 }
