@@ -446,6 +446,9 @@ public class CmiBlock {
 				.blockstate(FluidBurnerBlock.burnerBlockState("steel"))
 				.register();
 		NAHUATL_SCAFFOLD = Cmi.REGISTRATE.block("nahuatl_scaffold", ScaffoldingBlock::new)
+				.properties((properties) -> {
+					return properties.noOcclusion();
+				})
 				.initialProperties(SharedProperties::wooden)
 				.transform(TagGen.axeOnly())
 				.tag(BlockTags.MINEABLE_WITH_AXE)
@@ -469,6 +472,9 @@ public class CmiBlock {
 				.build()
 				.register();
 		BLAZEWOOD_SCAFFOLD = Cmi.REGISTRATE.block("blazewood_scaffold", ScaffoldingBlock::new)
+				.properties((properties) -> {
+					return properties.noOcclusion();
+				})
 				.initialProperties(SharedProperties::wooden)
 				.transform(TagGen.axeOnly())
 				.tag(BlockTags.MINEABLE_WITH_AXE)
