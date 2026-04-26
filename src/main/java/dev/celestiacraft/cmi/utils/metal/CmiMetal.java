@@ -23,8 +23,8 @@ public class CmiMetal {
 		return this;
 	}
 
-	public CmiMetal namespace(String namespacE) {
-		this.namespace = namespacE;
+	public CmiMetal namespace(String namespac) {
+		this.namespace = namespac;
 		return this;
 	}
 
