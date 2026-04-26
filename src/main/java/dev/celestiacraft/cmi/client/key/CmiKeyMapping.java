@@ -8,7 +8,7 @@ public class CmiKeyMapping {
 	public static final KeyMapping OPEN_RADIAL = new KeyMapping(
 			"key.cmi.open_radial",
 			InputConstants.Type.KEYSYM,
-			GLFW.GLFW_KEY_LEFT_ALT,
+			GLFW.GLFW_KEY_TAB,
 			"key.cmi.categories"
 	);
 }
