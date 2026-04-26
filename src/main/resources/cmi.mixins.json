@@ -26,6 +26,8 @@
 		"RoverMixin",
 		"VehicleItemMixin",
 		"IngredientWrapperMixin",
+		"FluidStackJSMixin",
+		"FluidWrapperMixin",
 		"IngredientListOverlayMixin"
 	],
 	"client": [],

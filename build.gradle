@@ -224,7 +224,7 @@ dependencies {
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
 	// architectury
-	runtimeOnly fg.deobf("curse.maven:architectury-api-419699:5137938")
+	implementation fg.deobf("curse.maven:architectury-api-419699:5137938")
 	// resourceful config
 	runtimeOnly fg.deobf("curse.maven:resourceful-config-714059:6231176")
 	// citadel
