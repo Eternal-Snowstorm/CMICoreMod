@@ -39,7 +39,7 @@ public class ModResources {
 
 		IRON_DEPOSIT_BLOCK = loadResource("create_rns:iron_deposit_block");
 
-		NETWORK_TOOL = loadResource(ResourceLocation.parse("ae:network_tool"));
+		NETWORK_TOOL = loadAe2("network_tool");
 	}
 
 	public static ResourcesEntry loadResource(ResourceLocation location) {
@@ -76,5 +76,9 @@ public class ModResources {
 
 	public static ResourcesEntry loadThermal(String path) {
 		return loadResource(ResourceLocation.fromNamespaceAndPath("thermal", path));
+	}
+
+	public static ResourcesEntry loadAe2(String path) {
+		return loadResource(ResourceLocation.fromNamespaceAndPath("ae2", path));
 	}
 }
