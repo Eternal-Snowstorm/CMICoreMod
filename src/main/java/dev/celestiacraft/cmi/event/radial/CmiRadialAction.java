@@ -50,24 +50,37 @@ public class CmiRadialAction {
 			return;
 		}
 
-		if (!player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-			return;
+		if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+			Inventory inventory = player.getInventory();
+
+			int slot = findItemIgnoringNBT(inventory, stack);
+			if (slot == -1) {
+				player.displayClientMessage(
+						Component.translatable("message.cmi.notFindItem"),
+						false
+				);
+				return;
+			}
+
+			ItemStack stackInSlot = inventory.getItem(slot);
+			player.setItemInHand(InteractionHand.MAIN_HAND, stackInSlot);
+			inventory.setItem(slot, ItemStack.EMPTY);
+		} else {
+			Inventory inventory = player.getInventory();
+			int slot = findItemIgnoringNBT(inventory, stack);
+			if (slot == -1) {
+				player.displayClientMessage(
+						Component.translatable("message.cmi.notFindItem"),
+						false
+				);
+				return;
+			}
+
+			ItemStack stackInSlot = inventory.getItem(slot);
+			ItemStack MainHandItem = player.getItemInHand(InteractionHand.MAIN_HAND);
+			player.setItemInHand(InteractionHand.MAIN_HAND, stackInSlot);
+			inventory.setItem(slot, MainHandItem.copy());
 		}
-
-		Inventory inventory = player.getInventory();
-
-		int slot = findItemIgnoringNBT(inventory, stack);
-		if (slot == -1) {
-			player.displayClientMessage(
-					Component.translatable("message.cmi.notFindItem"),
-					false
-			);
-			return;
-		}
-
-		ItemStack stackInSlot = inventory.getItem(slot);
-		player.setItemInHand(InteractionHand.MAIN_HAND, stackInSlot);
-		inventory.setItem(slot, ItemStack.EMPTY);
 	}
 
 	/**
