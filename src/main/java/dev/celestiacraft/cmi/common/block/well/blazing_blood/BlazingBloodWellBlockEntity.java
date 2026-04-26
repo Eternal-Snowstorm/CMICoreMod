@@ -68,7 +68,7 @@ public class BlazingBloodWellBlockEntity extends MachineControllerBlockEntity im
 
 	@Override
 	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-		if (isMachineStructureValid()) {
+		if (isMachineStructureValid() && level.dimension() == Level.NETHER) {
 			CmiLang.builder()
 					.translate("tooltip.blazing_blood_well.functional")
 					.forGoggles(tooltip);

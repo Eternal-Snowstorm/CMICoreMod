@@ -68,7 +68,7 @@ public class LavaWellBlockEntity extends MachineControllerBlockEntity implements
 
 	@Override
 	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-		if (isMachineStructureValid()) {
+		if (isMachineStructureValid() && level.dimension() == Level.NETHER) {
 			CmiLang.builder()
 					.translate("tooltip.lava_well.functional")
 					.forGoggles(tooltip);
