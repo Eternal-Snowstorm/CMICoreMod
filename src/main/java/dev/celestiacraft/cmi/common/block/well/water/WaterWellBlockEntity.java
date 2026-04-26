@@ -71,11 +71,11 @@ public class WaterWellBlockEntity extends MachineControllerBlockEntity implement
 	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
 		if (isMachineStructureValid()) {
 			CmiLang.builder()
-					.translate("tooltip.water_pump.functional")
+					.translate("tooltip.water_well.functional")
 					.forGoggles(tooltip);
 		} else {
 			CmiLang.builder()
-					.translate("tooltip.water_pump.non_functional")
+					.translate("tooltip.water_well.non_functional")
 					.forGoggles(tooltip);
 		}
 		return true;

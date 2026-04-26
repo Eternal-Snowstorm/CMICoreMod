@@ -70,11 +70,11 @@ public class BlazingBloodWellBlockEntity extends MachineControllerBlockEntity im
 	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
 		if (isMachineStructureValid()) {
 			CmiLang.builder()
-					.translate("tooltip.blazing_blood_pump.functional")
+					.translate("tooltip.blazing_blood_well.functional")
 					.forGoggles(tooltip);
 		} else {
 			CmiLang.builder()
-					.translate("tooltip.blazing_blood_pump.non_functional")
+					.translate("tooltip.blazing_blood_well.non_functional")
 					.forGoggles(tooltip);
 		}
 		return true;
