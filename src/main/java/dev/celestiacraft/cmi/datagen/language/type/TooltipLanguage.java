@@ -46,7 +46,7 @@ public class TooltipLanguage extends LanguageGenerate {
 		addTooltipLang(
 				"blazing_blood_well.non_functional",
 				"Blazing Blood Well Not Functional",
-				"熔岩井结构不完整"
+				"烈焰血井结构不完整"
 		);
 		addTooltipLang(
 				"blazing_blood_well.runningEnvironment",
