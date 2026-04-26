@@ -19,7 +19,7 @@ public class CmiRadialAction {
 	public static void register() {
 		pickupWrench();
 		pickupNetworkTool();
-		pickupNetworkTool();
+		pickupConfigurator();
 	}
 
 	private static void pickupWrench() {
