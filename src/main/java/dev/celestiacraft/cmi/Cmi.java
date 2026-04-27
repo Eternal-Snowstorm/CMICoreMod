@@ -53,6 +53,10 @@ public class Cmi {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
 
+	public static String loadResourceString(String path) {
+		return loadResource(path).toString();
+	}
+
 	public Cmi(FMLJavaModLoadingContext context) {
 		IEventBus bus = context.getModEventBus();
 
