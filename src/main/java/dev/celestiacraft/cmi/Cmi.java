@@ -53,7 +53,7 @@ public class Cmi {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
 
-	public static String loadResourceString(String path) {
+	public static String loadString(String path) {
 		return loadResource(path).toString();
 	}
 
