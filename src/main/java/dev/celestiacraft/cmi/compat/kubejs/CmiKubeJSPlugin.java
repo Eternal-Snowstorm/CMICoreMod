@@ -41,7 +41,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 	}
 
 	public void registerBindings(BindingsEvent event) {
-		event.add("CmiCore", Cmi.class);
+		event.add("Cmi", Cmi.class);
 		event.add("CmiLang", CmiLang.class);
 		event.add("CmiLang$JeiLang", CmiLang.JeiLang.class);
 		event.add("ClientSeedHandler", ClientSeedHandler.class);
