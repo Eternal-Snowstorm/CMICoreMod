@@ -4,7 +4,6 @@ import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.libs.api.interaction.IFluidInteractable;
 import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockFacing;
@@ -52,10 +51,10 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 						BlockModelProvider models = provider.models();
 
 						BlockModelBuilder modelFile = models.withExistingParent(path, "block/orientable")
-								.texture("top", Cmi.loadResource("block/fluid_burner/" + material + "/top"))
-								.texture("bottom", Cmi.loadResource("block/fluid_burner/" + material + "/down"))
-								.texture("side", Cmi.loadResource("block/fluid_burner/" + material + "/side"))
-								.texture("front", Cmi.loadResource("block/fluid_burner/" + material + (lit ? "/on" : "/off")));
+								.texture("top", models.modLoc("block/fluid_burner/" + material + "/top"))
+								.texture("bottom", models.modLoc("block/fluid_burner/" + material + "/down"))
+								.texture("side", models.modLoc("block/fluid_burner/" + material + "/side"))
+								.texture("front", models.modLoc("block/fluid_burner/" + material + (lit ? "/on" : "/off")));
 
 						return ConfiguredModel.builder()
 								.modelFile(modelFile)
