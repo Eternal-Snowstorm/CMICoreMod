@@ -75,10 +75,16 @@ public interface IIngredientUtils {
 			if (fluidHolder != null) {
 				ResourceLocation fluidKey = ForgeRegistries.FLUIDS.getKey(fluidHolder.value());
 				ConsoleJS.SERVER.debug("The first fluid is: %s".formatted(fluidKey));
+				return fluidKey;
 			}
 		}
 		ConsoleJS.SERVER.warn("No corresponding fluid under %s".formatted(fluidTag));
 		return null;
+	}
+
+	static String getFluidString(String fluidTag) {
+		ResourceLocation id = getFirstFluidId(fluidTag);
+		return id != null ? id.toString() : null;
 	}
 
 	static String getPath(String name) {
