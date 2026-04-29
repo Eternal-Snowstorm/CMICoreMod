@@ -25,10 +25,18 @@ public class CmiRecipeType {
 	static {
 		RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Cmi.MODID);
 
-		ACCELERATOR = register("accelerator", () -> AcceleratorRecipe.Type.INSTANCE);
-		SPACE_ELEVATOR_BASE = register("space_elevator_base", () -> SpaceElevatorBaseRecipe.Type.INSTANCE);
-		SPACE_ELEVATOR_CONSTRUCTION = register("space_elevator_construction", () -> SpaceElevatorConstructionRecipe.Type.INSTANCE);
-		FLUID_BURN = register("fluid_burn", () -> FluidBurnRecipe.Type.INSTANCE);
+		ACCELERATOR = register("accelerator", () -> {
+			return AcceleratorRecipe.Type.INSTANCE;
+		});
+		SPACE_ELEVATOR_BASE = register("space_elevator_base", () -> {
+			return SpaceElevatorBaseRecipe.Type.INSTANCE;
+		});
+		SPACE_ELEVATOR_CONSTRUCTION = register("space_elevator_construction", () -> {
+			return SpaceElevatorConstructionRecipe.Type.INSTANCE;
+		});
+		FLUID_BURN = register("fluid_burn", () -> {
+			return FluidBurnRecipe.Type.INSTANCE;
+		});
 		TEST_COKE_OVEN = registerSimple("test_coke_oven");
 	}
 
@@ -37,7 +45,9 @@ public class CmiRecipeType {
 	}
 
 	private static <T extends Recipe<?>> Supplier<RecipeType<T>> registerSimple(String path) {
-		return RECIPE_TYPES.register(path, () -> RecipeType.simple(Cmi.loadResource(path)));
+		return RECIPE_TYPES.register(path, () -> {
+			return RecipeType.simple(Cmi.loadResource(path));
+		});
 	}
 
 	public static void register(IEventBus bus) {
