@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.common.item;
 
+import dev.celestiacraft.libs.api.register.item.BasicItem;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public abstract class MechanismItem extends Item {
+public abstract class MechanismItem extends BasicItem {
 	protected static final Random RANDOM = new Random();
 
 	public MechanismItem(Properties properties) {
