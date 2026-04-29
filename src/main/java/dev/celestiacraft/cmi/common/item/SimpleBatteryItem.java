@@ -1,14 +1,14 @@
 package dev.celestiacraft.cmi.common.item;
 
+import dev.celestiacraft.libs.api.register.item.BasicItem;
 import dev.celestiacraft.libs.common.item.energy.EnergyItemCapabilityProvider;
 import dev.celestiacraft.libs.common.item.energy.IEnergyItem;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.NotNull;
 
-public class SimpleBatteryItem extends Item implements IEnergyItem {
+public class SimpleBatteryItem extends BasicItem implements IEnergyItem {
 	public SimpleBatteryItem(Properties properties) {
 		super(properties.stacksTo(1));
 	}

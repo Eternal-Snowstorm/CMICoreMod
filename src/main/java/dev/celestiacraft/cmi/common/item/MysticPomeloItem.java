@@ -7,13 +7,13 @@ import com.lowdragmc.lowdraglib.gui.texture.ResourceBorderTexture;
 import com.lowdragmc.lowdraglib.gui.widget.LabelWidget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
+import dev.celestiacraft.libs.api.register.item.BasicItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class MysticPomeloItem extends Item implements IUIHolder.ItemUI {
+public class MysticPomeloItem extends BasicItem implements IUIHolder.ItemUI {
 	public MysticPomeloItem(Properties properties) {
 		super(properties.stacksTo(1)
 				.fireResistant());

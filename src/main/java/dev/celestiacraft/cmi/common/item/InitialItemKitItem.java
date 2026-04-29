@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.item;
 
 import com.simibubi.create.foundation.item.TooltipHelper;
+import dev.celestiacraft.libs.api.register.item.BasicItem;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -23,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class InitialItemKitItem extends Item {
+public class InitialItemKitItem extends BasicItem {
 	public InitialItemKitItem(Properties properties) {
 		super(properties);
 	}
