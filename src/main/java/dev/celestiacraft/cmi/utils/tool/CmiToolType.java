@@ -1,6 +1,9 @@
 package dev.celestiacraft.cmi.utils.tool;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 public enum CmiToolType {
 	SWORD("forge:mineable/sword"),
@@ -9,13 +12,13 @@ public enum CmiToolType {
 	SHOVEL("minecraft:mineable/shovel"),
 	HOE("minecraft:mineable/hoe");
 
-	private final ResourceLocation tag;
+	private final TagKey<Block> tag;
 
 	CmiToolType(String location) {
-		tag = ResourceLocation.parse(location);
+		tag = BlockTags.create(ResourceLocation.parse(location));
 	}
 
-	public ResourceLocation tag() {
+	public TagKey<Block> tag() {
 		return tag;
 	}
 

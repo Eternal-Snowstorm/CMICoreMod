@@ -1,6 +1,9 @@
 package dev.celestiacraft.cmi.utils.tool;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 public enum CmiMiningLevel {
 	WOODEN("forge:needs_wooden_tool"),
@@ -10,13 +13,13 @@ public enum CmiMiningLevel {
 	DIAMOND("minecraft:needs_diamond_tool"),
 	NETHER("forge:needs_netherite_tool");
 
-	private final ResourceLocation tag;
+	private final TagKey<Block> tag;
 
 	CmiMiningLevel(String location) {
-		tag = ResourceLocation.parse(location);
+		tag = BlockTags.create(ResourceLocation.parse(location));
 	}
 
-	public ResourceLocation tag() {
+	public TagKey<Block> tag() {
 		return tag;
 	}
 
