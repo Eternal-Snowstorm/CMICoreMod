@@ -21,6 +21,7 @@ public class ModResources {
 	public static final ResourcesEntry CRUCIBLE_TUYERE;
 	public static final ResourcesEntry IRON_DEPOSIT_BLOCK;
 	public static final ResourcesEntry NETWORK_TOOL;
+	public static final ResourcesEntry STEAM;
 
 	static {
 		STEEL_INGOT = loadCmi("steel_ingot");
@@ -40,6 +41,8 @@ public class ModResources {
 		IRON_DEPOSIT_BLOCK = loadResource("create_rns:iron_deposit_block");
 
 		NETWORK_TOOL = loadAe2("network_tool");
+
+		STEAM = loadMek("steam");
 	}
 
 	public static ResourcesEntry loadResource(ResourceLocation location) {

@@ -10,10 +10,14 @@ import dev.celestiacraft.cmi.common.block.advanced_spout.AdvancedSpoutRenderer;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderBlockEntity;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderInstance;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderRenderer;
+import dev.celestiacraft.cmi.common.block.fluid_burner.bronze.BronzeFluidBurnerBlockEntity;
+import dev.celestiacraft.cmi.common.block.fluid_burner.cast_iron.CastIronFluidBurnerBlockEntity;
+import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlockEntity;
 import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlockEntity;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlockEntity;
-import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlockEntity;
-import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlockEntity;
+import dev.celestiacraft.cmi.common.block.solar_boiler.bronze.BronzeSolarBoilerBlockEntity;
+import dev.celestiacraft.cmi.common.block.solar_boiler.cast_iron.CastIronSolarBoilerBlockEntity;
+import dev.celestiacraft.cmi.common.block.solar_boiler.steel.SteelSolarBoilerBlockEntity;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlockEntity;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerInstance;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerRenderer;
@@ -22,10 +26,9 @@ import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlockEnti
 import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlockEntity;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlockEnitiy;
+import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlockEntity;
+import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlockEntity;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlockEntity;
-import dev.celestiacraft.cmi.common.block.fluid_burner.bronze.BronzeFluidBurnerBlockEntity;
-import dev.celestiacraft.cmi.common.block.fluid_burner.cast_iron.CastIronFluidBurnerBlockEntity;
-import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlockEntity;
 
 public class CmiBlockEntity {
 	public static final BlockEntityEntry<TestGravelBlockEntity> TEST_GRAVEL;
@@ -45,6 +48,9 @@ public class CmiBlockEntity {
 	public static final BlockEntityEntry<BronzeFluidBurnerBlockEntity> BRONZE_FLUID_BURNER;
 	public static final BlockEntityEntry<CastIronFluidBurnerBlockEntity> CAST_IRON_FLUID_BURNER;
 	public static final BlockEntityEntry<SteelFluidBurnerBlockEntity> STEEL_FLUID_BURNER;
+	public static final BlockEntityEntry<BronzeSolarBoilerBlockEntity> BRONZE_SOLAR_BOILER;
+	public static final BlockEntityEntry<CastIronSolarBoilerBlockEntity> CAST_IRON_SOLAR_BOILER;
+	public static final BlockEntityEntry<SteelSolarBoilerBlockEntity> STEEL_SOLAR_BOILER;
 
 	static {
 		TEST_GRAVEL = Cmi.REGISTRATE.blockEntity("test_gravel", TestGravelBlockEntity::new)
@@ -104,6 +110,15 @@ public class CmiBlockEntity {
 				.register();
 		STEEL_FLUID_BURNER = Cmi.REGISTRATE.blockEntity("steel_fluid_burner", SteelFluidBurnerBlockEntity::new)
 				.validBlock(CmiBlock.STEEL_FLUID_BURNER)
+				.register();
+		BRONZE_SOLAR_BOILER = Cmi.REGISTRATE.blockEntity("bronze_solar_boiler", BronzeSolarBoilerBlockEntity::new)
+				.validBlock(CmiBlock.BRONZE_SOLAR_BOILER)
+				.register();
+		CAST_IRON_SOLAR_BOILER = Cmi.REGISTRATE.blockEntity("cast_iron_solar_boiler", CastIronSolarBoilerBlockEntity::new)
+				.validBlock(CmiBlock.CAST_IRON_SOLAR_BOILER)
+				.register();
+		STEEL_SOLAR_BOILER = Cmi.REGISTRATE.blockEntity("steel_solar_boiler", SteelSolarBoilerBlockEntity::new)
+				.validBlock(CmiBlock.STEEL_SOLAR_BOILER)
 				.register();
 	}
 

@@ -4,6 +4,7 @@ import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.teammoeg.steampowered.content.burner.IHeatReceiver;
+import dev.celestiacraft.cmi.common.block.fluid_burner.capability.FluidBurnerFluidHandler;
 import dev.celestiacraft.cmi.common.recipe.fluid_burn.FluidBurnRecipe;
 import dev.celestiacraft.cmi.common.register.CmiRecipeType;
 import net.minecraft.core.BlockPos;

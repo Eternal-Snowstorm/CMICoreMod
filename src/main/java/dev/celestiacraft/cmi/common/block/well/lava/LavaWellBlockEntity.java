@@ -1,23 +1,18 @@
 package dev.celestiacraft.cmi.common.block.well.lava;
 
-import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.common.block.well.lava.capability.LavaWellFluidCapability;
 import dev.celestiacraft.cmi.common.register.CmiMultiblock;
 import dev.celestiacraft.libs.api.register.multiblock.machine.FluidSlots;
 import dev.celestiacraft.libs.api.register.multiblock.machine.IOMode;
 import dev.celestiacraft.libs.api.register.multiblock.machine.MachineControllerBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-import java.util.List;
-
-public class LavaWellBlockEntity extends MachineControllerBlockEntity implements IHaveGoggleInformation {
+public class LavaWellBlockEntity extends MachineControllerBlockEntity {
 	public LavaWellBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state, CmiMultiblock.LAVA_PUMP);
 	}
@@ -64,19 +59,5 @@ public class LavaWellBlockEntity extends MachineControllerBlockEntity implements
 		return new FluidSlots[] {
 				new FluidSlots(Integer.MAX_VALUE, IOMode.OUTPUT)
 		};
-	}
-
-	@Override
-	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-		if (isMachineStructureValid() && level.dimension() == Level.NETHER) {
-			CmiLang.builder()
-					.translate("tooltip.lava_well.functional")
-					.forGoggles(tooltip);
-		} else {
-			CmiLang.builder()
-					.translate("tooltip.lava_well.non_functional")
-					.forGoggles(tooltip);
-		}
-		return true;
 	}
 }
