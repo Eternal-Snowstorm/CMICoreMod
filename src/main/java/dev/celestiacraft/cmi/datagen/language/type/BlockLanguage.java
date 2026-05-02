@@ -75,6 +75,21 @@ public class BlockLanguage extends LanguageGenerate {
 				"钢制流体燃烧室"
 		);
 		addBlockLanguage(
+				"bronze_solar_boiler",
+				"Bronze Solar Boiler",
+				"青铜太阳能蒸汽锅炉"
+		);
+		addBlockLanguage(
+				"cast_iron_solar_boiler",
+				"Cast Iron Solar Boiler",
+				"铸铁太阳能蒸汽锅炉"
+		);
+		addBlockLanguage(
+				"steel_solar_boiler",
+				"Steel Solar Boiler",
+				"钢制太阳能蒸汽锅炉"
+		);
+		addBlockLanguage(
 				"nahuatl_scaffold",
 				"Nahuatl Scaffold",
 				"纳瓦特尔脚手架"

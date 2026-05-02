@@ -16,12 +16,17 @@ import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorBloc
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorItem;
 import dev.celestiacraft.cmi.common.block.advanced_spout.AdvancedSpoutBlock;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderBlock;
+import dev.celestiacraft.cmi.common.block.fluid_burner.FluidBurnerBlock;
+import dev.celestiacraft.cmi.common.block.fluid_burner.bronze.BronzeFluidBurnerBlock;
+import dev.celestiacraft.cmi.common.block.fluid_burner.cast_iron.CastIronFluidBurnerBlock;
+import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlock;
 import dev.celestiacraft.cmi.common.block.golden_sapling.GoldenSaplingBlock;
 import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
-import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlock;
-import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlockItem;
-import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlock;
+import dev.celestiacraft.cmi.common.block.solar_boiler.SolarBoilerBlock;
+import dev.celestiacraft.cmi.common.block.solar_boiler.bronze.BronzeSolarBoilerBlock;
+import dev.celestiacraft.cmi.common.block.solar_boiler.cast_iron.CastIronSolarBoilerBlock;
+import dev.celestiacraft.cmi.common.block.solar_boiler.steel.SteelSolarBoilerBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerItem;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlock;
@@ -30,14 +35,13 @@ import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlock;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorItem;
+import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlock;
+import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlockItem;
+import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlock;
 import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlockItem;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlock;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlockItem;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
-import dev.celestiacraft.cmi.common.block.fluid_burner.FluidBurnerBlock;
-import dev.celestiacraft.cmi.common.block.fluid_burner.bronze.BronzeFluidBurnerBlock;
-import dev.celestiacraft.cmi.common.block.fluid_burner.cast_iron.CastIronFluidBurnerBlock;
-import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlock;
 import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockItem;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -64,11 +68,14 @@ public class CmiBlock {
 	public static final BlockEntry<TestMultiblockBlock> TEST_MULTIBLOCK;
 	public static final BlockEntry<TestCokeOvenBlock> TEST_COKE_OVEN;
 	public static final BlockEntry<TestCokeOvenIOBlock> TEST_COKE_OVEN_IO;
+	public static final BlockEntry<ScaffoldingBlock> NAHUATL_SCAFFOLD;
+	public static final BlockEntry<ScaffoldingBlock> BLAZEWOOD_SCAFFOLD;
 	public static final BlockEntry<BronzeFluidBurnerBlock> BRONZE_FLUID_BURNER;
 	public static final BlockEntry<CastIronFluidBurnerBlock> CAST_IRON_FLUID_BURNER;
 	public static final BlockEntry<SteelFluidBurnerBlock> STEEL_FLUID_BURNER;
-	public static final BlockEntry<ScaffoldingBlock> NAHUATL_SCAFFOLD;
-	public static final BlockEntry<ScaffoldingBlock> BLAZEWOOD_SCAFFOLD;
+	public static final BlockEntry<BronzeSolarBoilerBlock> BRONZE_SOLAR_BOILER;
+	public static final BlockEntry<CastIronSolarBoilerBlock> CAST_IRON_SOLAR_BOILER;
+	public static final BlockEntry<SteelSolarBoilerBlock> STEEL_SOLAR_BOILER;
 
 	static {
 		ACCELERATOR = Cmi.REGISTRATE.block("accelerator", AcceleratorBlock::new)
@@ -400,54 +407,6 @@ public class CmiBlock {
 							});
 				})
 				.register();
-		BRONZE_FLUID_BURNER = Cmi.REGISTRATE.block("bronze_fluid_burner", BronzeFluidBurnerBlock::new)
-				.initialProperties(SharedProperties::softMetal)
-				.transform(TagGen.pickaxeOnly())
-				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-				.tag(BlockTags.NEEDS_STONE_TOOL)
-				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item()
-				.model((context, provider) -> {
-					provider.withExistingParent(
-							context.getName(),
-							provider.modLoc("block/fluid_burner/bronze/off")
-					);
-				})
-				.build()
-				.blockstate(FluidBurnerBlock.burnerBlockState("bronze"))
-				.register();
-		CAST_IRON_FLUID_BURNER = Cmi.REGISTRATE.block("cast_iron_fluid_burner", CastIronFluidBurnerBlock::new)
-				.initialProperties(SPBlocks::hardMetal)
-				.transform(TagGen.pickaxeOnly())
-				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-				.tag(BlockTags.NEEDS_STONE_TOOL)
-				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item()
-				.model((context, provider) -> {
-					provider.withExistingParent(
-							context.getName(),
-							provider.modLoc("block/fluid_burner/cast_iron/off")
-					);
-				})
-				.build()
-				.blockstate(FluidBurnerBlock.burnerBlockState("cast_iron"))
-				.register();
-		STEEL_FLUID_BURNER = Cmi.REGISTRATE.block("steel_fluid_burner", SteelFluidBurnerBlock::new)
-				.initialProperties(SPBlocks::hardMetal)
-				.transform(TagGen.pickaxeOnly())
-				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-				.tag(BlockTags.NEEDS_STONE_TOOL)
-				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item()
-				.model((context, provider) -> {
-					provider.withExistingParent(
-							context.getName(),
-							provider.modLoc("block/fluid_burner/steel/off")
-					);
-				})
-				.build()
-				.blockstate(FluidBurnerBlock.burnerBlockState("steel"))
-				.register();
 		NAHUATL_SCAFFOLD = Cmi.REGISTRATE.block("nahuatl_scaffold", ScaffoldingBlock::new)
 				.properties((properties) -> {
 					return properties.noOcclusion();
@@ -499,6 +458,102 @@ public class CmiBlock {
 					);
 				})
 				.build()
+				.register();
+		BRONZE_FLUID_BURNER = Cmi.REGISTRATE.block("bronze_fluid_burner", BronzeFluidBurnerBlock::new)
+				.initialProperties(SharedProperties::softMetal)
+				.transform(TagGen.pickaxeOnly())
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+				.item()
+				.model((context, provider) -> {
+					provider.withExistingParent(
+							context.getName(),
+							provider.modLoc("block/fluid_burner/bronze/off")
+					);
+				})
+				.build()
+				.blockstate(FluidBurnerBlock.genBlockState("bronze"))
+				.register();
+		CAST_IRON_FLUID_BURNER = Cmi.REGISTRATE.block("cast_iron_fluid_burner", CastIronFluidBurnerBlock::new)
+				.initialProperties(SPBlocks::hardMetal)
+				.transform(TagGen.pickaxeOnly())
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+				.item()
+				.model((context, provider) -> {
+					provider.withExistingParent(
+							context.getName(),
+							provider.modLoc("block/fluid_burner/cast_iron/off")
+					);
+				})
+				.build()
+				.blockstate(FluidBurnerBlock.genBlockState("cast_iron"))
+				.register();
+		STEEL_FLUID_BURNER = Cmi.REGISTRATE.block("steel_fluid_burner", SteelFluidBurnerBlock::new)
+				.initialProperties(SPBlocks::hardMetal)
+				.transform(TagGen.pickaxeOnly())
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+				.item()
+				.model((context, provider) -> {
+					provider.withExistingParent(
+							context.getName(),
+							provider.modLoc("block/fluid_burner/steel/off")
+					);
+				})
+				.build()
+				.blockstate(FluidBurnerBlock.genBlockState("steel"))
+				.register();
+		BRONZE_SOLAR_BOILER = Cmi.REGISTRATE.block("bronze_solar_boiler", BronzeSolarBoilerBlock::new)
+				.initialProperties(SharedProperties::softMetal)
+				.transform(TagGen.pickaxeOnly())
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+				.item()
+				.model((context, provider) -> {
+					provider.withExistingParent(
+							context.getName(),
+							provider.modLoc("block/solar_boiler/bronze")
+					);
+				})
+				.build()
+				.blockstate(SolarBoilerBlock.genBlockState("bronze"))
+				.register();
+		CAST_IRON_SOLAR_BOILER = Cmi.REGISTRATE.block("cast_iron_solar_boiler", CastIronSolarBoilerBlock::new)
+				.initialProperties(SharedProperties::softMetal)
+				.transform(TagGen.pickaxeOnly())
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+				.item()
+				.model((context, provider) -> {
+					provider.withExistingParent(
+							context.getName(),
+							provider.modLoc("block/solar_boiler/cast_iron")
+					);
+				})
+				.build()
+				.blockstate(SolarBoilerBlock.genBlockState("cast_iron"))
+				.register();
+		STEEL_SOLAR_BOILER = Cmi.REGISTRATE.block("steel_solar_boiler", SteelSolarBoilerBlock::new)
+				.initialProperties(SharedProperties::softMetal)
+				.transform(TagGen.pickaxeOnly())
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+				.item()
+				.model((context, provider) -> {
+					provider.withExistingParent(
+							context.getName(),
+							provider.modLoc("block/solar_boiler/steel")
+					);
+				})
+				.build()
+				.blockstate(SolarBoilerBlock.genBlockState("steel"))
 				.register();
 	}
 

@@ -44,7 +44,13 @@ public class AddCreativeModeTabs {
 					CmiBlock.STEAM_HAMMER,
 					CmiBlock.ADVANCED_SPOUT,
 					CmiBlock.VOID_DUST_COLLECTOR,
-					CmiBlock.BELT_GRINDER
+					CmiBlock.BELT_GRINDER,
+					CmiBlock.BRONZE_FLUID_BURNER,
+					CmiBlock.BRONZE_SOLAR_BOILER,
+					CmiBlock.CAST_IRON_FLUID_BURNER,
+					CmiBlock.CAST_IRON_SOLAR_BOILER,
+					CmiBlock.STEEL_FLUID_BURNER,
+					CmiBlock.STEEL_SOLAR_BOILER
 			).forEach((block) -> {
 				event.accept(block.asItem());
 			});
