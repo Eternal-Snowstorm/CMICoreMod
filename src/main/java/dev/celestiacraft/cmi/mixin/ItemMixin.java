@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.mixin;
 
-import dev.celestiacraft.cmi.tag.ModItemTags;
+import dev.celestiacraft.cmi.tags.ModItemTags;
 import earth.terrarium.adastra.common.blocks.base.Wrenchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;

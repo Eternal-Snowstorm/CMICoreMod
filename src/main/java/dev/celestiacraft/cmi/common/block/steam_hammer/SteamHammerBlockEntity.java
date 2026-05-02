@@ -20,7 +20,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import dev.celestiacraft.cmi.config.CommonConfig;
-import dev.celestiacraft.cmi.tag.ModFluidTags;
+import dev.celestiacraft.cmi.tags.ModFluidTags;
 
 import java.util.Optional;
 

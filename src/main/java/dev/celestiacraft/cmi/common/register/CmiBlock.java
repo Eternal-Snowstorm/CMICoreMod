@@ -42,6 +42,7 @@ import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlockItem;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlock;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlockItem;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
+import dev.celestiacraft.cmi.tags.ModItemTags;
 import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockItem;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -466,6 +467,7 @@ public class CmiBlock {
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.item()
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -482,6 +484,7 @@ public class CmiBlock {
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.item()
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -498,6 +501,7 @@ public class CmiBlock {
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.item()
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -514,6 +518,7 @@ public class CmiBlock {
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.item()
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -530,6 +535,7 @@ public class CmiBlock {
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.item()
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -546,6 +552,7 @@ public class CmiBlock {
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.item()
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),

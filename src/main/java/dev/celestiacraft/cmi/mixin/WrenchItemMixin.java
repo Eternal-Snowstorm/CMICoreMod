@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.mixin;
 
-import dev.celestiacraft.cmi.tag.ModItemTags;
+import dev.celestiacraft.cmi.tags.ModItemTags;
 import earth.terrarium.adastra.common.items.WrenchItem;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;

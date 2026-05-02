@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.tag;
+package dev.celestiacraft.cmi.tags;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
