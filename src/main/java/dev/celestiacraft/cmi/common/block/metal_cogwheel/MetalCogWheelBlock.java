@@ -73,6 +73,6 @@ public class MetalCogWheelBlock extends CogWheelBlock {
 
 	@Override
 	public BlockEntityType<? extends KineticBlockEntity> getBlockEntityType() {
-		return CmiBlockEntity.registerCogWheel().get();
+		return CmiBlockEntity.COGWHEEL.get();
 	}
 }
