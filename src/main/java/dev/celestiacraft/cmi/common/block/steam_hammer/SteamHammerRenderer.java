@@ -3,7 +3,7 @@ package dev.celestiacraft.cmi.common.block.steam_hammer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.press.PressingBehaviour;
-import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
+import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;

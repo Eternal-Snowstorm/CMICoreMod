@@ -3,7 +3,7 @@ package dev.celestiacraft.cmi.common.block.steam_hammer;
 import com.simibubi.create.content.kinetics.base.ShaftVisual;
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlock;
 import com.simibubi.create.content.kinetics.press.PressingBehaviour;
-import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
+import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.engine_room.flywheel.api.visual.DynamicVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;

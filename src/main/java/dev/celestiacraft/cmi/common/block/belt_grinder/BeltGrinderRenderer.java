@@ -23,8 +23,8 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
-import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
+import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
+import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
 
 public class BeltGrinderRenderer extends SafeBlockEntityRenderer<BeltGrinderBlockEntity> {
 	public BeltGrinderRenderer(BlockEntityRendererProvider.Context context) {

@@ -2,25 +2,10 @@
 	"parent": "create:block/large_wheels",
 	"texture_size": [32, 32],
 	"textures": {
-		"axis_top": "create:block/axis_top",
-		"cogwheel_axis": "create:block/cogwheel_axis",
 		"particle": "cogwheel_gear",
 		"cogwheel": "cogwheel_gear"
 	},
 	"elements": [
-		{
-			"name": "Axis",
-			"from": [6, 0, 6],
-			"to": [10, 16, 10],
-			"faces": {
-				"north": {"uv": [6, 0, 10, 16], "texture": "#cogwheel_axis"},
-				"east": {"uv": [6, 0, 10, 16], "texture": "#cogwheel_axis"},
-				"south": {"uv": [6, 0, 10, 16], "texture": "#cogwheel_axis"},
-				"west": {"uv": [6, 0, 10, 16], "texture": "#cogwheel_axis"},
-				"up": {"uv": [6, 6, 10, 10], "texture": "#axis_top"},
-				"down": {"uv": [6, 6, 10, 10], "texture": "#axis_top"}
-			}
-		},
 		{
 			"name": "GearCaseInnerRotated",
 			"from": [-2, 6.625, -2],

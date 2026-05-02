@@ -6,9 +6,10 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import dev.celestiacraft.cmi.client.CmiClient;
-import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
-import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
+import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
+import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
+import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
@@ -73,6 +74,8 @@ public class Cmi {
 
 		CmiBlockPartialModel.init();
 		CmiSpriteShiftEntry.init();
+
+		MetalCogWheelPartial.init();
 
 		CmiNetwork.register();
 

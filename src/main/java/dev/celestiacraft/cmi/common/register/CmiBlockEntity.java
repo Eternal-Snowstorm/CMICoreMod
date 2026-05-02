@@ -1,12 +1,11 @@
 package dev.celestiacraft.cmi.common.register;
 
 import com.simibubi.create.content.kinetics.base.ShaftVisual;
-import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityVisual;
 import com.simibubi.create.foundation.data.CreateBlockEntityBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.register.block.CogWheelRegister;
+import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorBlockEntity;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorRenderer;
 import dev.celestiacraft.cmi.common.block.advanced_spout.AdvancedSpoutBlockEntity;
@@ -21,6 +20,7 @@ import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVen
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlockEntity;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockEntity;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelRenderer;
+import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelVisual;
 import dev.celestiacraft.cmi.common.block.solar_boiler.bronze.BronzeSolarBoilerBlockEntity;
 import dev.celestiacraft.cmi.common.block.solar_boiler.cast_iron.CastIronSolarBoilerBlockEntity;
 import dev.celestiacraft.cmi.common.block.solar_boiler.steel.SteelSolarBoilerBlockEntity;
@@ -130,13 +130,14 @@ public class CmiBlockEntity {
 				.register();
 	}
 
-	private static BlockEntityEntry registerCogWheel() {
-		CreateBlockEntityBuilder<MetalCogWheelBlockEntity, CreateRegistrate> builder = Cmi.REGISTRATE.blockEntity("cogwheel", MetalCogWheelBlockEntity::new);
+	public static BlockEntityEntry<MetalCogWheelBlockEntity> registerCogWheel() {
+		CreateBlockEntityBuilder<MetalCogWheelBlockEntity, CreateRegistrate> builder = Cmi.REGISTRATE
+				.blockEntity("cogwheel", MetalCogWheelBlockEntity::new);
 
-		CogWheelRegister.COMMON_LIST.forEach((cogwheel) -> {
+		MetalCogWheelRegister.COMMON_LIST.forEach((cogwheel) -> {
 			builder.validBlock(cogwheel);
 		});
-		builder.visual(() -> BracketedKineticBlockEntityVisual::create, true);
+		builder.visual(() -> MetalCogWheelVisual::create, false);
 		builder.renderer(() -> MetalCogWheelRenderer::new);
 
 		return builder.register();

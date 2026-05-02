@@ -1,8 +1,9 @@
 package dev.celestiacraft.cmi.client;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
-import dev.celestiacraft.cmi.client.block.resource.CmiSpriteShiftEntry;
+import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
+import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
+import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.event.radial.CmiRadialAction;
 import dev.celestiacraft.cmi.client.key.CmiKeyMapping;
 import dev.celestiacraft.cmi.client.menu.CmiRadialMenu;
@@ -36,6 +37,8 @@ public class CmiClient {
 	public static void onClientSetup(FMLClientSetupEvent event) {
 		CmiBlockPartialModel.init();
 		CmiSpriteShiftEntry.init();
+
+		MetalCogWheelPartial.init();
 
 		EntityRenderers.register(CmiEntity.QI_MONTH.get(), QiMonthRenderer::new);
 		EntityRenderers.register(CmiEntity.SPACE_ELEVATOR.get(), SpaceElevatorRenderer::new);

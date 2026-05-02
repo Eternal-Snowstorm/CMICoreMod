@@ -1,13 +1,13 @@
 package dev.celestiacraft.cmi.common.register;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.register.block.CogWheelRegister;
-import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelSet;
+import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
+import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelInfo;
 
-public class CmiCogwheel extends CogWheelRegister {
-	public static final MetalCogWheelSet BRONZE;
-	public static final MetalCogWheelSet CAST_IRON;
-	public static final MetalCogWheelSet STEEL;
+public class CmiCogwheel extends MetalCogWheelRegister {
+	public static final MetalCogWheelInfo BRONZE;
+	public static final MetalCogWheelInfo CAST_IRON;
+	public static final MetalCogWheelInfo STEEL;
 
 	static {
 		BRONZE = register("bronze");

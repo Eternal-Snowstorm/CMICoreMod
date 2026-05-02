@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.event;
 
 import com.simibubi.create.AllItems;
-import dev.celestiacraft.cmi.api.register.block.CogWheelRegister;
+import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiCreativeTab;
 import dev.celestiacraft.cmi.common.register.CmiItem;
@@ -62,7 +62,7 @@ public class AddCreativeModeTabs {
 				event.accept(item.asItem());
 			});
 
-			CogWheelRegister.COMMON_LIST.forEach((cogwhee) -> {
+			MetalCogWheelRegister.COMMON_LIST.forEach((cogwhee) -> {
 				event.accept(cogwhee.asItem());
 			});
 		}

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour.TankSegment;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
-import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
+import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.platform.ForgeCatnipServices;
 import net.createmod.catnip.render.CachedBuffers;

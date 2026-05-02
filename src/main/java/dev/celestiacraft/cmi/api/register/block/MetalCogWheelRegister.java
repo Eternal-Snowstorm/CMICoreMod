@@ -8,19 +8,24 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelSet;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlock;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockItem;
+import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelInfo;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
 import dev.celestiacraft.cmi.tags.ModBlockTags;
 import dev.celestiacraft.cmi.tags.ModItemTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class CogWheelRegister {
+public class MetalCogWheelRegister {
 	public static final List<BlockEntry<MetalCogWheelBlock>> COMMON_LIST = new ArrayList<>();
+	public static final List<String> MATERIAL_LIST = new ArrayList<>();
+	public static final Map<Block, MetalCogWheelInfo> BLOCK_TO_SET = new HashMap<>();
 
 	private static <T extends MetalCogWheelBlock> BlockBuilder<T, CreateRegistrate> registerSmall(String material, NonNullFunction<BlockBehaviour.Properties, T> factory) {
 		String name = String.format("%s_cogwheel", material);
@@ -68,13 +73,33 @@ public class CogWheelRegister {
 		return builder;
 	}
 
-	public static MetalCogWheelSet register(String material) {
-		BlockEntry<MetalCogWheelBlock> small = registerSmall(material, MetalCogWheelBlock::small).register();
-		BlockEntry<MetalCogWheelBlock> large = registerLarge(material, MetalCogWheelBlock::large).register();
+	public static MetalCogWheelInfo register(String material) {
+		BlockBuilder<MetalCogWheelBlock, CreateRegistrate> smallBuilder = registerSmall(material, MetalCogWheelBlock::small);
+		BlockBuilder<MetalCogWheelBlock, CreateRegistrate> largeBuilder = registerLarge(material, MetalCogWheelBlock::large);
+		final MetalCogWheelInfo[] holder = new MetalCogWheelInfo[1];
+
+		smallBuilder.onRegister((block) -> {
+			if (holder[0] != null) {
+				BLOCK_TO_SET.put(block, holder[0]);
+			}
+		});
+
+		largeBuilder.onRegister((block) -> {
+			if (holder[0] != null) {
+				BLOCK_TO_SET.put(block, holder[0]);
+			}
+		});
+
+		BlockEntry<MetalCogWheelBlock> small = smallBuilder.register();
+		BlockEntry<MetalCogWheelBlock> large = largeBuilder.register();
+
+		MetalCogWheelInfo set = new MetalCogWheelInfo(material, small, large);
+		holder[0] = set;
 
 		COMMON_LIST.add(small);
 		COMMON_LIST.add(large);
+		MATERIAL_LIST.add(material);
 
-		return new MetalCogWheelSet(small, large);
+		return set;
 	}
 }

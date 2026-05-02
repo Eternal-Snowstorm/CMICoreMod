@@ -4,11 +4,13 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import lombok.Getter;
 
 @Getter
-public class MetalCogWheelSet {
+public class MetalCogWheelInfo {
+	private final String material;
 	private final BlockEntry<MetalCogWheelBlock> small;
 	private final BlockEntry<MetalCogWheelBlock> large;
 
-	public MetalCogWheelSet(BlockEntry<MetalCogWheelBlock> small, BlockEntry<MetalCogWheelBlock> large) {
+	public MetalCogWheelInfo(String material, BlockEntry<MetalCogWheelBlock> small, BlockEntry<MetalCogWheelBlock> large) {
+		this.material = material;
 		this.small = small;
 		this.large = large;
 	}
