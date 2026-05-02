@@ -59,6 +59,7 @@ public class Cmi {
 		REGISTRATE.registerEventListeners(bus);
 
 		CmiBlock.register();
+		CmiCogwheel.register();
 		CmiBlockEntity.register();
 		CmiEntity.register();
 		CmiItem.register();

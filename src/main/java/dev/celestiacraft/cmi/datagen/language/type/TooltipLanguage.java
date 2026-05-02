@@ -7,16 +7,6 @@ public class TooltipLanguage extends LanguageGenerate {
 	public static void addLang() {
 		// Water Well
 		addTooltipLang(
-				"water_well.functional",
-				"Water Well Functional",
-				"水井工作正常"
-		);
-		addTooltipLang(
-				"water_well.non_functional",
-				"Water Well Not Functional",
-				"水井结构不完整"
-		);
-		addTooltipLang(
 				"water_well.runningEnvironment",
 				"Can operate in any environment",
 				"可在任何环境下工作"
@@ -27,27 +17,7 @@ public class TooltipLanguage extends LanguageGenerate {
 				"Lava Well Functional",
 				"熔岩井工作正常"
 		);
-		addTooltipLang(
-				"lava_well.non_functional",
-				"Lava Well Not Functional",
-				"熔岩井结构不完整"
-		);
-		addTooltipLang(
-				"lava_well.runningEnvironment",
-				"Can only run in Nether",
-				"只能在下界运行"
-		);
 		// Blazing Blood Well
-		addTooltipLang(
-				"blazing_blood_well.functional",
-				"Blazing Blood Well Functional",
-				"烈焰血井工作正常"
-		);
-		addTooltipLang(
-				"blazing_blood_well.non_functional",
-				"Blazing Blood Well Not Functional",
-				"烈焰血井结构不完整"
-		);
 		addTooltipLang(
 				"blazing_blood_well.runningEnvironment",
 				"Can only run in Nether",

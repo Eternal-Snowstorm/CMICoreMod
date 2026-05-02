@@ -99,5 +99,33 @@ public class BlockLanguage extends LanguageGenerate {
 				"Blazewood Scaffold",
 				"烈焰木脚手架"
 		);
+		addCogWheelLang(
+				"bronze",
+				"Bronze",
+				"青铜"
+		);
+		addCogWheelLang(
+				"cast_iron",
+				"Cast Iron",
+				"铸铁"
+		);
+		addCogWheelLang(
+				"steel",
+				"Steel",
+				"钢"
+		);
+	}
+
+	private static void addCogWheelLang(String material, String english, String chinese) {
+		addBlockLanguage(
+				"%s_cogwheel".formatted(material),
+				"%s Cogwheel".formatted(english),
+				"%s齿轮".formatted(chinese)
+		);
+		addBlockLanguage(
+				"%s_large_cogwheel".formatted(material),
+				"%s Large Cogwheel".formatted(english),
+				"%s大齿轮".formatted(chinese)
+		);
 	}
 }
