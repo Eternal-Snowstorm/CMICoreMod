@@ -14,7 +14,7 @@ public class MetalCogWheelPartial {
 	public static final Map<String, PartialModel> LARGE_WITH_SHAFT = new HashMap<>();
 
 	public static void register() {
-		MetalCogWheelRegister.MATERIAL_LIST.forEach(material -> {
+		MetalCogWheelRegister.MATERIAL_LIST.forEach((material) -> {
 			SMALL.put(material, partial(material, "small_gear"));
 			LARGE.put(material, partial(material, "large_gear"));
 			SMALL_WITH_SHAFT.put(material, partial(material, "small"));
