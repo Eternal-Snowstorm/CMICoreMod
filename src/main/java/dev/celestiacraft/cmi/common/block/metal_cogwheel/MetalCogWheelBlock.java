@@ -36,12 +36,12 @@ public class MetalCogWheelBlock extends CogWheelBlock {
 			String partialPath = String.format("block/cogwheel/%s/%s_gear", material, type);
 
 			BlockModelBuilder main = models.withExistingParent(mainPath, models.modLoc("block/cogwheel/basic/" + type))
-					.texture("particle", models.modLoc("block/cogwheel/" + material + "/" + type))
-					.texture("cogwheel", models.modLoc("block/cogwheel/" + material + "/" + type));
+					.texture("particle", models.modLoc("block/cogwheel/%s/%s".formatted(material, type)))
+					.texture("cogwheel", models.modLoc("block/cogwheel/%s/%s".formatted(material, type)));
 
 			BlockModelBuilder partial = models.withExistingParent(partialPath, models.modLoc("block/cogwheel/basic/" + type + "_gear"))
-					.texture("particle", models.modLoc("block/cogwheel/" + material + "/" + type))
-					.texture("cogwheel", models.modLoc("block/cogwheel/" + material + "/" + type));
+					.texture("particle", models.modLoc("block/cogwheel/%s/%s".formatted(material, type)))
+					.texture("cogwheel", models.modLoc("block/cogwheel/%s/%s".formatted(material, type)));
 
 			provider.getVariantBuilder(context.get())
 					.forAllStates((state) -> {

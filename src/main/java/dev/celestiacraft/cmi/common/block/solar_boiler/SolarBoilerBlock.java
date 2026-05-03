@@ -30,9 +30,9 @@ public abstract class SolarBoilerBlock extends BasicBlock implements IBE<SolarBo
 						BlockModelProvider models = provider.models();
 
 						BlockModelBuilder modelFile = models.withExistingParent(path, "block/cube_bottom_top")
-								.texture("up", models.modLoc("block/solar_boiler/" + material + "/top"))
-								.texture("down", models.modLoc("block/solar_boiler/" + material + "/down"))
-								.texture("side", models.modLoc("block/solar_boiler/" + material + "/side"));
+								.texture("up", models.modLoc("block/solar_boiler/%s/top".formatted(material)))
+								.texture("down", models.modLoc("block/solar_boiler/%s/down".formatted(material)))
+								.texture("side", models.modLoc("block/solar_boiler/%s/side".formatted(material)));
 
 						return ConfiguredModel.builder()
 								.modelFile(modelFile)
