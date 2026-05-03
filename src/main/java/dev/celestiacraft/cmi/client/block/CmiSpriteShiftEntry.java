@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.client.block.resource;
+package dev.celestiacraft.cmi.client.block;
 
 import dev.celestiacraft.cmi.Cmi;
 import net.createmod.catnip.render.SpriteShiftEntry;

@@ -17,6 +17,7 @@ import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorItem
 import dev.celestiacraft.cmi.common.block.advanced_spout.AdvancedSpoutBlock;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderBlock;
 import dev.celestiacraft.cmi.common.block.fluid_burner.FluidBurnerBlock;
+import dev.celestiacraft.cmi.common.block.fluid_burner.FluidBurnerBlockItem;
 import dev.celestiacraft.cmi.common.block.fluid_burner.bronze.BronzeFluidBurnerBlock;
 import dev.celestiacraft.cmi.common.block.fluid_burner.cast_iron.CastIronFluidBurnerBlock;
 import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlock;
@@ -24,6 +25,7 @@ import dev.celestiacraft.cmi.common.block.golden_sapling.GoldenSaplingBlock;
 import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.solar_boiler.SolarBoilerBlock;
+import dev.celestiacraft.cmi.common.block.solar_boiler.SolarBoilerBlockItem;
 import dev.celestiacraft.cmi.common.block.solar_boiler.bronze.BronzeSolarBoilerBlock;
 import dev.celestiacraft.cmi.common.block.solar_boiler.cast_iron.CastIronSolarBoilerBlock;
 import dev.celestiacraft.cmi.common.block.solar_boiler.steel.SteelSolarBoilerBlock;
@@ -42,6 +44,7 @@ import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlockItem;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlock;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlockItem;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
+import dev.celestiacraft.cmi.tags.ModItemTags;
 import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockItem;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -465,7 +468,8 @@ public class CmiBlock {
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item()
+				.item(FluidBurnerBlockItem::new)
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -481,7 +485,8 @@ public class CmiBlock {
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item()
+				.item(FluidBurnerBlockItem::new)
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -497,7 +502,8 @@ public class CmiBlock {
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item()
+				.item(FluidBurnerBlockItem::new)
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -513,7 +519,8 @@ public class CmiBlock {
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item()
+				.item(SolarBoilerBlockItem::new)
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -529,7 +536,8 @@ public class CmiBlock {
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item()
+				.item(SolarBoilerBlockItem::new)
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),
@@ -545,7 +553,8 @@ public class CmiBlock {
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item()
+				.item(SolarBoilerBlockItem::new)
+				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
 							context.getName(),

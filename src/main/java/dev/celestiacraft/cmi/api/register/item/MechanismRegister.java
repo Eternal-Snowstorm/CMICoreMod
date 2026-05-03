@@ -7,7 +7,7 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.textures.Items;
 import dev.celestiacraft.cmi.common.item.MechanismItem;
-import dev.celestiacraft.cmi.tag.ModItemTags;
+import dev.celestiacraft.cmi.tags.ModItemTags;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;

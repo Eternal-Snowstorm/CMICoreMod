@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.client.block.resource;
+package dev.celestiacraft.cmi.client.block;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;

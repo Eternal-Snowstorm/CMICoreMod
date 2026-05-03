@@ -4,7 +4,7 @@ import com.simibubi.create.compat.jei.category.ProcessingViaFanCategory;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.freezing.FreezingRecipe;
-import dev.celestiacraft.cmi.tag.ModBlockTags;
+import dev.celestiacraft.cmi.tags.ModBlockTags;
 import dev.celestiacraft.libs.client.TagAnimatedBlock;
 import net.createmod.catnip.gui.element.GuiGameElement;
 import net.minecraft.client.gui.GuiGraphics;

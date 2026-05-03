@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.datagen.tags;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.tag.ModBlockTags;
+import dev.celestiacraft.cmi.tags.ModBlockTags;
 import earth.terrarium.adastra.common.registry.ModBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

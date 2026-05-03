@@ -1,8 +1,11 @@
 package dev.celestiacraft.cmi.common.register;
 
 import com.simibubi.create.content.kinetics.base.ShaftVisual;
+import com.simibubi.create.foundation.data.CreateBlockEntityBuilder;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorBlockEntity;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorRenderer;
 import dev.celestiacraft.cmi.common.block.advanced_spout.AdvancedSpoutBlockEntity;
@@ -15,6 +18,8 @@ import dev.celestiacraft.cmi.common.block.fluid_burner.cast_iron.CastIronFluidBu
 import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlockEntity;
 import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlockEntity;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlockEntity;
+import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockEntity;
+import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelVisual;
 import dev.celestiacraft.cmi.common.block.solar_boiler.bronze.BronzeSolarBoilerBlockEntity;
 import dev.celestiacraft.cmi.common.block.solar_boiler.cast_iron.CastIronSolarBoilerBlockEntity;
 import dev.celestiacraft.cmi.common.block.solar_boiler.steel.SteelSolarBoilerBlockEntity;
@@ -51,6 +56,7 @@ public class CmiBlockEntity {
 	public static final BlockEntityEntry<BronzeSolarBoilerBlockEntity> BRONZE_SOLAR_BOILER;
 	public static final BlockEntityEntry<CastIronSolarBoilerBlockEntity> CAST_IRON_SOLAR_BOILER;
 	public static final BlockEntityEntry<SteelSolarBoilerBlockEntity> STEEL_SOLAR_BOILER;
+	public static final BlockEntityEntry<MetalCogWheelBlockEntity> COGWHEEL;
 
 	static {
 		TEST_GRAVEL = Cmi.REGISTRATE.blockEntity("test_gravel", TestGravelBlockEntity::new)
@@ -120,6 +126,11 @@ public class CmiBlockEntity {
 		STEEL_SOLAR_BOILER = Cmi.REGISTRATE.blockEntity("steel_solar_boiler", SteelSolarBoilerBlockEntity::new)
 				.validBlock(CmiBlock.STEEL_SOLAR_BOILER)
 				.register();
+		CreateBlockEntityBuilder<MetalCogWheelBlockEntity, CreateRegistrate> cogwheelBuilder = Cmi.REGISTRATE
+				.blockEntity("cogwheel", MetalCogWheelBlockEntity::new)
+				.visual(() -> MetalCogWheelVisual::create);
+		MetalCogWheelRegister.COMMON_LIST.forEach(cogwheelBuilder::validBlock);
+		COGWHEEL = cogwheelBuilder.register();
 	}
 
 	public static void register() {

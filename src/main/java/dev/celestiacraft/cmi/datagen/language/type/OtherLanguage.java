@@ -5,6 +5,12 @@ import dev.celestiacraft.cmi.datagen.language.LanguageGenerate;
 
 public class OtherLanguage extends LanguageGenerate {
 	public static void addLang() {
+		addLanguage(
+				"message",
+				"notFindItem",
+				"Not Find Item!",
+				"未找到物品!"
+		);
 		addCreativeTabLang(
 				"mechanisms",
 				"CMI: Mechanisms",
@@ -32,7 +38,6 @@ public class OtherLanguage extends LanguageGenerate {
 				"Mechanism",
 				"构件"
 		);
-		// Jede
 		addLanguage(
 				"config.jade",
 				"plugin_cmi.common",

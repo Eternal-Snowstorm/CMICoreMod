@@ -5,7 +5,7 @@ import com.mojang.math.Axis;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
-import dev.celestiacraft.cmi.client.block.resource.CmiBlockPartialModel;
+import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderBlock;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 

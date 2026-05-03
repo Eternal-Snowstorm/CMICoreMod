@@ -2,7 +2,7 @@ package dev.celestiacraft.cmi.common.register;
 
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles;
 import blusunrize.immersiveengineering.common.register.IEBlocks;
-import dev.celestiacraft.cmi.tag.ModBlockTags;
+import dev.celestiacraft.cmi.tags.ModBlockTags;
 import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.StructureBuilder;
