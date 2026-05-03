@@ -9,12 +9,15 @@ import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEn
 import com.simibubi.create.content.kinetics.simpleRelays.ICogWheel;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
 import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
+import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.model.Model;
 import dev.engine_room.flywheel.api.visual.BlockEntityVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.Models;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
+
+import java.util.function.Consumer;
 
 public class MetalCogWheelVisual {
 	public static BlockEntityVisual<BracketedKineticBlockEntity> create(
@@ -103,7 +106,7 @@ public class MetalCogWheelVisual {
 		}
 
 		@Override
-		public void collectCrumblingInstances(java.util.function.Consumer<dev.engine_room.flywheel.api.instance.Instance> consumer) {
+		public void collectCrumblingInstances(Consumer<Instance> consumer) {
 			super.collectCrumblingInstances(consumer);
 			consumer.accept(additionalShaft);
 		}
