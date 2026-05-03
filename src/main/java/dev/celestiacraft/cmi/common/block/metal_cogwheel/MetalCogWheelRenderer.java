@@ -25,6 +25,7 @@ public class MetalCogWheelRenderer extends KineticBlockEntityRenderer<BracketedK
 		super(context);
 	}
 
+	@Override
 	protected void renderSafe(
 			BracketedKineticBlockEntity entity,
 			float partialTicks,
@@ -33,51 +34,47 @@ public class MetalCogWheelRenderer extends KineticBlockEntityRenderer<BracketedK
 			int light,
 			int overlay
 	) {
-		if (!VisualizationManager.supportsVisualization(entity.getLevel())) {
-			Block block = entity.getBlockState().getBlock();
-			MetalCogWheelInfo set = MetalCogWheelRegister.BLOCK_TO_SET.get(block);
+		if (VisualizationManager.supportsVisualization(entity.getLevel()))
+			return;
 
-			if (set == null) {
-				super.renderSafe(entity, partialTicks, stack, source, light, overlay);
-				return;
-			}
+		Block block = entity.getBlockState().getBlock();
+		MetalCogWheelInfo info = MetalCogWheelRegister.BLOCK_TO_SET.get(block);
 
-			String material = set.getMaterial();
-			Direction.Axis axis = getRotationAxisOf(entity);
-			Direction facing = Direction.fromAxisAndDirection(axis, Direction.AxisDirection.POSITIVE);
-
-			VertexConsumer vc = source.getBuffer(RenderType.solid());
-
-			if (!ICogWheel.isLargeCog(entity.getBlockState())) {
-				SuperByteBuffer buffer = CachedBuffers.partialFacingVertical(
-						MetalCogWheelPartial.SMALL.get(material),
-						entity.getBlockState(),
-						facing
-				);
-
-				renderRotatingBuffer(entity, buffer, stack, vc, light);
-				return;
-			}
-
-			SuperByteBuffer cog = CachedBuffers.partialFacingVertical(
-					MetalCogWheelPartial.LARGE.get(material),
-					entity.getBlockState(),
-					facing
-			);
-
-			renderRotatingBuffer(entity, cog, stack, vc, light);
-
-			float angle = getAngleForLargeCogShaft(entity, axis);
-
-			SuperByteBuffer shaft = CachedBuffers.partialFacingVertical(
-					AllPartialModels.COGWHEEL_SHAFT,
-					entity.getBlockState(),
-					facing
-			);
-
-			kineticRotationTransform(shaft, entity, axis, angle, light);
-			shaft.renderInto(stack, vc);
+		if (info == null) {
+			super.renderSafe(entity, partialTicks, stack, source, light, overlay);
+			return;
 		}
+
+		if (!ICogWheel.isLargeCog(entity.getBlockState())) {
+			super.renderSafe(entity, partialTicks, stack, source, light, overlay);
+			return;
+		}
+
+		String material = info.getMaterial();
+
+		VertexConsumer vc = source.getBuffer(RenderType.solid());
+
+		Direction.Axis axis = getRotationAxisOf(entity);
+		Direction facing = Direction.fromAxisAndDirection(axis, Direction.AxisDirection.POSITIVE);
+
+		SuperByteBuffer cog = CachedBuffers.partialFacingVertical(
+				MetalCogWheelPartial.LARGE.get(material),
+				entity.getBlockState(),
+				facing
+		);
+
+		renderRotatingBuffer(entity, cog, stack, vc, light);
+
+		float angle = getAngleForLargeCogShaft(entity, axis);
+
+		SuperByteBuffer shaft = CachedBuffers.partialFacingVertical(
+				AllPartialModels.COGWHEEL_SHAFT,
+				entity.getBlockState(),
+				facing
+		);
+
+		kineticRotationTransform(shaft, entity, axis, angle, light);
+		shaft.renderInto(stack, vc);
 	}
 
 	public static float getAngleForLargeCogShaft(SimpleKineticBlockEntity entity, Direction.Axis axis) {
