@@ -4,7 +4,6 @@ import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import dev.celestiacraft.libs.api.interaction.IFluidInteractable;
 import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockFacing;
 import net.minecraft.core.Direction;
@@ -17,7 +16,7 @@ import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
-public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBurnerBlockEntity>, IFluidInteractable {
+public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBurnerBlockEntity> {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
