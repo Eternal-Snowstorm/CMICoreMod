@@ -24,7 +24,8 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 		super(properties.sound(SoundType.LANTERN)
 				.lightLevel((state) -> {
 					return state.getValue(LIT) ? 15 : 0;
-				}));
+				})
+		);
 	}
 
 	@Override
@@ -44,24 +45,16 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 
 	public static <T extends Block, P> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState(String material) {
 		return (context, provider) -> {
-			provider.getVariantBuilder(context.get())
-					.forAllStates((state) -> {
-						boolean lit = state.getValue(FluidBurnerBlock.LIT);
-						Direction facing = state.getValue(FluidBurnerBlock.FACING);
-						String stateName = lit ? "on" : "off";
-						String path = String.format("block/fluid_burner/%s/%s", material, stateName);
-						BlockModelProvider models = provider.models();
+			provider.getVariantBuilder(context.get()).forAllStates((state) -> {
+				boolean lit = state.getValue(FluidBurnerBlock.LIT);
+				Direction facing = state.getValue(FluidBurnerBlock.FACING);
+				String stateName = lit ? "on" : "off";
+				String path = String.format("block/fluid_burner/%s/%s", material, stateName);
+				BlockModelProvider models = provider.models();
 
-						BlockModelBuilder modelFile = models.withExistingParent(path, "block/orientable")
-								.texture("top", models.modLoc("block/fluid_burner/%s/top".formatted(material)))
-								.texture("bottom", models.modLoc("block/fluid_burner/%s/down".formatted(material)))
-								.texture("side", models.modLoc("block/fluid_burner/%s/side".formatted(material)))
-								.texture("front", models.modLoc("block/fluid_burner/%s/%s".formatted(material, (lit ? "/on" : "/off"))));
-						return ConfiguredModel.builder()
-								.modelFile(modelFile)
-								.rotationY(BasicBlock.getYRotFromFacing(facing))
-								.build();
-					});
+				BlockModelBuilder modelFile = models.withExistingParent(path, "block/orientable").texture("top", models.modLoc("block/fluid_burner/%s/top".formatted(material))).texture("bottom", models.modLoc("block/fluid_burner/%s/down".formatted(material))).texture("side", models.modLoc("block/fluid_burner/%s/side".formatted(material))).texture("front", models.modLoc("block/fluid_burner/%s/%s".formatted(material, (lit ? "/on" : "/off"))));
+				return ConfiguredModel.builder().modelFile(modelFile).rotationY(BasicBlock.getYRotFromFacing(facing)).build();
+			});
 		};
 	}
 }
