@@ -42,7 +42,7 @@ public class WaterWellCategory {
 				})
 				.setTooltips((recipe, view, mouseX, mouseY) -> {
 					if (ClientRenderUtils.isCursorInsideBounds(102, 21, 14, 14, mouseX, mouseY)) {
-						return ImmutableList.of(Component.translatable("jei.catalyst.cmi.water_pump.complete"));
+						return ImmutableList.of(Component.translatable("jei.category.cmi.water_pump.complete"));
 					}
 					return Collections.emptyList();
 				})

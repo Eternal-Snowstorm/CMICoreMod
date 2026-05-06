@@ -41,13 +41,13 @@ public class WaterWellSeaWaterCategory {
 				})
 				.setTooltips((recipe, view, mouseX, mouseY) -> {
 					if (ClientRenderUtils.isCursorInsideBounds(86, 21, 14, 14, mouseX, mouseY)) {
-						return ImmutableList.of(Component.translatable("jei.catalyst.cmi.water_pump.complete"));
+						return ImmutableList.of(Component.translatable("jei.category.cmi.water_pump.complete"));
 					}
 					if (ClientRenderUtils.isCursorInsideBounds(102, 21, 14, 14, mouseX, mouseY)) {
-						return ImmutableList.of(Component.translatable("jei.catalyst.cmi.water_pump.ocean"));
+						return ImmutableList.of(Component.translatable("jei.category.cmi.water_pump.ocean"));
 					}
 					if (ClientRenderUtils.isCursorInsideBounds(118, 21, 14, 14, mouseX, mouseY)) {
-						return ImmutableList.of(Component.translatable("jei.catalyst.cmi.water_pump.pos"));
+						return ImmutableList.of(Component.translatable("jei.category.cmi.water_pump.pos"));
 					}
 					return Collections.emptyList();
 				})
