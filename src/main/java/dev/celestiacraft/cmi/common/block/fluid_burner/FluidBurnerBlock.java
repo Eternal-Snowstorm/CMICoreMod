@@ -56,7 +56,11 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 						.texture("bottom", models.modLoc("block/fluid_burner/%s/down".formatted(material)))
 						.texture("side", models.modLoc("block/fluid_burner/%s/side".formatted(material)))
 						.texture("front", models.modLoc("block/fluid_burner/%s/%s".formatted(material, (lit ? "on" : "off"))));
-				return ConfiguredModel.builder().modelFile(modelFile).rotationY(BasicBlock.getYRotFromFacing(facing)).build();
+
+				return ConfiguredModel.builder()
+						.modelFile(modelFile)
+						.rotationY(BasicBlock.getYRotFromFacing(facing))
+						.build();
 			});
 		};
 	}
