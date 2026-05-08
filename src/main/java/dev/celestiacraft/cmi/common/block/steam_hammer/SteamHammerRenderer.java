@@ -27,7 +27,9 @@ public class SteamHammerRenderer extends KineticBlockEntityRenderer<SteamHammerB
 	@Override
 	protected void renderSafe(SteamHammerBlockEntity entity, float partialTicks, PoseStack stack, MultiBufferSource source, int light, int overlay) {
 		super.renderSafe(entity, partialTicks, stack, source, light, overlay);
-		if (VisualizationManager.supportsVisualization(entity.getLevel())) return;
+		if (VisualizationManager.supportsVisualization(entity.getLevel())) {
+			return;
+		}
 
 		BlockState blockState = entity.getBlockState();
 		PressingBehaviour pressingBehaviour = entity.pressingBehaviour;
