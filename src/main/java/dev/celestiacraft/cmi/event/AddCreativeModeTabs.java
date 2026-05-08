@@ -5,6 +5,7 @@ import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiCreativeTab;
 import dev.celestiacraft.cmi.common.register.CmiItem;
+import dev.celestiacraft.cmi.utils.ModResources;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -13,7 +14,6 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -24,12 +24,7 @@ public class AddCreativeModeTabs {
 			ResourceLocation.parse("kubejs:tab")
 	);
 
-	private static final Item REDSTONE_MECHANISM = ForgeRegistries.ITEMS.getValue(
-			ResourceLocation.fromNamespaceAndPath(
-					"vintageimprovements",
-					"redstone_module"
-			)
-	);
+	private static final Item REDSTONE_MECHANISM = ModResources.RESSTONE_MODULE.getItem();
 
 	@SubscribeEvent
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {

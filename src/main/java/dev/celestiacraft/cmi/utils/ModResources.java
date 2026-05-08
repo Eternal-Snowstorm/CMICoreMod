@@ -22,6 +22,7 @@ public class ModResources {
 	public static final ResourcesEntry IRON_DEPOSIT_BLOCK;
 	public static final ResourcesEntry NETWORK_TOOL;
 	public static final ResourcesEntry STEAM;
+	public static final ResourcesEntry RESSTONE_MODULE;
 
 	static {
 		STEEL_INGOT = loadCmi("steel_ingot");
@@ -43,6 +44,8 @@ public class ModResources {
 		NETWORK_TOOL = loadAe2("network_tool");
 
 		STEAM = loadMek("steam");
+
+		RESSTONE_MODULE = loadVi("redstone_module");
 	}
 
 	public static ResourcesEntry loadResource(ResourceLocation location) {
@@ -83,5 +86,9 @@ public class ModResources {
 
 	public static ResourcesEntry loadAe2(String path) {
 		return loadResource(ResourceLocation.fromNamespaceAndPath("ae2", path));
+	}
+
+	public static ResourcesEntry loadVi(String path) {
+		return loadResource(ResourceLocation.fromNamespaceAndPath("vintageimprovements", path));
 	}
 }
