@@ -5,32 +5,24 @@ import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.libs.api.register.block.BasicBlock;
-import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockFacing;
+import dev.celestiacraft.libs.api.register.block.BasicBlockFacing;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBurnerBlockEntity> {
-	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-	public static final BooleanProperty LIT = BlockStateProperties.LIT;
-
 	public FluidBurnerBlock(Properties properties) {
 		super(properties.sound(SoundType.LANTERN)
-				.lightLevel((state) -> {
-					return state.getValue(LIT) ? 15 : 0;
-				})
+				.lightLevel(litBlockEmission(15))
 		);
 	}
 
 	@Override
-	protected ControllerBlockFacing useFacingType() {
-		return ControllerBlockFacing.HORIZONTAL;
+	protected BasicBlockFacing useFacingType() {
+		return BasicBlockFacing.HORIZONTAL;
 	}
 
 	@Override
@@ -46,8 +38,8 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 	public static <T extends Block, P> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState(String material) {
 		return (context, provider) -> {
 			provider.getVariantBuilder(context.get()).forAllStates((state) -> {
-				boolean lit = state.getValue(FluidBurnerBlock.LIT);
-				Direction facing = state.getValue(FluidBurnerBlock.FACING);
+				boolean lit = state.getValue(LIT);
+				Direction facing = state.getValue(HORIZONTAL_FACING);
 				String stateName = lit ? "on" : "off";
 				String path = String.format("block/fluid_burner/%s/%s", material, stateName);
 				BlockModelProvider models = provider.models();

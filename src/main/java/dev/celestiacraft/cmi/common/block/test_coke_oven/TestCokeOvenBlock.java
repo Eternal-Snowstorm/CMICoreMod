@@ -1,8 +1,8 @@
 package dev.celestiacraft.cmi.common.block.test_coke_oven;
 
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
+import dev.celestiacraft.libs.api.register.block.BasicBlockFacing;
 import dev.celestiacraft.libs.api.register.multiblock.ControllerBlock;
-import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockFacing;
 import dev.celestiacraft.libs.api.register.multiblock.machine.MultiblockContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -30,8 +30,8 @@ public class TestCokeOvenBlock extends ControllerBlock<TestCokeOvenBlockEntity> 
 	}
 
 	@Override
-	protected ControllerBlockFacing useFacingType() {
-		return ControllerBlockFacing.HORIZONTAL;
+	protected BasicBlockFacing useFacingType() {
+		return BasicBlockFacing.HORIZONTAL;
 	}
 
 	@Override

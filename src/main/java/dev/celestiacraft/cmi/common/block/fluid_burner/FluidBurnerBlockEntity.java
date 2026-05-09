@@ -7,6 +7,7 @@ import com.teammoeg.steampowered.content.burner.IHeatReceiver;
 import dev.celestiacraft.cmi.common.block.fluid_burner.capability.FluidBurnerFluidHandler;
 import dev.celestiacraft.cmi.common.recipe.fluid_burn.FluidBurnRecipe;
 import dev.celestiacraft.cmi.common.register.CmiRecipeType;
+import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -44,14 +45,14 @@ public abstract class FluidBurnerBlockEntity extends SmartBlockEntity implements
 		BlockState state = level.getBlockState(worldPosition);
 
 		if (!tryConsumeAndEmit()) {
-			if (state.getValue(FluidBurnerBlock.LIT)) {
-				level.setBlockAndUpdate(worldPosition, state.setValue(FluidBurnerBlock.LIT, false));
+			if (state.getValue(BasicBlock.LIT)) {
+				level.setBlockAndUpdate(worldPosition, state.setValue(BasicBlock.LIT, false));
 			}
 			return;
 		}
 
-		if (!state.getValue(FluidBurnerBlock.LIT)) {
-			level.setBlockAndUpdate(worldPosition, state.setValue(FluidBurnerBlock.LIT, true));
+		if (!state.getValue(BasicBlock.LIT)) {
+			level.setBlockAndUpdate(worldPosition, state.setValue(BasicBlock.LIT, true));
 		}
 	}
 
