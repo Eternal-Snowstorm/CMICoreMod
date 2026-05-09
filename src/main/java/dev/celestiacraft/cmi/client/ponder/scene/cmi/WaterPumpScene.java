@@ -6,7 +6,6 @@ import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.api.element.WorldSectionElement;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
-import net.createmod.ponder.api.scene.Selection;
 import net.minecraft.core.Direction;
 
 public class WaterPumpScene {
@@ -17,25 +16,20 @@ public class WaterPumpScene {
 		scene.scaleSceneView(0.5f);
 		scene.idle(20);
 
-		Selection indeSel1 = util.select().fromTo(1, 3, 3, 3, 3, 1);
-		Selection indeSel2 = util.select().fromTo(1, 6, 3, 3, 6, 1);
-		Selection indeSel3 = util.select().fromTo(1, 3, 3, 1, 6, 1);
-		Selection indeSel4 = util.select().fromTo(1, 3, 1, 3, 6, 1);
-
 		ElementLink<WorldSectionElement> inde1 = scene.world().showIndependentSection(
-				indeSel1,
+				util.select().fromTo(1, 3, 3, 3, 3, 1),
 				Direction.DOWN
 		);
 		ElementLink<WorldSectionElement> inde2 = scene.world().showIndependentSection(
-				indeSel2,
+				util.select().fromTo(1, 6, 3, 3, 6, 1),
 				Direction.DOWN
 		);
 		ElementLink<WorldSectionElement> inde3 = scene.world().showIndependentSection(
-				indeSel3,
+				util.select().fromTo(1, 3, 3, 1, 6, 1),
 				Direction.DOWN
 		);
 		ElementLink<WorldSectionElement> inde4 = scene.world().showIndependentSection(
-				indeSel4,
+				util.select().fromTo(1, 3, 1, 3, 6, 1),
 				Direction.DOWN
 		);
 
