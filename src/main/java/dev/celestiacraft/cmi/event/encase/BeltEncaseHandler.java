@@ -17,11 +17,13 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class BeltEncaseHandler {
-
 	@SubscribeEvent
 	public static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
 		Level level = event.getLevel();
 		Player player = event.getEntity();
+		ItemStack stack = event.getItemStack();
+		BlockPos pos = event.getPos();
+		BlockState state = level.getBlockState(pos);
 
 		if (level.isClientSide()) {
 			return;
@@ -35,10 +37,6 @@ public class BeltEncaseHandler {
 		if (!player.getItemInHand(InteractionHand.OFF_HAND).is(CmiMechanism.ANDESITE.get())) {
 			return;
 		}
-
-		ItemStack stack = event.getItemStack();
-		BlockPos pos = event.getPos();
-		BlockState state = level.getBlockState(pos);
 
 		if (!state.is(AllBlocks.BELT.get())) {
 			return;
@@ -75,7 +73,6 @@ public class BeltEncaseHandler {
 				}
 			}
 		} else {
-
 			for (int i = 0; i < beltLength; i++) {
 				BlockPos beltBlock = BeltHelper.getPositionForOffset(controller, i);
 				BeltBlockEntity targetEntity = BeltHelper.getSegmentBE(level, beltBlock);
