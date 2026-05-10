@@ -5,7 +5,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.client.textures.Items;
+import dev.celestiacraft.cmi.api.client.assets.Items;
 import dev.celestiacraft.cmi.common.item.MechanismItem;
 import dev.celestiacraft.cmi.tags.ModItemTags;
 import net.minecraft.core.registries.Registries;

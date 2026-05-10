@@ -3,9 +3,10 @@ package dev.celestiacraft.cmi.common.register;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.client.textures.Items;
+import dev.celestiacraft.cmi.api.client.assets.Items;
 import dev.celestiacraft.cmi.common.item.*;
 import dev.celestiacraft.cmi.common.item.tool.crafting_table.HandheleCraftingTableItem;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 
 public class CmiItem {
@@ -43,9 +44,7 @@ public class CmiItem {
 							properties
 					);
 				})
-				.model((context, provider) -> {
-					provider.withExistingParent(context.getName(), provider.mcLoc("item/template_spawn_egg"));
-				})
+				.model(Items.withModel(ResourceLocation.withDefaultNamespace("item/template_spawn_egg")))
 				.register();
 	}
 

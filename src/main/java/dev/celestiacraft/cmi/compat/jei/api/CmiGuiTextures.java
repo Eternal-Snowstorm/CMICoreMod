@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.compat.jei.api;
 
-import dev.celestiacraft.cmi.api.client.textures.Guis;
+import dev.celestiacraft.cmi.api.client.assets.Guis;
 
 public class CmiGuiTextures {
 	public static final Guis WATER_PUMP_SEA_WATER_ARROW;

@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.api.client.textures;
+package dev.celestiacraft.cmi.api.client.assets;
 
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
@@ -42,6 +42,18 @@ public class Items {
 		return (context, provider) -> {
 			provider.getBuilder(context.getName())
 					.parent(provider.getExistingFile(provider.modLoc(model)));
+		};
+	}
+
+	public static <T extends Item> NonNullBiConsumer<DataGenContext<Item, T>, RegistrateItemModelProvider> withModel(ResourceLocation model) {
+		return (context, provider) -> {
+			provider.withExistingParent(context.getName(), model);
+		};
+	}
+
+	public static <T extends Item> NonNullBiConsumer<DataGenContext<Item, T>, RegistrateItemModelProvider> withModel(String model) {
+		return (context, provider) -> {
+			provider.withExistingParent(context.getName(), provider.modLoc(model));
 		};
 	}
 }
