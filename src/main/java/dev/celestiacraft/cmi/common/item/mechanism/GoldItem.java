@@ -2,7 +2,9 @@ package dev.celestiacraft.cmi.common.item.mechanism;
 
 import dev.celestiacraft.cmi.common.item.MechanismItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -24,11 +26,14 @@ public class GoldItem extends MechanismItem {
 	 */
 	@Override
 	protected InteractionResult onMechanismUse(UseOnContext context) {
+		Player player = context.getPlayer();
+		InteractionHand hand = context.getHand();
 		Level level = context.getLevel();
 		BlockPos pos = context.getClickedPos();
 		BlockState state = level.getBlockState(pos);
 
 		if (state.is(Tags.Blocks.STONE) || state.is(Tags.Blocks.COBBLESTONE)) {
+			player.swing(hand);
 			if (level.random.nextFloat() < 0.01F) {
 				level.setBlockAndUpdate(pos, Blocks.GOLD_BLOCK.defaultBlockState());
 			}
