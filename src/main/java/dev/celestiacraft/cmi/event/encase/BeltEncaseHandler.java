@@ -39,12 +39,20 @@ public class BeltEncaseHandler {
 		ItemStack stack = event.getItemStack();
 		BlockPos pos = event.getPos();
 		BlockState state = level.getBlockState(pos);
+
+		if (!state.is(AllBlocks.BELT.get())) {
+			return;
+		}
+
 		BeltBlockEntity controller = BeltHelper.getControllerBE(level, pos);
 		int beltLength = controller.beltLength;
+
 		if (state.getValue(BeltBlock.SLOPE) == BeltSlope.VERTICAL) {
 			BlockPos beltStart = pos;
+
 			for (int i = 0; i < 20; i++) {
 				BlockState beltState = level.getBlockState(beltStart);
+				
 				if (beltState.getValue(BeltBlock.PART) == BeltPart.START || beltState.getValue(BeltBlock.PART) == BeltPart.END) {
 					break;
 				}
@@ -52,6 +60,7 @@ public class BeltEncaseHandler {
 			}
 			for (int i = 0; i < beltLength; i++) {
 				BeltBlockEntity targetEntity = BeltHelper.getSegmentBE(level, beltStart.above(i));
+
 				if (targetEntity == null) {
 					return;
 				}
@@ -66,9 +75,11 @@ public class BeltEncaseHandler {
 				}
 			}
 		} else {
+
 			for (int i = 0; i < beltLength; i++) {
 				BlockPos beltBlock = BeltHelper.getPositionForOffset(controller, i);
 				BeltBlockEntity targetEntity = BeltHelper.getSegmentBE(level, beltBlock);
+
 				if (targetEntity == null) {
 					return;
 				}
