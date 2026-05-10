@@ -52,7 +52,7 @@ public class BeltEncaseHandler {
 
 			for (int i = 0; i < 20; i++) {
 				BlockState beltState = level.getBlockState(beltStart);
-				
+
 				if (beltState.getValue(BeltBlock.PART) == BeltPart.START || beltState.getValue(BeltBlock.PART) == BeltPart.END) {
 					break;
 				}
