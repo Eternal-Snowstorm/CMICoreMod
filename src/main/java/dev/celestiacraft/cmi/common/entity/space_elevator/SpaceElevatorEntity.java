@@ -1,6 +1,8 @@
 package dev.celestiacraft.cmi.common.entity.space_elevator;
 
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraSpaceElevatorTravelCompat;
 import dev.celestiacraft.cmi.network.CmiNetwork;
@@ -51,11 +53,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.Animation;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.ArrayList;
@@ -76,7 +74,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 	private static final int STATE_DEPART_DOWN = 5;
 	private static final int STATE_ARRIVE_GROUND = 6;
 
-	private static final double ANCHOR_Y_OFFSET = 1.01D;
+	private static final double ANCHOR_Y_OFFSET = 2.01D;
 	private static final double ORBIT_DOCK_Y_OFFSET = -1.35D;
 	private static final int COUNTDOWN_TICKS = Rocket.COUNTDOWN_LENGTH;
 	private static final double GROUND_ASCENT_BLOCKS_PER_TICK = 192.0D / 180.0D;
@@ -90,6 +88,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 	private static final double CONFLICT_SEARCH_RADIUS = 3.5D;
 	private static final double CONFLICT_SEARCH_HEIGHT = 256.0D;
 	private static final double CABLE_BOTTOM_Y = -64.0D;
+	private static final int CONSOLE_SEARCH_RADIUS = 12;
+	private static final int CONSOLE_SEARCH_HEIGHT = 16;
 	private static final Vec3[] CABLE_OFFSETS = new Vec3[] {
 			new Vec3(-20.0D / 16.0D, 20.0D / 16.0D, -20.0D / 16.0D),
 			new Vec3(-20.0D / 16.0D, 20.0D / 16.0D, 20.0D / 16.0D),
@@ -202,6 +202,16 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 			return false;
 		}
 
+		SpaceElevatorBaseConsoleBlockEntity console = findNearbyConsole(serverLevel, getAnchor());
+		if (console == null) {
+			player.displayClientMessage(Component.translatable("text.cmi.space_elevator.no_console"), false);
+			return false;
+		}
+		if (console.getEnergyStored() < SpaceElevatorBaseConsoleBlockEntity.LAUNCH_ENERGY_COST) {
+			player.displayClientMessage(Component.translatable("text.cmi.space_elevator.not_enough_energy"), false);
+			return false;
+		}
+
 		SpaceElevatorEntity counterpart = findOrCreateElevator(target.level(), target.targetAnchor());
 		if (counterpart == null) {
 			player.displayClientMessage(Component.translatable("text.cmi.space_elevator.spawn_failed"), false);
@@ -212,10 +222,35 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 			return false;
 		}
 
+		if (!console.consumeEnergy(SpaceElevatorBaseConsoleBlockEntity.LAUNCH_ENERGY_COST)) {
+			player.displayClientMessage(Component.translatable("text.cmi.space_elevator.not_enough_energy"), false);
+			return false;
+		}
+
 		this.pendingDestinationDimension = target.level().dimension();
 		this.pendingDestinationAnchor = target.targetAnchor().immutable();
 		beginState(isOrbitSide() ? STATE_COUNTDOWN_DOWN : STATE_COUNTDOWN_UP);
 		return true;
+	}
+
+	private boolean isAnchorStillValid() {
+		return level().getBlockState(getAnchor()).is(CmiBlock.SPACE_ELEVATOR_BASE_CONSOLE.get());
+	}
+
+	@Nullable
+	private static SpaceElevatorBaseConsoleBlockEntity findNearbyConsole(ServerLevel level, BlockPos anchorPos) {
+		BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+		for (int dy = -CONSOLE_SEARCH_HEIGHT; dy <= CONSOLE_SEARCH_HEIGHT; dy++) {
+			for (int dx = -CONSOLE_SEARCH_RADIUS; dx <= CONSOLE_SEARCH_RADIUS; dx++) {
+				for (int dz = -CONSOLE_SEARCH_RADIUS; dz <= CONSOLE_SEARCH_RADIUS; dz++) {
+					cursor.set(anchorPos.getX() + dx, anchorPos.getY() + dy, anchorPos.getZ() + dz);
+					if (level.getBlockEntity(cursor) instanceof SpaceElevatorBaseConsoleBlockEntity console) {
+						return console;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -233,7 +268,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 			return;
 		}
 
-		if (hasAnchor() && !isTransporting() && level().getBlockState(getAnchor()).isAir()) {
+		if (hasAnchor() && !isTransporting() && !isAnchorStillValid()) {
 			discard();
 			return;
 		}

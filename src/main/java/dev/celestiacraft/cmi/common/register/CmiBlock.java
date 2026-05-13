@@ -29,6 +29,9 @@ import dev.celestiacraft.cmi.common.block.solar_boiler.SolarBoilerBlockItem;
 import dev.celestiacraft.cmi.common.block.solar_boiler.bronze.BronzeSolarBoilerBlock;
 import dev.celestiacraft.cmi.common.block.solar_boiler.cast_iron.CastIronSolarBoilerBlock;
 import dev.celestiacraft.cmi.common.block.solar_boiler.steel.SteelSolarBoilerBlock;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlock;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockItem;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorIoPortBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerItem;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlock;
@@ -48,10 +51,13 @@ import dev.celestiacraft.cmi.tags.ModItemTags;
 import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockItem;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.Tags;
 
 public class CmiBlock {
@@ -79,6 +85,8 @@ public class CmiBlock {
 	public static final BlockEntry<BronzeSolarBoilerBlock> BRONZE_SOLAR_BOILER;
 	public static final BlockEntry<CastIronSolarBoilerBlock> CAST_IRON_SOLAR_BOILER;
 	public static final BlockEntry<SteelSolarBoilerBlock> STEEL_SOLAR_BOILER;
+	public static final BlockEntry<SpaceElevatorBaseConsoleBlock> SPACE_ELEVATOR_BASE_CONSOLE;
+	public static final BlockEntry<SpaceElevatorIoPortBlock> SPACE_ELEVATOR_IO_PORT;
 
 	static {
 		ACCELERATOR = Cmi.REGISTRATE.block("accelerator", AcceleratorBlock::new)
@@ -546,6 +554,64 @@ public class CmiBlock {
 				})
 				.build()
 				.blockstate(SolarBoilerBlock.genBlockState("cast_iron"))
+				.register();
+		SPACE_ELEVATOR_BASE_CONSOLE = Cmi.REGISTRATE.block("space_elevator_base_console", SpaceElevatorBaseConsoleBlock::new)
+				.initialProperties(SharedProperties::stone)
+				.properties(BlockBehaviour.Properties::noOcclusion)
+				.item(SpaceElevatorBaseConsoleBlockItem::new)
+				.model((context, provider) -> provider.getBuilder(context.getName())
+						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))
+						.transforms()
+						.transform(ItemDisplayContext.GUI)
+						.rotation(30.0F, 45.0F, 0.0F)
+						.translation(0.0F, 0.0F, 0.0F)
+						.scale(0.18F)
+						.end()
+						.transform(ItemDisplayContext.GROUND)
+						.rotation(0.0F, 0.0F, 0.0F)
+						.translation(0.0F, 2.0F, 0.0F)
+						.scale(0.15F)
+						.end()
+						.transform(ItemDisplayContext.FIXED)
+						.rotation(0.0F, 0.0F, 0.0F)
+						.translation(0.0F, 0.0F, 0.0F)
+						.scale(0.25F)
+						.end()
+						.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
+						.rotation(75.0F, 45.0F, 0.0F)
+						.translation(0.0F, 2.5F, 0.0F)
+						.scale(0.20F)
+						.end()
+						.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
+						.rotation(75.0F, 45.0F, 0.0F)
+						.translation(0.0F, 2.5F, 0.0F)
+						.scale(0.20F)
+						.end()
+						.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
+						.rotation(0.0F, 45.0F, 0.0F)
+						.translation(0.0F, 4.0F, 2.0F)
+						.scale(0.25F)
+						.end()
+						.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
+						.rotation(0.0F, 225.0F, 0.0F)
+						.translation(0.0F, 4.0F, 2.0F)
+						.scale(0.25F)
+						.end()
+						.end())
+				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_IRON_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+				.blockstate((context, provider) -> provider.getVariantBuilder(context.get())
+						.forAllStatesExcept(state -> ConfiguredModel.builder()
+								.modelFile(provider.models().getExistingFile(provider.modLoc("block/space_elevator_base_console")))
+								.build()))
+				.register();
+		SPACE_ELEVATOR_IO_PORT = Cmi.REGISTRATE.block("space_elevator_io_port", SpaceElevatorIoPortBlock::new)
+				.initialProperties(SharedProperties::stone)
+				.properties(properties -> properties.noOcclusion().noLootTable())
+				.blockstate((context, provider) -> provider.simpleBlock(context.get(),
+						provider.models().withExistingParent(context.getName(), provider.mcLoc("block/block"))))
 				.register();
 		STEEL_SOLAR_BOILER = Cmi.REGISTRATE.block("steel_solar_boiler", SteelSolarBoilerBlock::new)
 				.initialProperties(SharedProperties::softMetal)

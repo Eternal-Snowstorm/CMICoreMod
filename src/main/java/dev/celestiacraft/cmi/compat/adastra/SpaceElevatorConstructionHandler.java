@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.compat.adastra;
 
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,7 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,14 +22,11 @@ import org.jetbrains.annotations.Nullable;
 
 public final class SpaceElevatorConstructionHandler {
 	private static final ResourceLocation WRENCH_ID = ResourceLocation.fromNamespaceAndPath("ad_astra", "wrench");
-	private static final ResourceLocation GLOWING_IRON_PILLAR_ID = ResourceLocation.fromNamespaceAndPath("ad_astra", "glowing_iron_pillar");
 	private static final double MAX_USE_DISTANCE_SQR = 64.0D;
-	private static final double EXISTING_ELEVATOR_RADIUS = 2.5D;
+	private static final double EXISTING_ELEVATOR_RADIUS = 4.0D;
 
 	@Nullable
 	private static Item cachedWrench;
-	@Nullable
-	private static Block cachedAnchorBlock;
 
 	private SpaceElevatorConstructionHandler() {
 	}
@@ -45,10 +42,7 @@ public final class SpaceElevatorConstructionHandler {
 	}
 
 	public static boolean isAnchorBlock(Level level, BlockPos pos) {
-		if (cachedAnchorBlock == null) {
-			cachedAnchorBlock = ForgeRegistries.BLOCKS.getValue(GLOWING_IRON_PILLAR_ID);
-		}
-		return cachedAnchorBlock != null ? level.getBlockState(pos).is(cachedAnchorBlock) : GLOWING_IRON_PILLAR_ID.equals(ForgeRegistries.BLOCKS.getKey(level.getBlockState(pos).getBlock()));
+		return level.getBlockState(pos).is(CmiBlock.SPACE_ELEVATOR_BASE_CONSOLE.get());
 	}
 
 	public static boolean isWithinUseRange(Player player, BlockPos pos) {
@@ -114,7 +108,8 @@ public final class SpaceElevatorConstructionHandler {
 		}
 
 		elevator.setAnchor(anchorPos);
-		elevator.moveTo(anchorPos.getX() + 0.5D, anchorPos.getY() + 1.01D, anchorPos.getZ() + 0.5D, 0.0F, 0.0F);
+		elevator.setYRot(180.0F);
+		elevator.setYBodyRot(180.0F);
 		level.addFreshEntity(elevator);
 		return true;
 	}

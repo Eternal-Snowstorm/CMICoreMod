@@ -182,5 +182,15 @@ public class GuiLanguage extends LanguageGenerate {
 				"Building...",
 				"正在建造..."
 		);
+		addCustomLang(
+				"text.cmi.space_elevator.no_console",
+				"No space elevator base console was found near the anchor.",
+				"附近未找到太空电梯基座控制台。"
+		);
+		addCustomLang(
+				"text.cmi.space_elevator.not_enough_energy",
+				"The base console does not have enough energy to launch.",
+				"基座控制台能量不足，无法发射。"
+		);
 	}
 }

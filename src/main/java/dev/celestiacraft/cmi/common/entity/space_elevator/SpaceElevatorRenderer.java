@@ -40,6 +40,12 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 		}
 	}
 
+	@Override
+	protected void applyRotations(SpaceElevatorEntity animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
+		float yRot = Mth.rotLerp(partialTick, animatable.yRotO, animatable.getYRot());
+		super.applyRotations(animatable, poseStack, ageInTicks, yRot, partialTick);
+	}
+
 	private void renderCable(SpaceElevatorEntity entity, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int cableIndex) {
 		Vec3 cameraPos = entityRenderDispatcher.camera.getPosition();
 		CableEndpoints endpoints = resolveCableEndpoints(entity, partialTick, cableIndex, cameraPos);

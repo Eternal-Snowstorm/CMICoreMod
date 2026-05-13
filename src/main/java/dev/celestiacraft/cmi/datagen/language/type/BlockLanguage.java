@@ -99,6 +99,16 @@ public class BlockLanguage extends LanguageGenerate {
 				"Blazewood Scaffold",
 				"烈焰木脚手架"
 		);
+		addBlockLanguage(
+				"space_elevator_base_console",
+				"Space Elevator Base Console",
+				"太空电梯基座控制台"
+		);
+		addBlockLanguage(
+				"space_elevator_io_port",
+				"Space Elevator IO Port",
+				"太空电梯接口"
+		);
 		addCogWheelLang(
 				"bronze",
 				"Bronze",
