@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class SpaceElevatorBaseStructure {
+	public static final Vec3i CENTER_SCREEN_OFFSET = new Vec3i(0, 1, 2);
 	public static final Map<Vec3i, IoPortShape> STRUCTURE_OFFSETS;
 	public static final Map<IoPortType, Vec3i> IO_PORT_OFFSETS;
 
@@ -40,6 +41,8 @@ public final class SpaceElevatorBaseStructure {
 		offsets.put(new Vec3i(2, 1, 0), IoPortShape.IO_RIGHT);
 		offsets.put(new Vec3i(-2, 0, 0), IoPortShape.IO_LEFT);
 		offsets.put(new Vec3i(-2, 1, 0), IoPortShape.IO_LEFT);
+
+		offsets.put(CENTER_SCREEN_OFFSET, IoPortShape.SCREEN_CENTER);
 
 		STRUCTURE_OFFSETS = Map.copyOf(offsets);
 

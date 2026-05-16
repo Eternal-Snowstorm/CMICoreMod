@@ -109,8 +109,7 @@ public class SpaceElevatorConstructionOverlay implements IGuiOverlay {
 			return null;
 		}
 
-		BlockPos pos = blockHitResult.getBlockPos();
-		return SpaceElevatorConstructionHandler.isAnchorBlock(player.level(), pos) ? pos : null;
+		return SpaceElevatorConstructionHandler.resolveAnchorPos(player.level(), blockHitResult.getBlockPos());
 	}
 
 	@Nullable

@@ -3,6 +3,7 @@ package dev.celestiacraft.cmi.common.block.space_elevator_base_console;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,6 +24,9 @@ public class SpaceElevatorIoPortBlockEntity extends BlockEntity {
 	public void setControllerPos(BlockPos controllerPos) {
 		this.controllerPos = controllerPos.immutable();
 		setChanged();
+		if (level != null && !level.isClientSide()) {
+			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+		}
 	}
 
 	@Nullable
@@ -91,5 +95,15 @@ public class SpaceElevatorIoPortBlockEntity extends BlockEntity {
 		if (tag.contains("ControllerPos")) {
 			controllerPos = BlockPos.of(tag.getLong("ControllerPos"));
 		}
+	}
+
+	@Override
+	public @NotNull CompoundTag getUpdateTag() {
+		return saveWithoutMetadata();
+	}
+
+	@Override
+	public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 }

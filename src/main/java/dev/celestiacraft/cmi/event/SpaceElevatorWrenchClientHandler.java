@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -85,26 +86,26 @@ public class SpaceElevatorWrenchClientHandler {
 
 	@SubscribeEvent
 	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-		if (!event.getLevel().isClientSide()) {
-			return;
-		}
-		if (event.getHand() != InteractionHand.MAIN_HAND) {
+		Level level = event.getLevel();
+		if (!level.isClientSide() || event.getHand() != InteractionHand.MAIN_HAND) {
 			return;
 		}
 		if (!SpaceElevatorConstructionHandler.isWrench(event.getItemStack())) {
 			return;
 		}
-		if (!SpaceElevatorConstructionHandler.isAnchorBlock(event.getLevel(), event.getPos())) {
+		BlockPos anchorPos = SpaceElevatorConstructionHandler.resolveAnchorPos(level, event.getPos());
+		if (anchorPos == null) {
 			return;
 		}
 
-		SpaceElevatorConstructionRecipe recipe = SpaceElevatorConstructionHandler.getRecipe(event.getLevel());
-		boolean bypassRequirements = event.getEntity().isCreative() || event.getEntity().isSpectator();
-		if (recipe != null && !hasStoredMaterials(event.getPos(), recipe, bypassRequirements)) {
-			CmiNetwork.CHANNEL.sendToServer(new StoreSpaceElevatorMaterialsPacket(event.getPos()));
+		Player player = event.getEntity();
+		boolean bypassRequirements = player.isCreative() || player.isSpectator();
+		SpaceElevatorConstructionRecipe recipe = SpaceElevatorConstructionHandler.getRecipe(level);
+
+		if (recipe != null && !hasStoredMaterials(anchorPos, recipe, bypassRequirements)) {
+			CmiNetwork.CHANNEL.sendToServer(new StoreSpaceElevatorMaterialsPacket(anchorPos));
 		}
 
-		// 建造流程触发，阻止use使用，将流畅修改为存储->建造
 		event.setCanceled(true);
 		event.setCancellationResult(InteractionResult.SUCCESS);
 	}
@@ -167,12 +168,7 @@ public class SpaceElevatorWrenchClientHandler {
 			CmiNetwork.CHANNEL.sendToServer(new RequestSpaceElevatorMaterialsPacket(anchorPos));
 		}
 
-		if (!mc.options.keyUse.isDown()) {
-			holdTicks = 0;
-			packetSent = false;
-			return;
-		}
-		if (!canCharge(player, anchorPos)) {
+		if (!mc.options.keyUse.isDown() || !canCharge(player, anchorPos)) {
 			holdTicks = 0;
 			packetSent = false;
 			return;
@@ -193,9 +189,8 @@ public class SpaceElevatorWrenchClientHandler {
 		if (!(mc.hitResult instanceof BlockHitResult blockHitResult) || blockHitResult.getType() != HitResult.Type.BLOCK) {
 			return null;
 		}
-
-		BlockPos pos = blockHitResult.getBlockPos();
-		return SpaceElevatorConstructionHandler.isAnchorBlock(player.level(), pos) ? pos : null;
+		Level level = player.level();
+		return SpaceElevatorConstructionHandler.resolveAnchorPos(level, blockHitResult.getBlockPos());
 	}
 
 	private static boolean canCharge(Player player, BlockPos anchorPos) {

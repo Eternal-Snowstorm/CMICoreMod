@@ -79,7 +79,7 @@ public class SpaceElevatorIoPortBlock extends BaseEntityBlock {
 
 	@Override
 	public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-		return state.getValue(SHAPE).shape();
+		return state.getValue(SHAPE).solidShape();
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class SpaceElevatorIoPortBlock extends BaseEntityBlock {
 
 	@Override
 	public @NotNull VoxelShape getVisualShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-		return state.getValue(SHAPE).shape();
+		return state.getValue(SHAPE).solidShape();
 	}
 
 	@Override

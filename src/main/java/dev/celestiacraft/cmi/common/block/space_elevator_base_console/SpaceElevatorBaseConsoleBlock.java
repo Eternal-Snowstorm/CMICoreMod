@@ -112,17 +112,24 @@ public class SpaceElevatorBaseConsoleBlock extends BaseEntityBlock {
 	}
 
 	public static void ensureStructure(@NotNull Level level, @NotNull BlockPos controllerPos) {
-		int missing = 0;
-		for (Vec3i offset : SpaceElevatorBaseStructure.STRUCTURE_OFFSETS.keySet()) {
+		boolean needsDeploy = false;
+		for (Map.Entry<Vec3i, IoPortShape> entry : SpaceElevatorBaseStructure.STRUCTURE_OFFSETS.entrySet()) {
+			Vec3i offset = entry.getKey();
 			if (offset.getX() == 0 && offset.getY() == 0 && offset.getZ() == 0) {
 				continue;
 			}
 			BlockPos portPos = controllerPos.offset(offset);
-			if (!(level.getBlockState(portPos).getBlock() instanceof SpaceElevatorIoPortBlock)) {
-				missing++;
+			BlockState existing = level.getBlockState(portPos);
+			if (!(existing.getBlock() instanceof SpaceElevatorIoPortBlock)) {
+				needsDeploy = true;
+				break;
+			}
+			if (existing.getValue(SpaceElevatorIoPortBlock.SHAPE) != entry.getValue()) {
+				needsDeploy = true;
+				break;
 			}
 		}
-		if (missing > 0) {
+		if (needsDeploy) {
 			deployStructure(level, controllerPos);
 		}
 	}

@@ -1,5 +1,8 @@
 package dev.celestiacraft.cmi.compat.adastra;
 
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.IoPortShape;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseStructure;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorIoPortBlock;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
@@ -15,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -43,6 +47,17 @@ public final class SpaceElevatorConstructionHandler {
 
 	public static boolean isAnchorBlock(Level level, BlockPos pos) {
 		return level.getBlockState(pos).is(CmiBlock.SPACE_ELEVATOR_BASE_CONSOLE.get());
+	}
+
+	@Nullable
+	public static BlockPos resolveAnchorPos(Level level, BlockPos clickedPos) {
+		BlockState state = level.getBlockState(clickedPos);
+		if (!(state.getBlock() instanceof SpaceElevatorIoPortBlock)
+				|| state.getValue(SpaceElevatorIoPortBlock.SHAPE) != IoPortShape.SCREEN_CENTER) {
+			return null;
+		}
+		BlockPos controller = clickedPos.subtract(SpaceElevatorBaseStructure.CENTER_SCREEN_OFFSET);
+		return isAnchorBlock(level, controller) ? controller : null;
 	}
 
 	public static boolean isWithinUseRange(Player player, BlockPos pos) {
