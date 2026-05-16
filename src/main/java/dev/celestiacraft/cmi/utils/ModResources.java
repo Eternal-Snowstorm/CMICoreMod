@@ -3,6 +3,7 @@ package dev.celestiacraft.cmi.utils;
 import blusunrize.immersiveengineering.ImmersiveEngineering;
 import com.simibubi.create.Create;
 import dev.celestiacraft.cmi.Cmi;
+import dev.latvian.mods.kubejs.KubeJS;
 import earth.terrarium.adastra.AdAstra;
 import lombok.Getter;
 import mekanism.common.Mekanism;
@@ -144,6 +145,6 @@ public enum ModResources {
 	}
 
 	public static ResourcesEntry loadKubeJS(String path) {
-		return loadResource(ResourceLocation.fromNamespaceAndPath("kubejs", path));
+		return loadResource(ResourceLocation.fromNamespaceAndPath(KubeJS.MOD_ID, path));
 	}
 }
