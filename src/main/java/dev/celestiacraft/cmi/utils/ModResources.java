@@ -99,47 +99,47 @@ public enum ModResources {
 		return entry.hasFluid();
 	}
 
-	private static ResourcesEntry loadResource(ResourceLocation location) {
+	public static ResourcesEntry loadResource(ResourceLocation location) {
 		return new ResourcesEntry(location);
 	}
 
-	private static ResourcesEntry loadResource(String path) {
+	public static ResourcesEntry loadResource(String path) {
 		return loadResource(ResourceLocation.parse(path));
 	}
 
-	private static ResourcesEntry loadCmi(String path) {
+	public static ResourcesEntry loadCmi(String path) {
 		return loadResource(Cmi.loadResource(path));
 	}
 
-	private static ResourcesEntry loadMek(String path) {
+	public static ResourcesEntry loadMek(String path) {
 		return loadResource(Mekanism.rl(path));
 	}
 
-	private static ResourcesEntry loadCreate(String path) {
+	public static ResourcesEntry loadCreate(String path) {
 		return loadResource(Create.asResource(path));
 	}
 
-	private static ResourcesEntry loadTCon(String path) {
+	public static ResourcesEntry loadTCon(String path) {
 		return loadResource(TConstruct.getResource(path));
 	}
 
-	private static ResourcesEntry loadIE(String path) {
+	public static ResourcesEntry loadIE(String path) {
 		return loadResource(ImmersiveEngineering.rl(path));
 	}
 
-	private static ResourcesEntry loadAd(String path) {
+	public static ResourcesEntry loadAd(String path) {
 		return loadResource(ResourceLocation.fromNamespaceAndPath(AdAstra.MOD_ID, path));
 	}
 
-	private static ResourcesEntry loadThermal(String path) {
+	public static ResourcesEntry loadThermal(String path) {
 		return loadResource(ResourceLocation.fromNamespaceAndPath("thermal", path));
 	}
 
-	private static ResourcesEntry loadAe2(String path) {
+	public static ResourcesEntry loadAe2(String path) {
 		return loadResource(ResourceLocation.fromNamespaceAndPath("ae2", path));
 	}
 
-	private static ResourcesEntry loadVi(String path) {
+	public static ResourcesEntry loadVi(String path) {
 		return loadResource(ResourceLocation.fromNamespaceAndPath("vintageimprovements", path));
 	}
 }
