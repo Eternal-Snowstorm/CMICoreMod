@@ -37,14 +37,14 @@ public class CmiRecipeType {
 		FLUID_BURN = register("fluid_burn", () -> {
 			return FluidBurnRecipe.Type.INSTANCE;
 		});
-		TEST_COKE_OVEN = registerSimple("test_coke_oven");
+		TEST_COKE_OVEN = register("test_coke_oven");
 	}
 
 	private static <T extends Recipe<?>> Supplier<RecipeType<T>> register(String path, Supplier<RecipeType<T>> supplier) {
 		return RECIPE_TYPES.register(path, supplier);
 	}
 
-	private static <T extends Recipe<?>> Supplier<RecipeType<T>> registerSimple(String path) {
+	private static <T extends Recipe<?>> Supplier<RecipeType<T>> register(String path) {
 		return RECIPE_TYPES.register(path, () -> {
 			return RecipeType.simple(Cmi.loadResource(path));
 		});
