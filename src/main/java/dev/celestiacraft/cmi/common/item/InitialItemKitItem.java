@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.item;
 
 import com.simibubi.create.foundation.item.TooltipHelper;
+import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.api.register.item.BasicItem;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
@@ -62,7 +63,7 @@ public class InitialItemKitItem extends BasicItem {
 
 		PARSED_LIST.forEach((parsed) -> {
 			ResourceLocation location = ResourceLocation.parse(parsed.id);
-			Item item = ForgeRegistries.ITEMS.getValue(location);
+			Item item = ModResources.loadResource(location).getItem();
 
 			if (item != null) {
 				player.addItem(new ItemStack(item, parsed.count));
