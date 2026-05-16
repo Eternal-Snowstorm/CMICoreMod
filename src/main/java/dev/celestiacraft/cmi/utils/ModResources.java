@@ -142,4 +142,8 @@ public enum ModResources {
 	public static ResourcesEntry loadVi(String path) {
 		return loadResource(ResourceLocation.fromNamespaceAndPath("vintageimprovements", path));
 	}
+
+	public static ResourcesEntry loadKubeJS(String path) {
+		return loadResource(ResourceLocation.fromNamespaceAndPath("kubejs", path));
+	}
 }
