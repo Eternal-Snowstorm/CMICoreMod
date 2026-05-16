@@ -4,7 +4,7 @@ import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.CreateLang;
 import dev.celestiacraft.cmi.api.client.CmiLang;
-import dev.celestiacraft.cmi.config.CommonConfig;
+import dev.celestiacraft.cmi.config.common.AcceleratorMotorConfig;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -44,7 +44,7 @@ public class AcceleratorMotorItem extends AssemblyOperatorBlockItem {
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-		int maxSpeedValue = CommonConfig.ACCELERATOR_MOTOR_MAX_SPEED.get();
+		int maxSpeedValue = AcceleratorMotorConfig.MAX_SPEED.get();
 		/*
 		 * "按住 [Shift] 查看详情" 提示 - 始终显示
 		 * Shift 按下时文字变白，否则为灰色

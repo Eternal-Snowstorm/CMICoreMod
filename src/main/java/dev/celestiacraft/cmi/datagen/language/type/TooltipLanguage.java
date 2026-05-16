@@ -116,5 +116,25 @@ public class TooltipLanguage extends LanguageGenerate {
 				"After the equipment let you never hunger",
 				"装备后让你永不饥饿"
 		);
+		addTooltipLang(
+				"solar_boiler.info",
+				"Solar Boiler Info:",
+				"太阳能锅炉信息:"
+		);
+		addTooltipLang(
+				"solar_boiler.efficiency",
+				"Efficiency: %s mB / Tick",
+				"效率: %s mB / Tick"
+		);
+		addTooltipLang(
+				"solar_boiler.capacity",
+				"Capacity: %s mB",
+				"容量: %s mB"
+		);
+		addTooltipLang(
+				"solar_boiler.total_capacity",
+				"Total Capacity: %s mB",
+				"总容量: %s mB"
+		);
 	}
 }

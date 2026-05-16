@@ -8,7 +8,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.CreateLang;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
-import dev.celestiacraft.cmi.config.CommonConfig;
+import dev.celestiacraft.cmi.config.common.AcceleratorMotorConfig;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
@@ -33,7 +33,7 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 	@Override
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 		super.addBehaviours(behaviours);
-		int max = CommonConfig.ACCELERATOR_MOTOR_MAX_SPEED.get();
+		int max = AcceleratorMotorConfig.MAX_SPEED.get();
 
 		generatedSpeed = new AcceleratorMotorScrollValueBehaviour(
 				CreateLang.translateDirect("kinetics.creative_motor.rotation_speed"),
@@ -41,7 +41,7 @@ public class AcceleratorMotorBlockEntity extends GeneratingKineticBlockEntity {
 				new MotorValueBox()
 		);
 		generatedSpeed.between(-max, max);
-		generatedSpeed.value = CommonConfig.ACCELERATOR_MOTOR_DEFAULT_SPEED.get();
+		generatedSpeed.value = AcceleratorMotorConfig.DEFAULT_SPEED.get();
 		generatedSpeed.withCallback((integer) -> {
 			this.updateGeneratedRotation();
 		});

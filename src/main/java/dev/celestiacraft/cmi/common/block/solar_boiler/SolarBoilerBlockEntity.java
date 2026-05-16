@@ -1,13 +1,18 @@
 package dev.celestiacraft.cmi.common.block.solar_boiler;
 
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
-import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
+import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.common.block.solar_boiler.capability.SolarBoilerFluidCapability;
 import dev.celestiacraft.cmi.common.block.solar_boiler.capability.SolarBoilerFluidTank;
+import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.config.common.SolarBoilerConfig;
 import dev.celestiacraft.cmi.utils.ModResources;
+import dev.celestiacraft.libs.api.register.block.BasicBlockEntity;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public abstract class SolarBoilerBlockEntity extends SmartBlockEntity {
+public abstract class SolarBoilerBlockEntity extends BasicBlockEntity implements IHaveGoggleInformation {
 	protected final SolarBoilerFluidTank waterTank;
 	protected final SolarBoilerFluidTank steamTank;
 
@@ -112,10 +117,6 @@ public abstract class SolarBoilerBlockEntity extends SmartBlockEntity {
 	}
 
 	@Override
-	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-	}
-
-	@Override
 	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction direction) {
 		if (capability == ForgeCapabilities.FLUID_HANDLER) {
 			return fluidCapability.get(direction).cast();
@@ -157,5 +158,44 @@ public abstract class SolarBoilerBlockEntity extends SmartBlockEntity {
 	@Override
 	public void handleUpdateTag(@NotNull CompoundTag tag) {
 		load(tag);
+	}
+
+	@Override
+	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+		int efficiency = 0;
+		int capacity = 0;
+
+		if (getBlockState().is(CmiBlock.BRONZE_SOLAR_BOILER.get())) {
+			efficiency = SolarBoilerConfig.BRONZE_EFFICIENCY.get();
+			capacity = SolarBoilerConfig.BRONZE_CAPACITY.get();
+		} else if (getBlockState().is(CmiBlock.CAST_IRON_SOLAR_BOILER.get())) {
+			efficiency = SolarBoilerConfig.CAST_IRON_EFFICIENCY.get();
+			capacity = SolarBoilerConfig.CAST_IRON_CAPACITY.get();
+		} else if (getBlockState().is(CmiBlock.STEEL_SOLAR_BOILER.get())) {
+			efficiency = SolarBoilerConfig.STEEL_EFFICIENCY.get();
+			capacity = SolarBoilerConfig.STEEL_CAPACITY.get();
+		}
+
+		CmiLang.builder()
+				.translate("tooltip.solar_boiler.info")
+				.style(ChatFormatting.GOLD)
+				.forGoggles(tooltip);
+
+		CmiLang.builder()
+				.translate("tooltip.solar_boiler.efficiency", efficiency)
+				.style(ChatFormatting.GRAY)
+				.forGoggles(tooltip);
+
+		CmiLang.builder()
+				.translate("tooltip.solar_boiler.capacity", capacity)
+				.style(ChatFormatting.GRAY)
+				.forGoggles(tooltip);
+
+		CmiLang.builder()
+				.translate("tooltip.solar_boiler.total_capacity", capacity * 2)
+				.style(ChatFormatting.GRAY)
+				.forGoggles(tooltip);
+
+		return true;
 	}
 }

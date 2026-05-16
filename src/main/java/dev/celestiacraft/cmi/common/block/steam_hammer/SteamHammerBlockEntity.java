@@ -3,6 +3,8 @@ package dev.celestiacraft.cmi.common.block.steam_hammer;
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.foundation.item.ItemHelper;
+import dev.celestiacraft.cmi.config.common.SteamHammerConfig;
+import dev.celestiacraft.cmi.tags.ModFluidTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -19,13 +21,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import dev.celestiacraft.cmi.config.CommonConfig;
-import dev.celestiacraft.cmi.tags.ModFluidTags;
 
 import java.util.Optional;
 
 public class SteamHammerBlockEntity extends MechanicalPressBlockEntity {
-	private static final int STEAM_CAPACITY = CommonConfig.STEAM_HAMMER_STEAM_CAPACITY.get();
+	private static final int STEAM_CAPACITY = SteamHammerConfig.STEAM_CAPACITY.get();
 
 	public SteamHammerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -94,12 +94,12 @@ public class SteamHammerBlockEntity extends MechanicalPressBlockEntity {
 	};
 
 	private boolean hasEnoughSteam() {
-		return !steam.isEmpty() && steam.getAmount() >= CommonConfig.STEAM_HAMMER_STEAM_CONSUMPTION.get();
+		return !steam.isEmpty() && steam.getAmount() >= SteamHammerConfig.STEAM_CONSUMPTION.get();
 	}
 
 	private void consumeSteam() {
 		if (!steam.isEmpty()) {
-			steam.shrink(CommonConfig.STEAM_HAMMER_STEAM_CONSUMPTION.get());
+			steam.shrink(SteamHammerConfig.STEAM_CONSUMPTION.get());
 			if (steam.isEmpty()) {
 				steam = FluidStack.EMPTY;
 			}

@@ -8,6 +8,7 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.api.client.assets.Items;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlock;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockItem;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelInfo;
@@ -32,12 +33,7 @@ public class MetalCogWheelRegister {
 		BlockBuilder<T, CreateRegistrate> builder = Cmi.REGISTRATE.block(name, factory);
 
 		builder.item(MetalCogWheelBlockItem::new)
-				.model((context, provider) -> {
-					provider.withExistingParent(
-							context.getName(),
-							provider.modLoc(String.format("block/cogwheel/%s/%s", material, "small"))
-					);
-				})
+				.model(Items.withModel(String.format("block/cogwheel/%s/%s", material, "small")))
 				.tag(ModItemTags.COGWHEEL)
 				.build();
 		builder.initialProperties(SharedProperties::stone);
@@ -55,12 +51,7 @@ public class MetalCogWheelRegister {
 		BlockBuilder<T, CreateRegistrate> builder = Cmi.REGISTRATE.block(name, factory);
 
 		builder.item(MetalCogWheelBlockItem::new)
-				.model((context, provider) -> {
-					provider.withExistingParent(
-							context.getName(),
-							provider.modLoc(String.format("block/cogwheel/%s/%s", material, "large"))
-					);
-				})
+				.model(Items.withModel(String.format("block/cogwheel/%s/%s", material, "large")))
 				.tag(ModItemTags.LARGE_COGWHEEL)
 				.build();
 		builder.initialProperties(SharedProperties::stone);

@@ -23,12 +23,16 @@ public class ModResources {
 	public static final ResourcesEntry NETWORK_TOOL;
 	public static final ResourcesEntry STEAM;
 	public static final ResourcesEntry RESSTONE_MODULE;
+	public static final ResourcesEntry VOID_SPRING;
+	public static final ResourcesEntry VOID_DUST;
 
 	static {
 		STEEL_INGOT = loadCmi("steel_ingot");
 		SEA_WATER = loadCmi("sea_water");
 		CRUCIBLE_BASE = loadCmi("crucible_base");
 		CRUCIBLE_TUYERE = loadCmi("crucible_tuyere");
+		VOID_SPRING = loadCmi("void_spring");
+		VOID_DUST = loadCmi("void_dust");
 
 		NAHUATL_SLAB = loadTCon("nahuatl_slab");
 		NAHUATL_FENCE = loadTCon("nahuatl_fence");

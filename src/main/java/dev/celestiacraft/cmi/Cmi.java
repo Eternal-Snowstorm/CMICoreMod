@@ -14,7 +14,7 @@ import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
-import dev.celestiacraft.cmi.config.CommonConfig;
+import dev.celestiacraft.cmi.config.main.CommonConfig;
 import dev.celestiacraft.cmi.datagen.worldgen.region.CmiOverworldRegion;
 import dev.celestiacraft.cmi.datagen.worldgen.surfacerule.CmiSurfaceRuleData;
 import dev.celestiacraft.cmi.network.CmiNetwork;

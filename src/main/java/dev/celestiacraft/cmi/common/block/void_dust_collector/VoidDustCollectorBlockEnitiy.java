@@ -1,12 +1,12 @@
 package dev.celestiacraft.cmi.common.block.void_dust_collector;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
-import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCEnergyStorage;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCItemHandler;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCItmeCapability;
-import dev.celestiacraft.cmi.config.CommonConfig;
+import dev.celestiacraft.cmi.config.common.VoidDustCollectorConfig;
+import dev.celestiacraft.cmi.utils.ModResources;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,35 +15,26 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class VoidDustCollectorBlockEnitiy extends BlockEntity implements IHaveGoggleInformation {
-	private static final int CAPACITY = CommonConfig.VOID_DUST_COLLECTOR_ENERGY_CAPACITY.get();
-	private static final int MAX_RECEIVE = CommonConfig.VOID_DUST_COLLECTOR_MAX_RECEIVE.get();
-	private static final int ENERGY_CONSUMPTION = CommonConfig.VOID_DUST_COLLECTOR_ENERGY_CONSUMPTION.get();
-	private static final int MAX_WORK_HEIGHT = CommonConfig.VOID_DUST_COLLECTOR_MAX_WORK_HEIGHT.get();
-	private static final int MIN_WORK_HEIGHT = CommonConfig.VOID_DUST_COLLECTOR_MIN_WORK_HEIGHT.get();
-	private static final int WORK_TIME = CommonConfig.VOID_DUST_COLLECTOR_WORK_TIME.get();
-	private static final Block BLOCKS_BELOW = Lazy.of(() -> {
-		return ForgeRegistries.BLOCKS.getValue(Cmi.loadResource("void_spring"));
-	}).get();
-	private static final ItemStack OUTPUT_ITEM = Lazy.of(() -> {
-		return ForgeRegistries.ITEMS.getValue(Cmi.loadResource("void_dust"));
-	}).get().getDefaultInstance();
+	private static final int CAPACITY = VoidDustCollectorConfig.ENERGY_CAPACITY.get();
+	private static final int MAX_RECEIVE = VoidDustCollectorConfig.MAX_RECEIVE.get();
+	private static final int ENERGY_CONSUMPTION = VoidDustCollectorConfig.ENERGY_CONSUMPTION.get();
+	private static final int MAX_WORK_HEIGHT = VoidDustCollectorConfig.MAX_WORK_HEIGHT.get();
+	private static final int MIN_WORK_HEIGHT = VoidDustCollectorConfig.MIN_WORK_HEIGHT.get();
+	private static final int WORK_TIME = VoidDustCollectorConfig.WORK_TIME.get();
 
 	@Getter
 	private int energyStored = 0;
@@ -70,7 +61,7 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity implements IHaveGo
 		ItemStack stack = itemHandler.getStackInSlot(0);
 
 		boolean canWork = energyStored >= 1000 &&
-				level.getBlockState(worldPosition.below()).is(BLOCKS_BELOW) &&
+				level.getBlockState(worldPosition.below()).is(ModResources.VOID_SPRING.getBlock()) &&
 				this.getBlockPos().getY() <= MAX_WORK_HEIGHT &&
 				this.getBlockPos().getY() >= MIN_WORK_HEIGHT &&
 				(stack.isEmpty() || stack.getCount() < stack.getMaxStackSize());
@@ -107,7 +98,7 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity implements IHaveGo
 
 		// 完成一次生成
 		if (workTimer >= workTimeRequired) {
-			ItemStack output = OUTPUT_ITEM.copy();
+			ItemStack output = ModResources.VOID_DUST.getItemStack().copy();
 			itemHandler.insertItem(0, output, false);
 
 			workTimer = 0;

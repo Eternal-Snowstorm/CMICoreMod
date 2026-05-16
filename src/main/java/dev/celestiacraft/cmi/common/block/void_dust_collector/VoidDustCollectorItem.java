@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.block.void_dust_collector;
 
 import dev.celestiacraft.cmi.api.client.CmiLang;
-import dev.celestiacraft.cmi.config.CommonConfig;
+import dev.celestiacraft.cmi.config.common.VoidDustCollectorConfig;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -29,8 +29,8 @@ public class VoidDustCollectorItem extends BlockItem {
 		CmiLang.isShiftDown(tooltip);
 
 		if (Screen.hasShiftDown()) {
-			int energyConsumption = CommonConfig.VOID_DUST_COLLECTOR_ENERGY_CONSUMPTION.get();
-			int workTime = CommonConfig.VOID_DUST_COLLECTOR_WORK_TIME.get();
+			int energyConsumption = VoidDustCollectorConfig.ENERGY_CONSUMPTION.get();
+			int workTime = VoidDustCollectorConfig.WORK_TIME.get();
 
 			tooltip.add(Component.empty());
 

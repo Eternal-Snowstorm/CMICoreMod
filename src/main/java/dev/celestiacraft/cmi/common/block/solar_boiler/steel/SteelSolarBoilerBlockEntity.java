@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.block.solar_boiler.steel;
 
 import dev.celestiacraft.cmi.common.block.solar_boiler.SolarBoilerBlockEntity;
+import dev.celestiacraft.cmi.config.common.SolarBoilerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,11 +13,11 @@ public class SteelSolarBoilerBlockEntity extends SolarBoilerBlockEntity {
 
 	@Override
 	public int getWaterConsumptionPerTick() {
-		return 6;
+		return SolarBoilerConfig.STEEL_EFFICIENCY.get();
 	}
 
 	@Override
 	protected int getFluidCapacity() {
-		return 12000;
+		return SolarBoilerConfig.STEEL_CAPACITY.get();
 	}
 }

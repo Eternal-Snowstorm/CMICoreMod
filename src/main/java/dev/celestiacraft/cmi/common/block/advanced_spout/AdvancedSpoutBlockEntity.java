@@ -12,7 +12,7 @@ import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.fluid.FluidHelper;
-import dev.celestiacraft.cmi.config.CommonConfig;
+import dev.celestiacraft.cmi.config.common.AdvancedSpoutConfig;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -36,14 +36,14 @@ public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
 
 		for (BlockEntityBehaviour behaviour : behaviours) {
 			if (behaviour instanceof SmartFluidTankBehaviour tankBehaviour) {
-				tankBehaviour.getPrimaryHandler().setCapacity(CommonConfig.ADVANCED_SPOUT_CAPACITY.get());
+				tankBehaviour.getPrimaryHandler().setCapacity(AdvancedSpoutConfig.CAPACITY.get());
 				break;
 			}
 		}
 	}
 
 	public int getFillingTime() {
-		return Math.max(CommonConfig.ADVANCED_SPOUT_FILLING_TIME.get(), 6);
+		return Math.max(AdvancedSpoutConfig.FILLING_TIME.get(), 6);
 	}
 
 	private SmartFluidTankBehaviour getTank() {
