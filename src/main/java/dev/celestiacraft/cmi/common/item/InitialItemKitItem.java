@@ -61,8 +61,8 @@ public class InitialItemKitItem extends BasicItem {
 		}
 
 		PARSED_LIST.forEach((parsed) -> {
-			ResourceLocation rl = ResourceLocation.parse(parsed.id);
-			Item item = ForgeRegistries.ITEMS.getValue(rl);
+			ResourceLocation location = ResourceLocation.parse(parsed.id);
+			Item item = ForgeRegistries.ITEMS.getValue(location);
 
 			if (item != null) {
 				player.addItem(new ItemStack(item, parsed.count));
