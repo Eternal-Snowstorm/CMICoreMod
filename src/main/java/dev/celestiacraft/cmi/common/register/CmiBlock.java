@@ -25,7 +25,7 @@ import dev.celestiacraft.cmi.common.block.golden_sapling.GoldenSaplingBlock;
 import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.solar_boiler.SolarBoilerBlock;
-import dev.celestiacraft.cmi.common.block.solar_boiler.SolarBoilerBlockItem;
+import dev.celestiacraft.cmi.common.block.solar_boiler.SolarBoilerItem;
 import dev.celestiacraft.cmi.common.block.solar_boiler.bronze.BronzeSolarBoilerBlock;
 import dev.celestiacraft.cmi.common.block.solar_boiler.cast_iron.CastIronSolarBoilerBlock;
 import dev.celestiacraft.cmi.common.block.solar_boiler.steel.SteelSolarBoilerBlock;
@@ -527,7 +527,7 @@ public class CmiBlock {
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item(SolarBoilerBlockItem::new)
+				.item(SolarBoilerItem::new)
 				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
@@ -544,7 +544,7 @@ public class CmiBlock {
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item(SolarBoilerBlockItem::new)
+				.item(SolarBoilerItem::new)
 				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(
@@ -619,7 +619,7 @@ public class CmiBlock {
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.item(SolarBoilerBlockItem::new)
+				.item(SolarBoilerItem::new)
 				.tag(ModItemTags.BURNER)
 				.model((context, provider) -> {
 					provider.withExistingParent(

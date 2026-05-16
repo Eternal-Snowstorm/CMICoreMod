@@ -117,6 +117,16 @@ public class TooltipLanguage extends LanguageGenerate {
 				"装备后让你永不饥饿"
 		);
 		addTooltipLang(
+				"solar_boiler.satisfy",
+				"Working conditions have been met!",
+				"已满足工作条件!"
+		);
+		addTooltipLang(
+				"solar_boiler.not_satisfy",
+				"Working conditions not met!",
+				"未满足工作条件!"
+		);
+		addTooltipLang(
 				"solar_boiler.info",
 				"Solar Boiler Info:",
 				"太阳能锅炉信息:"

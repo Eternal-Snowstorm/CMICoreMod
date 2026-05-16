@@ -8,8 +8,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
 
-public class SolarBoilerBlockItem extends BasicBlockItem {
-	public SolarBoilerBlockItem(Block block, Properties properties) {
+public class SolarBoilerItem extends BasicBlockItem {
+	public SolarBoilerItem(Block block, Properties properties) {
 		super(block, properties);
 	}
 

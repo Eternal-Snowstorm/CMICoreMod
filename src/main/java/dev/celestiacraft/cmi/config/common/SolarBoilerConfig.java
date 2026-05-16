@@ -10,6 +10,8 @@ public class SolarBoilerConfig extends ConfigModule {
 
 	private final String consumComment = "Water consumption and steam production per tick";
 	private final String capacityComment = "Boiler's Fluid Capacity";
+	private final String efficienctTextComment = "_pre_tick_consum_and_production";
+	private final String capacityTextComment = "_boiler_capacity";
 
 	public static ForgeConfigSpec.IntValue BRONZE_EFFICIENCY;
 	public static ForgeConfigSpec.IntValue BRONZE_CAPACITY;
@@ -25,37 +27,37 @@ public class SolarBoilerConfig extends ConfigModule {
 		BRONZE_EFFICIENCY = builder
 				.comment(consumComment)
 				.comment("type: int")
-				.comment("default: 4")
-				.defineInRange("bronze_pre_tick_consum_and_production", 4, 1, 1024);
+				.comment("default: 2")
+				.defineInRange("bronze" + efficienctTextComment, 2, 1, 1024);
 
 		BRONZE_CAPACITY = builder
 				.comment(capacityComment)
 				.comment("type: int")
 				.comment("default: 4000")
-				.defineInRange("bronze_boiler_capacity", 4000, 1, 100000000);
+				.defineInRange("bronze" + capacityTextComment, 4000, 1, 100000000);
 
 		CAST_IRON_EFFICIENCY = builder
 				.comment(consumComment)
 				.comment("type: int")
-				.comment("default: 8")
-				.defineInRange("cast_iron_pre_tick_consum_and_production", 8, 1, 1024);
+				.comment("default: 4")
+				.defineInRange("cast_iron" + efficienctTextComment, 4, 1, 1024);
 
 		CAST_IRON_CAPACITY = builder
 				.comment(capacityComment)
 				.comment("type: int")
 				.comment("default: 8000")
-				.defineInRange("cast_iron_boiler_capacity", 8000, 1, 100000000);
+				.defineInRange("cast_iron" + capacityTextComment, 8000, 1, 100000000);
 
 		STEEL_EFFICIENCY = builder
 				.comment(consumComment)
 				.comment("type: int")
-				.comment("default: 12")
-				.defineInRange("steel_pre_tick_consum_and_production", 12, 1, 1024);
+				.comment("default: 8")
+				.defineInRange("steel" + efficienctTextComment, 8, 1, 1024);
 
 		STEEL_CAPACITY = builder
 				.comment(capacityComment)
 				.comment("type: int")
 				.comment("default: 12000")
-				.defineInRange("steel_boiler_capacity", 12000, 1, 100000000);
+				.defineInRange("steel" + capacityTextComment, 12000, 1, 100000000);
 	}
 }

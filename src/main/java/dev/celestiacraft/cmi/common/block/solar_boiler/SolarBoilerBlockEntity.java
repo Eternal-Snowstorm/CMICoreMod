@@ -28,6 +28,7 @@ import java.util.List;
 public abstract class SolarBoilerBlockEntity extends BasicBlockEntity implements IHaveGoggleInformation {
 	protected final SolarBoilerFluidTank waterTank;
 	protected final SolarBoilerFluidTank steamTank;
+	private boolean working;
 
 	private SolarBoilerFluidCapability fluidCapability;
 
@@ -77,7 +78,10 @@ public abstract class SolarBoilerBlockEntity extends BasicBlockEntity implements
 	}
 
 	protected boolean canWork() {
-		return level.isDay()
+		long time = level.getDayTime() % 24000;
+
+		return time >= 0
+				&& time < 13000
 				&& level.canSeeSky(worldPosition.above())
 				&& !level.isRaining();
 	}
@@ -174,6 +178,20 @@ public abstract class SolarBoilerBlockEntity extends BasicBlockEntity implements
 		} else if (getBlockState().is(CmiBlock.STEEL_SOLAR_BOILER.get())) {
 			efficiency = SolarBoilerConfig.STEEL_EFFICIENCY.get();
 			capacity = SolarBoilerConfig.STEEL_CAPACITY.get();
+		}
+
+		if (canWork()) {
+			CmiLang.builder()
+					.translate("tooltip.solar_boiler.satisfy")
+					.style(ChatFormatting.GREEN)
+					.style(ChatFormatting.BOLD)
+					.forGoggles(tooltip);
+		} else {
+			CmiLang.builder()
+					.translate("tooltip.solar_boiler.not_satisfy")
+					.style(ChatFormatting.RED)
+					.style(ChatFormatting.BOLD)
+					.forGoggles(tooltip);
 		}
 
 		CmiLang.builder()
