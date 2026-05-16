@@ -83,7 +83,7 @@ public abstract class SolarBoilerBlockEntity extends BasicBlockEntity implements
 		return time >= 0
 				&& time < 13000
 				&& level.canSeeSky(worldPosition.above())
-				&& !level.isRaining();
+				&& !level.isRainingAt(worldPosition);
 	}
 
 	protected void process() {
