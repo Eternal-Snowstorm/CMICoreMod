@@ -29,7 +29,7 @@ public class WaterWellSeaWaterCategory {
 				.setIcon(() -> {
 					return new DoubleItemIcon(
 							() -> CmiBlock.WATER_WELL.get().asItem().getDefaultInstance(),
-							() -> ModResources.SEA_WATER.getFluid().getBucket().getDefaultInstance()
+							() -> ModResources.SEA_WATER.getBucketStack()
 					);
 				})
 				.setBackground(0, 0)
@@ -37,7 +37,7 @@ public class WaterWellSeaWaterCategory {
 					builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
 							.addFluidStack(ModResources.SEA_WATER.getFluid(), Integer.MAX_VALUE)
-							.addItemStack(ModResources.SEA_WATER.getFluid().getBucket().getDefaultInstance());
+							.addItemStack(ModResources.SEA_WATER.getBucketStack());
 				})
 				.setTooltips((recipe, view, mouseX, mouseY) -> {
 					if (ClientRenderUtils.isCursorInsideBounds(86, 21, 14, 14, mouseX, mouseY)) {
