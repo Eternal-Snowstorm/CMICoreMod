@@ -106,7 +106,7 @@ public class SolarBoilerItem extends BasicBlockItem {
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					CmiLang.translateDirect(
 							"tooltip.solar_boiler.capacity",
-							efficiency
+							capacity
 					).withStyle(ChatFormatting.GRAY).getString(),
 					FontHelper.Palette.STANDARD_CREATE.primary(),
 					FontHelper.Palette.STANDARD_CREATE.highlight()
@@ -115,7 +115,7 @@ public class SolarBoilerItem extends BasicBlockItem {
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					CmiLang.translateDirect(
 							"tooltip.solar_boiler.total_capacity",
-							efficiency
+							capacity * 2
 					).withStyle(ChatFormatting.GRAY).getString(),
 					FontHelper.Palette.STANDARD_CREATE.primary(),
 					FontHelper.Palette.STANDARD_CREATE.highlight()
