@@ -16,7 +16,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class WindVaneBlock extends BaseEntityBlock implements EntityBlock {
 	public WindVaneBlock(Properties properties) {
-		super(Properties.copy(Blocks.COPPER_BLOCK).strength(3.0F, 6.0F));
+		super(Properties.copy(Blocks.COPPER_BLOCK)
+				.strength(3.0F, 6.0F)
+		);
 	}
 
 	@Override

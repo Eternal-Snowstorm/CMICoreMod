@@ -15,17 +15,17 @@ public class WindVaneBlockEntity extends BlockEntity {
 	@Override
 	public void onLoad() {
 		super.onLoad();
-		if (this.level != null && !this.registered) {
-			WindVaneManager.add(this.level, this.worldPosition);
-			this.registered = true;
+		if (level != null && !registered) {
+			WindVaneManager.add(level, worldPosition);
+			registered = true;
 		}
 	}
 
 	@Override
 	public void setRemoved() {
-		if (this.level != null && this.registered) {
-			WindVaneManager.remove(this.level, this.worldPosition);
-			this.registered = false;
+		if (this.level != null && registered) {
+			WindVaneManager.remove(level, worldPosition);
+			registered = false;
 		}
 		super.setRemoved();
 	}

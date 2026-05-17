@@ -9,11 +9,8 @@ import net.minecraft.world.level.Level;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class WindVaneManager {
+public class WindVaneManager {
 	private static final Map<ResourceKey<Level>, Long2IntOpenHashMap> CHUNK_COUNTS = new ConcurrentHashMap<>();
-
-	private WindVaneManager() {
-	}
 
 	public static void add(Level level, BlockPos pos) {
 		if (level == null) {
