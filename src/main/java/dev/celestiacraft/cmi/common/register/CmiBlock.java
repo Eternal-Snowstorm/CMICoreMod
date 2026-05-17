@@ -24,6 +24,7 @@ import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlo
 import dev.celestiacraft.cmi.common.block.golden_sapling.GoldenSaplingBlock;
 import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
+import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlock;
 import dev.celestiacraft.cmi.common.block.solar_boiler.SolarBoilerBlock;
 import dev.celestiacraft.cmi.common.block.solar_boiler.SolarBoilerItem;
 import dev.celestiacraft.cmi.common.block.solar_boiler.bronze.BronzeSolarBoilerBlock;
@@ -87,6 +88,7 @@ public class CmiBlock {
 	public static final BlockEntry<SteelSolarBoilerBlock> STEEL_SOLAR_BOILER;
 	public static final BlockEntry<SpaceElevatorBaseConsoleBlock> SPACE_ELEVATOR_BASE_CONSOLE;
 	public static final BlockEntry<SpaceElevatorIoPortBlock> SPACE_ELEVATOR_IO_PORT;
+	public static final BlockEntry<WindVaneBlock> WIND_VANE;
 
 	static {
 		ACCELERATOR = Cmi.REGISTRATE.block("accelerator", AcceleratorBlock::new)
@@ -612,6 +614,14 @@ public class CmiBlock {
 				.properties(properties -> properties.noOcclusion().noLootTable())
 				.blockstate((context, provider) -> provider.simpleBlock(context.get(),
 						provider.models().withExistingParent(context.getName(), provider.mcLoc("block/block"))))
+				.register();
+		WIND_VANE = Cmi.REGISTRATE.block("wind_vane", WindVaneBlock::new)
+				.initialProperties(SharedProperties::copperMetal)
+				.item()
+				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.register();
 		STEEL_SOLAR_BOILER = Cmi.REGISTRATE.block("steel_solar_boiler", SteelSolarBoilerBlock::new)
 				.initialProperties(SharedProperties::softMetal)

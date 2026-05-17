@@ -45,7 +45,8 @@ public class AddCreativeModeTabs {
 					CmiBlock.CAST_IRON_FLUID_BURNER,
 					CmiBlock.CAST_IRON_SOLAR_BOILER,
 					CmiBlock.STEEL_FLUID_BURNER,
-					CmiBlock.STEEL_SOLAR_BOILER
+					CmiBlock.STEEL_SOLAR_BOILER,
+					CmiBlock.WIND_VANE
 			).forEach((block) -> {
 				event.accept(block.asItem());
 			});

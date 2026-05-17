@@ -28,7 +28,8 @@
 		"IngredientWrapperMixin",
 		"FluidStackJSMixin",
 		"FluidWrapperMixin",
-		"IngredientListOverlayMixin"
+		"IngredientListOverlayMixin",
+		"LevelMixin"
 	],
 	"client": [],
 	"injectors": {

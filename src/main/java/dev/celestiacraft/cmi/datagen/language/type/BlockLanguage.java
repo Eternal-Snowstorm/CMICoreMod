@@ -109,6 +109,11 @@ public class BlockLanguage extends LanguageGenerate {
 				"Space Elevator IO Port",
 				"太空电梯接口"
 		);
+		addBlockLanguage(
+				"wind_vane",
+				"Wind Vane",
+				"风向标"
+		);
 		addCogWheelLang(
 				"bronze",
 				"Bronze",
