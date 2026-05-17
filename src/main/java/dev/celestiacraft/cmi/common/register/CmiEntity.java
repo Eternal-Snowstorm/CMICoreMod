@@ -16,7 +16,9 @@ public class CmiEntity {
 				.properties((builder) -> {
 					builder.sized(0.6f, 1.8f);
 				})
-				.loot((lootTables, entity) -> lootTables.add(entity, LootTable.lootTable()))
+				.loot((tables, entity) -> {
+					tables.add(entity, LootTable.lootTable());
+				})
 				.register();
 		SPACE_ELEVATOR = Cmi.REGISTRATE.entity("space_elevator", SpaceElevatorEntity::new, MobCategory.MISC)
 				.properties((builder) -> {
