@@ -57,8 +57,8 @@ public class AddCreativeModeTabs {
 				event.accept(item.asItem());
 			});
 
-			MetalCogWheelRegister.COMMON_LIST.forEach((cogwhee) -> {
-				event.accept(cogwhee.asItem());
+			MetalCogWheelRegister.COMMON_LIST.forEach((cogwheel) -> {
+				event.accept(cogwheel.asItem());
 			});
 		}
 
