@@ -62,7 +62,7 @@ public class AddCreativeModeTabs {
 			});
 		}
 
-		if (event.getTabKey() == CmiCreativeTab.MECHANISMS) {
+		if (event.getTabKey().equals(CmiCreativeTab.MECHANISMS)) {
 			event.accept(AllItems.PRECISION_MECHANISM.get());
 			event.accept(REDSTONE_MECHANISM);
 		}
