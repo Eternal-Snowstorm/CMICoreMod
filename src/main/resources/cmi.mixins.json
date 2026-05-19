@@ -29,9 +29,14 @@
 		"FluidStackJSMixin",
 		"FluidWrapperMixin",
 		"IngredientListOverlayMixin",
-		"LevelMixin"
+		"LevelMixin",
+		"BiomeMixin",
+		"CauldronBlockMixin",
+		"LayeredCauldronBlockMixin"
 	],
-	"client": [],
+	"client": [
+		"LevelRendererMixin"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	}
