@@ -57,6 +57,8 @@ public class CmiClient {
 	}
 
 	public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerBlockEntityRenderer(CmiBlockEntity.SPACE_ELEVATOR_BASE_CONSOLE.get(), context -> new SpaceElevatorBaseConsoleRenderer());
+		event.registerBlockEntityRenderer(CmiBlockEntity.SPACE_ELEVATOR_BASE_CONSOLE.get(), (context) -> {
+			return new SpaceElevatorBaseConsoleRenderer();
+		});
 	}
 }
