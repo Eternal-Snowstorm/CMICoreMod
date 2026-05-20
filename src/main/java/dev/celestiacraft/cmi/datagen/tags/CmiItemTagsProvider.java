@@ -2,10 +2,12 @@ package dev.celestiacraft.cmi.datagen.tags;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.register.CmiItem;
+import dev.celestiacraft.cmi.tags.CmiItemTags;
 import dev.celestiacraft.libs.tags.TagsBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +38,9 @@ public class CmiItemTagsProvider extends ItemTagsProvider {
 	@Override
 	protected void addTags(HolderLookup.@NotNull Provider provider) {
 		addAllSlot();
+
+		tag(CmiItemTags.WORKBENCHS)
+				.add(Items.CRAFTING_TABLE);
 	}
 
 	private void addAllSlot() {

@@ -3,7 +3,7 @@ package dev.celestiacraft.cmi.common.recipe.fan_processig.freezing;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
 import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
-import dev.celestiacraft.cmi.tags.ModBlockTags;
+import dev.celestiacraft.cmi.tags.CmiBlockTags;
 import net.createmod.catnip.theme.Color;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -27,7 +27,7 @@ public class FreezingType implements FanProcessingType {
 	public boolean isValidAt(Level level, BlockPos pos) {
 		BlockState state = level.getBlockState(pos);
 
-		return state.is(ModBlockTags.FREEZING_CATALYST);
+		return state.is(CmiBlockTags.FREEZING_CATALYST);
 	}
 
 	/**

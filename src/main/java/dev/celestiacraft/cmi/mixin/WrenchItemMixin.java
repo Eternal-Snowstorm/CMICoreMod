@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.mixin;
 
-import dev.celestiacraft.cmi.tags.ModItemTags;
+import dev.celestiacraft.cmi.tags.CmiItemTags;
 import earth.terrarium.adastra.common.items.WrenchItem;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +26,7 @@ public class WrenchItemMixin {
 
 		ItemStack stack = player.getMainHandItem();
 
-		if (!stack.is(ModItemTags.WRENCHES)) {
+		if (!stack.is(CmiItemTags.WRENCHES)) {
 			returnable.setReturnValue(InteractionResult.PASS);
 		}
 	}

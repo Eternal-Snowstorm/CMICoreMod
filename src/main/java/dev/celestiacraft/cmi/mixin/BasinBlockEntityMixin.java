@@ -7,13 +7,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import dev.celestiacraft.cmi.tags.ModBlockTags;
+import dev.celestiacraft.cmi.tags.CmiBlockTags;
 
 @Mixin(value = BasinBlockEntity.class, remap = false)
 public abstract class BasinBlockEntityMixin {
 	@Inject(method = "getHeatLevelOf", at = @At("HEAD"), remap = false, cancellable = true)
 	private static void getHeatLevelOf(BlockState state, CallbackInfoReturnable<BlazeBurnerBlock.HeatLevel> cir) {
-		if (state.is(ModBlockTags.GRILL_SOURCES)) {
+		if (state.is(CmiBlockTags.GRILL_SOURCES)) {
 			cir.setReturnValue(BlazeBurnerBlock.HeatLevel.valueOf("GRILLED"));
 		}
 

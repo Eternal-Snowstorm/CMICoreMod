@@ -1,11 +1,15 @@
 package dev.celestiacraft.cmi.common.register;
 
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.client.assets.Items;
+import dev.celestiacraft.cmi.api.client.assets.ItemModelGen;
 import dev.celestiacraft.cmi.common.item.*;
 import dev.celestiacraft.cmi.common.item.tool.crafting_table.HandheleCraftingTableItem;
+import dev.celestiacraft.cmi.tags.CmiItemTags;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 
@@ -25,16 +29,22 @@ public class CmiItem {
 				.model(NonNullBiConsumer.noop())
 				.register();
 		MYSTIC_POMELO = Cmi.REGISTRATE.item("mystic_pomelo", MysticPomeloItem::new)
-				.model(Items.generated("item/mystic_pomelo"))
+				.model(ItemModelGen.generated("item/mystic_pomelo"))
 				.register();
 		SIMPLE_BATTERY = Cmi.REGISTRATE.item("simple_battery", SimpleBatteryItem::new)
-				.model(Items.generated("item/simple_battery"))
+				.model(ItemModelGen.generated("item/simple_battery"))
 				.register();
 		INITIAL_ITEM_KIT = Cmi.REGISTRATE.item("initial_item_kit", InitialItemKitItem::new)
 				.model(NonNullBiConsumer.noop())
 				.register();
 		HANDHELE_CRAFTING_TABLE = Cmi.REGISTRATE.item("handheld_crafting_table", HandheleCraftingTableItem::new)
-				.model(Items.handheld("item/tool/handheld_crafting_table"))
+				.model(ItemModelGen.handheld("item/tool/handheld_crafting_table"))
+				.recipe((context, provider) -> {
+					ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, context.get())
+							.requires(CmiItemTags.WORKBENCHS)
+							.unlockedBy("crafting_table", RegistrateRecipeProvider.has(CmiItemTags.WORKBENCHS))
+							.save(provider, Cmi.loadResource("minecraft/crafting/shapeless/" + context.getName()));
+				})
 				.register();
 		QI_MONTH_EGG = Cmi.REGISTRATE.item("qi_month_spawn_egg", (properties) -> {
 					return new ForgeSpawnEggItem(
@@ -44,7 +54,7 @@ public class CmiItem {
 							properties
 					);
 				})
-				.model(Items.withModel(ResourceLocation.withDefaultNamespace("item/template_spawn_egg")))
+				.model(ItemModelGen.withModel(ResourceLocation.withDefaultNamespace("item/template_spawn_egg")))
 				.register();
 	}
 

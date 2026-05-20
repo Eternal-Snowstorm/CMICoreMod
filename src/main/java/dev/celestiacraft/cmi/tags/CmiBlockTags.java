@@ -4,12 +4,13 @@ import dev.celestiacraft.libs.tags.TagsBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
-public class ModBlockTags {
-	public static final TagKey<Block> GRILL_SOURCES;
-	public static final TagKey<Block> FREEZING_CATALYST;
-	public static final TagKey<Block> COKE_OVEN_STRUCTURE;
-	public static final TagKey<Block> COGWHEEL;
-	public static final TagKey<Block> LARGE_COGWHEEL;
+public class CmiBlockTags {
+	public static final TagKey<Block>
+			GRILL_SOURCES,
+			FREEZING_CATALYST,
+			COKE_OVEN_STRUCTURE,
+			COGWHEEL,
+			LARGE_COGWHEEL;
 
 	static {
 		GRILL_SOURCES = TagsBuilder.block("grill_sources").cmi();

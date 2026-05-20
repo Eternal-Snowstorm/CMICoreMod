@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import dev.celestiacraft.cmi.tags.ModBlockTags;
+import dev.celestiacraft.cmi.tags.CmiBlockTags;
 import dev.celestiacraft.libs.client.TagAnimatedBlock;
 
 @Mixin(value = AnimatedBlazeBurner.class, remap = false)
@@ -30,7 +30,7 @@ public abstract class AnimatedBlazeBurnerMixin extends AnimatedKinetics {
 			matrixStack.mulPose(Axis.YP.rotationDegrees(22.5F));
 			int scale = 23;
 
-			Block block = TagAnimatedBlock.get(ModBlockTags.GRILL_SOURCES, 20f);
+			Block block = TagAnimatedBlock.get(CmiBlockTags.GRILL_SOURCES, 20f);
 			blockElement(block.defaultBlockState())
 					.atLocal(0.0F, 1.65, 0.0F)
 					.scale(scale)

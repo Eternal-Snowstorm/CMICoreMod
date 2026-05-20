@@ -256,7 +256,6 @@ tasks.named('processResources', ProcessResources).configure {
 			mekanism_version_range            : mekanism_version_range,
 			tconstruct_version_range          : tconstruct_version_range,
 			create_version_range              : create_version_range,
-			deepdrilling_version_range        : deepdrilling_version_range,
 			immersiveengineering_version_range: immersiveengineering_version_range,
 			jei_version_range                 : jei_version_range
 	]

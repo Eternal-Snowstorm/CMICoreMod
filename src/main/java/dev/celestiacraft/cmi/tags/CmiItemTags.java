@@ -4,14 +4,16 @@ import dev.celestiacraft.libs.tags.TagsBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
-public class ModItemTags {
-	public static final TagKey<Item> MECHANISMS;
-	public static final TagKey<Item> INCOMPLETE_MECHANISMS;
-	public static final TagKey<Item> MECHANISM_FLASH_DRIVES;
-	public static final TagKey<Item> WRENCHES;
-	public static final TagKey<Item> BURNER;
-	public static final TagKey<Item> COGWHEEL;
-	public static final TagKey<Item> LARGE_COGWHEEL;
+public class CmiItemTags {
+	public static final TagKey<Item>
+			MECHANISMS,
+			INCOMPLETE_MECHANISMS,
+			MECHANISM_FLASH_DRIVES,
+			WRENCHES,
+			BURNER,
+			COGWHEEL,
+			LARGE_COGWHEEL,
+			WORKBENCHS;
 
 	static {
 		MECHANISMS = TagsBuilder.item("mechanisms").create();
@@ -21,6 +23,7 @@ public class ModItemTags {
 		BURNER = TagsBuilder.item("burner").namespace("steampowered");
 		COGWHEEL = TagsBuilder.item("cogwheel").create();
 		LARGE_COGWHEEL = TagsBuilder.item("large_cogwheel").create();
+		WORKBENCHS = TagsBuilder.item("workbenchs").forge();
 	}
 
 	public static TagKey<Item> mechanism(String name) {

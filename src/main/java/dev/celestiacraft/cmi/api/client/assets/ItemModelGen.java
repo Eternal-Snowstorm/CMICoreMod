@@ -6,7 +6,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
-public class Items {
+public class ItemModelGen {
 	public static <T extends Item> NonNullBiConsumer<DataGenContext<Item, T>, RegistrateItemModelProvider> generated(ResourceLocation texture) {
 		return (context, provider) -> {
 			provider.generated(context::getEntry, texture);

@@ -4,7 +4,7 @@ import com.simibubi.create.compat.jei.category.ProcessingViaFanCategory;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.freezing.FreezingRecipe;
-import dev.celestiacraft.cmi.tags.ModBlockTags;
+import dev.celestiacraft.cmi.tags.CmiBlockTags;
 import dev.celestiacraft.libs.client.TagAnimatedBlock;
 import net.createmod.catnip.gui.element.GuiGameElement;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,7 +23,7 @@ public class FanFreezingCategory extends ProcessingViaFanCategory.MultiOutput<Fr
 
 	@Override
 	protected void renderAttachedBlock(@NotNull GuiGraphics graphics) {
-		Block block = TagAnimatedBlock.get(ModBlockTags.FREEZING_CATALYST, 20);
+		Block block = TagAnimatedBlock.get(CmiBlockTags.FREEZING_CATALYST, 20);
 
 		GuiGameElement.of(block.defaultBlockState())
 				.scale(SCALE)

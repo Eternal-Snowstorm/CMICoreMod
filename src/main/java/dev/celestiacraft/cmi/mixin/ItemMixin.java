@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.mixin;
 
-import dev.celestiacraft.cmi.tags.ModItemTags;
+import dev.celestiacraft.cmi.tags.CmiItemTags;
 import earth.terrarium.adastra.common.blocks.base.Wrenchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -34,7 +34,7 @@ public class ItemMixin {
 			return;
 		}
 
-		if (!stack.is(ModItemTags.WRENCHES)) {
+		if (!stack.is(CmiItemTags.WRENCHES)) {
 			return;
 		}
 

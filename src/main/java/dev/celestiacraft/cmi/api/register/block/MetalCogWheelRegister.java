@@ -8,13 +8,13 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.api.client.assets.Items;
+import dev.celestiacraft.cmi.api.client.assets.ItemModelGen;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlock;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockItem;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelInfo;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
-import dev.celestiacraft.cmi.tags.ModBlockTags;
-import dev.celestiacraft.cmi.tags.ModItemTags;
+import dev.celestiacraft.cmi.tags.CmiBlockTags;
+import dev.celestiacraft.cmi.tags.CmiItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
@@ -33,12 +33,12 @@ public class MetalCogWheelRegister {
 		BlockBuilder<T, CreateRegistrate> builder = Cmi.REGISTRATE.block(name, factory);
 
 		builder.item(MetalCogWheelBlockItem::new)
-				.model(Items.withModel(String.format("block/cogwheel/%s/%s", material, "small")))
-				.tag(ModItemTags.COGWHEEL)
+				.model(ItemModelGen.withModel(String.format("block/cogwheel/%s/%s", material, "small")))
+				.tag(CmiItemTags.COGWHEEL)
 				.build();
 		builder.initialProperties(SharedProperties::stone);
 		builder.blockstate(MetalCogWheelBlock.blockstate(material, false));
-		builder.tag(ModBlockTags.COGWHEEL);
+		builder.tag(CmiBlockTags.COGWHEEL);
 		builder.transform(CmiStress.setNoImpact());
 		builder.transform(TagGen.pickaxeOnly());
 		builder.onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new));
@@ -51,12 +51,12 @@ public class MetalCogWheelRegister {
 		BlockBuilder<T, CreateRegistrate> builder = Cmi.REGISTRATE.block(name, factory);
 
 		builder.item(MetalCogWheelBlockItem::new)
-				.model(Items.withModel(String.format("block/cogwheel/%s/%s", material, "large")))
-				.tag(ModItemTags.LARGE_COGWHEEL)
+				.model(ItemModelGen.withModel(String.format("block/cogwheel/%s/%s", material, "large")))
+				.tag(CmiItemTags.LARGE_COGWHEEL)
 				.build();
 		builder.initialProperties(SharedProperties::stone);
 		builder.blockstate(MetalCogWheelBlock.blockstate(material, true));
-		builder.tag(ModBlockTags.LARGE_COGWHEEL);
+		builder.tag(CmiBlockTags.LARGE_COGWHEEL);
 		builder.transform(CmiStress.setNoImpact());
 		builder.transform(TagGen.pickaxeOnly());
 		builder.onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new));

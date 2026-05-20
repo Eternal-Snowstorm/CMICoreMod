@@ -4,7 +4,7 @@ import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.foundation.item.ItemHelper;
 import dev.celestiacraft.cmi.config.common.SteamHammerConfig;
-import dev.celestiacraft.cmi.tags.ModFluidTags;
+import dev.celestiacraft.cmi.tags.CmiFluidTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -51,7 +51,7 @@ public class SteamHammerBlockEntity extends MechanicalPressBlockEntity {
 
 		@Override
 		public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-			return stack.getFluid().is(ModFluidTags.STEAM);
+			return stack.getFluid().is(CmiFluidTags.STEAM);
 		}
 
 		@Override

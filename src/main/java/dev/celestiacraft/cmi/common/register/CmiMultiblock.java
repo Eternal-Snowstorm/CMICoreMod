@@ -2,7 +2,7 @@ package dev.celestiacraft.cmi.common.register;
 
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles;
 import blusunrize.immersiveengineering.common.register.IEBlocks;
-import dev.celestiacraft.cmi.tags.ModBlockTags;
+import dev.celestiacraft.cmi.tags.CmiBlockTags;
 import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.StructureBuilder;
@@ -194,7 +194,7 @@ public class CmiMultiblock {
 				})
 				// 外壳
 				.define('A', (builder) -> {
-					builder.tag(ModBlockTags.COKE_OVEN_STRUCTURE);
+					builder.tag(CmiBlockTags.COKE_OVEN_STRUCTURE);
 				})
 				// 控制器
 				.define('0', (builder) -> {
