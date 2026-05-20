@@ -9,6 +9,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,13 +27,17 @@ public class SpaceElevatorIoPortBlock extends BaseEntityBlock {
 	public static final EnumProperty<IoPortShape> SHAPE = EnumProperty.create("shape", IoPortShape.class);
 
 	public SpaceElevatorIoPortBlock(Properties properties) {
-		super(Properties.copy(net.minecraft.world.level.block.Blocks.IRON_BLOCK)
+		super(Properties.copy(Blocks.IRON_BLOCK)
 				.noOcclusion()
 				.strength(-1.0F, 3600000.0F)
 				.noLootTable()
-				.isViewBlocking((s, l, p) -> false)
-				.isRedstoneConductor((s, l, p) -> false));
-		this.registerDefaultState(this.stateDefinition.any()
+				.isViewBlocking((state, getter, pos) -> {
+					return false;
+				})
+				.isRedstoneConductor((state, getter, pos) -> {
+					return false;
+				}));
+		this.registerDefaultState(stateDefinition.any()
 				.setValue(IO_TYPE, IoPortType.NONE)
 				.setValue(SHAPE, IoPortShape.FULL));
 	}

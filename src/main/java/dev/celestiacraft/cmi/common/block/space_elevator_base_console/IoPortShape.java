@@ -3,6 +3,7 @@ package dev.celestiacraft.cmi.common.block.space_elevator_base_console;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 public enum IoPortShape implements StringRepresentable {
 	FULL("full", Shapes.block()),
@@ -43,7 +44,7 @@ public enum IoPortShape implements StringRepresentable {
 	}
 
 	@Override
-	public String getSerializedName() {
+	public @NotNull String getSerializedName() {
 		return name;
 	}
 }
