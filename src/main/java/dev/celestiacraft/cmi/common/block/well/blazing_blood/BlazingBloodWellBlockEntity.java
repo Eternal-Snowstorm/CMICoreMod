@@ -34,7 +34,7 @@ public class BlazingBloodWellBlockEntity extends MachineControllerBlockEntity {
 			return false;
 		}
 		return level.dimension().equals(Level.NETHER)
-				&& BlockUtils.isInFortress(level, getBlockPos(), BuiltinStructures.FORTRESS);
+				&& BlockUtils.isInStructure(level, getBlockPos(), BuiltinStructures.FORTRESS);
 	}
 
 	@Override
