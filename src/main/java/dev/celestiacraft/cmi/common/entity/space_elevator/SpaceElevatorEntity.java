@@ -7,6 +7,7 @@ import dev.celestiacraft.cmi.common.register.CmiEntity;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraSpaceElevatorTravelCompat;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import dev.celestiacraft.cmi.network.c2s.StartSpaceElevatorTransportPacket;
+import dev.celestiacraft.libs.debug.DebugUserManager;
 import earth.terrarium.adastra.api.planets.Planet;
 import earth.terrarium.adastra.common.config.AdAstraConfig;
 import earth.terrarium.adastra.common.entities.vehicles.Rocket;
@@ -854,6 +855,13 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 
 	@Override
 	public boolean hurt(@NotNull DamageSource source, float amount) {
+		if (level().isClientSide()) {
+			return false;
+		}
+		if (source.getEntity() instanceof Player player && DebugUserManager.isDebugger(player)) {
+			discard();
+			return true;
+		}
 		return false;
 	}
 
