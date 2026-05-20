@@ -29,14 +29,9 @@ public class JeiLanguage extends LanguageGenerate {
 		);
 		// 水井
 		addJeiCategoryLang(
-				"water_pump",
-				"Multiblock Water Pump",
-				"多方块水井"
-		);
-		addJeiCategoryLang(
-				"water_pump_sea_water",
-				"Multiblock Water Pump",
-				"多方块水井(海水)"
+				"well",
+				"Multiblock Well",
+				"多方块流体井"
 		);
 		addJeiCategoryLang(
 				"water_pump.complete",
@@ -57,6 +52,11 @@ public class JeiLanguage extends LanguageGenerate {
 				"well.nether",
 				"In the nether dimension",
 				"处于下界维度"
+		);
+		addJeiCategoryLang(
+				"well.fortress",
+				"In the Nether Fortress structure",
+				"处于下界要塞结构"
 		);
 		// 打磨
 		addJeiCategoryLang(

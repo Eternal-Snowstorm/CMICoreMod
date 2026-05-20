@@ -3,14 +3,18 @@ package dev.celestiacraft.cmi.compat.jei.api;
 import dev.celestiacraft.cmi.api.client.assets.Guis;
 
 public class CmiGuiTextures {
-	public static final Guis WATER_WELL_SEA_WATER_ARROW;
-	public static final Guis WATER_WELL_ARROW;
-	public static final Guis WELL_NETHER_ARROW;
+	public static final Guis STRUCTURE;
+	public static final Guis HEIGHT;
+	public static final Guis OCEAN;
+	public static final Guis NETHER;
+	public static final Guis FORTRESS;
 
 	static {
-		WATER_WELL_SEA_WATER_ARROW = addGuiTexture("jei/arrows", 1, 1, 63, 24);
-		WATER_WELL_ARROW = addGuiTexture("jei/arrows", 1, 25, 63, 48);
-		WELL_NETHER_ARROW = addGuiTexture("jei/arrows", 1, 49, 63, 72);
+		STRUCTURE = addGuiTexture("jei/arrow_attachments", 0, 0, 16, 16);
+		HEIGHT = addGuiTexture("jei/arrow_attachments", 16, 0, 16, 16);
+		OCEAN = addGuiTexture("jei/arrow_attachments", 32, 0, 16, 16);
+		NETHER = addGuiTexture("jei/arrow_attachments", 48, 0, 16, 16);
+		FORTRESS = addGuiTexture("jei/arrow_attachments", 64, 0, 16, 16);
 	}
 
 	public static Guis addGuiTexture(String path, int startX, int startY, int width, int height) {

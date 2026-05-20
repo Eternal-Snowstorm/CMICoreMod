@@ -16,9 +16,7 @@ import dev.celestiacraft.cmi.common.block.belt_grinder.GrindingRecipe;
 import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.freezing.FreezingRecipe;
 import dev.celestiacraft.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
-import dev.celestiacraft.cmi.common.recipe.well.WaterWellRecipe;
-import dev.celestiacraft.cmi.common.recipe.well.SeaWaterWellRecipe;
-import dev.celestiacraft.cmi.common.recipe.well.WellRecipe;
+import dev.celestiacraft.cmi.common.recipe.well.*;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
@@ -81,7 +79,7 @@ public class CmiJeiPlugin implements IModPlugin {
 		RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
 
 		List<AcceleratorRecipe> acceleratorRecipe = manager.getAllRecipesFor(AcceleratorRecipe.Type.INSTANCE);
-		List<WellRecipe> wellRecipe = List.of(new SeaWaterWellRecipe(), new WaterWellRecipe());
+		List<WellRecipe> wellRecipe = List.of(new SeaWaterWellRecipe(), new WaterWellRecipe(), new LavaWellRecipe(), new BlazeWellRecipe());
 		List<VoidDustCollectorRecipe> voidDustCollectorRecipe = List.of(new VoidDustCollectorRecipe());
 		List<GrindingRecipe> grindingRecipe = manager.getAllRecipesFor(CmiCreateRecipe.GRINDING.getType());
 
