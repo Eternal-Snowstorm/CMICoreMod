@@ -7,6 +7,8 @@ import dev.celestiacraft.libs.tags.TagsBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -39,13 +41,14 @@ public class CmiItemTagsProvider extends ItemTagsProvider {
 	protected void addTags(HolderLookup.@NotNull Provider provider) {
 		addAllSlot();
 
-		tag(CmiItemTags.WORKBENCHS)
+		tag(CmiItemTags.WORKBENCHES)
 				.add(Items.CRAFTING_TABLE);
 	}
 
 	private void addAllSlot() {
 		ALL_SLOTS.forEach((slot) -> {
-			tag(TagsBuilder.item(slot).namespace("curios"))
+			TagKey<Item> curiosTag = TagsBuilder.item(slot).namespace("curios");
+			tag(curiosTag)
 					.add(CmiItem.NUTRITION_SYRINGE.asItem());
 		});
 	}

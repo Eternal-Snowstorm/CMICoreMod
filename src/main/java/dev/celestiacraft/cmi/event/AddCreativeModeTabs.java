@@ -52,7 +52,8 @@ public class AddCreativeModeTabs {
 			});
 
 			List.of(
-					CmiItem.INITIAL_ITEM_KIT
+					CmiItem.INITIAL_ITEM_KIT,
+					CmiItem.HANDHELE_CRAFTING_TABLE
 			).forEach((item) -> {
 				event.accept(item.asItem());
 			});

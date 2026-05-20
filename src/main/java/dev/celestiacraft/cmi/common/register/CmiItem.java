@@ -41,8 +41,8 @@ public class CmiItem {
 				.model(ItemModelGen.handheld("item/tool/handheld_crafting_table"))
 				.recipe((context, provider) -> {
 					ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, context.get())
-							.requires(CmiItemTags.WORKBENCHS)
-							.unlockedBy("crafting_table", RegistrateRecipeProvider.has(CmiItemTags.WORKBENCHS))
+							.requires(CmiItemTags.WORKBENCHES)
+							.unlockedBy("crafting_table", RegistrateRecipeProvider.has(CmiItemTags.WORKBENCHES))
 							.save(provider, Cmi.loadResource("minecraft/crafting/shapeless/" + context.getName()));
 				})
 				.register();

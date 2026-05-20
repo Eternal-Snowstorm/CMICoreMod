@@ -18,6 +18,7 @@ public class HandheleCraftingTableItem extends BasicItem {
 	@Override
 	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
 		if (!level.isClientSide()) {
+			player.swing(hand);
 			player.openMenu(createScreenHandlerFactory(level, player.getOnPos()));
 		}
 		return new InteractionResultHolder<>(InteractionResult.PASS, player.getItemInHand(hand));

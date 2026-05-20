@@ -13,7 +13,7 @@ public class CmiItemTags {
 			BURNER,
 			COGWHEEL,
 			LARGE_COGWHEEL,
-			WORKBENCHS;
+			WORKBENCHES;
 
 	static {
 		MECHANISMS = TagsBuilder.item("mechanisms").create();
@@ -23,7 +23,7 @@ public class CmiItemTags {
 		BURNER = TagsBuilder.item("burner").namespace("steampowered");
 		COGWHEEL = TagsBuilder.item("cogwheel").create();
 		LARGE_COGWHEEL = TagsBuilder.item("large_cogwheel").create();
-		WORKBENCHS = TagsBuilder.item("workbenchs").forge();
+		WORKBENCHES = TagsBuilder.item("workbenches").forge();
 	}
 
 	public static TagKey<Item> mechanism(String name) {
