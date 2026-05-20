@@ -53,6 +53,11 @@ public class JeiLanguage extends LanguageGenerate {
 				"Core block at coordinate Y = 62",
 				"核心方块处于坐标Y = 62"
 		);
+		addJeiCategoryLang(
+				"well.nether",
+				"In the nether dimension",
+				"处于下界维度"
+		);
 		// 打磨
 		addJeiCategoryLang(
 				"grinding",
