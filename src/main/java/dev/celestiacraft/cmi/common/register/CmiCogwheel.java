@@ -5,9 +5,10 @@ import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelInfo;
 
 public class CmiCogwheel extends MetalCogWheelRegister {
-	public static final MetalCogWheelInfo BRONZE;
-	public static final MetalCogWheelInfo CAST_IRON;
-	public static final MetalCogWheelInfo STEEL;
+	public static final MetalCogWheelInfo
+			BRONZE,
+			CAST_IRON,
+			STEEL;
 
 	static {
 		BRONZE = register("bronze");
