@@ -37,7 +37,9 @@
 		"BigInventoryHandlerMixin",
 		"CompactingInventoryHandlerMixin",
 		"DrawerStackItemHandlerMixin",
-		"CompactingStackItemHandlerMixin"
+		"CompactingStackItemHandlerMixin",
+		"InventoryHandlerMixin",
+		"StorageContainerMenuBaseMixin"
 	],
 	"client": [
 		"LevelRendererMixin"

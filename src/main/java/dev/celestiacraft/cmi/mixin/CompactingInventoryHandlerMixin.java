@@ -35,6 +35,10 @@ public abstract class CompactingInventoryHandlerMixin {
 		}
 
 		ItemStack result = results.get(slot).getResult();
+		if (CmiStackUpgradeHelper.isNoStorageStack(result)) {
+			cir.setReturnValue(1);
+			return;
+		}
 		if (!CmiStackUpgradeHelper.isNoStackUpgrade(result)) {
 			return;
 		}

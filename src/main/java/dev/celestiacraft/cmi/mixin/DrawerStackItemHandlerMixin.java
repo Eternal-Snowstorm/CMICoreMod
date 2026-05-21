@@ -31,6 +31,10 @@ public abstract class DrawerStackItemHandlerMixin {
 		}
 
 		ItemStack stored = getStoredStacks().get(slot).getStack();
+		if (CmiStackUpgradeHelper.isNoStorageStack(stored)) {
+			cir.setReturnValue(1);
+			return;
+		}
 		if (!CmiStackUpgradeHelper.isNoStackUpgrade(stored)) {
 			return;
 		}
