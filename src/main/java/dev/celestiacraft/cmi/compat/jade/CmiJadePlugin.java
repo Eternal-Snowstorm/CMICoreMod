@@ -1,5 +1,7 @@
 package dev.celestiacraft.cmi.compat.jade;
 
+import dev.celestiacraft.cmi.compat.jade.provider.CmiComponentProvider;
+import dev.celestiacraft.cmi.compat.jade.provider.SpaceElevatorEntityProvider;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;

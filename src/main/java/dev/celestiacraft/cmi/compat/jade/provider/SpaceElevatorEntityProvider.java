@@ -1,6 +1,7 @@
-package dev.celestiacraft.cmi.compat.jade;
+package dev.celestiacraft.cmi.compat.jade.provider;
 
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
+import dev.celestiacraft.cmi.compat.jade.CmiType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -13,8 +14,6 @@ import snownee.jade.api.config.IPluginConfig;
 public enum SpaceElevatorEntityProvider implements IEntityComponentProvider {
 	INSTANCE;
 
-	private static final ResourceLocation UID = CmiType.addType("space_elevator_cargo_fluid");
-
 	@Override
 	public void appendTooltip(ITooltip tooltip, EntityAccessor accessor, IPluginConfig config) {
 		if (!(accessor.getEntity() instanceof SpaceElevatorEntity elevator)) {
@@ -22,8 +21,12 @@ public enum SpaceElevatorEntityProvider implements IEntityComponentProvider {
 		}
 		FluidStack stored = elevator.getCargoFluid().getFluid();
 		int capacity = elevator.getCargoFluid().getCapacity();
+
 		if (stored.isEmpty()) {
-			tooltip.add(Component.translatable("jade.tip.cmi.space_elevator.cargo_fluid.empty", capacity).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable(
+					"jade.tip.cmi.space_elevator.cargo_fluid.empty",
+					capacity
+			).withStyle(ChatFormatting.GRAY));
 			return;
 		}
 		tooltip.add(Component.translatable(
@@ -36,6 +39,6 @@ public enum SpaceElevatorEntityProvider implements IEntityComponentProvider {
 
 	@Override
 	public ResourceLocation getUid() {
-		return UID;
+		return CmiType.SPACE_ELEVATOR_CARGO_FLUID;
 	}
 }

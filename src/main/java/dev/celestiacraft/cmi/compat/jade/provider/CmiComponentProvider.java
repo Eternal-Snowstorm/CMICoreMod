@@ -1,5 +1,6 @@
-package dev.celestiacraft.cmi.compat.jade;
+package dev.celestiacraft.cmi.compat.jade.provider;
 
+import dev.celestiacraft.cmi.compat.jade.CmiType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
