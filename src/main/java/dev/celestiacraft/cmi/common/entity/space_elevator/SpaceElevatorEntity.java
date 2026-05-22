@@ -19,6 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -36,6 +37,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ChestMenu;
@@ -543,16 +545,20 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 		return new Vec3(getX(), getY() + 0.15D, getZ());
 	}
 
-	private boolean hasStandingRoom(BlockPos floorPos) {
-		BlockState floorState = level().getBlockState(floorPos);
-		if (floorState.getCollisionShape(level(), floorPos).isEmpty()) {
+	private boolean hasStandingRoom(BlockPos pos) {
+		BlockState state = level().getBlockState(pos);
+		if (state.getCollisionShape(level(), pos).isEmpty()) {
 			return false;
 		}
 
-		BlockPos bodyPos = floorPos.above();
-		BlockPos headPos = floorPos.above(2);
-		return level().getBlockState(bodyPos).getCollisionShape(level(), bodyPos).isEmpty()
-				&& level().getBlockState(headPos).getCollisionShape(level(), headPos).isEmpty();
+		BlockPos bodyPos = pos.above();
+		BlockPos headPos = pos.above(2);
+		return level().getBlockState(bodyPos)
+				.getCollisionShape(level(), bodyPos)
+				.isEmpty()
+				&& level().getBlockState(headPos)
+				.getCollisionShape(level(), headPos)
+				.isEmpty();
 	}
 
 	private void spawnCableParticlesClient() {
@@ -821,8 +827,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 		if (tag.contains("AnchorPos")) {
 			setAnchor(BlockPos.of(tag.getLong("AnchorPos")));
 		}
-		if (tag.contains("CargoItems", net.minecraft.nbt.Tag.TAG_LIST)) {
-			cargoItems.fromTag(tag.getList("CargoItems", net.minecraft.nbt.Tag.TAG_COMPOUND));
+		if (tag.contains("CargoItems", Tag.TAG_LIST)) {
+			cargoItems.fromTag(tag.getList("CargoItems", Tag.TAG_COMPOUND));
 		}
 		if (tag.contains("CargoFluid")) {
 			cargoFluid.readFromNBT(tag.getCompound("CargoFluid"));
@@ -879,7 +885,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 
 	@Nullable
 	@Override
-	public AbstractContainerMenu createMenu(int containerId, @NotNull net.minecraft.world.entity.player.Inventory playerInventory, @NotNull Player player) {
+	public AbstractContainerMenu createMenu(int containerId, @NotNull Inventory playerInventory, @NotNull Player player) {
 		return new ChestMenu(MenuType.GENERIC_9x6, containerId, playerInventory, cargoItems, 6);
 	}
 
