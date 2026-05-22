@@ -5,6 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class CommonConfig {
 	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+	public static final ForgeConfigSpec SPEC;
 
 	public static final SneakyLinkConfig SNEAKY_LINK;
 	public static final SteamHammerConfig STEAM_HAMMER;
@@ -13,8 +14,6 @@ public class CommonConfig {
 	public static final VoidDustCollectorConfig VOID_DUST_COLLECTOR;
 	public static final SolarBoilerConfig SOLAR_BOILER;
 	public static final StackStorageConfig STACK_STORAGE;
-
-	public static final ForgeConfigSpec SPEC;
 
 	static {
 		BUILDER.comment("All settings below will only take effect after restarting the server or client.")
