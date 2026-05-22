@@ -43,7 +43,10 @@ public class ConstructSpaceElevatorPacket {
 			player.displayClientMessage(Component.translatable(result.translationKey()), false);
 			SpaceElevatorConstructionRecipe recipe = SpaceElevatorConstructionHandler.getRecipe(player.serverLevel());
 			int ingredientCount = recipe == null ? 0 : recipe.ingredients().size();
-			CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorMaterialsPacket(msg.anchorPos, SpaceElevatorConstructionHandler.getStoredCounts(player.serverLevel(), msg.anchorPos, ingredientCount)));
+			int fluidIngredientCount = recipe == null ? 0 : recipe.fluidIngredients().size();
+			int[] counts = SpaceElevatorConstructionHandler.getStoredCounts(player.serverLevel(), msg.anchorPos, ingredientCount);
+			int[] fluidAmounts = SpaceElevatorConstructionHandler.getStoredFluidAmounts(player.serverLevel(), msg.anchorPos, fluidIngredientCount);
+			CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorMaterialsPacket(msg.anchorPos, counts, fluidAmounts));
 		});
 		ctx.setPacketHandled(true);
 	}

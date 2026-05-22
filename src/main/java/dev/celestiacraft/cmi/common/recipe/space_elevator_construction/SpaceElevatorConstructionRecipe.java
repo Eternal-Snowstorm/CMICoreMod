@@ -13,8 +13,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -32,11 +30,13 @@ public class SpaceElevatorConstructionRecipe implements Recipe<SimpleContainer> 
 	private final ResourceLocation id;
 	private final ResourceKey<Level> dimension;
 	private final List<IngredientEntry> ingredients;
+	private final List<FluidIngredientEntry> fluidIngredients;
 
-	public SpaceElevatorConstructionRecipe(ResourceLocation id, ResourceKey<Level> dimension, List<IngredientEntry> ingredients) {
+	public SpaceElevatorConstructionRecipe(ResourceLocation id, ResourceKey<Level> dimension, List<IngredientEntry> ingredients, List<FluidIngredientEntry> fluidIngredients) {
 		this.id = id;
 		this.dimension = dimension;
 		this.ingredients = ingredients;
+		this.fluidIngredients = fluidIngredients;
 	}
 
 	@Override
@@ -94,6 +94,10 @@ public class SpaceElevatorConstructionRecipe implements Recipe<SimpleContainer> 
 		return ingredients;
 	}
 
+	public List<FluidIngredientEntry> fluidIngredients() {
+		return fluidIngredients;
+	}
+
 	@Nullable
 	public static SpaceElevatorConstructionRecipe getRecipe(Level level, ResourceKey<Level> dimension) {
 		return level.getRecipeManager()
@@ -104,44 +108,6 @@ public class SpaceElevatorConstructionRecipe implements Recipe<SimpleContainer> 
 				})
 				.findFirst()
 				.orElse(null);
-	}
-
-	public static boolean hasIngredients(Player player, SpaceElevatorConstructionRecipe recipe) {
-		return getCompletionRatio(player, recipe) >= 1.0F;
-	}
-
-	public static void consumeIngredients(Player player, SpaceElevatorConstructionRecipe recipe) {
-		if (player.isCreative() || player.isSpectator()) {
-			return;
-		}
-		Inventory inventory = player.getInventory();
-		for (IngredientEntry entry : recipe.ingredients()) {
-			int remaining = entry.count();
-			for (int i = 0; i < inventory.getContainerSize() && remaining > 0; i++) {
-				ItemStack stack = inventory.getItem(i);
-				if (!entry.ingredient().test(stack)) {
-					continue;
-				}
-				int removed = Math.min(remaining, stack.getCount());
-				stack.shrink(removed);
-				remaining -= removed;
-			}
-		}
-	}
-
-	public static List<DisplayIngredient> getDisplayIngredients(Player player, SpaceElevatorConstructionRecipe recipe) {
-		Inventory inventory = player.getInventory();
-		return getDisplayIngredients(recipe, ingredientIndex -> {
-			IngredientEntry entry = recipe.ingredients().get(ingredientIndex);
-			int amountOwned = 0;
-			for (int i = 0; i < inventory.getContainerSize(); i++) {
-				ItemStack stack = inventory.getItem(i);
-				if (entry.ingredient().test(stack)) {
-					amountOwned += stack.getCount();
-				}
-			}
-			return amountOwned;
-		});
 	}
 
 	public static List<DisplayIngredient> getDisplayIngredients(SpaceElevatorConstructionRecipe recipe, IntUnaryOperator ownedProvider) {
@@ -158,23 +124,13 @@ public class SpaceElevatorConstructionRecipe implements Recipe<SimpleContainer> 
 		return result;
 	}
 
-	public static float getCompletionRatio(Player player, SpaceElevatorConstructionRecipe recipe) {
-		if (player.isCreative() || player.isSpectator()) {
-			return 1.0F;
+	public static List<DisplayFluidIngredient> getDisplayFluidIngredients(SpaceElevatorConstructionRecipe recipe, IntUnaryOperator ownedProvider) {
+		List<DisplayFluidIngredient> result = new ArrayList<>();
+		for (int i = 0; i < recipe.fluidIngredients().size(); i++) {
+			FluidIngredientEntry entry = recipe.fluidIngredients().get(i);
+			result.add(new DisplayFluidIngredient(entry.displayStack(), entry.amount(), Math.max(0, ownedProvider.applyAsInt(i))));
 		}
-
-		return getCompletionRatio(recipe, (ingredientIndex) -> {
-			IngredientEntry entry = recipe.ingredients().get(ingredientIndex);
-			int amountOwned = 0;
-			Inventory inventory = player.getInventory();
-			for (int i = 0; i < inventory.getContainerSize(); i++) {
-				ItemStack stack = inventory.getItem(i);
-				if (entry.ingredient().test(stack)) {
-					amountOwned += stack.getCount();
-				}
-			}
-			return amountOwned;
-		}, false);
+		return result;
 	}
 
 	public static float getCompletionRatio(SpaceElevatorConstructionRecipe recipe, IntUnaryOperator ownedProvider, boolean bypassRequirements) {
@@ -198,6 +154,12 @@ public class SpaceElevatorConstructionRecipe implements Recipe<SimpleContainer> 
 	}
 
 	public record DisplayIngredient(ItemStack stack, int required, int owned) {
+		public boolean complete(boolean bypassRequirements) {
+			return bypassRequirements || owned >= required;
+		}
+	}
+
+	public record DisplayFluidIngredient(net.minecraftforge.fluids.FluidStack stack, int required, int owned) {
 		public boolean complete(boolean bypassRequirements) {
 			return bypassRequirements || owned >= required;
 		}
@@ -228,7 +190,19 @@ public class SpaceElevatorConstructionRecipe implements Recipe<SimpleContainer> 
 			for (int i = 0; i < ingredientsJson.size(); i++) {
 				ingredients.add(parseIngredientEntry(ingredientsJson.get(i), id));
 			}
-			return new SpaceElevatorConstructionRecipe(id, dimension, ingredients);
+
+			List<FluidIngredientEntry> fluidIngredients = new ArrayList<>();
+			if (json.has("fluid_ingredients")) {
+				JsonArray fluidJson = json.getAsJsonArray("fluid_ingredients");
+				for (int i = 0; i < fluidJson.size(); i++) {
+					JsonElement element = fluidJson.get(i);
+					if (!element.isJsonObject()) {
+						throw new JsonParseException("Invalid fluid ingredient entry for recipe " + id);
+					}
+					fluidIngredients.add(FluidIngredientEntry.fromJson(element.getAsJsonObject()));
+				}
+			}
+			return new SpaceElevatorConstructionRecipe(id, dimension, ingredients, fluidIngredients);
 		}
 
 		private static IngredientEntry parseIngredientEntry(JsonElement ingredientElement, ResourceLocation recipeId) {
@@ -258,7 +232,12 @@ public class SpaceElevatorConstructionRecipe implements Recipe<SimpleContainer> 
 				int count = buf.readVarInt();
 				ingredients.add(new IngredientEntry(ingredient, count));
 			}
-			return new SpaceElevatorConstructionRecipe(id, dimension, ingredients);
+			int fluidSize = buf.readVarInt();
+			List<FluidIngredientEntry> fluidIngredients = new ArrayList<>();
+			for (int i = 0; i < fluidSize; i++) {
+				fluidIngredients.add(FluidIngredientEntry.fromNetwork(buf));
+			}
+			return new SpaceElevatorConstructionRecipe(id, dimension, ingredients, fluidIngredients);
 		}
 
 		@Override
@@ -268,6 +247,10 @@ public class SpaceElevatorConstructionRecipe implements Recipe<SimpleContainer> 
 			for (IngredientEntry ingredient : recipe.ingredients) {
 				ingredient.ingredient().toNetwork(buf);
 				buf.writeVarInt(ingredient.count());
+			}
+			buf.writeVarInt(recipe.fluidIngredients.size());
+			for (FluidIngredientEntry fluidIngredient : recipe.fluidIngredients) {
+				fluidIngredient.toNetwork(buf);
 			}
 		}
 	}

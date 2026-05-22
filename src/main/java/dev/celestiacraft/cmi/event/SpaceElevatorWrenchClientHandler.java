@@ -6,7 +6,6 @@ import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import dev.celestiacraft.cmi.network.c2s.ConstructSpaceElevatorPacket;
 import dev.celestiacraft.cmi.network.c2s.RequestSpaceElevatorMaterialsPacket;
-import dev.celestiacraft.cmi.network.c2s.StoreSpaceElevatorMaterialsPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -37,6 +36,7 @@ public class SpaceElevatorWrenchClientHandler {
 	private static boolean packetSent;
 	private static int scrollOffset;
 	private static int[] syncedCounts = new int[0];
+	private static int[] syncedFluidAmounts = new int[0];
 
 	public static float getHoldProgress(@Nullable BlockPos anchorPos) {
 		if (trackedAnchor == null || !trackedAnchor.equals(anchorPos)) {
@@ -56,9 +56,17 @@ public class SpaceElevatorWrenchClientHandler {
 		return ingredientIndex >= 0 && ingredientIndex < syncedCounts.length ? syncedCounts[ingredientIndex] : 0;
 	}
 
-	public static void syncStoredCounts(BlockPos anchorPos, int[] counts) {
+	public static int getStoredFluidAmount(@Nullable BlockPos anchorPos, int fluidIngredientIndex) {
+		if (syncedAnchor == null || !syncedAnchor.equals(anchorPos)) {
+			return 0;
+		}
+		return fluidIngredientIndex >= 0 && fluidIngredientIndex < syncedFluidAmounts.length ? syncedFluidAmounts[fluidIngredientIndex] : 0;
+	}
+
+	public static void syncStoredCounts(BlockPos anchorPos, int[] counts, int[] fluidAmounts) {
 		syncedAnchor = anchorPos.immutable();
 		syncedCounts = counts.clone();
+		syncedFluidAmounts = fluidAmounts.clone();
 	}
 
 	public static boolean hasStoredMaterials(@Nullable BlockPos anchorPos, @Nullable SpaceElevatorConstructionRecipe recipe, boolean bypassRequirements) {
@@ -70,6 +78,11 @@ public class SpaceElevatorWrenchClientHandler {
 		}
 		for (int i = 0; i < recipe.ingredients().size(); i++) {
 			if (getStoredCount(anchorPos, i) < recipe.ingredients().get(i).count()) {
+				return false;
+			}
+		}
+		for (int i = 0; i < recipe.fluidIngredients().size(); i++) {
+			if (getStoredFluidAmount(anchorPos, i) < recipe.fluidIngredients().get(i).amount()) {
 				return false;
 			}
 		}
@@ -98,14 +111,6 @@ public class SpaceElevatorWrenchClientHandler {
 			return;
 		}
 
-		Player player = event.getEntity();
-		boolean bypassRequirements = player.isCreative() || player.isSpectator();
-		SpaceElevatorConstructionRecipe recipe = SpaceElevatorConstructionHandler.getRecipe(level);
-
-		if (recipe != null && !hasStoredMaterials(anchorPos, recipe, bypassRequirements)) {
-			CmiNetwork.CHANNEL.sendToServer(new StoreSpaceElevatorMaterialsPacket(anchorPos));
-		}
-
 		event.setCanceled(true);
 		event.setCancellationResult(InteractionResult.SUCCESS);
 	}
@@ -128,7 +133,7 @@ public class SpaceElevatorWrenchClientHandler {
 			return;
 		}
 
-		int totalEntries = SpaceElevatorConstructionRecipe.getDisplayIngredients(player, recipe).size();
+		int totalEntries = recipe.ingredients().size() + recipe.fluidIngredients().size();
 		if (totalEntries <= MAX_VISIBLE_ROWS) {
 			return;
 		}
@@ -209,6 +214,7 @@ public class SpaceElevatorWrenchClientHandler {
 		trackedAnchor = null;
 		syncedAnchor = null;
 		syncedCounts = new int[0];
+		syncedFluidAmounts = new int[0];
 		holdTicks = 0;
 		packetSent = false;
 		scrollOffset = 0;

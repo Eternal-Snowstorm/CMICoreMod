@@ -192,5 +192,20 @@ public class GuiLanguage extends LanguageGenerate {
 				"The base console does not have enough energy to launch.",
 				"基座控制台能量不足，无法发射。"
 		);
+		addCustomLang(
+				"entity.cmi.space_elevator.cargo",
+				"Space Elevator Cargo",
+				"太空电梯货舱"
+		);
+		addCustomLang(
+				"jade.tip.cmi.space_elevator.cargo_fluid",
+				"Cargo Fluid: %1$s %2$s / %3$s mB",
+				"货舱流体: %1$s %2$s / %3$s mB"
+		);
+		addCustomLang(
+				"jade.tip.cmi.space_elevator.cargo_fluid.empty",
+				"Cargo Fluid: empty (0 / %1$s mB)",
+				"货舱流体: 空 (0 / %1$s mB)"
+		);
 	}
 }

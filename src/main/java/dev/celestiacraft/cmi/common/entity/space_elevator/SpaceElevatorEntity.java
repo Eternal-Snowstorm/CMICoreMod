@@ -32,12 +32,18 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.Container;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -45,9 +51,18 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -61,7 +76,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, value = Dist.CLIENT)
-public class SpaceElevatorEntity extends Entity implements GeoEntity {
+public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvider {
 	private static final EntityDataAccessor<BlockPos> ANCHOR_POS = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.BLOCK_POS);
 	private static final EntityDataAccessor<Boolean> HAS_ANCHOR = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Integer> TRANSPORT_STATE = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.INT);
@@ -91,6 +106,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 	private static final double CABLE_BOTTOM_Y = -64.0D;
 	private static final int CONSOLE_SEARCH_RADIUS = 12;
 	private static final int CONSOLE_SEARCH_HEIGHT = 16;
+	public static final int CARGO_ITEM_SLOTS = 54;
+	public static final int CARGO_FLUID_CAPACITY = 16_000;
 	private static final Vec3[] CABLE_OFFSETS = new Vec3[] {
 			new Vec3(-20.0D / 16.0D, 20.0D / 16.0D, -20.0D / 16.0D),
 			new Vec3(-20.0D / 16.0D, 20.0D / 16.0D, 20.0D / 16.0D),
@@ -115,9 +132,15 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 	@Nullable
 	private BlockPos pendingDestinationAnchor;
 
+	private final SimpleContainer cargoItems = new SimpleContainer(CARGO_ITEM_SLOTS);
+	private final FluidTank cargoFluid = new FluidTank(CARGO_FLUID_CAPACITY);
+	private LazyOptional<IItemHandler> cargoItemsCap = LazyOptional.empty();
+	private LazyOptional<IFluidHandler> cargoFluidCap = LazyOptional.empty();
+
 	public SpaceElevatorEntity(EntityType<? extends Entity> type, Level level) {
 		super(type, level);
 		this.noCulling = true;
+		rebuildCargoCaps();
 	}
 
 	@SubscribeEvent
@@ -796,6 +819,12 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 		if (tag.contains("AnchorPos")) {
 			setAnchor(BlockPos.of(tag.getLong("AnchorPos")));
 		}
+		if (tag.contains("CargoItems", net.minecraft.nbt.Tag.TAG_LIST)) {
+			cargoItems.fromTag(tag.getList("CargoItems", net.minecraft.nbt.Tag.TAG_COMPOUND));
+		}
+		if (tag.contains("CargoFluid")) {
+			cargoFluid.readFromNBT(tag.getCompound("CargoFluid"));
+		}
 		clearTransport();
 	}
 
@@ -804,6 +833,56 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 		if (hasAnchor()) {
 			tag.putLong("AnchorPos", getAnchor().asLong());
 		}
+		tag.put("CargoItems", cargoItems.createTag());
+		tag.put("CargoFluid", cargoFluid.writeToNBT(new CompoundTag()));
+	}
+
+	public Container getCargoItems() {
+		return cargoItems;
+	}
+
+	public FluidTank getCargoFluid() {
+		return cargoFluid;
+	}
+
+	private void rebuildCargoCaps() {
+		this.cargoItemsCap = LazyOptional.of(() -> new InvWrapper(cargoItems));
+		this.cargoFluidCap = LazyOptional.of(() -> cargoFluid);
+	}
+
+	@Override
+	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+		if (cap == ForgeCapabilities.ITEM_HANDLER) {
+			return cargoItemsCap.cast();
+		}
+		if (cap == ForgeCapabilities.FLUID_HANDLER) {
+			return cargoFluidCap.cast();
+		}
+		return super.getCapability(cap, side);
+	}
+
+	@Override
+	public void invalidateCaps() {
+		super.invalidateCaps();
+		cargoItemsCap.invalidate();
+		cargoFluidCap.invalidate();
+	}
+
+	@Override
+	public void reviveCaps() {
+		super.reviveCaps();
+		rebuildCargoCaps();
+	}
+
+	@Override
+	public @NotNull Component getDisplayName() {
+		return Component.translatable("entity.cmi.space_elevator.cargo");
+	}
+
+	@Nullable
+	@Override
+	public AbstractContainerMenu createMenu(int containerId, @NotNull net.minecraft.world.entity.player.Inventory playerInventory, @NotNull Player player) {
+		return new ChestMenu(MenuType.GENERIC_9x6, containerId, playerInventory, cargoItems, 6);
 	}
 
 	@Override
@@ -832,6 +911,16 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity {
 	@Override
 	public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand hand) {
 		if (hand != InteractionHand.MAIN_HAND) {
+			return InteractionResult.PASS;
+		}
+		if (player.isShiftKeyDown()) {
+			if (level().isClientSide()) {
+				return InteractionResult.SUCCESS;
+			}
+			if (player instanceof ServerPlayer serverPlayer) {
+				NetworkHooks.openScreen(serverPlayer, this);
+				return InteractionResult.CONSUME;
+			}
 			return InteractionResult.PASS;
 		}
 		if (level().isClientSide()) {

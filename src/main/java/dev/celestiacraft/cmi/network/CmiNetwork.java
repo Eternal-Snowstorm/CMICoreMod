@@ -65,13 +65,6 @@ public class CmiNetwork {
 		);
 		CHANNEL.registerMessage(
 				id++,
-				StoreSpaceElevatorMaterialsPacket.class,
-				StoreSpaceElevatorMaterialsPacket::encode,
-				StoreSpaceElevatorMaterialsPacket::decode,
-				StoreSpaceElevatorMaterialsPacket::handle
-		);
-		CHANNEL.registerMessage(
-				id++,
 				SyncSpaceElevatorMaterialsPacket.class,
 				SyncSpaceElevatorMaterialsPacket::encode,
 				SyncSpaceElevatorMaterialsPacket::decode,

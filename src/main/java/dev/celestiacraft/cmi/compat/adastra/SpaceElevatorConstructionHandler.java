@@ -73,6 +73,10 @@ public final class SpaceElevatorConstructionHandler {
 		return SpaceElevatorMaterialStorage.getStoredCounts(level, anchorPos, ingredientCount);
 	}
 
+	public static int[] getStoredFluidAmounts(ServerLevel level, BlockPos anchorPos, int fluidIngredientCount) {
+		return SpaceElevatorMaterialStorage.getStoredFluidAmounts(level, anchorPos, fluidIngredientCount);
+	}
+
 	public static boolean hasNearbyElevator(Level level, BlockPos anchorPos) {
 		return getNearbyElevator(level, anchorPos) != null;
 	}
