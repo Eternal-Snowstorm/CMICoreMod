@@ -15,13 +15,13 @@ public class StackStorageConfig extends ConfigModule {
 	protected void register() {
 		NO_STACK_UPGRADE_ENABLED = builder
 				.comment("Whether the cmi:no_stack_upgrade tag should disable storage stack scaling for matching items")
-				.comment("type: bool")
+				.comment("type: boolean")
 				.comment("default: true")
 				.define("no_stack_upgrade_enabled", true);
 
 		NO_STORAGE_STACK_ENABLED = builder
 				.comment("Whether the cmi:no_storage_stack tag should force the in-storage stack limit of matching items to 1")
-				.comment("type: bool")
+				.comment("type: boolean")
 				.comment("default: true")
 				.define("no_storage_stack_enabled", true);
 	}
