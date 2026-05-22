@@ -225,6 +225,16 @@ dependencies {
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
+	// Functional Storage
+	implementation fg.deobf("curse.maven:functional-sto.rage-556861:6702553")
+	// Titanium
+	runtimeOnly fg.deobf("curse.maven:titanium-287342:7949783")
+
+	// Sophisticated Backpacks
+	implementation fg.deobf("curse.maven:sophisticated-backpacks-422301:8114838")
+	// Sophisticated Core
+	implementation fg.deobf("curse.maven:sophisticated-core-618298:8114826")
+
 	// architectury
 	implementation fg.deobf("curse.maven:architectury-api-419699:5137938")
 	// resourceful config
