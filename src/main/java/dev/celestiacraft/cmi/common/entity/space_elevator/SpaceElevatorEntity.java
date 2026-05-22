@@ -12,6 +12,7 @@ import earth.terrarium.adastra.api.planets.Planet;
 import earth.terrarium.adastra.common.config.AdAstraConfig;
 import earth.terrarium.adastra.common.entities.vehicles.Rocket;
 import earth.terrarium.adastra.common.registry.ModSoundEvents;
+import lombok.Getter;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -60,7 +61,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
@@ -133,6 +133,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 	private BlockPos pendingDestinationAnchor;
 
 	private final SimpleContainer cargoItems = new SimpleContainer(CARGO_ITEM_SLOTS);
+	@Getter
 	private final FluidTank cargoFluid = new FluidTank(CARGO_FLUID_CAPACITY);
 	private LazyOptional<IItemHandler> cargoItemsCap = LazyOptional.empty();
 	private LazyOptional<IFluidHandler> cargoFluidCap = LazyOptional.empty();
@@ -839,10 +840,6 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 
 	public Container getCargoItems() {
 		return cargoItems;
-	}
-
-	public FluidTank getCargoFluid() {
-		return cargoFluid;
 	}
 
 	private void rebuildCargoCaps() {
