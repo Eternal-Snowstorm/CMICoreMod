@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console;
 
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.capability.*;
+import dev.celestiacraft.cmi.common.entity.space_elevator.ElevatorEnergyAnchor;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
@@ -41,7 +42,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements GeoBlockEntity, dev.celestiacraft.cmi.common.entity.space_elevator.ElevatorEnergyAnchor {
+public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements GeoBlockEntity, ElevatorEnergyAnchor {
 	public static final int ENERGY_CAPACITY = 10_000_000;
 	public static final int ENERGY_MAX_RECEIVE = 50_000;
 	public static final int LAUNCH_ENERGY_COST = 1_000_000;
