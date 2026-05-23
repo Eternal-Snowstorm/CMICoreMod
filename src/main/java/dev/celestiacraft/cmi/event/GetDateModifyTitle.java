@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.event;
 
+import dev.celestiacraft.libs.utils.FestivalUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,7 +21,7 @@ public class GetDateModifyTitle {
 		int day = LocalDateTime.now().getDayOfMonth();
 
 		event.enqueueWork(() -> {
-			if (month == 4 && day == 1) {
+			if (FestivalUtils.isAprilFoolsDay()) {
 				modifyTitle("Create: Infinity Mechanism");
 			} else {
 				modifyTitle("Create: Mechanism and Innovation");

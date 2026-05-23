@@ -246,6 +246,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.28'
 	// Mixin
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+	// Lunar
+	implementation 'cn.6tail:lunar:1.7.4'
+	jarJar(group: "cn.6tail", name: "lunar", version: "[1.7.4,)")
 }
 
 tasks.named('processResources', ProcessResources).configure {
