@@ -8,7 +8,7 @@ public abstract class ConfigModule {
 	public ConfigModule(ForgeConfigSpec.Builder builder, String path, String comment) {
 		this.builder = builder;
 
-		builder.comment(comment + "settings")
+		builder.comment(comment + " settings")
 				.push(path);
 
 		register();
