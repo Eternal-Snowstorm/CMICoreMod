@@ -351,7 +351,7 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-		controllers.add(new AnimationController<>(this, "controller", 0, state -> {
+		controllers.add(new AnimationController<>(this, "controller", 0, (state) -> {
 			state.getController().setAnimation(IDLE_ANIM);
 			return PlayState.CONTINUE;
 		}).triggerableAnim("idle", IDLE_ANIM));
