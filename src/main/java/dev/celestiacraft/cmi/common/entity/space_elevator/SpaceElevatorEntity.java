@@ -87,7 +87,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 	private static final int STATE_ARRIVE_GROUND = 6;
 
 	private static final double ANCHOR_Y_OFFSET = 2.01D;
-	private static final double ORBIT_DOCK_Y_OFFSET = -0.35D;
+	private static final double ORBIT_DOCK_Y_OFFSET = -3.75D;
 	private static final double ORBIT_EXIT_Y_OFFSET = 4.02D;
 	private static final int COUNTDOWN_TICKS = Rocket.COUNTDOWN_LENGTH;
 	private static final double GROUND_ASCENT_BLOCKS_PER_TICK = 192.0D / 180.0D;
