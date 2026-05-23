@@ -28,7 +28,7 @@ public class CmiGlobal {
 	 */
 	@Getter
 	@Setter
-	public static String modPackState = "Beta";
+	private static String modPackState = "Beta";
 
 	/**
 	 * 是否为热修复版本
@@ -43,7 +43,7 @@ public class CmiGlobal {
 
 	@Getter
 	@Setter
-	public static String modpackNumberVersion = "2.5.0";
+	private static String modpackNumberVersion = "2.5.0";
 
 	/**
 	 * 定义版本号
