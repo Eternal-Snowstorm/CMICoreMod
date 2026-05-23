@@ -9,7 +9,6 @@ public class CmiFluidTags {
 			STEAM;
 
 	static {
-		STEAM = TagsBuilder.fluid("steam")
-				.forge();
+		STEAM = TagsBuilder.fluid("steam").forge();
 	}
 }
