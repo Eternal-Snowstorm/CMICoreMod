@@ -27,7 +27,7 @@ public class AddCreativeModeTabs {
 
 	@SubscribeEvent
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
-		if (event.getTabKey() == KUBEJS_TAB) {
+		if (event.getTab().equals(KUBEJS_TAB)) {
 			List.of(
 					CmiBlock.MARS_GEO,
 					CmiBlock.MERCURY_GEO,
@@ -63,7 +63,7 @@ public class AddCreativeModeTabs {
 			});
 		}
 
-		if (event.getTabKey().equals(CmiCreativeTab.MECHANISMS)) {
+		if (event.getTab().equals(CmiCreativeTab.MECHANISMS)) {
 			event.accept(AllItems.PRECISION_MECHANISM.get());
 			event.accept(REDSTONE_MECHANISM);
 		}
