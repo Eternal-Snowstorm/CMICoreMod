@@ -3,6 +3,7 @@ package dev.celestiacraft.cmi.common.entity.space_elevator;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraSpaceElevatorTravelCompat;
+import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorLinkHandler;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import dev.celestiacraft.cmi.network.c2s.StartSpaceElevatorTransportPacket;
 import earth.terrarium.adastra.api.planets.Planet;
@@ -40,9 +41,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -53,6 +54,9 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.common.Mod;
@@ -126,6 +130,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 	private ResourceKey<Level> pendingDestinationDimension;
 	@Nullable
 	private BlockPos pendingDestinationAnchor;
+	private boolean transferringToCounterpart;
 
 	private final SimpleContainer cargoItems = new SimpleContainer(CARGO_ITEM_SLOTS);
 	@Getter
@@ -224,7 +229,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 
 		// Energy is only required when launching from the ground; the orbital receiver
 		// dispatches elevators back to Earth for free.
-		BlockEntity energySource = null;
+		ElevatorEnergyAnchor energySource = null;
 		if (!isOrbitSide()) {
 			energySource = SpaceElevatorAnchors.findEnergySource(serverLevel, getAnchor());
 			if (energySource == null) {
@@ -439,8 +444,10 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 		if (candidate.isTransporting() != current.isTransporting()) {
 			return candidate.isTransporting();
 		}
-		if ((candidate.getFirstPassenger() == null) == (current.getFirstPassenger() != null)) {
-			return candidate.getFirstPassenger() != null;
+		boolean candHas = candidate.getFirstPassenger() != null;
+		boolean currHas = current.getFirstPassenger() != null;
+		if (candHas != currHas) {
+			return candHas;
 		}
 		return candidate.getId() < current.getId();
 	}
@@ -466,6 +473,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 			return;
 		}
 
+		transferCargoTo(counterpart);
+		transferringToCounterpart = true;
 		counterpart.beginState(STATE_ARRIVE_ORBIT);
 		movePassengerToCounterpart(player, targetLevel, counterpart);
 		discard();
@@ -492,6 +501,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 			return;
 		}
 
+		transferCargoTo(counterpart);
+		transferringToCounterpart = true;
 		counterpart.beginState(STATE_ARRIVE_GROUND);
 		movePassengerToCounterpart(player, targetLevel, counterpart);
 		discard();
@@ -501,6 +512,20 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 		player.stopRiding();
 		player.teleportTo(targetLevel, counterpart.getX(), counterpart.getY() - 0.5D, counterpart.getZ(), player.getYRot(), player.getXRot());
 		player.startRiding(counterpart, true);
+	}
+
+	private void transferCargoTo(SpaceElevatorEntity target) {
+		if (target == this) {
+			return;
+		}
+		for (int i = 0; i < cargoItems.getContainerSize(); i++) {
+			ItemStack stack = cargoItems.getItem(i);
+			target.cargoItems.setItem(i, stack.copy());
+			cargoItems.setItem(i, ItemStack.EMPTY);
+		}
+		FluidStack fluid = cargoFluid.getFluid().copy();
+		target.cargoFluid.setFluid(fluid);
+		cargoFluid.setFluid(FluidStack.EMPTY);
 	}
 
 	private void finishArrival() {
@@ -522,9 +547,6 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 			return new Vec3(getX(), getY() + 0.15D, getZ());
 		}
 		if (isOrbitSide()) {
-			// Anchor is the TOP receiver block (3 blocks below the NBT structure's bottom trapdoor).
-			// Drop the player on top of that trapdoor so they land on the station floor instead of
-			// inside the receiver model.
 			return new Vec3(getAnchor().getX() + 0.5D, getAnchor().getY() + ORBIT_EXIT_Y_OFFSET, getAnchor().getZ() + 0.5D);
 		}
 
@@ -768,18 +790,28 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 	@Nullable
 	private static SpaceElevatorEntity findOrCreateElevator(ServerLevel level, BlockPos anchorPos) {
 		loadAnchorChunk(level, anchorPos);
-		SpaceElevatorEntity existing = findElevator(level, anchorPos);
-		if (existing != null) {
-			return existing;
+		SpaceElevatorEntity result = findElevator(level, anchorPos);
+		if (result == null) {
+			result = CmiEntity.SPACE_ELEVATOR.get().create(level);
+			if (result == null) {
+				return null;
+			}
+			result.setAnchor(anchorPos);
+			level.addFreshEntity(result);
 		}
+		SpaceElevatorLinkHandler.markElevatorPresent(level, anchorPos, true);
+		return result;
+	}
 
-		SpaceElevatorEntity elevator = CmiEntity.SPACE_ELEVATOR.get().create(level);
-		if (elevator == null) {
-			return null;
+	@Override
+	public void remove(@NotNull RemovalReason reason) {
+		if (!level().isClientSide()
+				&& hasAnchor()
+				&& reason.shouldDestroy()
+				&& !transferringToCounterpart) {
+			SpaceElevatorLinkHandler.markElevatorPresent((ServerLevel) level(), getAnchor(), false);
 		}
-		elevator.setAnchor(anchorPos);
-		level.addFreshEntity(elevator);
-		return elevator;
+		super.remove(reason);
 	}
 
 	@Nullable
@@ -834,6 +866,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 		if (tag.contains("CargoFluid")) {
 			cargoFluid.readFromNBT(tag.getCompound("CargoFluid"));
 		}
+		this.transferringToCounterpart = tag.getBoolean("TransferringToCounterpart");
 		clearTransport();
 	}
 
@@ -844,6 +877,9 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 		}
 		tag.put("CargoItems", cargoItems.createTag());
 		tag.put("CargoFluid", cargoFluid.writeToNBT(new CompoundTag()));
+		if (transferringToCounterpart) {
+			tag.putBoolean("TransferringToCounterpart", true);
+		}
 	}
 
 	public Container getCargoItems() {
@@ -919,6 +955,13 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 			return InteractionResult.PASS;
 		}
 		if (player.isShiftKeyDown()) {
+			ItemStack held = player.getItemInHand(hand);
+			if (!cargoFluid.isEmpty() && FluidUtil.getFluidHandler(held).isPresent()) {
+				if (level().isClientSide()) {
+					return InteractionResult.SUCCESS;
+				}
+				return tryDrainContainer(player, hand);
+			}
 			if (level().isClientSide()) {
 				return InteractionResult.SUCCESS;
 			}
@@ -935,6 +978,27 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 			return InteractionResult.FAIL;
 		}
 		return player.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.FAIL;
+	}
+
+	private InteractionResult tryDrainContainer(Player player, InteractionHand hand) {
+		if (cargoFluid.isEmpty()) {
+			return InteractionResult.FAIL;
+		}
+		ItemStack held = player.getItemInHand(hand);
+		IItemHandler inventory = new InvWrapper(player.getInventory());
+		FluidActionResult result = FluidUtil.tryFillContainerAndStow(
+				held,
+				cargoFluid,
+				inventory,
+				Integer.MAX_VALUE,
+				player,
+				true
+		);
+		if (!result.isSuccess()) {
+			return InteractionResult.FAIL;
+		}
+		player.setItemInHand(hand, result.getResult());
+		return InteractionResult.CONSUME;
 	}
 
 	@Override

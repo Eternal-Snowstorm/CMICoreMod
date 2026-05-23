@@ -41,7 +41,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements GeoBlockEntity {
+public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements GeoBlockEntity, dev.celestiacraft.cmi.common.entity.space_elevator.ElevatorEnergyAnchor {
 	public static final int ENERGY_CAPACITY = 10_000_000;
 	public static final int ENERGY_MAX_RECEIVE = 50_000;
 	public static final int LAUNCH_ENERGY_COST = 1_000_000;
@@ -195,6 +195,16 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 		return true;
 	}
 
+	@Override
+	public int getLaunchEnergyCost() {
+		return LAUNCH_ENERGY_COST;
+	}
+
+	@Override
+	public boolean consumeLaunchEnergy() {
+		return consumeEnergy(LAUNCH_ENERGY_COST);
+	}
+
 	public static void serverTick(Level level, BlockPos pos, BlockState state, SpaceElevatorBaseConsoleBlockEntity entity) {
 		if (!(level instanceof ServerLevel serverLevel)) {
 			return;
@@ -296,9 +306,10 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 	private void broadcastStoredCounts(ServerLevel level, SpaceElevatorConstructionRecipe recipe) {
 		int[] counts = SpaceElevatorConstructionHandler.getStoredCounts(level, worldPosition, recipe.ingredients().size());
 		int[] fluidAmounts = SpaceElevatorConstructionHandler.getStoredFluidAmounts(level, worldPosition, recipe.fluidIngredients().size());
+		boolean orbitalCounterpartPresent = SpaceElevatorConstructionHandler.hasOrbitalCounterpart(level, worldPosition);
 		AABB syncBounds = AABB.ofSize(Vec3.atCenterOf(worldPosition), MATERIAL_SYNC_RADIUS * 2.0D, MATERIAL_SYNC_RADIUS * 2.0D, MATERIAL_SYNC_RADIUS * 2.0D);
 		for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, syncBounds)) {
-			CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorMaterialsPacket(worldPosition, counts, fluidAmounts));
+			CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorMaterialsPacket(worldPosition, counts, fluidAmounts, orbitalCounterpartPresent));
 		}
 	}
 

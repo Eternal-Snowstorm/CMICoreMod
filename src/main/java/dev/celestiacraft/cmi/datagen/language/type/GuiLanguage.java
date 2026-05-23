@@ -133,6 +133,11 @@ public class GuiLanguage extends LanguageGenerate {
 				"这个地面锚点已经存在太空电梯实体。"
 		);
 		addCustomLang(
+				"text.cmi.space_elevator.already_in_orbit",
+				"The linked space elevator is still docked at the orbital station.",
+				"关联的太空电梯还停在轨道空间站。"
+		);
+		addCustomLang(
 				"text.cmi.space_elevator.not_enough_materials",
 				"Not enough stored materials to deploy the space elevator.",
 				"已存入材料不足，无法部署太空电梯。"
