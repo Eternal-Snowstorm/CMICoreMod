@@ -1,6 +1,5 @@
 package dev.celestiacraft.cmi.common.entity.space_elevator;
 
-import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import net.minecraft.core.BlockPos;
@@ -10,9 +9,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public final class SpaceElevatorAnchors {
-	private static final int SEARCH_RADIUS = 12;
-	private static final int SEARCH_HEIGHT = 16;
-
 	private SpaceElevatorAnchors() {
 	}
 
@@ -26,50 +22,21 @@ public final class SpaceElevatorAnchors {
 	}
 
 	@Nullable
-	public static BlockEntity findEnergySource(ServerLevel level, BlockPos anchorPos) {
-		BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
-		for (int dy = -SEARCH_HEIGHT; dy <= SEARCH_HEIGHT; dy++) {
-			for (int dx = -SEARCH_RADIUS; dx <= SEARCH_RADIUS; dx++) {
-				for (int dz = -SEARCH_RADIUS; dz <= SEARCH_RADIUS; dz++) {
-					cursor.set(anchorPos.getX() + dx, anchorPos.getY() + dy, anchorPos.getZ() + dz);
-					BlockEntity be = level.getBlockEntity(cursor);
-					if (be instanceof SpaceElevatorBaseConsoleBlockEntity) {
-						return be;
-					}
-					if (be instanceof SpaceElevatorTopBlockEntity) {
-						return be;
-					}
-				}
-			}
-		}
-		return null;
+	public static ElevatorEnergyAnchor findEnergySource(ServerLevel level, BlockPos anchorPos) {
+		BlockEntity be = level.getBlockEntity(anchorPos);
+		return be instanceof ElevatorEnergyAnchor anchor ? anchor : null;
 	}
 
-	public static int getEnergyStored(BlockEntity source) {
-		if (source instanceof SpaceElevatorBaseConsoleBlockEntity console) {
-			return console.getEnergyStored();
-		}
-		if (source instanceof SpaceElevatorTopBlockEntity top) {
-			return top.getEnergyStored();
-		}
-		return 0;
+	public static int getEnergyStored(ElevatorEnergyAnchor source) {
+		return source.getEnergyStored();
 	}
 
-	public static boolean consumeLaunchEnergy(BlockEntity source) {
-		if (source instanceof SpaceElevatorBaseConsoleBlockEntity console) {
-			return console.consumeEnergy(SpaceElevatorBaseConsoleBlockEntity.LAUNCH_ENERGY_COST);
-		}
-		if (source instanceof SpaceElevatorTopBlockEntity top) {
-			return top.consumeEnergy(SpaceElevatorTopBlockEntity.LAUNCH_ENERGY_COST);
-		}
-		return false;
+	public static boolean consumeLaunchEnergy(ElevatorEnergyAnchor source) {
+		return source.consumeLaunchEnergy();
 	}
 
-	public static int getLaunchEnergyCost(BlockEntity source) {
-		if (source instanceof SpaceElevatorTopBlockEntity) {
-			return SpaceElevatorTopBlockEntity.LAUNCH_ENERGY_COST;
-		}
-		return SpaceElevatorBaseConsoleBlockEntity.LAUNCH_ENERGY_COST;
+	public static int getLaunchEnergyCost(ElevatorEnergyAnchor source) {
+		return source.getLaunchEnergyCost();
 	}
 
 	public static void onElevatorArrived(ServerLevel level, BlockPos anchorPos) {

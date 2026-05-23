@@ -46,7 +46,8 @@ public class ConstructSpaceElevatorPacket {
 			int fluidIngredientCount = recipe == null ? 0 : recipe.fluidIngredients().size();
 			int[] counts = SpaceElevatorConstructionHandler.getStoredCounts(player.serverLevel(), msg.anchorPos, ingredientCount);
 			int[] fluidAmounts = SpaceElevatorConstructionHandler.getStoredFluidAmounts(player.serverLevel(), msg.anchorPos, fluidIngredientCount);
-			CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorMaterialsPacket(msg.anchorPos, counts, fluidAmounts));
+			boolean orbitalCounterpartPresent = SpaceElevatorConstructionHandler.hasOrbitalCounterpart(player.serverLevel(), msg.anchorPos);
+			CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorMaterialsPacket(msg.anchorPos, counts, fluidAmounts, orbitalCounterpartPresent));
 		});
 		ctx.setPacketHandled(true);
 	}

@@ -7,16 +7,19 @@ import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
+import earth.terrarium.adastra.api.planets.Planet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.TicketType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -28,6 +31,7 @@ public final class SpaceElevatorConstructionHandler {
 	private static final ResourceLocation WRENCH_ID = ResourceLocation.fromNamespaceAndPath("ad_astra", "wrench");
 	private static final double MAX_USE_DISTANCE_SQR = 64.0D;
 	private static final double EXISTING_ELEVATOR_RADIUS = 4.0D;
+	private static final double GROUND_BASE_LINK_RADIUS = 16.0D;
 
 	@Nullable
 	private static Item cachedWrench;
@@ -81,6 +85,36 @@ public final class SpaceElevatorConstructionHandler {
 		return getNearbyElevator(level, anchorPos) != null;
 	}
 
+	public static boolean hasOrbitalCounterpart(ServerLevel groundLevel, BlockPos groundAnchor) {
+		ServerLevel orbitLevel = groundLevel.getServer().getLevel(Planet.EARTH_ORBIT);
+		if (orbitLevel == null) {
+			return false;
+		}
+		SpaceElevatorLinkHandler.LinkTarget link = SpaceElevatorLinkHandler.findByGroundAnchor(
+				orbitLevel, groundLevel.dimension(), groundAnchor);
+		if (link == null || link.orbitAnchor() == null) {
+			link = SpaceElevatorLinkHandler.findNearestByGroundBase(orbitLevel, groundLevel.dimension(), groundAnchor, GROUND_BASE_LINK_RADIUS);
+			if (link == null || link.orbitAnchor() == null) {
+				return false;
+			}
+			SpaceElevatorLinkHandler.setGroundAnchor(orbitLevel, link.stationPos(), groundAnchor);
+		}
+		if (SpaceElevatorLinkHandler.isElevatorPresent(orbitLevel, link.stationPos())) {
+			return true;
+		}
+		BlockPos orbitAnchor = link.orbitAnchor();
+		ChunkPos chunkPos = new ChunkPos(orbitAnchor);
+		orbitLevel.getChunkSource().addRegionTicket(TicketType.PORTAL, chunkPos, 1, orbitAnchor);
+		orbitLevel.getChunk(chunkPos.x, chunkPos.z);
+		AABB bounds = AABB.ofSize(Vec3.atCenterOf(orbitAnchor), 8.0D, 16.0D, 8.0D);
+		boolean found = !orbitLevel.getEntitiesOfClass(SpaceElevatorEntity.class, bounds,
+				entity -> entity.isAlive() && entity.isAnchoredTo(orbitAnchor)).isEmpty();
+		if (found) {
+			SpaceElevatorLinkHandler.setElevatorPresent(orbitLevel, link.stationPos(), true);
+		}
+		return found;
+	}
+
 	@Nullable
 	public static SpaceElevatorEntity getNearbyElevator(Level level, BlockPos anchorPos) {
 		Vec3 center = Vec3.atCenterOf(anchorPos);
@@ -107,6 +141,9 @@ public final class SpaceElevatorConstructionHandler {
 		if (hasNearbyElevator(level, anchorPos)) {
 			return ConstructResult.ALREADY_PRESENT;
 		}
+		if (hasOrbitalCounterpart(level, anchorPos)) {
+			return ConstructResult.ALREADY_IN_ORBIT;
+		}
 		if (!(player.isCreative() || player.isSpectator()) && !SpaceElevatorMaterialStorage.hasAllMaterials(level, anchorPos, recipe)) {
 			return ConstructResult.NOT_ENOUGH_MATERIALS;
 		}
@@ -115,6 +152,7 @@ public final class SpaceElevatorConstructionHandler {
 			return ConstructResult.SPAWN_FAILED;
 		}
 		AdAstraSpaceElevatorTravelCompat.bindConstructedGroundAnchor(level, anchorPos);
+		SpaceElevatorLinkHandler.markElevatorPresent(level, anchorPos, true);
 		SpaceElevatorMaterialStorage.clear(level, anchorPos);
 		playFeedback(level, anchorPos);
 		return ConstructResult.SUCCESS;
@@ -142,6 +180,7 @@ public final class SpaceElevatorConstructionHandler {
 	public enum ConstructResult {
 		SUCCESS("text.cmi.space_elevator.success"),
 		ALREADY_PRESENT("text.cmi.space_elevator.already_present"),
+		ALREADY_IN_ORBIT("text.cmi.space_elevator.already_in_orbit"),
 		NOT_ENOUGH_MATERIALS("text.cmi.space_elevator.not_enough_materials"),
 		INVALID_ANCHOR("text.cmi.space_elevator.invalid_anchor"),
 		NO_RECIPE("text.cmi.space_elevator.no_recipe"),

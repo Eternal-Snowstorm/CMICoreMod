@@ -1,14 +1,10 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_top;
 
-import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
-import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,7 +24,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlockEntity {
+public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlockEntity, dev.celestiacraft.cmi.common.entity.space_elevator.ElevatorEnergyAnchor {
 	public static final int ENERGY_CAPACITY = 10_000_000;
 	public static final int ENERGY_MAX_RECEIVE = 50_000;
 	public static final int LAUNCH_ENERGY_COST = 1_000_000;
@@ -116,6 +112,16 @@ public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlock
 		return true;
 	}
 
+	@Override
+	public int getLaunchEnergyCost() {
+		return LAUNCH_ENERGY_COST;
+	}
+
+	@Override
+	public boolean consumeLaunchEnergy() {
+		return consumeEnergy(LAUNCH_ENERGY_COST);
+	}
+
 	public void addEnergyForTesting(int amount) {
 		energy.receiveEnergy(amount, false);
 	}
@@ -136,22 +142,6 @@ public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlock
 		doorClosed = false;
 		setChanged();
 		triggerAnim(DOOR_CONTROLLER, ANIM_OPEN_DOOR);
-	}
-
-	public static void serverTick(Level level, BlockPos pos, BlockState state, SpaceElevatorTopBlockEntity be) {
-		if (!(level instanceof ServerLevel serverLevel)) {
-			return;
-		}
-		if ((serverLevel.getGameTime() + pos.asLong()) % 20L != 0L) {
-			return;
-		}
-		SpaceElevatorEntity elevator = SpaceElevatorConstructionHandler.getNearbyElevator(serverLevel, pos);
-		boolean elevatorPresentAndIdle = elevator != null && !elevator.isCurrentlyTransporting();
-		if (elevatorPresentAndIdle && !be.doorClosed) {
-			be.playCloseDoor();
-		} else if (elevator == null && be.doorClosed) {
-			be.playOpenDoor();
-		}
 	}
 
 	@Override

@@ -11,11 +11,17 @@ public class SyncSpaceElevatorMaterialsPacket {
 	private final BlockPos anchorPos;
 	private final int[] counts;
 	private final int[] fluidAmounts;
+	private final boolean orbitalCounterpartPresent;
 
 	public SyncSpaceElevatorMaterialsPacket(BlockPos anchorPos, int[] counts, int[] fluidAmounts) {
+		this(anchorPos, counts, fluidAmounts, false);
+	}
+
+	public SyncSpaceElevatorMaterialsPacket(BlockPos anchorPos, int[] counts, int[] fluidAmounts, boolean orbitalCounterpartPresent) {
 		this.anchorPos = anchorPos.immutable();
 		this.counts = counts.clone();
 		this.fluidAmounts = fluidAmounts.clone();
+		this.orbitalCounterpartPresent = orbitalCounterpartPresent;
 	}
 
 	public static void encode(SyncSpaceElevatorMaterialsPacket msg, FriendlyByteBuf buf) {
@@ -28,6 +34,7 @@ public class SyncSpaceElevatorMaterialsPacket {
 		for (int amount : msg.fluidAmounts) {
 			buf.writeVarInt(amount);
 		}
+		buf.writeBoolean(msg.orbitalCounterpartPresent);
 	}
 
 	public static SyncSpaceElevatorMaterialsPacket decode(FriendlyByteBuf buf) {
@@ -42,12 +49,12 @@ public class SyncSpaceElevatorMaterialsPacket {
 		for (int i = 0; i < fluidSize; i++) {
 			fluidAmounts[i] = buf.readVarInt();
 		}
-		return new SyncSpaceElevatorMaterialsPacket(anchorPos, counts, fluidAmounts);
+		return new SyncSpaceElevatorMaterialsPacket(anchorPos, counts, fluidAmounts, buf.readBoolean());
 	}
 
 	public static void handle(SyncSpaceElevatorMaterialsPacket msg, Supplier<NetworkEvent.Context> ctxSupplier) {
 		NetworkEvent.Context ctx = ctxSupplier.get();
-		ctx.enqueueWork(() -> SpaceElevatorWrenchClientHandler.syncStoredCounts(msg.anchorPos, msg.counts, msg.fluidAmounts));
+		ctx.enqueueWork(() -> SpaceElevatorWrenchClientHandler.syncStoredCounts(msg.anchorPos, msg.counts, msg.fluidAmounts, msg.orbitalCounterpartPresent));
 		ctx.setPacketHandled(true);
 	}
 }

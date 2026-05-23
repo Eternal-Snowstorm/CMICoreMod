@@ -16,8 +16,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -64,15 +62,6 @@ public class SpaceElevatorTopBlock extends BaseEntityBlock {
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return CmiBlockEntity.SPACE_ELEVATOR_TOP.get().create(pos, state);
-	}
-
-	@Nullable
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-		if (level.isClientSide()) {
-			return null;
-		}
-		return createTickerHelper(type, CmiBlockEntity.SPACE_ELEVATOR_TOP.get(), SpaceElevatorTopBlockEntity::serverTick);
 	}
 
 	@Override

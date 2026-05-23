@@ -37,6 +37,7 @@ public class SpaceElevatorWrenchClientHandler {
 	private static int scrollOffset;
 	private static int[] syncedCounts = new int[0];
 	private static int[] syncedFluidAmounts = new int[0];
+	private static boolean syncedOrbitalCounterpartPresent;
 
 	public static float getHoldProgress(@Nullable BlockPos anchorPos) {
 		if (trackedAnchor == null || !trackedAnchor.equals(anchorPos)) {
@@ -64,9 +65,18 @@ public class SpaceElevatorWrenchClientHandler {
 	}
 
 	public static void syncStoredCounts(BlockPos anchorPos, int[] counts, int[] fluidAmounts) {
+		syncStoredCounts(anchorPos, counts, fluidAmounts, false);
+	}
+
+	public static void syncStoredCounts(BlockPos anchorPos, int[] counts, int[] fluidAmounts, boolean orbitalCounterpartPresent) {
 		syncedAnchor = anchorPos.immutable();
 		syncedCounts = counts.clone();
 		syncedFluidAmounts = fluidAmounts.clone();
+		syncedOrbitalCounterpartPresent = orbitalCounterpartPresent;
+	}
+
+	public static boolean hasSyncedOrbitalCounterpart(@Nullable BlockPos anchorPos) {
+		return syncedAnchor != null && syncedAnchor.equals(anchorPos) && syncedOrbitalCounterpartPresent;
 	}
 
 	public static boolean hasStoredMaterials(@Nullable BlockPos anchorPos, @Nullable SpaceElevatorConstructionRecipe recipe, boolean bypassRequirements) {
@@ -205,6 +215,9 @@ public class SpaceElevatorWrenchClientHandler {
 		if (SpaceElevatorConstructionHandler.hasNearbyElevator(player.level(), anchorPos)) {
 			return false;
 		}
+		if (hasSyncedOrbitalCounterpart(anchorPos)) {
+			return false;
+		}
 
 		SpaceElevatorConstructionRecipe recipe = SpaceElevatorConstructionHandler.getRecipe(player.level());
 		return hasStoredMaterials(anchorPos, recipe, player.isCreative() || player.isSpectator());
@@ -215,6 +228,7 @@ public class SpaceElevatorWrenchClientHandler {
 		syncedAnchor = null;
 		syncedCounts = new int[0];
 		syncedFluidAmounts = new int[0];
+		syncedOrbitalCounterpartPresent = false;
 		holdTicks = 0;
 		packetSent = false;
 		scrollOffset = 0;
