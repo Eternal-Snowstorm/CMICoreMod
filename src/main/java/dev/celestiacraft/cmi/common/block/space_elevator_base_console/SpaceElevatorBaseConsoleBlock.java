@@ -1,17 +1,10 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console;
 
-import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
-import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -24,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -190,28 +182,5 @@ public class SpaceElevatorBaseConsoleBlock extends BaseEntityBlock {
 				level.removeBlock(portPos, false);
 			}
 		}
-	}
-
-	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
-		if (hand != InteractionHand.MAIN_HAND) {
-			return InteractionResult.PASS;
-		}
-		if (SpaceElevatorConstructionHandler.isWrench(player.getItemInHand(hand))) {
-			return InteractionResult.PASS;
-		}
-		if (level.isClientSide()) {
-			return InteractionResult.SUCCESS;
-		}
-		if (!(player instanceof ServerPlayer serverPlayer) || !(level instanceof ServerLevel serverLevel)) {
-			return InteractionResult.PASS;
-		}
-
-		SpaceElevatorEntity existing = SpaceElevatorConstructionHandler.getNearbyElevator(serverLevel, pos);
-		if (existing != null && existing.getFirstPassenger() == null) {
-			serverPlayer.startRiding(existing);
-			return InteractionResult.CONSUME;
-		}
-		return InteractionResult.PASS;
 	}
 }

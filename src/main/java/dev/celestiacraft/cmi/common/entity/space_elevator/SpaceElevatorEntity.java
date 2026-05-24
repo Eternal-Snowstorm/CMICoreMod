@@ -1,6 +1,10 @@
 package dev.celestiacraft.cmi.common.entity.space_elevator;
 
+import com.lowdragmc.lowdraglib.gui.modular.IUIHolder;
+import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.client.gui.SpaceElevatorCargoUI;
+import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraSpaceElevatorTravelCompat;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorLinkHandler;
@@ -30,17 +34,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.world.*;
+import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -62,7 +65,6 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -76,7 +78,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, value = Dist.CLIENT)
-public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvider {
+public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder {
 	private static final EntityDataAccessor<BlockPos> ANCHOR_POS = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.BLOCK_POS);
 	private static final EntityDataAccessor<Boolean> HAS_ANCHOR = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Integer> TRANSPORT_STATE = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.INT);
@@ -105,8 +107,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 	private static final double CONFLICT_SEARCH_RADIUS = 3.5D;
 	private static final double CONFLICT_SEARCH_HEIGHT = 256.0D;
 	private static final double CABLE_BOTTOM_Y = -64.0D;
-	public static final int CARGO_ITEM_SLOTS = 54;
-	public static final int CARGO_FLUID_CAPACITY = 16_000;
+	public static final int CARGO_ITEM_SLOTS = 60;
+	public static final int CARGO_FLUID_CAPACITY = 64_000;
 	private static final Vec3[] CABLE_OFFSETS = new Vec3[] {
 			new Vec3(-20.0D / 16.0D, 20.0D / 16.0D, -20.0D / 16.0D),
 			new Vec3(-20.0D / 16.0D, 20.0D / 16.0D, 20.0D / 16.0D),
@@ -916,14 +918,24 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 	}
 
 	@Override
-	public @NotNull Component getDisplayName() {
-		return Component.translatable("entity.cmi.space_elevator.cargo");
+	public ModularUI createUI(Player entityPlayer) {
+		return SpaceElevatorCargoUI.create(this, entityPlayer);
 	}
 
-	@Nullable
 	@Override
-	public AbstractContainerMenu createMenu(int containerId, @NotNull Inventory playerInventory, @NotNull Player player) {
-		return new ChestMenu(MenuType.GENERIC_9x6, containerId, playerInventory, cargoItems, 6);
+	public boolean isInvalid() {
+		return this.isRemoved();
+	}
+
+	@Override
+	public boolean isRemote() {
+		Level level = this.level();
+		return level.isClientSide;
+	}
+
+	@Override
+	public void markAsDirty() {
+
 	}
 
 	@Override
@@ -966,7 +978,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, MenuProvid
 				return InteractionResult.SUCCESS;
 			}
 			if (player instanceof ServerPlayer serverPlayer) {
-				NetworkHooks.openScreen(serverPlayer, this);
+				SpaceElevatorUIFactory.INSTANCE.openUI(this, serverPlayer);
 				return InteractionResult.CONSUME;
 			}
 			return InteractionResult.PASS;

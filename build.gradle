@@ -74,6 +74,8 @@ mixin {
 	config "${mod_id}.mixins.json"
 }
 
+def generatedRefmap = file("$buildDir/tmp/compileJava/compileJava-refmap.json")
+
 sourceSets.main.resources {
 	srcDir 'src/generated/resources'
 }
@@ -282,6 +284,10 @@ tasks.named('processResources', ProcessResources).configure {
 
 tasks.named('jar', Jar).configure {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	dependsOn tasks.named('compileJava')
+	from(generatedRefmap) {
+		rename { "${mod_id}.refmap.json" }
+	}
 	manifest {
 		attributes([
 				"Specification-Title"     : mod_id,
@@ -300,6 +306,10 @@ tasks.named('jar', Jar).configure {
 
 tasks.named('jarJar') {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	dependsOn tasks.named('compileJava')
+	from(generatedRefmap) {
+		rename { "${mod_id}.refmap.json" }
+	}
 	manifest {
 		attributes([
 				"Specification-Title"     : mod_id,

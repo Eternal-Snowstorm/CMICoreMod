@@ -46,7 +46,7 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 	public static final int ENERGY_CAPACITY = 10_000_000;
 	public static final int ENERGY_MAX_RECEIVE = 50_000;
 	public static final int LAUNCH_ENERGY_COST = 1_000_000;
-	public static final int FLUID_TANK_CAPACITY = 16_000;
+	public static final int FLUID_TANK_CAPACITY = 64_000;
 	public static final int ITEM_SLOT_COUNT = 9;
 
 	public static final Direction INPUT_SIDE = Direction.EAST;

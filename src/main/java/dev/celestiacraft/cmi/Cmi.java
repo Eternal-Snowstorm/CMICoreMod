@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi;
 
+import com.lowdragmc.lowdraglib.gui.factory.UIFactory;
 import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
@@ -8,6 +9,7 @@ import com.simibubi.create.foundation.item.TooltipModifier;
 import dev.celestiacraft.cmi.client.CmiClient;
 import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
+import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
 import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
@@ -107,6 +109,8 @@ public class Cmi {
 
 	private void onCommonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
+			UIFactory.register(SpaceElevatorUIFactory.INSTANCE);
+
 			Regions.register(new CmiOverworldRegion(5));
 
 			SurfaceRuleManager.addSurfaceRules(

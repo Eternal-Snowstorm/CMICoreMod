@@ -50,5 +50,15 @@
 			"tag": "forge:glass",
 			"count": 32
 		}
+	],
+	"fluid_ingredients": [
+		{
+			"tag": "forge:water",
+			"amount": 16000
+		},
+		{
+			"fluid": "minecraft:lava",
+			"amount": 8000
+		}
 	]
 }
