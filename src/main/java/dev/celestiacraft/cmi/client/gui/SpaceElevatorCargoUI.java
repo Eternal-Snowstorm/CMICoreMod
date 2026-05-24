@@ -11,6 +11,7 @@ import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.side.fluid.forge.FluidTransferWrapper;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -72,7 +73,7 @@ public final class SpaceElevatorCargoUI {
 		}
 
 		FluidTank cargoFluid = elevator.getCargoFluid();
-		TankWidget tank = new TankWidget(
+		TankWidget tank = new ScaledTankWidget(
 				new FluidTransferWrapper(cargoFluid),
 				0,
 				TANK_X, TANK_Y,
@@ -91,14 +92,15 @@ public final class SpaceElevatorCargoUI {
 
 		Inventory inventory = player.getInventory();
 
+		EquipmentSlot[] armorSlots = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
 		for (int i = 0; i < 4; i++) {
 			int invIndex = ARMOR_INDEX_BASE + (3 - i);
-			SlotWidget armorSlot = new SlotWidget(inventory, invIndex, ARMOR_X, ARMOR_Y + i * SLOT_SIZE, true, true);
+			ArmorSlotWidget armorSlot = new ArmorSlotWidget(inventory, invIndex, ARMOR_X, ARMOR_Y + i * SLOT_SIZE, armorSlots[i]);
 			armorSlot.setLocationInfo(true, false);
 			root.addWidget(armorSlot);
 		}
 
-		SlotWidget offhandSlot = new SlotWidget(inventory, OFFHAND_INDEX, OFFHAND_X, OFFHAND_Y, true, true);
+		ArmorSlotWidget offhandSlot = new ArmorSlotWidget(inventory, OFFHAND_INDEX, OFFHAND_X, OFFHAND_Y, EquipmentSlot.OFFHAND);
 		offhandSlot.setLocationInfo(true, false);
 		root.addWidget(offhandSlot);
 
