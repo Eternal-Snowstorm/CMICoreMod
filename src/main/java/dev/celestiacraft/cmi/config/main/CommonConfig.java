@@ -14,6 +14,7 @@ public class CommonConfig {
 	public static final VoidDustCollectorConfig VOID_DUST_COLLECTOR;
 	public static final SolarBoilerConfig SOLAR_BOILER;
 	public static final StackStorageConfig STACK_STORAGE;
+	public static final DrawerUpgradeConfig DRAWER_UPGRADE;
 
 	static {
 		BUILDER.comment("All settings below will only take effect after restarting the server or client.")
@@ -26,6 +27,7 @@ public class CommonConfig {
 		VOID_DUST_COLLECTOR = new VoidDustCollectorConfig(BUILDER);
 		SOLAR_BOILER = new SolarBoilerConfig(BUILDER);
 		STACK_STORAGE = new StackStorageConfig(BUILDER);
+		DRAWER_UPGRADE = new DrawerUpgradeConfig(BUILDER);
 
 		BUILDER.pop();
 

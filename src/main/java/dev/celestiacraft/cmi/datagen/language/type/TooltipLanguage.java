@@ -186,5 +186,21 @@ public class TooltipLanguage extends LanguageGenerate {
 				" ● No full _Cube_ block is obstructing the top",
 				" ● 顶上不存在_任何_完整方块遮挡"
 		);
+		// Functional Storage - Additive Drawer Upgrade
+		addTooltipLang(
+				"storageupgrade.desc.item.additive",
+				"Increases the block item storage by %sx",
+				"使该容器的物品存储量增加 %s 倍"
+		);
+		addTooltipLang(
+				"storageupgrade.desc.fluid.additive",
+				"Increases the block fluid storage by %sx",
+				"使该容器的液体存储量增加 %s 倍"
+		);
+		addTooltipLang(
+				"storageupgrade.desc.range.additive",
+				"Increases controller radius by %s blocks",
+				"将控制器的作用半径延长%s格"
+		);
 	}
 }

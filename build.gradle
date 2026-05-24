@@ -230,7 +230,7 @@ dependencies {
 	// Functional Storage
 	implementation fg.deobf("curse.maven:functional-sto.rage-556861:6702553")
 	// Titanium
-	runtimeOnly fg.deobf("curse.maven:titanium-287342:7949783")
+	implementation fg.deobf("curse.maven:titanium-287342:7949783")
 
 	// Sophisticated Backpacks
 	implementation fg.deobf("curse.maven:sophisticated-backpacks-422301:8114838")
