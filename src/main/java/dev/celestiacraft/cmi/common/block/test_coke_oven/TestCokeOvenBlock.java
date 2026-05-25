@@ -22,11 +22,12 @@ public class TestCokeOvenBlock extends ControllerBlock<TestCokeOvenBlockEntity> 
 			return null;
 		}
 
-		return (lvl, pos, st, be) -> {
-			if (be instanceof TestCokeOvenBlockEntity entity) {
-				entity.tick(MultiblockContext.of(entity));
-			}
-		};
+		return createTickerHelper(
+				type,
+				CmiBlockEntity.TEST_COKE_OVEN.get(),
+				(lvl, pos, st, be) -> {
+					be.tick(MultiblockContext.of(be));
+				});
 	}
 
 	@Override
