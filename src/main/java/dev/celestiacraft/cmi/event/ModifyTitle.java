@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class GetDateModifyTitle {
+public class ModifyTitle {
 	private static final List<String> NORMAL_GREETINGS = List.of(
 			"Wishing You Happiness and Peace Every Day!",
 			"May Your Day Be Filled with Joy and Creativity!",
