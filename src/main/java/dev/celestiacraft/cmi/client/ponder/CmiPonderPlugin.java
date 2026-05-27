@@ -17,8 +17,7 @@ public class CmiPonderPlugin implements PonderPlugin {
 
 	@Override
 	public void registerScenes(@NotNull PonderSceneRegistrationHelper<ResourceLocation> helper) {
-		PonderSceneRegistrationHelper<Item> itemHelper = itemHelper(helper);
-		CmiPonderScene.register(itemHelper);
+		CmiPonderScene.register(helper(helper));
 	}
 
 	@Override
@@ -27,7 +26,7 @@ public class CmiPonderPlugin implements PonderPlugin {
 		CmiPonderTags.add(helper);
 	}
 
-	private static PonderSceneRegistrationHelper<Item> itemHelper(PonderSceneRegistrationHelper<ResourceLocation> helper) {
+	private static PonderSceneRegistrationHelper<Item> helper(PonderSceneRegistrationHelper<ResourceLocation> helper) {
 		return helper.withKeyFunction((item) -> {
 			return ForgeRegistries.ITEMS.getKey(item);
 		});
