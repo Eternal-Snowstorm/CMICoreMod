@@ -26,7 +26,7 @@ public class AcceleratorCategory {
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(
-							() -> CmiBlock.ACCELERATOR.get().asItem().getDefaultInstance(),
+							() -> CmiBlock.ACCELERATOR.asStack(),
 							() -> AllItems.PRECISION_MECHANISM.asStack()
 					);
 				})
