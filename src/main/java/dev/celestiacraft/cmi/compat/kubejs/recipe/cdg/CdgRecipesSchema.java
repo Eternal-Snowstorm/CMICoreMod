@@ -32,7 +32,8 @@ public interface CdgRecipesSchema {
 			.alwaysWrite();
 
 	RecipeKey<String> MOLDNAME = StringComponent.ID
-			.key("mold");
+			.key("mold")
+			.defaultOptional();
 
 	RecipeKey<String> HEAT_REQUIREMENT = new StringComponent("not a valid heat condition!",
 			(string) -> {
@@ -46,7 +47,6 @@ public interface CdgRecipesSchema {
 			.key("heatRequirement")
 			.defaultOptional()
 			.allowEmpty();
-
 
 	RecipeSchema BASIN = new RecipeSchema(
 			CdgRecipeJS.class,
