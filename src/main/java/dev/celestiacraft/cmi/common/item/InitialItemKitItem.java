@@ -35,12 +35,8 @@ public class InitialItemKitItem extends BasicItem {
 			"create:super_glue",
 			"create:stressometer",
 			"create:item_hatch",
-			"create:packager",
-			"create:stock_link",
-			"create:stock_ticker",
-			"create:red_seat",
 			"63x create:item_vault",
-
+			"craftingstationjei:crafting_station",
 			"tiab:time_in_a_bottle"
 	);
 
