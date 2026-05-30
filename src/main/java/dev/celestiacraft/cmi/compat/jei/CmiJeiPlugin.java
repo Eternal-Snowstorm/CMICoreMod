@@ -80,12 +80,16 @@ public class CmiJeiPlugin implements IModPlugin {
 		RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
 
 		List<AcceleratorRecipe> acceleratorRecipe = manager.getAllRecipesFor(AcceleratorRecipe.Type.INSTANCE);
-		List<WellRecipe> wellRecipe = List.of(new SeaWaterWellRecipe(), new WaterWellRecipe(), new LavaWellRecipe(), new BlazeWellRecipe());
 		List<VoidDustCollectorRecipe> voidDustCollectorRecipe = List.of(new VoidDustCollectorRecipe());
 		List<GrindingRecipe> grindingRecipe = manager.getAllRecipesFor(CmiCreateRecipe.GRINDING.getType());
 
 		registration.addRecipes(CmiJeiRecipeType.ACCELERATOR, acceleratorRecipe);
-		registration.addRecipes(CmiJeiRecipeType.WELL, wellRecipe);
+		registration.addRecipes(CmiJeiRecipeType.WELL, List.of(
+				new SeaWaterWellRecipe(),
+				new WaterWellRecipe(),
+				new LavaWellRecipe(),
+				new BlazeWellRecipe()
+		));
 		registration.addRecipes(CmiJeiRecipeType.VOID_DUST_COLLECTOR, voidDustCollectorRecipe);
 		registration.addRecipes(CmiJeiRecipeType.GRINDING, grindingRecipe);
 
@@ -120,7 +124,7 @@ public class CmiJeiPlugin implements IModPlugin {
 		});
 
 		registration.addRecipeCatalyst(
-				CmiBlock.ACCELERATOR.asItem().getDefaultInstance(),
+				CmiBlock.ACCELERATOR.asStack(),
 				CmiJeiRecipeType.ACCELERATOR
 		);
 		registration.addRecipeCatalyst(
