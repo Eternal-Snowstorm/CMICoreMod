@@ -16,7 +16,9 @@ public class WindVaneManager {
 		if (level == null) {
 			return;
 		}
-		Long2IntOpenHashMap map = CHUNK_COUNTS.computeIfAbsent(level.dimension(), (key) -> new Long2IntOpenHashMap());
+		Long2IntOpenHashMap map = CHUNK_COUNTS.computeIfAbsent(level.dimension(), (key) -> {
+			return new Long2IntOpenHashMap();
+		});
 		long key = new ChunkPos(pos).toLong();
 		synchronized (map) {
 			map.addTo(key, 1);

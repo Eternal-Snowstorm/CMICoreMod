@@ -78,14 +78,18 @@ public class TestCokeOvenIOBlockEntity extends IOBlockEntity {
 	}
 
 	public FluidStack drainFluid(int amount, IFluidHandler.FluidAction action) {
-		if (fluid.isEmpty()) return FluidStack.EMPTY;
+		if (fluid.isEmpty()) {
+			return FluidStack.EMPTY;
+		}
 
 		int drained = Math.min(amount, fluid.getAmount());
 		FluidStack result = new FluidStack(fluid, drained);
 
 		if (action.execute()) {
 			fluid.shrink(drained);
-			if (fluid.isEmpty()) fluid = FluidStack.EMPTY;
+			if (fluid.isEmpty()) {
+				fluid = FluidStack.EMPTY;
+			}
 			setChanged();
 		}
 
