@@ -96,8 +96,9 @@ public class InitialItemKitItem extends BasicItem {
 
 			// 标题
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
-					Component.translatable("cmi.tooltip.initial_item_kit.list")
-							.withStyle(ChatFormatting.GRAY).getString(),
+					Component.translatable(
+							"cmi.tooltip.initial_item_kit.list"
+					).withStyle(ChatFormatting.GRAY).getString(),
 					FontHelper.Palette.STANDARD_CREATE
 			));
 
@@ -123,8 +124,9 @@ public class InitialItemKitItem extends BasicItem {
 			});
 		} else {
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
-					Component.translatable("cmi.tooltip.initial_item_kit.hold_shift")
-							.withStyle(ChatFormatting.DARK_GRAY).getString(),
+					Component.translatable(
+							"cmi.tooltip.initial_item_kit.hold_shift"
+					).withStyle(ChatFormatting.DARK_GRAY).getString(),
 					FontHelper.Palette.STANDARD_CREATE
 			));
 		}
