@@ -23,6 +23,7 @@ public enum ModResources {
 	STEEL_INGOT(loadCmi("steel_ingot")),
 	VOID_SPRING(loadCmi("void_spring")),
 	VOID_DUST(loadCmi("void_dust")),
+	PARCHMENT(loadCmi("parchment")),
 
 	TREATED_WOOD_SLAB(loadIE("slab_treated_wood_horizontal")),
 
@@ -70,6 +71,10 @@ public enum ModResources {
 
 	public ItemStack getItemStack(int count) {
 		return entry.getItemStack(count);
+	}
+
+	public FluidStack getFluidStack() {
+		return entry.getFluidStack();
 	}
 
 	public FluidStack getFluidStack(int amount) {
