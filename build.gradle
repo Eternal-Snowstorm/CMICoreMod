@@ -216,7 +216,6 @@ dependencies {
 	implementation fg.deobf("curse.maven:rhino-416294:6186971")
 	// Jade
 	implementation fg.deobf("curse.maven:jade-324717:6106101")
-	implementation fg.deobf("curse.maven:jade-addons-583345:8203724")
 	// KubeJS
 	implementation fg.deobf("curse.maven:kubejs-238086:5853326")
 	// TerraBlender
