@@ -28,6 +28,10 @@ public class StoneItem extends MechanismItem {
 		Level level = context.getLevel();
 		BlockState state = level.getBlockState(pos);
 
+		if (level.isClientSide()) {
+			return InteractionResult.PASS;
+		}
+
 		if (state.is(Blocks.COBBLESTONE)) {
 			player.swing(hand);
 			level.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());

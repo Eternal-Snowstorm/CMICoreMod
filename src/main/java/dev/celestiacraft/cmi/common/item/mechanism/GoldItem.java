@@ -37,6 +37,10 @@ public class GoldItem extends MechanismItem {
 		BlockPos pos = context.getClickedPos();
 		BlockState state = level.getBlockState(pos);
 
+		if (level.isClientSide()) {
+			return InteractionResult.PASS;
+		}
+
 		if (state.is(Tags.Blocks.STONE) || state.is(Tags.Blocks.COBBLESTONE)) {
 			player.swing(hand);
 			if (level.random.nextFloat() < 0.01F) {
