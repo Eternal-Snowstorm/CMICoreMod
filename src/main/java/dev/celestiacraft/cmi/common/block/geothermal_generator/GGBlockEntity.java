@@ -60,7 +60,9 @@ public class GGBlockEntity extends BasicBlockEntity {
 	/**
 	 * 计算当前地热发电机的发电量
 	 *
-	 * <p>发电机将检查六个相邻方向(上, 下, 北, 南, 西, 东)
+	 * <p>
+	 * 发电机将检查六个相邻方向(上, 下, 北, 南, 西, 东)
+	 * <p>
 	 * 是否存在 {@link CmiFluidTags#GG_WORK_FLUID} 标签中的流体
 	 *
 	 * <p>每检测到一个有效接触面, 发电机的产能倍率都会翻倍:
