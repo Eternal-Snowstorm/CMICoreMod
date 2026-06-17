@@ -7,6 +7,7 @@ import dev.celestiacraft.libs.api.register.block.BasicBlockEntity;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -64,6 +65,9 @@ public class GGBlockEntity extends BasicBlockEntity {
 	 * 发电机将检查六个相邻方向(上, 下, 北, 南, 西, 东)
 	 * <p>
 	 * 是否存在 {@link CmiFluidTags#GG_WORK_FLUID} 标签中的流体
+	 * <p>
+	 * 并且只能在下界工作
+	 * </p>
 	 *
 	 * <p>每检测到一个有效接触面, 发电机的产能倍率都会多一倍:
 	 *
@@ -88,6 +92,9 @@ public class GGBlockEntity extends BasicBlockEntity {
 			BlockPos pos = worldPosition.relative(direction);
 			FluidState fluidState = level.getFluidState(pos);
 
+			if (!level.dimension().equals(Level.NETHER)) {
+				return 0;
+			}
 			if (fluidState.is(CmiFluidTags.GG_WORK_FLUID)) {
 				contactSurface++;
 			}
