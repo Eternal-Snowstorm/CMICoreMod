@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.block.geothermal_generator;
 
 import dev.celestiacraft.cmi.common.block.geothermal_generator.capability.GGEnergyStorage;
+import dev.celestiacraft.cmi.config.common.GeothermalGeneratorConfig;
 import dev.celestiacraft.cmi.tags.CmiFluidTags;
 import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import dev.celestiacraft.libs.api.register.block.BasicBlockEntity;
@@ -24,7 +25,7 @@ public class GGBlockEntity extends BasicBlockEntity {
 	@Getter
 	private int storagedEnergy;
 	@Getter
-	private static final int BASE_PRODUCTION = 4096;
+	private static final int BASE_PRODUCTION = GeothermalGeneratorConfig.PRODUCTION_EFFICIENCY.get();
 
 	public GGBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -90,12 +91,12 @@ public class GGBlockEntity extends BasicBlockEntity {
 
 		for (Direction direction : Direction.values()) {
 			BlockPos pos = worldPosition.relative(direction);
-			FluidState fluidState = level.getFluidState(pos);
+			FluidState fluid = level.getFluidState(pos);
 
 			if (!level.dimension().equals(Level.NETHER)) {
 				return 0;
 			}
-			if (fluidState.is(CmiFluidTags.GG_WORK_FLUID)) {
+			if (fluid.is(CmiFluidTags.GG_WORK_FLUID)) {
 				contactSurface++;
 			}
 		}

@@ -21,6 +21,7 @@ public class CmiFluidTagsProvider extends FluidTagsProvider {
 	protected void addTags(HolderLookup.@NotNull Provider provider) {
 		tag(CmiFluidTags.GG_WORK_FLUID)
 				.add(Fluids.LAVA)
-				.add(TinkerFluids.blazingBlood.get());
+				.add(TinkerFluids.blazingBlood.get())
+				.add(TinkerFluids.magma.get());
 	}
 }

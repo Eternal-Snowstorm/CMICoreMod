@@ -14,6 +14,7 @@ import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorItem
 import dev.celestiacraft.cmi.common.block.advanced_spout.AdvancedSpoutBlock;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderBlock;
 import dev.celestiacraft.cmi.common.block.geothermal_generator.GGBlock;
+import dev.celestiacraft.cmi.common.block.geothermal_generator.GGItem;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlock;
 import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerItem;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlock;
@@ -200,7 +201,7 @@ public class MachineBlocks {
 				.register();
 
 		GEOTHERMAL_GENERATOR = Cmi.REGISTRATE.block("geothermal_generator", GGBlock::new)
-				.item()
+				.item(GGItem::new)
 				.model(NonNullBiConsumer.noop())
 				.build()
 				.blockstate(NonNullBiConsumer.noop())
