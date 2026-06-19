@@ -26,7 +26,7 @@ public class VoidDustCollectorStructure extends AnimatedKinetics {
 		matrixStack.mulPose(Axis.YP.rotationDegrees(22.5F));
 
 		int scale = 23;
-		defaultBlockElement(MachineBlocks.VOID_DUST_COLLECTOR.get().defaultBlockState()
+		defaultBlockElement(MachineBlocks.VOID_DUST_COLLECTOR.getDefaultState()
 				.setValue(BasicBlock.LIT, true)
 				.setValue(VoidDustCollectorBlock.HORIZONTAL_FACING, Direction.SOUTH))
 				.atLocal(0.0F, 1.0F, 0.0F)
