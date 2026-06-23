@@ -24,7 +24,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(value = ChemicalState.class, remap = false)
 public class ChemicalStateMixin {
-
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void cmi$fixOutputFluidCapability(IInitialMultiblockContext<ChemicalState> capabilitySource, CallbackInfo ci) {
 		ChemicalStateAccessor self = (ChemicalStateAccessor) this;

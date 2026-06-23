@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LevelRenderer.class)
-public abstract class LevelRendererMixin {
+public class LevelRendererMixin {
 	@Inject(
 			method = "renderSnowAndRain",
 			at = @At("HEAD"),
@@ -21,7 +21,7 @@ public abstract class LevelRendererMixin {
 	)
 	private void cmi$renderSnowAndRain(LightTexture lightTexture, float partialTick, double camX, double camY, double camZ, CallbackInfo ci) {
 		ClientLevel level = Minecraft.getInstance().level;
-		if (level != null && WindVaneManager.isSealed(level, BlockPos.containing(camX, camY, camZ))) {
+		if (WindVaneManager.isSealed(level, BlockPos.containing(camX, camY, camZ))) {
 			ci.cancel();
 		}
 	}
