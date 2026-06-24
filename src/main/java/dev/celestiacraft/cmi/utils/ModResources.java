@@ -53,6 +53,10 @@ public enum ModResources {
 		return entry.getLocation();
 	}
 
+	public String toString() {
+		return id().toString();
+	}
+
 	public Item getItem() {
 		return entry.getItem();
 	}
