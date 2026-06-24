@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 
 public class ProspectingRocketUIFactory extends UIFactory<ProspectingRocketEntity> {
 	public static final ProspectingRocketUIFactory INSTANCE = new ProspectingRocketUIFactory();
@@ -20,7 +21,7 @@ public class ProspectingRocketUIFactory extends UIFactory<ProspectingRocketEntit
 	}
 
 	@Override
-	protected ModularUI createUITemplate(ProspectingRocketEntity holder, Player entityPlayer) {
+	protected @Nullable ModularUI createUITemplate(ProspectingRocketEntity holder, Player entityPlayer) {
 		if (holder == null) {
 			return null;
 		}
@@ -29,7 +30,7 @@ public class ProspectingRocketUIFactory extends UIFactory<ProspectingRocketEntit
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	protected ProspectingRocketEntity readHolderFromSyncData(FriendlyByteBuf syncData) {
+	protected @Nullable ProspectingRocketEntity readHolderFromSyncData(FriendlyByteBuf syncData) {
 		int entityId = syncData.readVarInt();
 		Level level = Minecraft.getInstance().level;
 		if (level == null) {

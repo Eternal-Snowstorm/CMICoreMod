@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
-public final class ProspectingRocketCargoUI {
+public class ProspectingRocketCargoUI {
 	private static final int SLOT_SIZE = 18;
 	private static final int MARGIN = 8;
 	private static final int TANK_WIDTH = 16;
@@ -46,7 +46,7 @@ public final class ProspectingRocketCargoUI {
 		int playerInvY = CARGO_Y + cargoHeight + 16;
 		int hotbarY = playerInvY + 3 * SLOT_SIZE + 4;
 
-		int guiWidth = MARGIN * 2 + innerWidth;
+		int guiWidth = (MARGIN << 1) + innerWidth;
 		int guiHeight = hotbarY + SLOT_SIZE + MARGIN;
 
 		WidgetGroup root = new WidgetGroup(0, 0, guiWidth, guiHeight);

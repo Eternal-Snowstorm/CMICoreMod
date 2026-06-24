@@ -10,6 +10,7 @@ import com.lowdragmc.lowdraglib.gui.widget.TankWidget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.side.fluid.forge.FluidTransferWrapper;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
+import dev.celestiacraft.cmi.config.common.SpaceElevatorConfig;
 import dev.celestiacraft.cmi.config.main.CommonConfig;
 import dev.celestiacraft.cmi.feature.cargogrid.CargoGridWidget;
 import net.minecraft.network.chat.Component;
@@ -18,7 +19,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
-public final class SpaceElevatorCargoUI {
+public class SpaceElevatorCargoUI {
 	private static final int SLOT_SIZE = 18;
 	private static final int CARGO_COLS = 10;
 	private static final int CARGO_ROWS = 6;
@@ -63,7 +64,7 @@ public final class SpaceElevatorCargoUI {
 				.setTextColor(LABEL_COLOR)
 				.setDropShadow(false));
 
-		if (CommonConfig.SPACE_ELEVATOR != null && CommonConfig.SPACE_ELEVATOR.ENABLE_CARGO_GRID.get()) {
+		if (CommonConfig.SPACE_ELEVATOR != null && SpaceElevatorConfig.ENABLE_CARGO_GRID.get()) {
 			root.addWidget(new CargoGridWidget(CARGO_X, CARGO_Y, CARGO_COLS, CARGO_ROWS, elevator.getCargoItems()));
 		} else {
 			for (int row = 0; row < CARGO_ROWS; row++) {
