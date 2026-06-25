@@ -20,12 +20,13 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public abstract class FluidBurnerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 	private FluidStack fluid = FluidStack.EMPTY;
-	private FluidBurnRecipe cachedRecipe = null;
+	private @Nullable FluidBurnRecipe cachedRecipe = null;
 	private LazyOptional<IFluidHandler> fluidCap = LazyOptional.empty();
 
 	public FluidBurnerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
