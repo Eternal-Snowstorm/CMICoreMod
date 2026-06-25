@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NonNls;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EnderItem extends MechanismItem {
@@ -76,9 +77,9 @@ public class EnderItem extends MechanismItem {
 			int range = 2;
 			RandomSource random = player.getRandom();
 
-			double targetX = player.getX() + random.nextInt(range * 2 + 1) - range;
+			double targetX = player.getX() + random.nextInt((range << 1) + 1) - range;
 			double targetY = player.getY();
-			double targetZ = player.getZ() + random.nextInt(range * 2 + 1) - range;
+			double targetZ = player.getZ() + random.nextInt((range << 1) + 1) - range;
 
 			player.teleportTo(targetX, targetY, targetZ);
 			player.swing(InteractionHand.MAIN_HAND, true);
@@ -137,7 +138,7 @@ public class EnderItem extends MechanismItem {
 			double destinationX = tag.getInt("x");
 			double destinationY = tag.getInt("y");
 			double destinationZ = tag.getInt("z");
-			String destinationDim = tag.getString("dim");
+			@NonNls String destinationDim = tag.getString("dim");
 
 			if (level.dimension().location().toString().equals(destinationDim)) {
 				level.playSound(
