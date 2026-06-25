@@ -2,33 +2,27 @@ package dev.celestiacraft.cmi.common.block.void_dust_collector;
 
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.config.common.VoidDustCollectorConfig;
+import dev.celestiacraft.libs.api.client.context.TooltipContext;
+import dev.celestiacraft.libs.api.register.block.BasicBlockItem;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-public class VoidDustCollectorItem extends BlockItem {
+public class VoidDustCollectorItem extends BasicBlockItem {
 	public VoidDustCollectorItem(Block block, Properties properties) {
 		super(block, properties);
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
+	public void addTooltips(TooltipContext context) {
+		List<Component> tooltip = context.getTooltip();
+
 		CmiLang.isShiftDown(tooltip);
 
-		if (Screen.hasShiftDown()) {
+		if (context.isShiftDown()) {
 			int energyConsumption = VoidDustCollectorConfig.ENERGY_CONSUMPTION.get();
 			int workTime = VoidDustCollectorConfig.WORK_TIME.get();
 

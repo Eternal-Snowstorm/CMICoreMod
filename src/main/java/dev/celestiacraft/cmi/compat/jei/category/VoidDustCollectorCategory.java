@@ -6,11 +6,11 @@ import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.structure.VoidDustCollectorStructure;
 import dev.celestiacraft.cmi.utils.ModResources;
-import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
+import dev.celestiacraft.libs.compat.jei.api.SimpleJeiCategory;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 
@@ -23,8 +23,8 @@ public class VoidDustCollectorCategory {
 				.setSize(178, 72)
 				.setIcon(() -> {
 					return new DoubleItemIcon(
-							() -> ModResources.VOID_SPRING.getItemStack(),
-							() -> CmiBlock.VOID_DUST_COLLECTOR.asStack()
+							ModResources.VOID_SPRING::getItemStack,
+							MachineBlocks.VOID_DUST_COLLECTOR::asStack
 					);
 				})
 				.setBackground(0, 0)
@@ -34,7 +34,7 @@ public class VoidDustCollectorCategory {
 							.addItemStack(ModResources.VOID_DUST.getItemStack());
 					builder.addInvisibleIngredients(RecipeIngredientRole.INPUT)
 							.addItemStack(ModResources.VOID_SPRING.getItemStack())
-							.addItemStack(CmiBlock.VOID_DUST_COLLECTOR.asStack());
+							.addItemStack(MachineBlocks.VOID_DUST_COLLECTOR.asStack());
 				})
 				.setDraw((recipe, view, graphics, mouseX, mouseY) -> {
 					AllGuiTextures.JEI_SHADOW.render(graphics, 50, 50);

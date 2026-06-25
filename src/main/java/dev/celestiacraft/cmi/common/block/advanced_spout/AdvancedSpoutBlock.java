@@ -4,6 +4,9 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.blockEntity.ComparatorUtil;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import net.minecraft.core.BlockPos;
@@ -20,6 +23,8 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.client.model.generators.BlockModelProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import org.jetbrains.annotations.NotNull;
 
 public class AdvancedSpoutBlock extends BasicBlock implements IWrenchable, IBE<AdvancedSpoutBlockEntity> {
@@ -88,5 +93,18 @@ public class AdvancedSpoutBlock extends BasicBlock implements IWrenchable, IBE<A
 	@Override
 	public @NotNull VoxelShape getBlockSupportShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
 		return SUPPORT_SHAPE;
+	}
+
+	public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState(){
+		return (context, provider) -> {
+			provider.getVariantBuilder(context.get())
+					.forAllStatesExcept((state) -> {
+						BlockModelProvider models = provider.models();
+						boolean powered = state.getValue(BlockStateProperties.POWERED);
+						return ConfiguredModel.builder()
+								.modelFile(models.getExistingFile(provider.modLoc(powered ? "block/advanced_spout/block" : "block/advanced_spout/block_off")))
+								.build();
+					});
+		};
 	}
 }

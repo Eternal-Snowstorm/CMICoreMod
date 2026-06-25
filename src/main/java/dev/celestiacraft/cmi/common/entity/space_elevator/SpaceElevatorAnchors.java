@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.entity.space_elevator;
 
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopBlockEntity;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -13,12 +13,12 @@ public final class SpaceElevatorAnchors {
 	}
 
 	public static boolean isValidAnchor(Level level, BlockPos pos) {
-		return level.getBlockState(pos).is(CmiBlock.SPACE_ELEVATOR_BASE_CONSOLE.get())
-				|| level.getBlockState(pos).is(CmiBlock.SPACE_ELEVATOR_TOP.get());
+		return level.getBlockState(pos).is(SpaceElevatorBlocks.SPACE_ELEVATOR_BASE_CONSOLE.get())
+				|| level.getBlockState(pos).is(SpaceElevatorBlocks.SPACE_ELEVATOR_TOP.get());
 	}
 
 	public static boolean isTopAnchor(Level level, BlockPos pos) {
-		return level.getBlockState(pos).is(CmiBlock.SPACE_ELEVATOR_TOP.get());
+		return level.getBlockState(pos).is(SpaceElevatorBlocks.SPACE_ELEVATOR_TOP.get());
 	}
 
 	@Nullable

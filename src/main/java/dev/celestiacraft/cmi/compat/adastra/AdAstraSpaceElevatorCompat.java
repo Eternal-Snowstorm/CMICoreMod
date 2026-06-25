@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.compat.adastra;
 
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlock;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
 import dev.celestiacraft.cmi.event.PlaceBlockInWorld;
 import earth.terrarium.adastra.api.planets.Planet;
 import net.minecraft.core.BlockPos;
@@ -113,7 +113,7 @@ public class AdAstraSpaceElevatorCompat {
 	private static void buildGroundBase(ServerLevel level, BlockPos centerPos) {
 		PlaceBlockInWorld.placeStructure(level, centerPos.getX() - BASE_RADIUS, centerPos.getY(), centerPos.getZ() - BASE_RADIUS, "space_elevator_base");
 		BlockPos consolePos = centerPos.offset(GROUND_CONSOLE_OFFSET);
-		level.setBlockAndUpdate(consolePos, CmiBlock.SPACE_ELEVATOR_BASE_CONSOLE.getDefaultState());
+		level.setBlockAndUpdate(consolePos, SpaceElevatorBlocks.SPACE_ELEVATOR_BASE_CONSOLE.getDefaultState());
 		SpaceElevatorBaseConsoleBlock.deployStructure(level, consolePos);
 	}
 

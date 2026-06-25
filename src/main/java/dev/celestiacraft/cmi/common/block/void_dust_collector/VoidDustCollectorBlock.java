@@ -1,52 +1,39 @@
 package dev.celestiacraft.cmi.common.block.void_dust_collector;
 
 import com.simibubi.create.foundation.block.IBE;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
+import dev.celestiacraft.libs.api.register.block.BasicBlock;
+import dev.celestiacraft.libs.api.register.block.BasicBlockFacing;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import org.jetbrains.annotations.NotNull;
-import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
+import net.minecraftforge.client.model.generators.BlockModelProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
-public class VoidDustCollectorBlock extends Block implements IBE<VoidDustCollectorBlockEnitiy> {
-	public static final BooleanProperty WORKING = BooleanProperty.create("working");
-	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-
+public class VoidDustCollectorBlock extends BasicBlock implements IBE<VoidDustCollectorBlockEntity> {
 	public VoidDustCollectorBlock(Properties properties) {
 		super(Properties.copy(Blocks.IRON_BLOCK)
 				.sound(SoundType.NETHERITE_BLOCK));
-		this.registerDefaultState(this.stateDefinition.any()
-				.setValue(WORKING, false)
-				.setValue(FACING, Direction.NORTH));
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(WORKING, FACING);
+	protected BasicBlockFacing useFacingType() {
+		return BasicBlockFacing.HORIZONTAL;
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return this.defaultBlockState()
-				.setValue(FACING, context.getHorizontalDirection().getOpposite());
-	}
-
-	@Override
-	public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
-		return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-	}
-
-	@Override
-	public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
-		return state.rotate(mirror.getRotation(state.getValue(FACING)));
+	protected boolean useLitState() {
+		return true;
 	}
 
 	@Override
@@ -55,20 +42,35 @@ public class VoidDustCollectorBlock extends Block implements IBE<VoidDustCollect
 			return null;
 		}
 
-		return (lvl, pos, st, be) -> {
-			if (be instanceof VoidDustCollectorBlockEnitiy entity) {
-				VoidDustCollectorBlockEnitiy.tick(lvl, pos, st, entity);
-			}
-		};
+		return createTickerHelper(
+				type,
+				CmiBlockEntity.VOID_DUST_COLLECTOR.get(),
+				VoidDustCollectorBlockEntity::tick
+		);
 	}
 
 	@Override
-	public Class<VoidDustCollectorBlockEnitiy> getBlockEntityClass() {
-		return VoidDustCollectorBlockEnitiy.class;
+	public Class<VoidDustCollectorBlockEntity> getBlockEntityClass() {
+		return VoidDustCollectorBlockEntity.class;
 	}
 
 	@Override
-	public BlockEntityType<? extends VoidDustCollectorBlockEnitiy> getBlockEntityType() {
+	public BlockEntityType<? extends VoidDustCollectorBlockEntity> getBlockEntityType() {
 		return CmiBlockEntity.VOID_DUST_COLLECTOR.get();
+	}
+
+	public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState() {
+		return (context, provider) -> {
+			provider.getVariantBuilder(context.get())
+					.forAllStatesExcept((state) -> {
+						BlockModelProvider models = provider.models();
+						Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
+						boolean working = state.getValue(BasicBlock.LIT);
+						return ConfiguredModel.builder()
+								.modelFile(models.getExistingFile(provider.modLoc(working ? "block/void_dust_collector/on" : "block/void_dust_collector/off")))
+								.rotationY((int) facing.toYRot())
+								.build();
+					});
+		};
 	}
 }

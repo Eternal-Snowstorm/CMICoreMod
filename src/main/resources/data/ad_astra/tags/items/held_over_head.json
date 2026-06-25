@@ -1,0 +1,9 @@
+{
+	"replace": false,
+	"values": [
+		"cmi:prospecting_rocket_tier1",
+		"cmi:prospecting_rocket_tier2",
+		"cmi:prospecting_rocket_tier3",
+		"cmi:prospecting_rocket_tier4"
+	]
+}

@@ -16,6 +16,7 @@ import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderRenderer;
 import dev.celestiacraft.cmi.common.block.fluid_burner.bronze.BronzeFluidBurnerBlockEntity;
 import dev.celestiacraft.cmi.common.block.fluid_burner.cast_iron.CastIronFluidBurnerBlockEntity;
 import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlockEntity;
+import dev.celestiacraft.cmi.common.block.geothermal_generator.GGBlockEntity;
 import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlockEntity;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlockEntity;
 import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlockEntity;
@@ -34,10 +35,11 @@ import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlockEntity
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_multiblock.TestMultiblockBlockEntity;
-import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlockEnitiy;
+import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlockEntity;
 import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlockEntity;
 import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlockEntity;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlockEntity;
+import dev.celestiacraft.cmi.common.register.block.*;
 
 public class CmiBlockEntity {
 	public static final BlockEntityEntry<TestGravelBlockEntity> TEST_GRAVEL;
@@ -49,7 +51,7 @@ public class CmiBlockEntity {
 	public static final BlockEntityEntry<SteamHammerBlockEntity> STEAM_HAMMER;
 	public static final BlockEntityEntry<AcceleratorMotorBlockEntity> ACCELERATOR_MOTOR;
 	public static final BlockEntityEntry<AdvancedSpoutBlockEntity> ADVANCED_SPOUT;
-	public static final BlockEntityEntry<VoidDustCollectorBlockEnitiy> VOID_DUST_COLLECTOR;
+	public static final BlockEntityEntry<VoidDustCollectorBlockEntity> VOID_DUST_COLLECTOR;
 	public static final BlockEntityEntry<BeltGrinderBlockEntity> BELT_GRINDER;
 	public static final BlockEntityEntry<TestMultiblockBlockEntity> TEST_MULTIBLOCK;
 	public static final BlockEntityEntry<TestCokeOvenBlockEntity> TEST_COKE_OVEN;
@@ -65,95 +67,125 @@ public class CmiBlockEntity {
 	public static final BlockEntityEntry<SpaceElevatorTopBlockEntity> SPACE_ELEVATOR_TOP;
 	public static final BlockEntityEntry<MetalCogWheelBlockEntity> COGWHEEL;
 	public static final BlockEntityEntry<WindVaneBlockEntity> WIND_VANE;
+	public static final BlockEntityEntry<GGBlockEntity> GEOTHERMAL_GENERATOR;
 
 	static {
 		TEST_GRAVEL = Cmi.REGISTRATE.blockEntity("test_gravel", TestGravelBlockEntity::new)
-				.validBlock(CmiBlock.TEST_GRAVEL)
+				.validBlock(OtherBlocks.TEST_GRAVEL)
 				.register();
+
 		MARS_GEO = Cmi.REGISTRATE.blockEntity("mars_geothermal_vent", MarsGeothermalVentBlockEntity::new)
-				.validBlock(CmiBlock.MARS_GEO)
+				.validBlock(VentBlocks.MARS_GEO)
 				.register();
+
 		MERCURY_GEO = Cmi.REGISTRATE.blockEntity("mercury_geothermal_vent", MercuryGeothermalVentBlockEntity::new)
-				.validBlock(CmiBlock.MERCURY_GEO)
+				.validBlock(VentBlocks.MERCURY_GEO)
 				.register();
+
 		WATER_WELL = Cmi.REGISTRATE.blockEntity("water_well", WaterWellBlockEntity::new)
-				.validBlock(CmiBlock.WATER_WELL)
+				.validBlock(WallBlocks.WATER_WELL)
 				.register();
+
 		BLAZING_BLOOD_WELL = Cmi.REGISTRATE.blockEntity("blazing_blood_well", BlazingBloodWellBlockEntity::new)
-				.validBlock(CmiBlock.BLAZING_BLOOD_WELL)
+				.validBlock(WallBlocks.BLAZING_BLOOD_WELL)
 				.register();
+
 		LAVA_WELL = Cmi.REGISTRATE.blockEntity("lava_well", LavaWellBlockEntity::new)
-				.validBlock(CmiBlock.LAVA_WELL)
+				.validBlock(WallBlocks.LAVA_WELL)
 				.register();
+
 		STEAM_HAMMER = Cmi.REGISTRATE.blockEntity("steam_hammer", SteamHammerBlockEntity::new)
 				.visual(() -> SteamHammerInstance::new)
 				.renderer(() -> SteamHammerRenderer::new)
-				.validBlock(CmiBlock.STEAM_HAMMER)
+				.validBlock(MachineBlocks.STEAM_HAMMER)
 				.register();
+
 		ACCELERATOR_MOTOR = Cmi.REGISTRATE.blockEntity("accelerator_motor", AcceleratorMotorBlockEntity::new)
 				.visual(() -> ShaftVisual::new, false)
-				.validBlocks(CmiBlock.ACCELERATOR_MOTOR)
+				.validBlocks(MachineBlocks.ACCELERATOR_MOTOR)
 				.renderer(() -> AcceleratorMotorRenderer::new)
 				.register();
+
 		ADVANCED_SPOUT = Cmi.REGISTRATE.blockEntity("advanced_spout", AdvancedSpoutBlockEntity::new)
-				.validBlocks(CmiBlock.ADVANCED_SPOUT)
+				.validBlocks(MachineBlocks.ADVANCED_SPOUT)
 				.renderer(() -> AdvancedSpoutRenderer::new)
 				.register();
-		VOID_DUST_COLLECTOR = Cmi.REGISTRATE.blockEntity("void_dust_collector", VoidDustCollectorBlockEnitiy::new)
-				.validBlock(CmiBlock.VOID_DUST_COLLECTOR)
+
+		VOID_DUST_COLLECTOR = Cmi.REGISTRATE.blockEntity("void_dust_collector", VoidDustCollectorBlockEntity::new)
+				.validBlock(MachineBlocks.VOID_DUST_COLLECTOR)
 				.register();
+
 		BELT_GRINDER = Cmi.REGISTRATE.blockEntity("mechanical_belt_grinder", BeltGrinderBlockEntity::new)
 				.visual(() -> BeltGrinderInstance::new)
-				.validBlocks(CmiBlock.BELT_GRINDER)
+				.validBlocks(MachineBlocks.BELT_GRINDER)
 				.renderer(() -> BeltGrinderRenderer::new)
 				.register();
+
 		TEST_MULTIBLOCK = Cmi.REGISTRATE.blockEntity("test_multiblock_controller", TestMultiblockBlockEntity::new)
-				.validBlock(CmiBlock.TEST_MULTIBLOCK)
+				.validBlock(MultiblockBlocks.TEST_MULTIBLOCK)
 				.register();
+
 		TEST_COKE_OVEN = Cmi.REGISTRATE.blockEntity("test_coke_oven", TestCokeOvenBlockEntity::new)
-				.validBlock(CmiBlock.TEST_COKE_OVEN)
+				.validBlock(MultiblockBlocks.TEST_COKE_OVEN)
 				.register();
+
 		TEST_COKE_OVEN_IO = Cmi.REGISTRATE.blockEntity("test_coke_oven_io", TestCokeOvenIOBlockEntity::new)
-				.validBlock(CmiBlock.TEST_COKE_OVEN_IO)
+				.validBlock(MultiblockBlocks.TEST_COKE_OVEN_IO)
 				.register();
+
 		BRONZE_FLUID_BURNER = Cmi.REGISTRATE.blockEntity("bronze_fluid_burner", BronzeFluidBurnerBlockEntity::new)
-				.validBlock(CmiBlock.BRONZE_FLUID_BURNER)
+				.validBlock(FluidBurnerBlocks.BRONZE_FLUID_BURNER)
 				.register();
+
 		CAST_IRON_FLUID_BURNER = Cmi.REGISTRATE.blockEntity("cast_iron_fluid_burner", CastIronFluidBurnerBlockEntity::new)
-				.validBlock(CmiBlock.CAST_IRON_FLUID_BURNER)
+				.validBlock(FluidBurnerBlocks.CAST_IRON_FLUID_BURNER)
 				.register();
+
 		STEEL_FLUID_BURNER = Cmi.REGISTRATE.blockEntity("steel_fluid_burner", SteelFluidBurnerBlockEntity::new)
-				.validBlock(CmiBlock.STEEL_FLUID_BURNER)
+				.validBlock(FluidBurnerBlocks.STEEL_FLUID_BURNER)
 				.register();
+
 		BRONZE_SOLAR_BOILER = Cmi.REGISTRATE.blockEntity("bronze_solar_boiler", BronzeSolarBoilerBlockEntity::new)
-				.validBlock(CmiBlock.BRONZE_SOLAR_BOILER)
+				.validBlock(SolarBoilerBlocks.BRONZE_SOLAR_BOILER)
 				.register();
+
 		CAST_IRON_SOLAR_BOILER = Cmi.REGISTRATE.blockEntity("cast_iron_solar_boiler", CastIronSolarBoilerBlockEntity::new)
-				.validBlock(CmiBlock.CAST_IRON_SOLAR_BOILER)
+				.validBlock(SolarBoilerBlocks.CAST_IRON_SOLAR_BOILER)
 				.register();
+
 		STEEL_SOLAR_BOILER = Cmi.REGISTRATE.blockEntity("steel_solar_boiler", SteelSolarBoilerBlockEntity::new)
-				.validBlock(CmiBlock.STEEL_SOLAR_BOILER)
+				.validBlock(SolarBoilerBlocks.STEEL_SOLAR_BOILER)
 				.register();
+
 		SPACE_ELEVATOR_BASE_CONSOLE = Cmi.REGISTRATE.blockEntity("space_elevator_base_console", SpaceElevatorBaseConsoleBlockEntity::new)
-				.validBlock(CmiBlock.SPACE_ELEVATOR_BASE_CONSOLE)
+				.validBlock(SpaceElevatorBlocks.SPACE_ELEVATOR_BASE_CONSOLE)
 				.register();
+
 		SPACE_ELEVATOR_IO_PORT = Cmi.REGISTRATE.blockEntity("space_elevator_io_port", SpaceElevatorIoPortBlockEntity::new)
-				.validBlock(CmiBlock.SPACE_ELEVATOR_IO_PORT)
+				.validBlock(SpaceElevatorBlocks.SPACE_ELEVATOR_IO_PORT)
 				.register();
+
 		SPACE_ELEVATOR_TOP = Cmi.REGISTRATE.blockEntity("space_elevator_top", SpaceElevatorTopBlockEntity::new)
-				.validBlock(CmiBlock.SPACE_ELEVATOR_TOP)
+				.validBlock(SpaceElevatorBlocks.SPACE_ELEVATOR_TOP)
 				.register();
+
 		WIND_VANE = Cmi.REGISTRATE.blockEntity("wind_vane", WindVaneBlockEntity::new)
-				.validBlock(CmiBlock.WIND_VANE)
+				.validBlock(OtherBlocks.WIND_VANE)
 				.register();
+
+		GEOTHERMAL_GENERATOR = Cmi.REGISTRATE.blockEntity("geothermal_generator", GGBlockEntity::new)
+				.validBlock(MachineBlocks.GEOTHERMAL_GENERATOR)
+				.register();
+
 		CreateBlockEntityBuilder<MetalCogWheelBlockEntity, CreateRegistrate> cogwheelBuilder = Cmi.REGISTRATE
 				.blockEntity("cogwheel", MetalCogWheelBlockEntity::new)
 				.visual(() -> MetalCogWheelVisual::create);
 		MetalCogWheelRegister.COMMON_LIST.forEach(cogwheelBuilder::validBlock);
+
 		COGWHEEL = cogwheelBuilder.register();
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("CMI Core BlockEntities Registered!");
+		Cmi.LOGGER.info("{} BlockEntities Registered!", Cmi.MODID);
 	}
 }

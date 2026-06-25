@@ -36,10 +36,8 @@ public class CmiMechanism extends MechanismRegister {
 	public static final ItemEntry<UltimateMekanismItem> ULTIMATE_MEKANISM;
 	public static final ItemEntry<ComputingItem> COMPUTING;
 	public static final ItemEntry<AirTightItem> AIR_TIGHT;
-	public static final ItemEntry<TierOneAviationItem> TIER_ONE_AVIATION;
-	public static final ItemEntry<TierTwoAviationItem> TIER_TWO_AVIATION;
-	public static final ItemEntry<TierThreeAviationItem> TIER_THREE_AVIATION;
-	public static final ItemEntry<TierFourAviationItem> TIER_FOUR_AVIATION;
+	public static final ItemEntry<AeronauticItem> AERONAUTIC;
+	public static final ItemEntry<AstronauticItem> ASTRONAUTIC;
 	public static final ItemEntry<NuclearItem> NUCLEAR;
 	public static final ItemEntry<AntimatterItem> ANTIMATTER;
 	public static final ItemEntry<CreativeItem> CREATIVE;
@@ -105,13 +103,9 @@ public class CmiMechanism extends MechanismRegister {
 				.register();
 		AIR_TIGHT = registerMechanism("air_tight", AirTightItem::new)
 				.register();
-		TIER_ONE_AVIATION = registerMechanism("tier_1_aviation", TierOneAviationItem::new)
+		AERONAUTIC = registerMechanism("aeronautic", AeronauticItem::new)
 				.register();
-		TIER_TWO_AVIATION = registerMechanism("tier_2_aviation", TierTwoAviationItem::new)
-				.register();
-		TIER_THREE_AVIATION = registerMechanism("tier_3_aviation", TierThreeAviationItem::new)
-				.register();
-		TIER_FOUR_AVIATION = registerMechanism("tier_4_aviation", TierFourAviationItem::new)
+		ASTRONAUTIC = registerMechanism("astronautic", AstronauticItem::new)
 				.register();
 		NUCLEAR = registerMechanism("nuclear", NuclearItem::new)
 				.register();

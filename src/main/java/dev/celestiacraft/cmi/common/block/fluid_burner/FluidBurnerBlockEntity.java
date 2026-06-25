@@ -32,8 +32,17 @@ public abstract class FluidBurnerBlockEntity extends SmartBlockEntity implements
 		super(type, pos, state);
 	}
 
+	/**
+	 * 定义锅炉的流体容量
+	 *
+	 * @return
+	 */
 	public abstract int getFluidTankCapacity();
 
+	/**
+	 * 定义锅炉的效率
+	 * @return
+	 */
 	protected abstract double getEfficiency();
 
 	@Override

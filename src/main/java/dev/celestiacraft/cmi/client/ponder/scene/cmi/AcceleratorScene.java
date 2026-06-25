@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.client.ponder.scene.cmi;
 
-import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiMechanism;
+import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
 import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
@@ -19,7 +19,7 @@ public class AcceleratorScene {
 		scene.showBasePlate();
 		scene.idle(20);
 
-		scene.world().setBlock(util.grid().at(3, 1, 3), CmiBlock.ACCELERATOR.getDefaultState(), false);
+		scene.world().setBlock(util.grid().at(3, 1, 3), MachineBlocks.ACCELERATOR.getDefaultState(), false);
 		scene.world().showSection(
 				util.select().position(3, 1, 3),
 				Direction.DOWN

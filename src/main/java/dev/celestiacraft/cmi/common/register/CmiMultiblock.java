@@ -2,6 +2,10 @@ package dev.celestiacraft.cmi.common.register;
 
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles;
 import blusunrize.immersiveengineering.common.register.IEBlocks;
+import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.register.block.MultiblockBlocks;
+import dev.celestiacraft.cmi.common.register.block.OtherBlocks;
+import dev.celestiacraft.cmi.common.register.block.WallBlocks;
 import dev.celestiacraft.cmi.tags.CmiBlockTags;
 import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
@@ -47,7 +51,7 @@ public class CmiMultiblock {
 					builder.block(IEBlocks.WoodenDecoration.TREATED_WOOD.get(TreatedWoodStyles.HORIZONTAL).get());
 				})
 				.define('0', (builder) -> {
-					builder.block(CmiBlock.WATER_WELL.get());
+					builder.block(WallBlocks.WATER_WELL.get());
 				})
 				.define('C', (builder) -> {
 					builder.block(IEBlocks.WoodenDecoration.TREATED_FENCE.get());
@@ -90,13 +94,13 @@ public class CmiMultiblock {
 					builder.block(TinkerMaterials.nahuatl.get());
 				})
 				.define('0', (builder) -> {
-					builder.block(CmiBlock.LAVA_WELL.get());
+					builder.block(WallBlocks.LAVA_WELL.get());
 				})
 				.define('C', (builder) -> {
 					builder.block(ModResources.NAHUATL_FENCE.getBlock());
 				})
 				.define('D', (builder) -> {
-					builder.block(CmiBlock.NAHUATL_SCAFFOLD.get());
+					builder.block(OtherBlocks.NAHUATL_SCAFFOLD.get());
 				})
 				.define(' ', (builder) -> {
 					builder.any();
@@ -133,13 +137,13 @@ public class CmiMultiblock {
 					builder.block(TinkerMaterials.blazewood.get());
 				})
 				.define('0', (builder) -> {
-					builder.block(CmiBlock.BLAZING_BLOOD_WELL.get());
+					builder.block(WallBlocks.BLAZING_BLOOD_WELL.get());
 				})
 				.define('C', (builder) -> {
 					builder.block(ModResources.BLAZEWOOD_FENCE.getBlock());
 				})
 				.define('D', (builder) -> {
-					builder.block(CmiBlock.BLAZEWOOD_SCAFFOLD.get());
+					builder.block(OtherBlocks.BLAZEWOOD_SCAFFOLD.get());
 				})
 				.define(' ', (builder) -> {
 					builder.any();
@@ -172,7 +176,7 @@ public class CmiMultiblock {
 					builder.tag(Tags.Blocks.COBBLESTONE);
 				})
 				.define('0', (builder) -> {
-					builder.block(CmiBlock.TEST_MULTIBLOCK.get());
+					builder.block(MultiblockBlocks.TEST_MULTIBLOCK.get());
 				}));
 
 		TEST_COKE_OVEN = structure(StructureBuilder.create(new String[][] {
@@ -198,11 +202,15 @@ public class CmiMultiblock {
 				})
 				// 控制器
 				.define('0', (builder) -> {
-					builder.block(CmiBlock.TEST_COKE_OVEN.get());
+					builder.block(MultiblockBlocks.TEST_COKE_OVEN.get());
 				}));
 	}
 
 	private static Lazy<IMultiblock> structure(StructureBuilder structure) {
 		return Lazy.of(structure::build);
+	}
+
+	public static void register() {
+		Cmi.LOGGER.info("{} Multiblock Registered!", Cmi.MODID);
 	}
 }

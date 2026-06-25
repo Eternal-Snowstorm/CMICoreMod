@@ -4,21 +4,19 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
-@ParametersAreNonnullByDefault
 public class FreezingRecipe extends ProcessingRecipe<FreezingWrapper> {
 	public FreezingRecipe(ProcessingRecipeBuilder.ProcessingRecipeParams params) {
 		super(CmiCreateRecipe.FREEZING, params);
 	}
 
 	@Override
-	public boolean matches(FreezingWrapper inv, Level worldIn) {
-		if (inv.isEmpty()) {
+	public boolean matches(FreezingWrapper wrapper, @NotNull Level level) {
+		if (wrapper.isEmpty()) {
 			return false;
 		}
-		return ingredients.get(0).test(inv.getItem(0));
+		return ingredients.get(0).test(wrapper.getItem(0));
 	}
 
 	@Override

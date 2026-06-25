@@ -32,10 +32,8 @@ public abstract class HeatConditionMixin implements StringRepresentable {
 
 	@Unique
 	private static HeatCondition cmi$addVariant(String name, int color) {
-		ArrayList<HeatCondition> variants = new ArrayList<>(Arrays.asList(HeatConditionMixin.$VALUES));
-		if ($VALUES != null) {
-			variants = new ArrayList<>(Arrays.asList($VALUES));
-		}
+		ArrayList<HeatCondition> variants;
+		variants = new ArrayList<>(Arrays.asList($VALUES));
 		HeatCondition heatCondition = cmi$invokeInit(name, variants.get(variants.size() - 1).ordinal() + 1, color);
 		variants.add(heatCondition);
 		$VALUES = variants.toArray(new HeatCondition[0]);
@@ -44,24 +42,29 @@ public abstract class HeatConditionMixin implements StringRepresentable {
 
 	@Inject(method = "testBlazeBurner", at = @At("HEAD"), remap = false, cancellable = true)
 	public void testBlazeBurner(BlazeBurnerBlock.HeatLevel level, CallbackInfoReturnable<Boolean> returnable) {
-		if (this.equals(HeatCondition.SUPERHEATED)) {
+		if (equals(HeatCondition.SUPERHEATED)) {
 			returnable.setReturnValue(level == BlazeBurnerBlock.HeatLevel.SEETHING);
 			return;
 		}
 
-		if (this.equals(HeatCondition.HEATED)) {
+		if (equals(HeatCondition.HEATED)) {
 			returnable.setReturnValue(level == BlazeBurnerBlock.HeatLevel.FADING
 					|| level == BlazeBurnerBlock.HeatLevel.KINDLED
 					|| level == BlazeBurnerBlock.HeatLevel.SEETHING);
 			return;
 		}
 
-		if (this.equals(CMI$GRILLED)) {
-			returnable.setReturnValue(level == BlazeBurnerBlock.HeatLevel.valueOf("GRILLED")
-					|| level == BlazeBurnerBlock.HeatLevel.FADING
-					|| level == BlazeBurnerBlock.HeatLevel.KINDLED
-					|| level == BlazeBurnerBlock.HeatLevel.SEETHING);
+		if (equals(CMI$GRILLED)) {
+			returnable.setReturnValue(cmi$isGrilled(level));
 		}
+	}
+
+	@Unique
+	private static boolean cmi$isGrilled(BlazeBurnerBlock.HeatLevel level) {
+		return level == BlazeBurnerBlock.HeatLevel.valueOf("GRILLED")
+				|| level == BlazeBurnerBlock.HeatLevel.FADING
+				|| level == BlazeBurnerBlock.HeatLevel.KINDLED
+				|| level == BlazeBurnerBlock.HeatLevel.SEETHING;
 	}
 
 	@Inject(method = "visualizeAsBlazeBurner", at = @At("HEAD"), remap = false, cancellable = true)

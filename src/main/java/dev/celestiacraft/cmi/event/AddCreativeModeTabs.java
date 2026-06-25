@@ -2,9 +2,9 @@ package dev.celestiacraft.cmi.event;
 
 import com.simibubi.create.AllItems;
 import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiCreativeTab;
 import dev.celestiacraft.cmi.common.register.CmiItem;
+import dev.celestiacraft.cmi.common.register.block.*;
 import dev.celestiacraft.cmi.utils.ModResources;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -27,26 +27,29 @@ public class AddCreativeModeTabs {
 
 	@SubscribeEvent
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
-		if (event.getTabKey().equals(KUBEJS_TAB)) {
+		ResourceKey<CreativeModeTab> key = event.getTabKey();
+
+		if (key.equals(KUBEJS_TAB)) {
 			List.of(
-					CmiBlock.MARS_GEO,
-					CmiBlock.MERCURY_GEO,
-					CmiBlock.WATER_WELL,
-					CmiBlock.LAVA_WELL,
-					CmiBlock.BLAZING_BLOOD_WELL,
-					CmiBlock.ACCELERATOR,
-					CmiBlock.ACCELERATOR_MOTOR,
-					CmiBlock.STEAM_HAMMER,
-					CmiBlock.ADVANCED_SPOUT,
-					CmiBlock.VOID_DUST_COLLECTOR,
-					CmiBlock.BELT_GRINDER,
-					CmiBlock.BRONZE_FLUID_BURNER,
-					CmiBlock.BRONZE_SOLAR_BOILER,
-					CmiBlock.CAST_IRON_FLUID_BURNER,
-					CmiBlock.CAST_IRON_SOLAR_BOILER,
-					CmiBlock.STEEL_FLUID_BURNER,
-					CmiBlock.STEEL_SOLAR_BOILER,
-					CmiBlock.WIND_VANE
+					VentBlocks.MARS_GEO,
+					VentBlocks.MERCURY_GEO,
+					WallBlocks.WATER_WELL,
+					WallBlocks.LAVA_WELL,
+					WallBlocks.BLAZING_BLOOD_WELL,
+					MachineBlocks.ACCELERATOR,
+					MachineBlocks.ACCELERATOR_MOTOR,
+					MachineBlocks.STEAM_HAMMER,
+					MachineBlocks.ADVANCED_SPOUT,
+					MachineBlocks.VOID_DUST_COLLECTOR,
+					MachineBlocks.BELT_GRINDER,
+					MachineBlocks.GEOTHERMAL_GENERATOR,
+					FluidBurnerBlocks.BRONZE_FLUID_BURNER,
+					FluidBurnerBlocks.CAST_IRON_FLUID_BURNER,
+					FluidBurnerBlocks.STEEL_FLUID_BURNER,
+					SolarBoilerBlocks.BRONZE_SOLAR_BOILER,
+					SolarBoilerBlocks.CAST_IRON_SOLAR_BOILER,
+					SolarBoilerBlocks.STEEL_SOLAR_BOILER,
+					OtherBlocks.WIND_VANE
 			).forEach((block) -> {
 				event.accept(block.asItem());
 			});
@@ -63,7 +66,7 @@ public class AddCreativeModeTabs {
 			});
 		}
 
-		if (event.getTabKey().equals(CmiCreativeTab.MECHANISMS)) {
+		if (key.equals(CmiCreativeTab.MECHANISMS)) {
 			event.accept(AllItems.PRECISION_MECHANISM.get());
 			event.accept(REDSTONE_MECHANISM);
 		}

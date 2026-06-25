@@ -139,10 +139,8 @@ public class CmiGlobal {
 			"ultimate_mekanism",
 			"computing",
 			"air_tight",
-			"tier_1_aviation",
-			"tier_2_aviation",
-			"tier_3_aviation",
-			"tier_4_aviation",
+			"aeronautic",
+			"astronautic",
 			"nuclear",
 			"antimatter",
 			"creative"

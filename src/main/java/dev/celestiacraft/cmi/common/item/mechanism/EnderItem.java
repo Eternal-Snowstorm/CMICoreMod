@@ -2,7 +2,7 @@ package dev.celestiacraft.cmi.common.item.mechanism;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.item.MechanismItem;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -126,7 +126,7 @@ public class EnderItem extends MechanismItem {
 			return;
 		}
 
-		if (hasTag && state.is(CmiBlock.ACCELERATOR.getDefaultState().getBlock())) {
+		if (hasTag && state.is(MachineBlocks.ACCELERATOR.getDefaultState().getBlock())) {
 			CompoundTag tag = mechanism.getTag();
 
 			double destinationX = tag.getInt("x");

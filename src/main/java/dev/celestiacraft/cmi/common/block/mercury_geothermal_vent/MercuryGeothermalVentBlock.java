@@ -1,14 +1,18 @@
 package dev.celestiacraft.cmi.common.block.mercury_geothermal_vent;
 
+import com.simibubi.create.foundation.block.IBE;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
+import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -19,11 +23,12 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraftforge.client.model.generators.BlockModelProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 
-public class MercuryGeothermalVentBlock extends BaseEntityBlock {
+public class MercuryGeothermalVentBlock extends BasicBlock implements IBE<MercuryGeothermalVentBlockEntity> {
 	public static final IntegerProperty SMOKE_TYPE = IntegerProperty.create("smoke_type", 0, 3);
 	public static final BooleanProperty SPAWNING_PARTICLES = BooleanProperty.create("spawning_particles");
 
@@ -33,7 +38,7 @@ public class MercuryGeothermalVentBlock extends BaseEntityBlock {
 				.requiresCorrectToolForDrops()
 				.strength(2.0F, 5.0F)
 				.sound(SoundType.TUFF));
-		this.registerDefaultState(this.stateDefinition.any()
+		registerDefaultState(stateDefinition.any()
 				.setValue(SMOKE_TYPE, Integer.valueOf(0))
 				.setValue(SPAWNING_PARTICLES, true));
 	}
@@ -41,7 +46,7 @@ public class MercuryGeothermalVentBlock extends BaseEntityBlock {
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		LevelAccessor accessor = context.getLevel();
 		BlockPos blockpos = context.getClickedPos();
-		return this.defaultBlockState()
+		return defaultBlockState()
 				.setValue(SMOKE_TYPE, getSmokeType(accessor, blockpos))
 				.setValue(SPAWNING_PARTICLES, isSpawningParticles(blockpos, accessor));
 	}
@@ -77,22 +82,38 @@ public class MercuryGeothermalVentBlock extends BaseEntityBlock {
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return state.getValue(SMOKE_TYPE) > 0 && state.getValue(SPAWNING_PARTICLES) ?
-					createTickerHelper(type, CmiBlockEntity.MERCURY_GEO.get(),
-							MercuryGeothermalVentBlockEntity::particleTick) : null;
+					createTickerHelper(
+							type,
+							CmiBlockEntity.MERCURY_GEO.get(),
+							MercuryGeothermalVentBlockEntity::particleTick
+					) : null;
 		} else {
 			return null;
 		}
 	}
 
-	public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
-		return RenderShape.MODEL;
+
+	@Override
+	public Class<MercuryGeothermalVentBlockEntity> getBlockEntityClass() {
+		return MercuryGeothermalVentBlockEntity.class;
 	}
 
-	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-		return new MercuryGeothermalVentBlockEntity(CmiBlockEntity.MERCURY_GEO.get(), pos, state);
+	public BlockEntityType<? extends MercuryGeothermalVentBlockEntity> getBlockEntityType() {
+		return CmiBlockEntity.MERCURY_GEO.get();
+	}
+
+	public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState() {
+		return (context, provider) -> {
+			provider.getVariantBuilder(context.get())
+					.forAllStatesExcept((state) -> {
+						BlockModelProvider models = provider.models();
+						return ConfiguredModel.builder()
+								.modelFile(models.getExistingFile(provider.modLoc("block/mercury_geothermal_vent")))
+								.build();
+					});
+		};
 	}
 }

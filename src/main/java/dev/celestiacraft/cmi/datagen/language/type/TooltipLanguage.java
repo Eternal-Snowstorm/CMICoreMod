@@ -186,5 +186,10 @@ public class TooltipLanguage extends LanguageGenerate {
 				" ● No full _Cube_ block is obstructing the top",
 				" ● 顶上不存在_任何_完整方块遮挡"
 		);
+		addTooltipLang(
+				"solar_boiler.condition.4",
+				" ● At The End of the ground only need to follow the condition of no occlusion",
+				" ● 在末地只需要遵循_无遮挡_的条件"
+		);
 	}
 }

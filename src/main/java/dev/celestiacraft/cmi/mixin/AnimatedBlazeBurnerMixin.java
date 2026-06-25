@@ -25,12 +25,12 @@ public abstract class AnimatedBlazeBurnerMixin extends AnimatedKinetics {
 		if (heatLevel == BlazeBurnerBlock.HeatLevel.valueOf("GRILLED")) {
 			PoseStack matrixStack = graphics.pose();
 			matrixStack.pushPose();
-			matrixStack.translate((float) xOffset, (float) yOffset, 200.0F);
+			matrixStack.translate(xOffset, yOffset, 200.0F);
 			matrixStack.mulPose(Axis.XP.rotationDegrees(-15.5F));
 			matrixStack.mulPose(Axis.YP.rotationDegrees(22.5F));
 			int scale = 23;
 
-			Block block = TagAnimatedBlock.get(CmiBlockTags.GRILL_SOURCES, 20f);
+			Block block = TagAnimatedBlock.get(CmiBlockTags.GRILL_SOURCES, 20);
 			blockElement(block.defaultBlockState())
 					.atLocal(0.0F, 1.65, 0.0F)
 					.scale(scale)

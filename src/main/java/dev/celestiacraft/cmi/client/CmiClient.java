@@ -14,6 +14,8 @@ import dev.celestiacraft.cmi.client.render.SpaceElevatorHudRenderer;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.render.SpaceElevatorBaseConsoleRenderer;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopRenderer;
 import dev.celestiacraft.cmi.common.entity.dev.qi_month.QiMonthRenderer;
+import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketRenderer;
+import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorRenderer;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
@@ -47,6 +49,9 @@ public class CmiClient {
 
 		EntityRenderers.register(CmiEntity.QI_MONTH.get(), QiMonthRenderer::new);
 		EntityRenderers.register(CmiEntity.SPACE_ELEVATOR.get(), SpaceElevatorRenderer::new);
+		for (ProspectingRocketTier tier : ProspectingRocketTier.values()) {
+			EntityRenderers.register(CmiEntity.prospectingRocket(tier).get(), ProspectingRocketRenderer::new);
+		}
 
 		CmiRadialMenu.register();
 		CmiRadialAction.register();

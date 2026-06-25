@@ -1,12 +1,17 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console;
 
+import com.simibubi.create.foundation.block.IBE;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortShape;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortType;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlockEntity;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.structure.SpaceElevatorBaseStructure;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
+import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
+import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,10 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -25,13 +27,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpaceElevatorBaseConsoleBlock extends BaseEntityBlock {
+public class SpaceElevatorBaseConsoleBlock extends BasicBlock implements IBE<SpaceElevatorBaseConsoleBlockEntity> {
 	public SpaceElevatorBaseConsoleBlock(Properties properties) {
 		super(Properties.copy(Blocks.IRON_BLOCK)
 				.sound(SoundType.NETHERITE_BLOCK)
@@ -61,14 +64,18 @@ public class SpaceElevatorBaseConsoleBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	public RenderShape getRenderShape(BlockState state) {
+	public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
 		return RenderShape.ENTITYBLOCK_ANIMATED;
 	}
 
-	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return CmiBlockEntity.SPACE_ELEVATOR_BASE_CONSOLE.get().create(pos, state);
+	public Class<SpaceElevatorBaseConsoleBlockEntity> getBlockEntityClass() {
+		return SpaceElevatorBaseConsoleBlockEntity.class;
+	}
+
+	@Override
+	public BlockEntityType<? extends SpaceElevatorBaseConsoleBlockEntity> getBlockEntityType() {
+		return CmiBlockEntity.SPACE_ELEVATOR_BASE_CONSOLE.get();
 	}
 
 	@Nullable
@@ -160,7 +167,7 @@ public class SpaceElevatorBaseConsoleBlock extends BaseEntityBlock {
 				continue;
 			}
 			IoPortType ioType = ioByOffset.getOrDefault(offset, IoPortType.NONE);
-			BlockState portState = CmiBlock.SPACE_ELEVATOR_IO_PORT.getDefaultState()
+			BlockState portState = SpaceElevatorBlocks.SPACE_ELEVATOR_IO_PORT.getDefaultState()
 					.setValue(SpaceElevatorIoPortBlock.IO_TYPE, ioType)
 					.setValue(SpaceElevatorIoPortBlock.SHAPE, entry.getValue());
 			level.setBlock(portPos, portState, 3);
@@ -187,5 +194,16 @@ public class SpaceElevatorBaseConsoleBlock extends BaseEntityBlock {
 				level.removeBlock(portPos, false);
 			}
 		}
+	}
+
+	public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState() {
+		return (context, provider) -> {
+			provider.getVariantBuilder(context.get())
+					.forAllStatesExcept((state) -> {
+						return ConfiguredModel.builder()
+								.modelFile(provider.models().getExistingFile(provider.modLoc("block/space_elevator_base_console")))
+								.build();
+					});
+		};
 	}
 }

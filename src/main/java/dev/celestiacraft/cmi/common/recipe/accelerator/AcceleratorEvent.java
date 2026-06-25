@@ -2,7 +2,7 @@ package dev.celestiacraft.cmi.common.recipe.accelerator;
 
 import com.simibubi.create.AllSoundEvents;
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -34,7 +34,7 @@ public class AcceleratorEvent {
 
 		ServerLevel sl = (ServerLevel) level;
 
-		if (!state.is(CmiBlock.ACCELERATOR.get())) {
+		if (!state.is(MachineBlocks.ACCELERATOR.get())) {
 			return;
 		}
 

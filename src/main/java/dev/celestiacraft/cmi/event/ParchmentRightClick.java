@@ -1,5 +1,8 @@
 package dev.celestiacraft.cmi.event;
 
+import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.utils.ModResources;
+import dev.celestiacraft.libs.NebulaLibs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -16,9 +19,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.libs.NebulaLibs;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ParchmentRightClick {
@@ -29,7 +29,7 @@ public class ParchmentRightClick {
 
 	private static Item getParchment() {
 		if (cachedParchment == null) {
-			cachedParchment = ForgeRegistries.ITEMS.getValue(Cmi.loadResource("parchment"));
+			cachedParchment = ModResources.PARCHMENT.getItem();
 		}
 		return cachedParchment;
 	}
@@ -53,7 +53,7 @@ public class ParchmentRightClick {
 		}
 
 		// 只能主手触发
-		if (item.is(parchment) && event.getHand() == InteractionHand.MAIN_HAND) {
+		if (item.is(parchment) && event.getHand().equals(InteractionHand.MAIN_HAND)) {
 			// 定位玩家眼睛坐标(Pos)
 			Vec3 eyePos = player.getEyePosition();
 

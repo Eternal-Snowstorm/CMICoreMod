@@ -17,7 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.function.BooleanSupplier;
 
 @Mixin(value = IngredientListOverlay.class, remap = false)
-public abstract class IngredientListOverlayMixin {
+public class IngredientListOverlayMixin {
 	@Redirect(
 			method = "<init>",
 			at = @At(

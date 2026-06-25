@@ -30,12 +30,16 @@ public class GoldItem extends MechanismItem {
 	 * @return
 	 */
 	@Override
-	protected InteractionResult onMechanismUse(UseOnContext context) {
+	protected InteractionResult onMechanismUseOn(UseOnContext context) {
 		Player player = context.getPlayer();
 		InteractionHand hand = context.getHand();
 		Level level = context.getLevel();
 		BlockPos pos = context.getClickedPos();
 		BlockState state = level.getBlockState(pos);
+
+		if (level.isClientSide()) {
+			return InteractionResult.PASS;
+		}
 
 		if (state.is(Tags.Blocks.STONE) || state.is(Tags.Blocks.COBBLESTONE)) {
 			player.swing(hand);

@@ -14,7 +14,7 @@ public class SneakyLinkConfig extends ConfigModule {
 	}
 
 	@Override
-	protected void register() {
+	protected void addConfigs() {
 		COLLECTION_RADIUS  = builder
 				.comment("Horizontal radius within which the player picks up item entities")
 				.define("Collection radius", 3.0);

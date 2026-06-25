@@ -7,6 +7,7 @@ import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCItem
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCItmeCapability;
 import dev.celestiacraft.cmi.config.common.VoidDustCollectorConfig;
 import dev.celestiacraft.cmi.utils.ModResources;
+import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class VoidDustCollectorBlockEnitiy extends BlockEntity implements IHaveGoggleInformation {
+public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGoggleInformation {
 	private static final int CAPACITY = VoidDustCollectorConfig.ENERGY_CAPACITY.get();
 	private static final int MAX_RECEIVE = VoidDustCollectorConfig.MAX_RECEIVE.get();
 	private static final int ENERGY_CONSUMPTION = VoidDustCollectorConfig.ENERGY_CONSUMPTION.get();
@@ -41,11 +42,11 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity implements IHaveGo
 	private int workTimer = 0;
 	private int workTimeRequired = 0;
 
-	public VoidDustCollectorBlockEnitiy(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+	public VoidDustCollectorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 
-	public static void tick(Level level, BlockPos pos, BlockState state, VoidDustCollectorBlockEnitiy enitiy) {
+	public static void tick(Level level, BlockPos pos, BlockState state, VoidDustCollectorBlockEntity enitiy) {
 		if (level.isClientSide()) {
 			return;
 		}
@@ -68,12 +69,12 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity implements IHaveGo
 
 		// 同步BlockState
 		BlockState state = getBlockState();
-		boolean wasWorking = state.getValue(VoidDustCollectorBlock.WORKING);
+		boolean wasWorking = state.getValue(BasicBlock.LIT);
 
 		if (wasWorking != canWork) {
 			level.setBlock(
 					worldPosition,
-					state.setValue(VoidDustCollectorBlock.WORKING, canWork),
+					state.setValue(BasicBlock.LIT, canWork),
 					3
 			);
 		}
@@ -142,8 +143,8 @@ public class VoidDustCollectorBlockEnitiy extends BlockEntity implements IHaveGo
 
 	public boolean isWorking() {
 		BlockState state = getBlockState();
-		if (state.hasProperty(VoidDustCollectorBlock.WORKING)) {
-			return state.getValue(VoidDustCollectorBlock.WORKING);
+		if (state.hasProperty(BasicBlock.LIT)) {
+			return state.getValue(BasicBlock.LIT);
 		}
 		return false;
 	}

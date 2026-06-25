@@ -6,9 +6,11 @@ import dev.celestiacraft.libs.tags.TagsBuilder;
 
 public class CmiFluidTags {
 	public static final TagKey<Fluid>
-			STEAM;
+			STEAM,
+			GG_WORK_FLUID;
 
 	static {
 		STEAM = TagsBuilder.fluid("steam").forge();
+		GG_WORK_FLUID = TagsBuilder.fluid("geothermal_generator_work_fluid").cmi();
 	}
 }

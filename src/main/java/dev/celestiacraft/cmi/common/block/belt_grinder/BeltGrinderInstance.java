@@ -1,9 +1,9 @@
 package dev.celestiacraft.cmi.common.block.belt_grinder;
 
 import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
-import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.content.kinetics.saw.SawVisual;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
 import dev.engine_room.flywheel.api.instance.Instance;
@@ -30,7 +30,6 @@ public class BeltGrinderInstance extends KineticBlockEntityVisual<BeltGrinderBlo
 	public static RotatingInstance shaft(InstancerProvider provider, BlockState state) {
 		Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
 		Direction.Axis axis = facing.getAxis();
-		// We could change this to return either an Oriented- or SingleAxisRotatingVisual
 		if (axis.isHorizontal()) {
 			Direction align = facing.getOpposite();
 			return provider.instancer(
@@ -47,7 +46,7 @@ public class BeltGrinderInstance extends KineticBlockEntityVisual<BeltGrinderBlo
 		} else {
 			return provider.instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.SHAFT))
 					.createInstance()
-					.rotateToFace(state.getValue(SawBlock.AXIS_ALONG_FIRST_COORDINATE) ? Direction.Axis.X : Direction.Axis.Z);
+					.rotateToFace(state.getValue(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE) ? Direction.Axis.X : Direction.Axis.Z);
 		}
 	}
 

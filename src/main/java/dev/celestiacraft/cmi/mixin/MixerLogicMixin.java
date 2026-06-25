@@ -3,16 +3,14 @@ package dev.celestiacraft.cmi.mixin;
 import blusunrize.immersiveengineering.api.crafting.MixerRecipe;
 import blusunrize.immersiveengineering.api.multiblocks.blocks.env.IMultiblockContext;
 import blusunrize.immersiveengineering.common.blocks.multiblocks.logic.mixer.MixerLogic;
-import blusunrize.immersiveengineering.common.blocks.multiblocks.logic.mixer.MixerLogic.State;
 import blusunrize.immersiveengineering.common.blocks.multiblocks.process.MultiblockProcess;
-import blusunrize.immersiveengineering.common.blocks.multiblocks.process.ProcessContext.ProcessContextInMachine;
+import blusunrize.immersiveengineering.common.blocks.multiblocks.process.ProcessContext;
 import blusunrize.immersiveengineering.common.util.Utils;
 import blusunrize.immersiveengineering.common.util.inventory.MultiFluidTank;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +24,7 @@ import java.util.List;
 /**
  * 修复 IE 搅拌机的神必流体输出 bug。
  * <p>
- * Bugs：MultiFluidTank 使用 List<FluidStack> 存储多种流体，
+ * Bugs：MultiFluidTank 使用 List<{@link FluidStack}> 存储多种流体，
  * 新流体总是 append 到末尾。当输入流体被完全消耗后重新泵入时，
  * 它会被插入到产物流体之后，破坏了输出逻辑依赖的列表顺序。你会感觉刚抽进去的流体又被抽出来了。
  * <p>
@@ -44,11 +42,11 @@ import java.util.List;
 public class MixerLogicMixin {
 	// 缓存logic上下文
 	@Unique
-	private IMultiblockContext<State> cmi$currentContext;
+	private IMultiblockContext<MixerLogic.State> cmi$currentContext;
 
 	@Inject(method = "tickServer", at = @At("HEAD"))
-	private void cmi$captureContext(IMultiblockContext<State> context, CallbackInfo ci) {
-		this.cmi$currentContext = context;
+	private void cmi$captureContext(IMultiblockContext<MixerLogic.State> context, CallbackInfo ci) {
+		cmi$currentContext = context;
 	}
 
 	/**
@@ -61,7 +59,7 @@ public class MixerLogicMixin {
 					target = "Lblusunrize/immersiveengineering/common/blocks/multiblocks/logic/mixer/MixerLogic;outputFluids(Lblusunrize/immersiveengineering/common/blocks/multiblocks/logic/mixer/MixerLogic$State;Z)Z"
 			)
 	)
-	private boolean cmi$fixedOutputFluids(MixerLogic instance, State state, boolean foundRecipe) {
+	private boolean cmi$fixedOutputFluids(MixerLogic instance, MixerLogic.State state, boolean foundRecipe) {
 		int fluidTypes = state.tank.getFluidTypes();
 		if (fluidTypes <= 0)
 			return false;
@@ -69,11 +67,11 @@ public class MixerLogicMixin {
 		if (output == null)
 			return false;
 		Level level = cmi$currentContext.getLevel().getRawLevel();
-		List<MultiblockProcess<MixerRecipe, ProcessContextInMachine<MixerRecipe>>> queue = state.processor.getQueue();
-		if (!state.outputAll) {
-			return cmi$outputSingleFluid(state, output, queue, level, foundRecipe);
-		} else {
+		List<MultiblockProcess<MixerRecipe, ProcessContext.ProcessContextInMachine<MixerRecipe>>> queue = state.processor.getQueue();
+		if (state.outputAll) {
 			return cmi$outputAllFluids(state, output, queue, level, foundRecipe);
+		} else {
+			return cmi$outputSingleFluid(state, output, queue, level, foundRecipe);
 		}
 	}
 
@@ -83,8 +81,8 @@ public class MixerLogicMixin {
 	 */
 	@Unique
 	private static boolean cmi$outputSingleFluid(
-			State state, IFluidHandler output,
-			List<MultiblockProcess<MixerRecipe, ProcessContextInMachine<MixerRecipe>>> queue,
+			MixerLogic.State state, IFluidHandler output,
+			List<MultiblockProcess<MixerRecipe, ProcessContext.ProcessContextInMachine<MixerRecipe>>> queue,
 			Level level, boolean foundRecipe
 	) {
 		FluidStack toOutput = null;
@@ -109,8 +107,8 @@ public class MixerLogicMixin {
 
 		int maxAmount = Math.min(toOutput.getAmount(), FluidType.BUCKET_VOLUME);
 		FluidStack out = Utils.copyFluidStackWithAmount(toOutput, maxAmount, false);
-		int drained = output.fill(out, FluidAction.EXECUTE);
-		state.tank.drain(new FluidStack(toOutput, drained), FluidAction.EXECUTE);
+		int drained = output.fill(out, IFluidHandler.FluidAction.EXECUTE);
+		state.tank.drain(new FluidStack(toOutput, drained), IFluidHandler.FluidAction.EXECUTE);
 		return drained > 0;
 	}
 
@@ -121,8 +119,8 @@ public class MixerLogicMixin {
 	 */
 	@Unique
 	private static boolean cmi$outputAllFluids(
-			State state, IFluidHandler output,
-			List<MultiblockProcess<MixerRecipe, ProcessContextInMachine<MixerRecipe>>> queue,
+			MixerLogic.State state, IFluidHandler output,
+			List<MultiblockProcess<MixerRecipe, ProcessContext.ProcessContextInMachine<MixerRecipe>>> queue,
 			Level level, boolean foundRecipe
 	) {
 		int totalOut = 0;
@@ -134,8 +132,8 @@ public class MixerLogicMixin {
 				continue;
 			int maxAmount = Math.min(fs.getAmount(), FluidType.BUCKET_VOLUME - totalOut);
 			FluidStack out = Utils.copyFluidStackWithAmount(fs, maxAmount, false);
-			int drained = output.fill(out, FluidAction.EXECUTE);
-			MultiFluidTank.drain(drained, fs, it, FluidAction.EXECUTE);
+			int drained = output.fill(out, IFluidHandler.FluidAction.EXECUTE);
+			MultiFluidTank.drain(drained, fs, it, IFluidHandler.FluidAction.EXECUTE);
 			totalOut += drained;
 			if (totalOut >= FluidType.BUCKET_VOLUME)
 				break;
@@ -149,8 +147,8 @@ public class MixerLogicMixin {
 					continue;
 				int maxAmount = Math.min(fs.getAmount(), FluidType.BUCKET_VOLUME - totalOut);
 				FluidStack out = Utils.copyFluidStackWithAmount(fs, maxAmount, false);
-				int drained = output.fill(out, FluidAction.EXECUTE);
-				MultiFluidTank.drain(drained, fs, it, FluidAction.EXECUTE);
+				int drained = output.fill(out, IFluidHandler.FluidAction.EXECUTE);
+				MultiFluidTank.drain(drained, fs, it, IFluidHandler.FluidAction.EXECUTE);
 				totalOut += drained;
 				if (totalOut >= FluidType.BUCKET_VOLUME)
 					break;
@@ -165,7 +163,7 @@ public class MixerLogicMixin {
 	@Unique
 	private static boolean cmi$isRecipeInput(
 			FluidStack fluid,
-			List<MultiblockProcess<MixerRecipe, ProcessContextInMachine<MixerRecipe>>> queue,
+			List<MultiblockProcess<MixerRecipe, ProcessContext.ProcessContextInMachine<MixerRecipe>>> queue,
 			Level level
 	) {
 		for (MultiblockProcess<MixerRecipe, ?> process : queue) {

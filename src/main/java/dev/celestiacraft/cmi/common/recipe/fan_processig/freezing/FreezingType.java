@@ -65,7 +65,8 @@ public class FreezingType implements FanProcessingType {
 		}
 		level.addParticle(
 				ParticleTypes.POOF,
-				pos.x, pos.y + .25f,
+				pos.x,
+				pos.y + .25f,
 				pos.z,
 				0,
 				1 / 16f,

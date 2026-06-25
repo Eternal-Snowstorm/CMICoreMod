@@ -2,7 +2,8 @@ package dev.celestiacraft.cmi.client.ponder;
 
 import blusunrize.immersiveengineering.common.register.IEBlocks;
 import com.teammoeg.immersiveindustry.IIContent;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
+import dev.celestiacraft.cmi.common.register.block.WallBlocks;
 import dev.celestiacraft.cmi.utils.ModResources;
 import mekanism.common.registries.MekanismBlocks;
 import net.minecraft.world.item.Item;
@@ -11,7 +12,7 @@ import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 public class CmiPonderItem {
 	public static class Cmi {
 		public static final Item[] SEA_WATER = new Item[] {
-				CmiBlock.WATER_WELL.asItem(),
+				WallBlocks.WATER_WELL.asItem(),
 				ModResources.SEA_WATER.getBucket()
 		};
 
@@ -25,7 +26,7 @@ public class CmiPonderItem {
 		};
 
 		public static final Item[] ACCELERATOR = new Item[] {
-				CmiBlock.ACCELERATOR.asItem(),
+				MachineBlocks.ACCELERATOR.asItem(),
 		};
 	}
 

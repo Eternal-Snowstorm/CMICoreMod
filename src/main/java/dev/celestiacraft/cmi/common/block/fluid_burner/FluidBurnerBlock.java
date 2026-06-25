@@ -35,7 +35,7 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 		return true;
 	}
 
-	public static <T extends Block, P> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState(String material) {
+	public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState(String material) {
 		return (context, provider) -> {
 			provider.getVariantBuilder(context.get()).forAllStates((state) -> {
 				boolean lit = state.getValue(LIT);

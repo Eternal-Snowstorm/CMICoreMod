@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 
 public class SpaceElevatorUIFactory extends UIFactory<SpaceElevatorEntity> {
 	public static final SpaceElevatorUIFactory INSTANCE = new SpaceElevatorUIFactory();
@@ -20,7 +21,7 @@ public class SpaceElevatorUIFactory extends UIFactory<SpaceElevatorEntity> {
 	}
 
 	@Override
-	protected ModularUI createUITemplate(SpaceElevatorEntity holder, Player entityPlayer) {
+	protected @Nullable ModularUI createUITemplate(SpaceElevatorEntity holder, Player entityPlayer) {
 		if (holder == null) {
 			return null;
 		}
@@ -29,7 +30,7 @@ public class SpaceElevatorUIFactory extends UIFactory<SpaceElevatorEntity> {
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	protected SpaceElevatorEntity readHolderFromSyncData(FriendlyByteBuf syncData) {
+	protected @Nullable SpaceElevatorEntity readHolderFromSyncData(FriendlyByteBuf syncData) {
 		int entityId = syncData.readVarInt();
 		Level level = Minecraft.getInstance().level;
 		if (level == null) {

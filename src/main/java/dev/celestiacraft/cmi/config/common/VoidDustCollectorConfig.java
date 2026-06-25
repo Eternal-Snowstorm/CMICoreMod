@@ -16,7 +16,7 @@ public class VoidDustCollectorConfig extends ConfigModule {
 	}
 
 	@Override
-	protected void register() {
+	protected void addConfigs() {
 		WORK_TIME = builder
 				.comment("Work time")
 				.comment("20 ticks = 1 second")

@@ -73,6 +73,10 @@ public class ResourcesEntry {
 		return getBlock().defaultBlockState();
 	}
 
+	public FluidStack getFluidStack() {
+		return new FluidStack(getFluid(), 1000);
+	}
+
 	public FluidStack getFluidStack(int amount) {
 		return new FluidStack(getFluid(), amount);
 	}

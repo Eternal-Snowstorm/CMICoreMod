@@ -17,7 +17,7 @@ public class AnimatedFreezingFan extends AnimatedKinetics {
 		pose.translate(xOffset, yOffset, 0);
 		pose.translate(2, 22, 200);
 		pose.mulPose(Axis.XP.rotationDegrees(-15.5f));
-		pose.mulPose(Axis.YP.rotationDegrees(22.5f + 90f));
+		pose.mulPose(Axis.YP.rotationDegrees(22.5f + 90.0f));
 
 		int scale = 25;
 
@@ -26,7 +26,7 @@ public class AnimatedFreezingFan extends AnimatedKinetics {
 				.scale(scale)
 				.render(graphics);
 
-		blockElement(AllBlocks.ENCASED_FAN.get().defaultBlockState()
+		blockElement(AllBlocks.ENCASED_FAN.getDefaultState()
 				.setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST))
 				.atLocal(0, 0, 2)
 				.rotateBlock(0, 0, 0)

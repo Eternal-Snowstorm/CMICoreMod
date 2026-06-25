@@ -12,7 +12,7 @@ public class AcceleratorMotorConfig extends ConfigModule {
 	}
 
 	@Override
-	protected void register() {
+	protected void addConfigs() {
 		DEFAULT_SPEED = builder
 				.comment("Default speed when placing the Accelerator Motor (RPM)")
 				.comment("type: int")

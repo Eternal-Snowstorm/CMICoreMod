@@ -13,14 +13,12 @@ import java.util.function.Supplier;
 
 public class CmiCreativeTab {
 	public static final DeferredRegister<CreativeModeTab> TABS;
-	public static final Supplier<CreativeModeTab> MECHANISMS;
+		public static final Supplier<CreativeModeTab> MECHANISMS;
 
 	static {
 		TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Cmi.MODID);
 
-		MECHANISMS = addCreativeModeTab("mechanisms", () -> {
-			return AllItems.PRECISION_MECHANISM.asStack();
-		});
+		MECHANISMS = addCreativeModeTab("mechanisms", AllItems.PRECISION_MECHANISM::asStack);
 	}
 
 	private static Supplier<CreativeModeTab> addCreativeModeTab(String name, Supplier<ItemStack> icon) {

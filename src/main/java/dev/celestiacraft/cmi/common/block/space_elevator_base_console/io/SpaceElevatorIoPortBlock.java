@@ -1,18 +1,22 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console.io;
 
+import com.simibubi.create.foundation.block.IBE;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlock;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
+import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -23,7 +27,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class SpaceElevatorIoPortBlock extends BaseEntityBlock {
+public class SpaceElevatorIoPortBlock extends BasicBlock implements IBE<SpaceElevatorIoPortBlockEntity> {
 	public static final EnumProperty<IoPortType> IO_TYPE = EnumProperty.create("io_type", IoPortType.class);
 	public static final EnumProperty<IoPortShape> SHAPE = EnumProperty.create("shape", IoPortShape.class);
 
@@ -38,7 +42,7 @@ public class SpaceElevatorIoPortBlock extends BaseEntityBlock {
 				.isRedstoneConductor((state, getter, pos) -> {
 					return false;
 				}));
-		this.registerDefaultState(stateDefinition.any()
+		registerDefaultState(stateDefinition.any()
 				.setValue(IO_TYPE, IoPortType.NONE)
 				.setValue(SHAPE, IoPortShape.FULL));
 	}
@@ -51,12 +55,6 @@ public class SpaceElevatorIoPortBlock extends BaseEntityBlock {
 	@Override
 	public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
 		return RenderShape.INVISIBLE;
-	}
-
-	@Nullable
-	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-		return CmiBlockEntity.SPACE_ELEVATOR_IO_PORT.get().create(pos, state);
 	}
 
 	@Override
@@ -122,5 +120,26 @@ public class SpaceElevatorIoPortBlock extends BaseEntityBlock {
 			}
 		}
 		super.onRemove(state, level, pos, newState, moved);
+	}
+
+	@Override
+	public Class<SpaceElevatorIoPortBlockEntity> getBlockEntityClass() {
+		return SpaceElevatorIoPortBlockEntity.class;
+	}
+
+	@Override
+	public BlockEntityType<? extends SpaceElevatorIoPortBlockEntity> getBlockEntityType() {
+		return CmiBlockEntity.SPACE_ELEVATOR_IO_PORT.get();
+	}
+
+	public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState() {
+		return (context, provider) -> {
+			provider.simpleBlock(
+					context.get(),
+					provider.models()
+							.withExistingParent(
+									context.getName(), provider.mcLoc("block/block"))
+			);
+		};
 	}
 }

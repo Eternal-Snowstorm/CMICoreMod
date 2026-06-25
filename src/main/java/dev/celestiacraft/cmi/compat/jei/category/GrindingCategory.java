@@ -3,14 +3,14 @@ package dev.celestiacraft.cmi.compat.jei.category;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.recipe.RecipeIngredientRole;
+import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.common.block.belt_grinder.GrindingRecipe;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.animations.AnimatedBeltGrinder;
-import dev.celestiacraft.cmi.api.client.CmiLang;
-import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
+import dev.celestiacraft.libs.compat.jei.api.SimpleJeiCategory;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class GrindingCategory {
 				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("grinding"))
 				.setSize(178, 72)
 				.setBackground(178, 72)
-				.setIcon(CmiBlock.BELT_GRINDER.asStack())
+				.setIcon(MachineBlocks.BELT_GRINDER.asStack())
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.INPUT, 44, 5)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)

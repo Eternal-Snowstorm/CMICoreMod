@@ -16,7 +16,7 @@ public class WoodenItem extends MechanismItem {
 	}
 
 	@Override
-	protected InteractionResult onMechanismUse(UseOnContext context) {
+	protected InteractionResult onMechanismUseOn(UseOnContext context) {
 		return useOtherItem(AllItems.TREE_FERTILIZER.get(), context);
 	}
 

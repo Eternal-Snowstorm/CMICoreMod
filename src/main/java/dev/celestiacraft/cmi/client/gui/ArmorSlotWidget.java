@@ -6,12 +6,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 
@@ -28,10 +29,10 @@ public class ArmorSlotWidget extends SlotWidget {
 	public ArmorSlotWidget(Inventory inventory, int slotIndex, int xPosition, int yPosition, EquipmentSlot equipmentSlot) {
 		super(inventory, slotIndex, xPosition, yPosition, true, true);
 		this.equipmentSlot = equipmentSlot;
-		this.emptyIcon = resolveEmptyIcon(equipmentSlot);
+		emptyIcon = resolveEmptyIcon(equipmentSlot);
 	}
 
-	private static ResourceLocation resolveEmptyIcon(EquipmentSlot slot) {
+	private static @Nullable ResourceLocation resolveEmptyIcon(EquipmentSlot slot) {
 		return switch (slot) {
 			case HEAD -> EMPTY_ARMOR_SLOT_HELMET;
 			case CHEST -> EMPTY_ARMOR_SLOT_CHESTPLATE;
@@ -53,7 +54,7 @@ public class ArmorSlotWidget extends SlotWidget {
 		if (stack.isEmpty()) {
 			return true;
 		}
-		return Mob.getEquipmentSlotForItem(stack) == equipmentSlot;
+		return LivingEntity.getEquipmentSlotForItem(stack) == equipmentSlot;
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class ArmorSlotWidget extends SlotWidget {
 		if (equipmentSlot == EquipmentSlot.OFFHAND) {
 			return true;
 		}
-		return Mob.getEquipmentSlotForItem(stack) == equipmentSlot;
+		return LivingEntity.getEquipmentSlotForItem(stack) == equipmentSlot;
 	}
 
 	@Override

@@ -198,9 +198,39 @@ public class GuiLanguage extends LanguageGenerate {
 				"基座控制台能量不足，无法发射。"
 		);
 		addCustomLang(
+				"text.cmi.space_elevator.rocket_present",
+				"A prospecting rocket is occupying this base. Remove it before building the elevator.",
+				"发射台上存在勘探火箭，请先移走再建造电梯。"
+		);
+		addCustomLang(
+				"text.cmi.prospecting_rocket.not_launch_pad",
+				"The rocket can only be placed on a space elevator base.",
+				"火箭只能放置在太空电梯基座上。"
+		);
+		addCustomLang(
+				"text.cmi.prospecting_rocket.base_has_elevator",
+				"A space elevator is occupying this base.",
+				"该基座已被太空电梯占用。"
+		);
+		addCustomLang(
+				"text.cmi.prospecting_rocket.base_has_rocket",
+				"This base already has a rocket on it.",
+				"该基座上已经停放了一枚火箭。"
+		);
+		addCustomLang(
 				"entity.cmi.space_elevator.cargo",
 				"Space Elevator Cargo",
 				"太空电梯货舱"
+		);
+		addCustomLang(
+				"gui.cmi.prospecting_rocket.cargo",
+				"Cargo",
+				"货舱"
+		);
+		addCustomLang(
+				"gui.cmi.prospecting_rocket.fuel",
+				"Fuel",
+				"燃料"
 		);
 		addCustomLang(
 				"jade.tip.cmi.space_elevator.cargo_fluid",

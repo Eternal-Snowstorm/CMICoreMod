@@ -11,10 +11,10 @@ public abstract class ConfigModule {
 		builder.comment(comment + " Settings")
 				.push(path);
 
-		register();
+		addConfigs();
 
 		builder.pop();
 	}
 
-	protected abstract void register();
+	protected abstract void addConfigs();
 }

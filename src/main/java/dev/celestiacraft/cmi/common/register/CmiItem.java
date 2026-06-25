@@ -5,6 +5,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.assets.ItemModelGen;
+import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import dev.celestiacraft.cmi.common.item.*;
 import dev.celestiacraft.cmi.common.item.tool.crafting_table.HandheleCraftingTableItem;
 import dev.celestiacraft.cmi.tags.CmiItemTags;
@@ -12,6 +13,9 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeSpawnEggItem;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class CmiItem {
 	public static final ItemEntry<TestBrushItem> TEST_BRUSH;
@@ -21,8 +25,24 @@ public class CmiItem {
 	public static final ItemEntry<InitialItemKitItem> INITIAL_ITEM_KIT;
 	public static final ItemEntry<HandheleCraftingTableItem> HANDHELE_CRAFTING_TABLE;
 	public static final ItemEntry<NutritionSyringeItem> NUTRITION_SYRINGE;
+	private static final Map<ProspectingRocketTier, ItemEntry<ProspectingRocketItem>> PROSPECTING_ROCKETS = new EnumMap<>(ProspectingRocketTier.class);
+
+	public static ItemEntry<ProspectingRocketItem> prospectingRocket(ProspectingRocketTier tier) {
+		return PROSPECTING_ROCKETS.get(tier);
+	}
 
 	static {
+		for (ProspectingRocketTier tier : ProspectingRocketTier.values()) {
+			ItemEntry<ProspectingRocketItem> entry = Cmi.REGISTRATE
+					.item(tier.registryName(), (properties) -> new ProspectingRocketItem(
+							tier,
+							() -> CmiEntity.prospectingRocket(tier).get(),
+							properties))
+					.model(NonNullBiConsumer.noop())
+					.register();
+			PROSPECTING_ROCKETS.put(tier, entry);
+		}
+
 		TEST_BRUSH = Cmi.REGISTRATE.item("test_brush", TestBrushItem::new)
 				.register();
 		NUTRITION_SYRINGE = Cmi.REGISTRATE.item("nutrition_syringe", NutritionSyringeItem::new)

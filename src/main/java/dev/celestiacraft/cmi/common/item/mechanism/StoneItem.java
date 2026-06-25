@@ -21,12 +21,16 @@ public class StoneItem extends MechanismItem {
 	}
 
 	@Override
-	protected InteractionResult onMechanismUse(UseOnContext context) {
+	protected InteractionResult onMechanismUseOn(UseOnContext context) {
 		Player player = context.getPlayer();
 		InteractionHand hand = context.getHand();
 		BlockPos pos = context.getClickedPos();
 		Level level = context.getLevel();
 		BlockState state = level.getBlockState(pos);
+
+		if (level.isClientSide()) {
+			return InteractionResult.PASS;
+		}
 
 		if (state.is(Blocks.COBBLESTONE)) {
 			player.swing(hand);

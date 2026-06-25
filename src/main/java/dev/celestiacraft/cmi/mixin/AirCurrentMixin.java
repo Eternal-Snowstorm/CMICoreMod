@@ -41,7 +41,7 @@ public abstract class AirCurrentMixin {
 					value = "INVOKE",
 					target = "Lcom/simibubi/create/content/kinetics/fan/AirCurrent;tickAffectedHandlers()V")
 	)
-	public void tickMixin(CallbackInfo info) {
+	public void cmi$tickMixin(CallbackInfo info) {
 		Level world = source.getAirCurrentWorld();
 		BlockPos start = source.getAirCurrentPos();
 		int limit = getLimit();

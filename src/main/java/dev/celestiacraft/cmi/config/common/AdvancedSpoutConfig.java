@@ -12,7 +12,7 @@ public class AdvancedSpoutConfig extends ConfigModule {
 	}
 
 	@Override
-	protected void register() {
+	protected void addConfigs() {
 		FILLING_TIME = builder
 				.comment("Filling time in ticks")
 				.comment("20 ticks = 1 second")

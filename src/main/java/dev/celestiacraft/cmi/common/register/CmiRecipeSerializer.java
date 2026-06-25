@@ -26,15 +26,15 @@ public class CmiRecipeSerializer {
 	static {
 		SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Cmi.MODID);
 
-		ACCELERATOR = register("accelerator", () -> AcceleratorRecipe.Serializer.INSTANCE);
-		SPACE_ELEVATOR_BASE = register("space_elevator_base", () -> SpaceElevatorBaseRecipe.Serializer.INSTANCE);
-		SPACE_ELEVATOR_CONSTRUCTION = register("space_elevator_construction", () -> SpaceElevatorConstructionRecipe.Serializer.INSTANCE);
-		FLUID_BURN = register("fluid_burn", () -> FluidBurnRecipe.Serializer.INSTANCE);
-		TEST_COKE_OVEN = register("test_coke_oven", () -> new MachineRecipeSerializer(Cmi.loadResource("test_coke_oven")));
+		ACCELERATOR = register("accelerator", AcceleratorRecipe.Serializer.INSTANCE);
+		SPACE_ELEVATOR_BASE = register("space_elevator_base", SpaceElevatorBaseRecipe.Serializer.INSTANCE);
+		SPACE_ELEVATOR_CONSTRUCTION = register("space_elevator_construction", SpaceElevatorConstructionRecipe.Serializer.INSTANCE);
+		FLUID_BURN = register("fluid_burn", FluidBurnRecipe.Serializer.INSTANCE);
+		TEST_COKE_OVEN = register("test_coke_oven", new MachineRecipeSerializer(Cmi.loadResource("test_coke_oven")));
 	}
 
-	private static <T extends Recipe<?>> Supplier<RecipeSerializer<T>> register(String path, Supplier<RecipeSerializer<T>> supplier) {
-		return SERIALIZERS.register(path, supplier);
+	private static <T extends Recipe<?>> Supplier<RecipeSerializer<T>> register(String path, RecipeSerializer<T> serializer) {
+		return SERIALIZERS.register(path, () -> serializer);
 	}
 
 	public static void register(IEventBus bus) {

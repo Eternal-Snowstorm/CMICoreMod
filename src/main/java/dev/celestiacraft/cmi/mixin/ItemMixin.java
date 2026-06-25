@@ -30,10 +30,6 @@ public class ItemMixin {
 		BlockState state = level.getBlockState(pos);
 		ItemStack stack = player.getMainHandItem();
 
-		if (player == null) {
-			return;
-		}
-
 		if (!stack.is(CmiItemTags.WRENCHES)) {
 			return;
 		}

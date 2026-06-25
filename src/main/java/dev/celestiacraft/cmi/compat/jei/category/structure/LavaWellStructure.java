@@ -3,21 +3,16 @@ package dev.celestiacraft.cmi.compat.jei.category.structure;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.block.OtherBlocks;
+import dev.celestiacraft.cmi.common.register.block.WallBlocks;
 import dev.celestiacraft.cmi.utils.ModResources;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.SlabType;
-import net.minecraftforge.common.util.Lazy;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.shared.TinkerMaterials;
 
 public class LavaWellStructure extends AnimatedKinetics {
-	private static final Lazy<Block> SLAB = Lazy.of(() -> {
-		return ModResources.NAHUATL_SLAB.getBlock();
-	});
-
 	@Override
 	public void draw(@NotNull GuiGraphics graphics, int offsetX, int offsetY) {
 		PoseStack matrixStack = graphics.pose();
@@ -27,7 +22,7 @@ public class LavaWellStructure extends AnimatedKinetics {
 		matrixStack.mulPose(Axis.YP.rotationDegrees(22.5F));
 
 		int scale = 15;
-		defaultBlockElement(CmiBlock.LAVA_WELL.get().defaultBlockState())
+		defaultBlockElement(WallBlocks.LAVA_WELL.get().defaultBlockState())
 				.atLocal(0.0F, 4.0F, 0.0F)
 				.scale(scale)
 				.render(graphics);
@@ -95,38 +90,38 @@ public class LavaWellStructure extends AnimatedKinetics {
 				.atLocal(-1.0F, 2.0F, -1.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(CmiBlock.NAHUATL_SCAFFOLD.get().defaultBlockState())
+		defaultBlockElement(OtherBlocks.NAHUATL_SCAFFOLD.get().defaultBlockState())
 				.atLocal(-1.0F, 1.0F, -1.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(CmiBlock.NAHUATL_SCAFFOLD.get().defaultBlockState())
+		defaultBlockElement(OtherBlocks.NAHUATL_SCAFFOLD.get().defaultBlockState())
 				.atLocal(-1.0F, 1.0F, 1.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(CmiBlock.NAHUATL_SCAFFOLD.get().defaultBlockState())
+		defaultBlockElement(OtherBlocks.NAHUATL_SCAFFOLD.get().defaultBlockState())
 				.atLocal(1.0F, 1.0F, -1.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(CmiBlock.NAHUATL_SCAFFOLD.get().defaultBlockState())
+		defaultBlockElement(OtherBlocks.NAHUATL_SCAFFOLD.get().defaultBlockState())
 				.atLocal(1.0F, 1.0F, 1.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(SLAB.get().defaultBlockState()
+		defaultBlockElement(ModResources.NAHUATL_SLAB.defaultBlockState()
 				.setValue(SlabBlock.TYPE, SlabType.TOP))
 				.atLocal(0.0F, 1.0F, -1.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(SLAB.get().defaultBlockState()
+		defaultBlockElement(ModResources.NAHUATL_SLAB.defaultBlockState()
 				.setValue(SlabBlock.TYPE, SlabType.TOP))
 				.atLocal(0.0F, 1.0F, 1.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(SLAB.get().defaultBlockState()
+		defaultBlockElement(ModResources.NAHUATL_SLAB.defaultBlockState()
 				.setValue(SlabBlock.TYPE, SlabType.TOP))
 				.atLocal(-1.0F, 1.0F, 0.0F)
 				.scale(scale)
 				.render(graphics);
-		defaultBlockElement(SLAB.get().defaultBlockState()
+		defaultBlockElement(ModResources.NAHUATL_SLAB.defaultBlockState()
 				.setValue(SlabBlock.TYPE, SlabType.TOP))
 				.atLocal(1.0F, 1.0F, 0.0F)
 				.scale(scale)

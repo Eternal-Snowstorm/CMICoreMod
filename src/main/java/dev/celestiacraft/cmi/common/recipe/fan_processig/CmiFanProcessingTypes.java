@@ -10,13 +10,10 @@ public class CmiFanProcessingTypes {
 	public static FreezingType FREEZING;
 
 	public static void register() {
-		if (FREEZING != null) {
-			return;
-		}
-		FREEZING = registerType(new FreezingType());
+		FREEZING = registerType("freezing", new FreezingType());
 	}
 
-	private static <T extends FanProcessingType> T registerType(T type) {
-		return Registry.register(CreateBuiltInRegistries.FAN_PROCESSING_TYPE, Cmi.loadResource("freezing"), type);
+	private static <T extends FanProcessingType> T registerType(String name, T type) {
+		return Registry.register(CreateBuiltInRegistries.FAN_PROCESSING_TYPE, Cmi.loadResource(name), type);
 	}
 }

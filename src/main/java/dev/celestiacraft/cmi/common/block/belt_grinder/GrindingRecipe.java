@@ -5,6 +5,10 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import com.simibubi.create.content.processing.sequenced.IAssemblyRecipe;
+import dev.celestiacraft.cmi.api.client.CmiLang;
+import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
+import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
+import dev.celestiacraft.cmi.compat.jei.category.CmiSequencedAssemblySubCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -13,10 +17,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
-import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
-import dev.celestiacraft.cmi.compat.jei.category.CmiSequencedAssemblySubCategory;
-import dev.celestiacraft.cmi.api.client.CmiLang;
 
 import java.util.List;
 import java.util.Set;
@@ -60,7 +60,7 @@ public class GrindingRecipe extends ProcessingRecipe<RecipeWrapper> implements I
 
 	@Override
 	public void addRequiredMachines(Set<ItemLike> list) {
-		list.add(CmiBlock.BELT_GRINDER.get());
+		list.add(MachineBlocks.BELT_GRINDER.get());
 	}
 
 	@Override

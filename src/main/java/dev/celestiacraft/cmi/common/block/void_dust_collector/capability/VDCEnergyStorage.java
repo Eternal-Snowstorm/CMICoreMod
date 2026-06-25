@@ -1,12 +1,12 @@
 package dev.celestiacraft.cmi.common.block.void_dust_collector.capability;
 
-import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlockEnitiy;
+import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlockEntity;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class VDCEnergyStorage implements IEnergyStorage {
-	private final VoidDustCollectorBlockEnitiy entity;
+	private final VoidDustCollectorBlockEntity entity;
 
-	public VDCEnergyStorage(VoidDustCollectorBlockEnitiy entity) {
+	public VDCEnergyStorage(VoidDustCollectorBlockEntity entity) {
 		this.entity = entity;
 	}
 

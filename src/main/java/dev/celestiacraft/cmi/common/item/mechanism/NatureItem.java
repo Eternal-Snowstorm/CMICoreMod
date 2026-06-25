@@ -16,7 +16,7 @@ public class NatureItem extends MechanismItem {
 	}
 
 	@Override
-	protected InteractionResult onMechanismUse(UseOnContext context) {
+	protected InteractionResult onMechanismUseOn(UseOnContext context) {
 		return useOtherItem(ACItemRegistry.FERTILIZER.get(), context);
 	}
 

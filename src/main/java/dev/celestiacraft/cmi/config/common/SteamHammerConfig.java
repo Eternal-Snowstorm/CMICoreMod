@@ -13,7 +13,7 @@ public class SteamHammerConfig extends ConfigModule {
 	}
 
 	@Override
-	protected void register() {
+	protected void addConfigs() {
 		STEAM_CONSUMPTION = builder
 				.comment("Steam consumption per run of steam hammer (mB)")
 				.comment("type: int")

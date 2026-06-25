@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.item.TooltipModifier;
 import dev.celestiacraft.cmi.client.CmiClient;
 import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
+import dev.celestiacraft.cmi.client.gui.ProspectingRocketUIFactory;
 import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
 import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
@@ -111,6 +112,7 @@ public class Cmi {
 	private void onCommonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
 			UIFactory.register(SpaceElevatorUIFactory.INSTANCE);
+			UIFactory.register(ProspectingRocketUIFactory.INSTANCE);
 
 			Regions.register(new CmiOverworldRegion(5));
 

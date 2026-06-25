@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CauldronBlock.class)
-public abstract class CauldronBlockMixin {
+public class CauldronBlockMixin {
 	@Inject(
 			method = "handlePrecipitation",
 			at = @At("HEAD"),

@@ -16,9 +16,14 @@ import dev.celestiacraft.cmi.common.block.belt_grinder.GrindingRecipe;
 import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.freezing.FreezingRecipe;
 import dev.celestiacraft.cmi.common.recipe.void_dust_collector.VoidDustCollectorRecipe;
-import dev.celestiacraft.cmi.common.recipe.well.*;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.recipe.well.BlazeWellRecipe;
+import dev.celestiacraft.cmi.common.recipe.well.LavaWellRecipe;
+import dev.celestiacraft.cmi.common.recipe.well.SeaWaterWellRecipe;
+import dev.celestiacraft.cmi.common.recipe.well.WaterWellRecipe;
 import dev.celestiacraft.cmi.common.register.CmiCreateRecipe;
+import dev.celestiacraft.cmi.common.register.CmiRecipeType;
+import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
+import dev.celestiacraft.cmi.common.register.block.WallBlocks;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.*;
 import dev.celestiacraft.cmi.utils.ModResources;
@@ -79,7 +84,7 @@ public class CmiJeiPlugin implements IModPlugin {
 	public void registerRecipes(IRecipeRegistration registration) {
 		RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
 
-		List<AcceleratorRecipe> acceleratorRecipe = manager.getAllRecipesFor(AcceleratorRecipe.Type.INSTANCE);
+		List<AcceleratorRecipe> acceleratorRecipe = manager.getAllRecipesFor(CmiRecipeType.ACCELERATOR.get());
 		List<VoidDustCollectorRecipe> voidDustCollectorRecipe = List.of(new VoidDustCollectorRecipe());
 		List<GrindingRecipe> grindingRecipe = manager.getAllRecipesFor(CmiCreateRecipe.GRINDING.getType());
 
@@ -103,8 +108,8 @@ public class CmiJeiPlugin implements IModPlugin {
 		IJeiHelpers helpers = registration.getJeiHelpers();
 
 		Map<String, ItemStack> createCatalysts = Map.of(
-				"pressing", CmiBlock.STEAM_HAMMER.asStack(),
-				"spout_filling", CmiBlock.ADVANCED_SPOUT.asStack()
+				"pressing", MachineBlocks.STEAM_HAMMER.asStack(),
+				"spout_filling", MachineBlocks.ADVANCED_SPOUT.asStack()
 		);
 
 		createCatalysts.forEach((recipeId, stack) -> {
@@ -115,20 +120,20 @@ public class CmiJeiPlugin implements IModPlugin {
 		});
 
 		List<ItemStack> wellBlockList = List.of(
-				CmiBlock.WATER_WELL.asStack(),
-				CmiBlock.LAVA_WELL.asStack(),
-				CmiBlock.BLAZING_BLOOD_WELL.asStack()
+				WallBlocks.WATER_WELL.asStack(),
+				WallBlocks.LAVA_WELL.asStack(),
+				WallBlocks.BLAZING_BLOOD_WELL.asStack()
 		);
 		wellBlockList.forEach((block) -> {
 			registration.addRecipeCatalyst(block, CmiJeiRecipeType.WELL);
 		});
 
 		registration.addRecipeCatalyst(
-				CmiBlock.ACCELERATOR.asStack(),
+				MachineBlocks.ACCELERATOR.asStack(),
 				CmiJeiRecipeType.ACCELERATOR
 		);
 		registration.addRecipeCatalyst(
-				CmiBlock.VOID_DUST_COLLECTOR.asStack(),
+				MachineBlocks.VOID_DUST_COLLECTOR.asStack(),
 				CmiJeiRecipeType.VOID_DUST_COLLECTOR
 		);
 		registration.addRecipeCatalyst(
@@ -136,7 +141,7 @@ public class CmiJeiPlugin implements IModPlugin {
 				CmiJeiRecipeType.VOID_DUST_COLLECTOR
 		);
 		registration.addRecipeCatalyst(
-				CmiBlock.BELT_GRINDER.asStack(),
+				MachineBlocks.BELT_GRINDER.asStack(),
 				CmiJeiRecipeType.GRINDING
 		);
 
@@ -241,7 +246,7 @@ public class CmiJeiPlugin implements IModPlugin {
 					return recipes;
 				};
 			} else {
-				recipesSupplier = () -> Collections.emptyList();
+				recipesSupplier = Collections::emptyList;
 			}
 
 			CreateRecipeCategory.Info<T> info = new CreateRecipeCategory.Info<>(

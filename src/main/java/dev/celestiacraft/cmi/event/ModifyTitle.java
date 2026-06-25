@@ -36,10 +36,9 @@ public class ModifyTitle {
 			"Hope Today Brings You Happiness and Inspiration!"
 	);
 
-	public static String getRandomNormalGreeting() {
-		return NORMAL_GREETINGS.get(
-				ThreadLocalRandom.current().nextInt(NORMAL_GREETINGS.size())
-		);
+	private static String getRandomNormalGreeting() {
+		int nextInt = ThreadLocalRandom.current().nextInt(NORMAL_GREETINGS.size());
+		return NORMAL_GREETINGS.get(nextInt);
 	}
 
 	@SubscribeEvent

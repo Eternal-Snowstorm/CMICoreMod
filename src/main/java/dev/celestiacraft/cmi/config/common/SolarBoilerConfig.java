@@ -23,7 +23,7 @@ public class SolarBoilerConfig extends ConfigModule {
 	public static ForgeConfigSpec.IntValue STEEL_CAPACITY;
 
 	@Override
-	protected void register() {
+	protected void addConfigs() {
 		BRONZE_EFFICIENCY = builder
 				.comment(consumComment)
 				.comment("type: int")

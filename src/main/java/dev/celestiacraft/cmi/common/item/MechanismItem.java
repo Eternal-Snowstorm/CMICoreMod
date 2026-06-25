@@ -1,7 +1,9 @@
 package dev.celestiacraft.cmi.common.item;
 
 import dev.celestiacraft.libs.api.register.item.BasicItem;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -11,10 +13,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 public abstract class MechanismItem extends BasicItem {
-	protected static final Random RANDOM = new Random();
+	protected static final Random RANDOM = new SecureRandom();
 
 	public MechanismItem(Properties properties) {
 		super(properties);
@@ -61,8 +64,32 @@ public abstract class MechanismItem extends BasicItem {
 	 * }
 	 * }</pre>
 	 */
-	protected InteractionResult onMechanismUse(UseOnContext context) {
+	protected InteractionResult onMechanismUseOn(UseOnContext context) {
 		return InteractionResult.PASS;
+	}
+
+	/**
+	 * 当构件使用时调用
+	 *
+	 * <p>
+	 * 子类可以重写该方法实现具体的构件行为
+	 * </p>
+	 *
+	 * <p>
+	 * 默认返回 {@link InteractionResult#PASS}, 表示不执行任何操作,
+	 * 并允许其他逻辑继续处理该交互
+	 * </p>
+	 *
+	 * <pre>{@code
+	 * @Override
+	 * protected InteractionResult MechanismItemUse(UseContext context) {
+	 *     // 在这里实现构件的具体逻辑
+	 *     return InteractionResult.SUCCESS;
+	 * }
+	 * }</pre>
+	 */
+	protected InteractionResultHolder<ItemStack> onMechanismUse(Level level, Player player, InteractionHand hand) {
+		return InteractionResultHolder.pass(player.getMainHandItem());
 	}
 
 	/**
@@ -73,6 +100,10 @@ public abstract class MechanismItem extends BasicItem {
 	 */
 	private void handleSwing(UseOnContext context, Player player) {
 		player.swing(context.getHand(), true);
+	}
+
+	private void handleItemSwing(InteractionHand hand, Player player) {
+		player.swing(hand, true);
 	}
 
 	/**
@@ -175,7 +206,7 @@ public abstract class MechanismItem extends BasicItem {
 	 * 处理玩家对方块使用该物品时的逻辑
 	 *
 	 * <p>
-	 * 该方法会调用 {@link #onMechanismUse(UseOnContext)} 执行构件行为,
+	 * 该方法会调用 {@link #onMechanismUseOn(UseOnContext)} 执行构件行为,
 	 * 并在行为成功时自动处理以下逻辑:
 	 * </p>
 	 *
@@ -187,12 +218,12 @@ public abstract class MechanismItem extends BasicItem {
 	 *
 	 * <p>
 	 * 一般情况下不需要重写该方法,
-	 * 只需重写 {@link #onMechanismUse(UseOnContext)} 即可实现新的构件行为
+	 * 只需重写 {@link #onMechanismUseOn(UseOnContext)} 即可实现新的构件行为
 	 * </p>
 	 */
 	@Override
 	public @NotNull InteractionResult useOn(@NotNull UseOnContext context) {
-		InteractionResult result = onMechanismUse(context);
+		InteractionResult result = onMechanismUseOn(context);
 
 		if (result.consumesAction()) {
 			Player player = context.getPlayer();
@@ -206,5 +237,39 @@ public abstract class MechanismItem extends BasicItem {
 		}
 
 		return result;
+	}
+
+	/**
+	 * 处理玩家使用该物品时的逻辑
+	 *
+	 * <p>
+	 * 该方法会调用 {@link #onMechanismUse(Level, Player, InteractionHand)} 执行构件行为,
+	 * 并在行为成功时自动处理以下逻辑:
+	 * </p>
+	 *
+	 * <ul>
+	 * <li>播放玩家挥手动画</li>
+	 * <li>根据 {@link #useAfterConsume()} 决定是否消耗物品</li>
+	 * <li>根据 {@link #getCooldownTicks()} 添加物品冷却</li>
+	 * </ul>
+	 *
+	 * <p>
+	 * 一般情况下不需要重写该方法,
+	 * 只需重写 {@link #onMechanismUse(Level, Player, InteractionHand)} 即可实现新的构件行为
+	 * </p>
+	 */
+	@Override
+	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+		InteractionResultHolder<ItemStack> resultHolder = onMechanismUse(level, player, hand);
+
+		if (resultHolder.getResult().consumesAction()) {
+			ItemStack stack = player.getItemInHand(hand);
+
+			handleItemSwing(hand, player);
+			handleCooldown(player, stack);
+			applyConsume(player, stack);
+		}
+
+		return resultHolder;
 	}
 }

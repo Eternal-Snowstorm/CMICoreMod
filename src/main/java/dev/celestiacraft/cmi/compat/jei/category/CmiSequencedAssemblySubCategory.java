@@ -24,7 +24,7 @@ public abstract class CmiSequencedAssemblySubCategory extends SequencedAssemblyS
 			PoseStack ms = graphics.pose();
 			ms.pushPose();
 			ms.translate(0, 51.5f, 0);
-			ms.scale(.6f, .6f, .6f);
+			ms.scale(0.6f, 0.6f, 0.6f);
 			grinder.draw(graphics, getWidth() / 2, 30);
 			ms.popPose();
 		}

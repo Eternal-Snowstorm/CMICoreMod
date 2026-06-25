@@ -6,7 +6,7 @@ import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.common.recipe.well.*;
-import dev.celestiacraft.cmi.common.register.CmiBlock;
+import dev.celestiacraft.cmi.common.register.block.WallBlocks;
 import dev.celestiacraft.cmi.compat.jei.api.CmiGuiTextures;
 import dev.celestiacraft.cmi.compat.jei.api.CmiJeiRecipeType;
 import dev.celestiacraft.cmi.compat.jei.category.structure.BlazeWellStructure;
@@ -14,7 +14,7 @@ import dev.celestiacraft.cmi.compat.jei.category.structure.LavaWellStructure;
 import dev.celestiacraft.cmi.compat.jei.category.structure.WaterWellStructure;
 import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.client.ClientRenderUtils;
-import dev.celestiacraft.libs.compat.jei.categoty.SimpleJeiCategory;
+import dev.celestiacraft.libs.compat.jei.api.SimpleJeiCategory;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.network.chat.Component;
@@ -34,7 +34,7 @@ public class WellCategory {
 		return SimpleJeiCategory.builder(CmiJeiRecipeType.WELL, helper)
 				.setTitle(CmiLang.JeiLang.setTranCategoryTitle("well"))
 				.setSize(178, 72)
-				.setIcon(CmiBlock.WATER_WELL.asStack())
+				.setIcon(WallBlocks.WATER_WELL.asStack())
 				.setBackground(0, 0)
 				.setRecipe((builder, recipe, group) -> {
 					if (recipe instanceof WaterWellRecipe water) {
