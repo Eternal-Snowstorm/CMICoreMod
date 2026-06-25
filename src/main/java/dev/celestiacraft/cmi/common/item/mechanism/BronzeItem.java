@@ -21,6 +21,11 @@ public class BronzeItem extends MechanismItem {
 	}
 
 	@Override
+	protected boolean useAfterConsume() {
+		return false;
+	}
+
+	@Override
 	protected InteractionResultHolder<ItemStack> onMechanismUse(Level level, Player player, InteractionHand hand) {
 		ItemStack item = player.getItemInHand(hand);
 		player.swing(hand);
