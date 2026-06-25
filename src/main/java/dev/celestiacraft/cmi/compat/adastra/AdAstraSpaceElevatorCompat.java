@@ -117,7 +117,7 @@ public class AdAstraSpaceElevatorCompat {
 		SpaceElevatorBaseConsoleBlock.deployStructure(level, consolePos);
 	}
 
-	private static final net.minecraft.core.Vec3i GROUND_CONSOLE_OFFSET = new net.minecraft.core.Vec3i(0, 1, 0);
+	private static final net.minecraft.core.Vec3i GROUND_CONSOLE_OFFSET = new net.minecraft.core.Vec3i(0, 2, 0);
 
 	private record LaunchOrigin(ResourceKey<Level> dimension, BlockPos pos) {
 	}
