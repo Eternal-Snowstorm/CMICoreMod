@@ -16,6 +16,70 @@ import org.jetbrains.annotations.NotNull;
 import java.security.SecureRandom;
 import java.util.Random;
 
+/**
+ * 构件物品基类
+ *
+ * <p>
+ * 该类封装了构件类物品的通用行为, 大致包括:
+ * </p>
+ *
+ * <ul>
+ *     <li>右键空气使用逻辑</li>
+ *     <li>右键方块使用逻辑</li>
+ *     <li>自动挥手动画</li>
+ *     <li>自动冷却处理</li>
+ *     <li>自动物品消耗</li>
+ *     <li>食物类物品使用后的保留逻辑</li>
+ * </ul>
+ *
+ * <p>
+ * 子类通常只需要重写以下方法即可实现新的构件:
+ * </p>
+ *
+ * <ul>
+ *     <li>{@link #onMechanismUseOn(UseOnContext)} —— 对方块使用时触发</li>
+ *     <li>{@link #onMechanismUse(Level, Player, InteractionHand)} —— 右键使用时触发</li>
+ *     <li>{@link #useAfterConsume()} —— 是否在使用后消耗物品</li>
+ *     <li>{@link #getCooldownTicks()} —— 使用后的冷却时间</li>
+ * </ul>
+ *
+ * <p>
+ * 当上述行为返回成功结果（即
+ * {@link InteractionResult#consumesAction()} 返回 {@code true}）
+ * 时, 本类会自动执行挥手动画, 冷却以及物品消耗逻辑
+ * </p>
+ *
+ * <h2>示例</h2>
+ *
+ * <pre>{@code
+ * public class FireItem extends MechanismItem {
+ *     public FireItem(Properties properties) {
+ *         super(properties);
+ *     }
+ *
+ *     @Override
+ *     protected boolean useAfterConsume() {
+ *         return true;
+ *     }
+ *
+ *     @Override
+ *     protected int getCooldownTicks() {
+ *         return 20;
+ *     }
+ *
+ *     @Override
+ *     protected InteractionResult onMechanismUseOn(UseOnContext context) {
+ *         context.getLevel().setBlock(
+ *                 context.getClickedPos().above(),
+ *                 Blocks.FIRE.defaultBlockState(),
+ *                 3
+ *         );
+ *
+ *         return InteractionResult.SUCCESS;
+ *     }
+ * }
+ * }</pre>
+ */
 public abstract class MechanismItem extends BasicItem {
 	protected static final Random RANDOM = new SecureRandom();
 
