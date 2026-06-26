@@ -53,7 +53,7 @@ public class BronzeItem extends MechanismItem {
 			});
 		}
 
-		return InteractionResultHolder.sidedSuccess(item, level.isClientSide());
+		return InteractionResultHolder.success(item);
 	}
 
 	private boolean trigger(LivingEntity entity) {
