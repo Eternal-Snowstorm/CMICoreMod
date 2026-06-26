@@ -47,7 +47,7 @@ public class BronzeItem extends MechanismItem {
 					player.getBoundingBox().inflate(2)
 			);
 			entities.forEach((entity) -> {
-				if (entity.distanceToSqr(player) <= 4 && !trigger(entity, player)) {
+				if (entity.distanceToSqr(player) <= 4 && !trigger(entity)) {
 					entity.hurt(entity.damageSources().hotFloor(), 8.0F);
 				}
 			});
@@ -56,7 +56,7 @@ public class BronzeItem extends MechanismItem {
 		return InteractionResultHolder.sidedSuccess(item, level.isClientSide());
 	}
 
-	private boolean trigger(LivingEntity entity, Player player) {
+	private boolean trigger(LivingEntity entity) {
 		return entity.hasEffect(MobEffects.FIRE_RESISTANCE)
 				|| ICuriosHelper.hasItem(entity, CmiMechanism.NETHER.get());
 	}
