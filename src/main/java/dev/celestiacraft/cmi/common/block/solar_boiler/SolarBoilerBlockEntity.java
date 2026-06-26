@@ -236,7 +236,7 @@ public abstract class SolarBoilerBlockEntity extends SmartBlockEntity implements
 					.forGoggles(tooltip);
 
 			CmiLang.builder()
-					.translate("tooltip.solar_boiler.total_capacity", capacity * 2)
+					.translate("tooltip.solar_boiler.total_capacity", capacity << 1)
 					.style(ChatFormatting.GRAY)
 					.forGoggles(tooltip);
 		}
