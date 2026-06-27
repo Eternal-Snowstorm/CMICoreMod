@@ -27,11 +27,13 @@ public class DataGenerators {
 		PackOutput output = generator.getPackOutput();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 		CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
+		boolean client = event.includeClient();
+		boolean server = event.includeServer();
 
 		// Client
 		LanguageGenerate.register();
-		generator.addProvider(event.includeClient(), new English(output));
-		generator.addProvider(event.includeClient(), new Chinese(output));
+		generator.addProvider(client, new English(output));
+		generator.addProvider(client, new Chinese(output));
 
 		// Server
 		CmiBlockTagsProvider blockTags = new CmiBlockTagsProvider(output, provider, helper);
@@ -40,10 +42,10 @@ public class DataGenerators {
 		CmiWorldGenProvider worldGen = new CmiWorldGenProvider(output, provider);
 		CmiCuriosProvider curios = new CmiCuriosProvider(output, helper, provider);
 
-		generator.addProvider(event.includeServer(), blockTags);
-		generator.addProvider(event.includeServer(), itemTags);
-		generator.addProvider(event.includeServer(), fluidTags);
-		generator.addProvider(event.includeServer(), worldGen);
-		generator.addProvider(event.includeServer(), curios);
+		generator.addProvider(server, blockTags);
+		generator.addProvider(server, itemTags);
+		generator.addProvider(server, fluidTags);
+		generator.addProvider(server, worldGen);
+		generator.addProvider(server, curios);
 	}
 }
