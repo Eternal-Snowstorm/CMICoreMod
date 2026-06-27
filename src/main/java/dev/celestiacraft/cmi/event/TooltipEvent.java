@@ -52,18 +52,18 @@ public class TooltipEvent {
 
 								Block block = data.blockState.getBlock();
 								tooltip.remove(MekanismLang.BLOCK.translate(block));
-								tooltip
-										.add(TextComponentUtil.build(EnumColor.INDIGO, MekanismLang.BLOCK.translate(
-												Component.translatable(block.getDescriptionId()).withStyle(ChatFormatting.GRAY)))
-										);
+								tooltip.add(TextComponentUtil.build(
+										EnumColor.INDIGO,
+										MekanismLang.BLOCK.translate(Component.translatable(block.getDescriptionId())
+												.withStyle(ChatFormatting.GRAY))));
 
 								if (block instanceof SpawnerBlock) {
 									CompoundTag tileTag = data.tileTag;
 									if (tileTag != null) {
 										tooltip.remove(MekanismLang.BLOCK_ENTITY.translate(tileTag.getString("id")));
-										tooltip.add(
-												MekanismLang.BLOCK_ENTITY.translateColored(EnumColor.INDIGO,
-														Component.translatable(tileTag.getString("id")).withStyle(ChatFormatting.GRAY))
+										tooltip.add(MekanismLang.BLOCK_ENTITY.translateColored(
+												EnumColor.INDIGO,
+												Component.translatable(tileTag.getString("id")).withStyle(ChatFormatting.GRAY))
 										);
 
 										Tag tag = data.tileTag.getCompound("SpawnData").getCompound("entity").get("id");
@@ -73,16 +73,17 @@ public class TooltipEvent {
 												ResourceLocation entityLocation = ForgeRegistries.ENTITY_TYPES.getKey(type);
 												if (entityLocation != null) {
 													tooltip.add(
-															TextComponentUtil.build(EnumColor.INDIGO,
-																	Component.translatable("cardboard_box.mekanism.block_entity.spawn_type",
-																			Component.translatable(capitaliseAllWords(entityLocation.toShortLanguageKey().replace("_", " "))).withStyle(ChatFormatting.GRAY)
+															TextComponentUtil.build(EnumColor.INDIGO, Component.translatable(
+																			"cardboard_box.mekanism.block_entity.spawn_type",
+																			Component.translatable(
+																					capitaliseAllWords(entityLocation.toShortLanguageKey().replace("_", " "))
+																			).withStyle(ChatFormatting.GRAY)
 																	)
 															)
 													);
 												}
 											}
 										}
-
 									}
 								}
 							}
@@ -95,7 +96,7 @@ public class TooltipEvent {
 		}
 	}
 
-	public static String capitaliseAllWords(String string) {
+	private static String capitaliseAllWords(String string) {
 		if (string == null) {
 			return null;
 		}
