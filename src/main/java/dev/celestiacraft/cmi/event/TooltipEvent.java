@@ -33,7 +33,7 @@ import java.util.List;
 public class TooltipEvent {
 	@SubscribeEvent
 	public static void onItemTooltip(ItemTooltipEvent event) {
-		List<Component> toolTip = event.getToolTip();
+		List<Component> tooltip = event.getToolTip();
 
 		if (ICheckModLoaded.hasMekanism()) {
 			Item item = MekanismBlocks.CARDBOARD_BOX.asItem();
@@ -45,14 +45,14 @@ public class TooltipEvent {
 					if (item instanceof ItemBlockCardboardBox cardboardBox) {
 						Level level = player.level();
 						BlockCardboardBox.BlockData data = cardboardBox.getBlockData(level, stack);
-						toolTip.remove(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(data != null)));
+						tooltip.remove(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(data != null)));
 						if (stack.hasTag()) {
 							if (data != null) {
-								toolTip.add(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(true, true)));
+								tooltip.add(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(true, true)));
 
 								Block block = data.blockState.getBlock();
-								toolTip.remove(MekanismLang.BLOCK.translate(block));
-								toolTip
+								tooltip.remove(MekanismLang.BLOCK.translate(block));
+								tooltip
 										.add(TextComponentUtil.build(EnumColor.INDIGO, MekanismLang.BLOCK.translate(
 												Component.translatable(block.getDescriptionId()).withStyle(ChatFormatting.GRAY)))
 										);
@@ -60,8 +60,8 @@ public class TooltipEvent {
 								if (block instanceof SpawnerBlock) {
 									CompoundTag tileTag = data.tileTag;
 									if (tileTag != null) {
-										toolTip.remove(MekanismLang.BLOCK_ENTITY.translate(tileTag.getString("id")));
-										toolTip.add(
+										tooltip.remove(MekanismLang.BLOCK_ENTITY.translate(tileTag.getString("id")));
+										tooltip.add(
 												MekanismLang.BLOCK_ENTITY.translateColored(EnumColor.INDIGO,
 														Component.translatable(tileTag.getString("id")).withStyle(ChatFormatting.GRAY))
 										);
@@ -72,7 +72,7 @@ public class TooltipEvent {
 											if (type != null) {
 												ResourceLocation entityLocation = ForgeRegistries.ENTITY_TYPES.getKey(type);
 												if (entityLocation != null) {
-													toolTip.add(
+													tooltip.add(
 															TextComponentUtil.build(EnumColor.INDIGO,
 																	Component.translatable("cardboard_box.mekanism.block_entity.spawn_type",
 																			Component.translatable(capitaliseAllWords(entityLocation.toShortLanguageKey().replace("_", " "))).withStyle(ChatFormatting.GRAY)
@@ -87,7 +87,7 @@ public class TooltipEvent {
 								}
 							}
 						} else {
-							toolTip.add(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, TextComponentUtil.build(EnumColor.RED, MekanismLang.NO)));
+							tooltip.add(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, TextComponentUtil.build(EnumColor.RED, MekanismLang.NO)));
 						}
 					}
 				}
