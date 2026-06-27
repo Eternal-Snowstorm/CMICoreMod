@@ -101,5 +101,15 @@ public class OtherLanguage extends LanguageGenerate {
 				"Pickup A Configurator",
 				"拿起配置器"
 		);
+		addCustomLang(
+				"jade.cmi.cardboard_box.type",
+				"Type: $1$s",
+				"类型: $1$s"
+		);
+		addCustomLang(
+				"cardboard_box.mekanism.block_entity.spawn_type",
+				"Spawns: %1$s",
+				"生成: %1$s"
+		);
 	}
 }
