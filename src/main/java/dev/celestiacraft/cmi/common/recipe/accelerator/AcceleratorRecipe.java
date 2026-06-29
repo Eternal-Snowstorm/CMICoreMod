@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.recipe.accelerator;
 
 import com.google.gson.*;
+import lombok.Getter;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +20,7 @@ import dev.celestiacraft.cmi.Cmi;
 
 import java.util.*;
 
+@Getter
 public class AcceleratorRecipe implements Recipe<SimpleContainer> {
 	public final ResourceLocation id;
 	public final List<Ingredient> inputs;
