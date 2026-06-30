@@ -1,10 +1,8 @@
 package dev.celestiacraft.cmi.common.block.belt_grinder;
 
 import com.simibubi.create.AllPartialModels;
-import com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
-import com.simibubi.create.content.kinetics.saw.SawVisual;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.instance.InstancerProvider;
@@ -21,37 +19,27 @@ public class BeltGrinderInstance extends KineticBlockEntityVisual<BeltGrinderBlo
 
 	public BeltGrinderInstance(VisualizationContext context, BeltGrinderBlockEntity entity, float partialTick) {
 		super(context, entity, partialTick);
-		rotatingModel = SawVisual.shaft(instancerProvider(), blockState)
+		rotatingModel = shaft(instancerProvider(), blockState)
 				.setup(blockEntity)
 				.setPosition(getVisualPosition());
 		rotatingModel.setChanged();
 	}
 
-	public static RotatingInstance shaft(InstancerProvider provider, BlockState state) {
+	public RotatingInstance shaft(InstancerProvider provider, BlockState state) {
 		Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
-		Direction.Axis axis = facing.getAxis();
-		if (axis.isHorizontal()) {
-			Direction align = facing.getOpposite();
-			return provider.instancer(
-					AllInstanceTypes.ROTATING,
-					Models.partial(AllPartialModels.SHAFT_HALF)
-			).createInstance().rotateTo(
-					0,
-					0,
-					1,
-					align.getStepX(),
-					align.getStepY(),
-					align.getStepZ()
-			);
-		} else {
-			return provider.instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.SHAFT))
-					.createInstance()
-					.rotateToFace(state.getValue(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE) ? Direction.Axis.X : Direction.Axis.Z);
-		}
+		Direction align = facing.getOpposite();
+		int x = align.getStepX();
+		int y = align.getStepY();
+		int z = align.getStepZ();
+
+		return provider.instancer(
+				AllInstanceTypes.ROTATING,
+				Models.partial(AllPartialModels.SHAFT_HALF)
+		).createInstance().rotateTo(0, 0, 1, x, y, z);
 	}
 
 	@Override
-	public void update(float pt) {
+	public void update(float partialTick) {
 		rotatingModel.setup(blockEntity)
 				.setChanged();
 	}
