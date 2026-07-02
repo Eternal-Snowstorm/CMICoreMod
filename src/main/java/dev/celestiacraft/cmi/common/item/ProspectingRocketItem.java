@@ -4,6 +4,7 @@ import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortS
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketEntity;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
+import lombok.Getter;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,6 +33,7 @@ import java.util.function.Supplier;
 
 public class ProspectingRocketItem extends Item implements GeoItem {
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+	@Getter
 	private final ProspectingRocketTier tier;
 	private final Supplier<EntityType<?>> entityType;
 
@@ -39,10 +41,6 @@ public class ProspectingRocketItem extends Item implements GeoItem {
 		super(properties);
 		this.tier = tier;
 		this.entityType = entityType;
-	}
-
-	public ProspectingRocketTier getTier() {
-		return tier;
 	}
 
 	@Override

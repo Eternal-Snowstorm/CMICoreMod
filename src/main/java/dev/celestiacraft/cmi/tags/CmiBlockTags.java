@@ -10,6 +10,7 @@ public class CmiBlockTags {
 			FREEZING_CATALYST,
 			COKE_OVEN_STRUCTURE,
 			COGWHEEL,
+			SMOKE_SOURCE,
 			LARGE_COGWHEEL;
 
 	static {
@@ -17,6 +18,7 @@ public class CmiBlockTags {
 		FREEZING_CATALYST = TagsBuilder.block("freezing_catalyst").cmi();
 		COKE_OVEN_STRUCTURE = TagsBuilder.block("coke_oven_structure").cmi();
 		COGWHEEL = TagsBuilder.block("cogwheel").create();
+		SMOKE_SOURCE = TagsBuilder.block("smoke_source").cmi();
 		LARGE_COGWHEEL = TagsBuilder.block("large_cogwheel").create();
 	}
 }
