@@ -4,6 +4,7 @@ import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortS
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketEntity;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
+import dev.celestiacraft.libs.api.register.item.BasicItem;
 import lombok.Getter;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
@@ -15,7 +16,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -31,7 +31,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class ProspectingRocketItem extends Item implements GeoItem {
+public class ProspectingRocketItem extends BasicItem implements GeoItem {
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	@Getter
 	private final ProspectingRocketTier tier;
