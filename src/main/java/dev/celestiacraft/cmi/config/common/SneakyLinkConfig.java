@@ -15,20 +15,16 @@ public class SneakyLinkConfig extends ConfigModule {
 
 	@Override
 	protected void addConfigs() {
-		COLLECTION_RADIUS  = builder
-				.comment("Horizontal radius within which the player picks up item entities")
+		COLLECTION_RADIUS = builder.comment("Horizontal radius within which the player picks up item entities")
 				.define("Collection radius", 3.0);
 
-		COLLECTION_DEPTH = builder
-				.comment("Amount of blocks below the player where sneaking picks up item entities")
+		COLLECTION_DEPTH = builder.comment("Amount of blocks below the player where sneaking picks up item entities")
 				.define("Collection depth", 2.0);
 
-		COLLECTION_HEIGHT = builder
-				.comment("Amount of blocks above the player where sneaking picks up item entities")
+		COLLECTION_HEIGHT = builder.comment("Amount of blocks above the player where sneaking picks up item entities")
 				.defineInRange("Collection height", 0.0, 0.0, 8.0);
 
-		INSTANT_PICKUP = builder
-				.comment("Pick up item entities regardless of their cooldown after being dropped from a player's inventory")
+		INSTANT_PICKUP = builder.comment("Pick up item entities regardless of their cooldown after being dropped from a player's inventory")
 				.define("Ignore pickup delay", false);
 	}
 }

@@ -14,20 +14,17 @@ public class SteamHammerConfig extends ConfigModule {
 
 	@Override
 	protected void addConfigs() {
-		STEAM_CONSUMPTION = builder
-				.comment("Steam consumption per run of steam hammer (mB)")
+		STEAM_CONSUMPTION = builder.comment("Steam consumption per run of steam hammer (mB)")
 				.comment("type: int")
 				.comment("default: 1000")
 				.defineInRange("steam_consumption", 1000, 0, 1000000);
 
-		STEAM_CAPACITY = builder
-				.comment("Steam capacity in steam hammer (mB)")
+		STEAM_CAPACITY = builder.comment("Steam capacity in steam hammer (mB)")
 				.comment("type: int")
 				.comment("default: 10000")
 				.defineInRange("steam_capacity", 10000, 1000, 1000000);
 
-		STRESS_IMPACT = builder
-				.comment("Stress impact of steam hammer (su)")
+		STRESS_IMPACT = builder.comment("Stress impact of steam hammer (su)")
 				.comment("type: double")
 				.comment("default: 16.0")
 				.defineInRange("stress_impact", 16.0, 0.0, 64);

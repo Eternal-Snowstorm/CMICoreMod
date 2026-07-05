@@ -13,16 +13,14 @@ public class AdvancedSpoutConfig extends ConfigModule {
 
 	@Override
 	protected void addConfigs() {
-		FILLING_TIME = builder
-				.comment("Filling time in ticks")
+		FILLING_TIME = builder.comment("Filling time in ticks")
 				.comment("20 ticks = 1 second")
 				.comment("Original spout uses 20 ticks")
 				.comment("type: int")
 				.comment("default: 5")
 				.defineInRange("filling_time", 5, 1, 100);
 
-		CAPACITY = builder
-				.comment("Fluid capacity in mB (millibuckets)")
+		CAPACITY = builder.comment("Fluid capacity in mB (millibuckets)")
 				.comment("1000 mB = 1 bucket")
 				.comment("Original spout uses 1000 mB")
 				.comment("type: int")

@@ -12,8 +12,7 @@ public class GeothermalGeneratorConfig extends ConfigModule {
 
 	@Override
 	protected void addConfigs() {
-		PRODUCTION_EFFICIENCY = builder
-				.comment("Per tick production FE")
+		PRODUCTION_EFFICIENCY = builder.comment("Per tick production FE")
 				.comment("20 ticks = 1 second")
 				.comment("type: int")
 				.defineInRange("production_efficiency", 5000, 1, 500000);

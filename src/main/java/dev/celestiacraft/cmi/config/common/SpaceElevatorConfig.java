@@ -12,8 +12,7 @@ public class SpaceElevatorConfig extends ConfigModule {
 
 	@Override
 	protected void addConfigs() {
-		ENABLE_CARGO_GRID = builder
-				.comment("Enable the multi-slot cargo grid in the space elevator storage UI")
+		ENABLE_CARGO_GRID = builder.comment("Enable the multi-slot cargo grid in the space elevator storage UI")
 				.comment("type: boolean")
 				.comment("default: false")
 				.define("Enable cargo grid", false);

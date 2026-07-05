@@ -8,10 +8,10 @@ public class SolarBoilerConfig extends ConfigModule {
 		super(builder, "solar_boilder", "Solar Boiler");
 	}
 
-	private final String consumComment = "Water consumption and steam production per tick";
-	private final String capacityComment = "Boiler's Fluid Capacity";
-	private final String efficienctTextComment = "_pre_tick_consum_and_production";
-	private final String capacityTextComment = "_boiler_capacity";
+	private static final String CONSUM_COMMENT = "Water consumption and steam production per tick";
+	private static final String CAPACITY_COMMENT = "Boiler's Fluid Capacity";
+	private static final String EFFICIENCT_TEXT_COMMENT = "_pre_tick_consum_and_production";
+	private static final String CAPACITY_TEXT_COMMENT = "_boiler_capacity";
 
 	public static ForgeConfigSpec.IntValue BRONZE_EFFICIENCY;
 	public static ForgeConfigSpec.IntValue BRONZE_CAPACITY;
@@ -24,40 +24,34 @@ public class SolarBoilerConfig extends ConfigModule {
 
 	@Override
 	protected void addConfigs() {
-		BRONZE_EFFICIENCY = builder
-				.comment(consumComment)
+		BRONZE_EFFICIENCY = builder.comment(CONSUM_COMMENT)
 				.comment("type: int")
 				.comment("default: 2")
-				.defineInRange("bronze" + efficienctTextComment, 2, 1, 1024);
+				.defineInRange("bronze" + EFFICIENCT_TEXT_COMMENT, 2, 1, 1024);
 
-		BRONZE_CAPACITY = builder
-				.comment(capacityComment)
+		BRONZE_CAPACITY = builder.comment(CAPACITY_COMMENT)
 				.comment("type: int")
 				.comment("default: 4000")
-				.defineInRange("bronze" + capacityTextComment, 4000, 1, 100000000);
+				.defineInRange("bronze" + CAPACITY_TEXT_COMMENT, 4000, 1, 100000000);
 
-		CAST_IRON_EFFICIENCY = builder
-				.comment(consumComment)
+		CAST_IRON_EFFICIENCY = builder.comment(CONSUM_COMMENT)
 				.comment("type: int")
 				.comment("default: 4")
-				.defineInRange("cast_iron" + efficienctTextComment, 4, 1, 1024);
+				.defineInRange("cast_iron" + EFFICIENCT_TEXT_COMMENT, 4, 1, 1024);
 
-		CAST_IRON_CAPACITY = builder
-				.comment(capacityComment)
+		CAST_IRON_CAPACITY = builder.comment(CAPACITY_COMMENT)
 				.comment("type: int")
 				.comment("default: 8000")
-				.defineInRange("cast_iron" + capacityTextComment, 8000, 1, 100000000);
+				.defineInRange("cast_iron" + CAPACITY_TEXT_COMMENT, 8000, 1, 100000000);
 
-		STEEL_EFFICIENCY = builder
-				.comment(consumComment)
+		STEEL_EFFICIENCY = builder.comment(CONSUM_COMMENT)
 				.comment("type: int")
 				.comment("default: 8")
-				.defineInRange("steel" + efficienctTextComment, 8, 1, 1024);
+				.defineInRange("steel" + EFFICIENCT_TEXT_COMMENT, 8, 1, 1024);
 
-		STEEL_CAPACITY = builder
-				.comment(capacityComment)
+		STEEL_CAPACITY = builder.comment(CAPACITY_COMMENT)
 				.comment("type: int")
 				.comment("default: 12000")
-				.defineInRange("steel" + capacityTextComment, 12000, 1, 100000000);
+				.defineInRange("steel" + CAPACITY_TEXT_COMMENT, 12000, 1, 100000000);
 	}
 }

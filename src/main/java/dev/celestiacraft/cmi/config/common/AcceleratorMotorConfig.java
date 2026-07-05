@@ -13,14 +13,12 @@ public class AcceleratorMotorConfig extends ConfigModule {
 
 	@Override
 	protected void addConfigs() {
-		DEFAULT_SPEED = builder
-				.comment("Default speed when placing the Accelerator Motor (RPM)")
+		DEFAULT_SPEED = builder.comment("Default speed when placing the Accelerator Motor (RPM)")
 				.comment("type: int")
 				.comment("default: 16")
 				.defineInRange("default_speed", 16, 1, 256);
 
-		MAX_SPEED = builder
-				.comment("Maximum RPM the accelerator motor")
+		MAX_SPEED = builder.comment("Maximum RPM the accelerator motor")
 				.comment("type: int")
 				.comment("default: 128")
 				.defineInRange("max_speed", 128, 1, 256);
