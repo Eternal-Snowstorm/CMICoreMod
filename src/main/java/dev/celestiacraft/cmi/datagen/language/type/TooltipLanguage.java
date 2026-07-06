@@ -127,6 +127,11 @@ public class TooltipLanguage extends LanguageGenerate {
 				"\"呐, 天气要开始放晴了哦\""
 		);
 		addTooltipLang(
+				"metal_detector",
+				"Can search for buried ore",
+				"可以搜寻埋藏在地下的矿石"
+		);
+		addTooltipLang(
 				"holdForDescriptionCtrl",
 				"Hold [%1$s] for Info",
 				"按住 [%1$s] 可查看信息"
