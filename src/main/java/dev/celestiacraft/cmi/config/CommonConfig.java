@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.config.main;
+package dev.celestiacraft.cmi.config;
 
 import dev.celestiacraft.cmi.config.common.*;
 import dev.celestiacraft.cmi.config.common.mbd2.ReinforcedCokeOvenConfig;
@@ -15,6 +15,7 @@ public class CommonConfig {
 	public static final SolarBoilerConfig SOLAR_BOILER;
 	public static final SpaceElevatorConfig SPACE_ELEVATOR;
 	public static final GeothermalGeneratorConfig GEOTHERMAL_GENERATOR;
+	public static final MetalDetectorConfig METAL_DETECTOR;
 
 	public static final ReinforcedCokeOvenConfig REINFORCED_COKE;
 
@@ -29,6 +30,7 @@ public class CommonConfig {
 		SOLAR_BOILER = new SolarBoilerConfig(BUILDER);
 		SPACE_ELEVATOR = new SpaceElevatorConfig(BUILDER);
 		GEOTHERMAL_GENERATOR = new GeothermalGeneratorConfig(BUILDER);
+		METAL_DETECTOR = new MetalDetectorConfig(BUILDER);
 
 		REINFORCED_COKE = new ReinforcedCokeOvenConfig(BUILDER);
 

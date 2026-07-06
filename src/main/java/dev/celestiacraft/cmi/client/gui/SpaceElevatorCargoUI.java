@@ -11,7 +11,7 @@ import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.side.fluid.forge.FluidTransferWrapper;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import dev.celestiacraft.cmi.config.common.SpaceElevatorConfig;
-import dev.celestiacraft.cmi.config.main.CommonConfig;
+import dev.celestiacraft.cmi.config.CommonConfig;
 import dev.celestiacraft.cmi.feature.cargogrid.CargoGridWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;

@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.common.item.tool;
 
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.common.register.CmiSound;
+import dev.celestiacraft.cmi.config.common.MetalDetectorConfig;
 import dev.celestiacraft.libs.api.client.context.TooltipContext;
 import dev.celestiacraft.libs.api.register.item.BasicItem;
 import net.minecraft.core.BlockPos;
@@ -49,14 +50,17 @@ public class MetalDetector extends BasicItem {
 					found = true;
 					outputValuableCoordinates(pos, player, state);
 					spawnFoundParticles(context);
-					level.playSound(
-							null,
-							player.blockPosition(),
-							CmiSound.DING.get(),
-							SoundSource.PLAYERS,
-							0.5F,
-							1.0F
-					);
+
+					if (MetalDetectorConfig.PLAY_SOUND.get()) {
+						level.playSound(
+								null,
+								player.blockPosition(),
+								CmiSound.DING.get(),
+								SoundSource.PLAYERS,
+								0.5F,
+								1.0F
+						);
+					}
 					break;
 				}
 			}
