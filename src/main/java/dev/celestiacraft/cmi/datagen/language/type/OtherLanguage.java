@@ -56,6 +56,18 @@ public class OtherLanguage extends LanguageGenerate {
 				"State: on",
 				"状态: 开"
 		);
+		addLanguage(
+				"info",
+				"metal_detector.not",
+				"No search for anything of value",
+				"没有什么有用的东西"
+		);
+		addLanguage(
+				"info",
+				"metal_detector.have",
+				"Searching on [%s, %s, %s] have %s",
+				"在[%s, %s, %s]搜寻到%s"
+		);
 		addRecipeLang(
 				"freezing",
 				"Freezing",

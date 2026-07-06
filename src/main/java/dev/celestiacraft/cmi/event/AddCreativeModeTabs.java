@@ -51,7 +51,8 @@ public class AddCreativeModeTabs {
 			List.of(
 					CmiItem.INITIAL_ITEM_KIT,
 					CmiItem.HANDHELE_CRAFTING_TABLE,
-					CmiItem.SIMPLE_BATTERY
+					CmiItem.SIMPLE_BATTERY,
+					CmiItem.METAL_DETECTOR
 			).forEach((item) -> {
 				event.accept(item.asItem());
 			});

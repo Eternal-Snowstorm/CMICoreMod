@@ -134,6 +134,10 @@ repositories {
 		name = 'Architectury'
 	}
 	maven {
+		name "LowDragMC-Ldlib-mbd2"
+		url "https://maven.firstdarkdev.xyz/snapshots"
+	}
+	maven {
 		url "https://maven.firstdark.dev/snapshots"
 	}
 	maven {
@@ -236,7 +240,7 @@ dependencies {
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 	// MBD2
-	implementation fg.deobf("curse.maven:multiblocked2-unofficial-1562745:8362924")
+	implementation fg.deobf("com.lowdragmc.multiblocked2:Multiblocked2:${minecraft_version}-${mbd2_version}") { transitive = false }
 	// KubeJS
 	implementation fg.deobf("dev.architectury:architectury-forge:9.2.14")
 	implementation fg.deobf("dev.latvian.mods:rhino-forge:2001.2.3-build.10")
