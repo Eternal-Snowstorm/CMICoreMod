@@ -6,6 +6,7 @@ import com.lowdragmc.mbd2.common.machine.definition.config.event.MachineOnRecipe
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.config.common.mbd2.ReinforcedCokeOvenConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -42,13 +43,39 @@ public class CokeOvenWorking {
 		}
 
 		BlockPos pos = machine.getPos();
+		Direction direction = machine.getFrontFacing().orElse(Direction.NORTH);
 
 		for (int i = 0; i < 9; i++) {
+			double localX = RANDOM.nextDouble() * 2 - 1;
+			double localZ = -1 - RANDOM.nextDouble() * 2;
+
+			double worldX;
+			double worldZ;
+
+			switch (direction) {
+				case NORTH -> {
+					worldX = -localX;
+					worldZ = -localZ;
+				}
+				case EAST -> {
+					worldX = localZ;
+					worldZ = -localX;
+				}
+				case WEST -> {
+					worldX = -localZ;
+					worldZ = localX;
+				}
+				default -> {
+					worldX = localX;
+					worldZ = localZ;
+				}
+			}
+
 			serverLevel.sendParticles(
 					ParticleTypes.CAMPFIRE_COSY_SMOKE,
-					pos.getX() - 1 + RANDOM.nextDouble() * 3,
+					pos.getX() + worldX,
 					pos.getY() + 3 + RANDOM.nextDouble(),
-					pos.getZ() + 1 + RANDOM.nextDouble() * 3,
+					pos.getZ() + worldZ,
 					0,
 					0,
 					0.07,
