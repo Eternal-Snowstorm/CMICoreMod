@@ -47,7 +47,7 @@ public class AddCreativeModeTabs {
 			});
 		}
 
-		if (key.equals(CmiCreativeTabs.MACHINES)) {
+		if (key.equals(CmiCreativeTabs.getTabKey("machines"))) {
 			List.of(
 					WallBlocks.WATER_WELL,
 					WallBlocks.LAVA_WELL,
