@@ -75,7 +75,7 @@ public class Cmi {
 		CmiAdvanmentTrigger.register();
 		CmiSound.register(bus);
 
-		CmiCreativeTab.register(bus);
+		CmiCreativeTabs.register(bus);
 
 		CmiBlockPartialModel.init();
 		CmiSpriteShiftEntry.init();
