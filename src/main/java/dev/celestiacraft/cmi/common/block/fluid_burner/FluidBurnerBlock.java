@@ -37,23 +37,24 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 
 	public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState(String material) {
 		return (context, provider) -> {
-			provider.getVariantBuilder(context.get()).forAllStates((state) -> {
-				boolean lit = state.getValue(LIT);
-				Direction facing = state.getValue(HORIZONTAL_FACING);
-				String stateName = lit ? "on" : "off";
-				String path = String.format("block/fluid_burner/%s/%s", material, stateName);
-				BlockModelProvider models = provider.models();
+			provider.getVariantBuilder(context.get())
+					.forAllStates((state) -> {
+						boolean lit = state.getValue(LIT);
+						Direction facing = state.getValue(HORIZONTAL_FACING);
+						String stateName = lit ? "on" : "off";
+						String path = String.format("block/fluid_burner/%s/%s", material, stateName);
+						BlockModelProvider models = provider.models();
 
-				BlockModelBuilder modelFile = models.withExistingParent(path, "block/orientable").texture("top", models.modLoc("block/fluid_burner/%s/top".formatted(material)))
-						.texture("bottom", models.modLoc("block/fluid_burner/%s/down".formatted(material)))
-						.texture("side", models.modLoc("block/fluid_burner/%s/side".formatted(material)))
-						.texture("front", models.modLoc("block/fluid_burner/%s/%s".formatted(material, (lit ? "on" : "off"))));
+						BlockModelBuilder modelFile = models.withExistingParent(path, "block/orientable").texture("top", models.modLoc("block/fluid_burner/%s/top".formatted(material)))
+								.texture("bottom", models.modLoc("block/fluid_burner/%s/down".formatted(material)))
+								.texture("side", models.modLoc("block/fluid_burner/%s/side".formatted(material)))
+								.texture("front", models.modLoc("block/fluid_burner/%s/%s".formatted(material, (lit ? "on" : "off"))));
 
-				return ConfiguredModel.builder()
-						.modelFile(modelFile)
-						.rotationY(BasicBlock.getYRotFromFacing(facing))
-						.build();
-			});
+						return ConfiguredModel.builder()
+								.modelFile(modelFile)
+								.rotationY(BasicBlock.getYRotFromFacing(facing))
+								.build();
+					});
 		};
 	}
 }

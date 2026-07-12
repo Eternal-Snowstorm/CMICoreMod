@@ -37,7 +37,7 @@ public class TooltipEvent {
 		Item item = MekanismBlocks.CARDBOARD_BOX.asItem();
 		ItemStack stack = event.getItemStack();
 
-		if (stack.getItem().equals(item)) {
+		if (stack.is(item)) {
 			Player player = event.getEntity();
 			if (player != null) {
 				if (item instanceof ItemBlockCardboardBox cardboardBox) {

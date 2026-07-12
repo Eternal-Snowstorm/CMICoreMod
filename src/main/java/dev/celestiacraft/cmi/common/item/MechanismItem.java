@@ -6,11 +6,9 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
 import java.security.SecureRandom;
@@ -44,8 +42,8 @@ import java.util.Random;
  * </ul>
  *
  * <p>
- * 当上述行为返回成功结果（即
- * {@link InteractionResult#consumesAction()} 返回 {@code true}）
+ * 当上述行为返回成功结果(即
+ * {@link InteractionResult#consumesAction()} 返回 {@code true})
  * 时, 本类会自动执行挥手动画, 冷却以及物品消耗逻辑
  * </p>
  *
@@ -220,27 +218,6 @@ public abstract class MechanismItem extends BasicItem {
 	 */
 	protected int getCooldownTicks() {
 		return 0;
-	}
-
-	protected InteractionResult useOtherItem(@NotNull Item item, @NotNull UseOnContext context) {
-		ItemStack stack = item.getDefaultInstance();
-
-		BlockHitResult result = new BlockHitResult(
-				context.getClickLocation(),
-				context.getClickedFace(),
-				context.getClickedPos(),
-				false
-		);
-
-		UseOnContext newContext = new UseOnContext(
-				context.getLevel(),
-				context.getPlayer(),
-				context.getHand(),
-				stack,
-				result
-		);
-
-		return item.useOn(newContext);
 	}
 
 	@Override
