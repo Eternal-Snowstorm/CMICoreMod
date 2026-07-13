@@ -12,7 +12,6 @@ import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.client.gui.ProspectingRocketUIFactory;
 import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
 import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
-import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
@@ -64,7 +63,7 @@ public class Cmi {
 		REGISTRATE.registerEventListeners(bus);
 
 		CmiBlock.register();
-		CmiCogwheel.register();
+//		CmiCogwheel.register();
 		CmiBlockEntity.register();
 		CmiEntity.register();
 		CmiItem.register();
@@ -80,7 +79,7 @@ public class Cmi {
 		CmiBlockPartialModel.init();
 		CmiSpriteShiftEntry.init();
 
-		MetalCogWheelPartial.init();
+//		MetalCogWheelPartial.init();
 
 		CmiNetwork.register();
 
