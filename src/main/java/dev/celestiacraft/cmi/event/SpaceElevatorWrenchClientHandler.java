@@ -129,6 +129,7 @@ public class SpaceElevatorWrenchClientHandler {
 	public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
 		Minecraft mc = Minecraft.getInstance();
 		Player player = mc.player;
+
 		if (player == null || mc.level == null) {
 			return;
 		}
@@ -179,7 +180,7 @@ public class SpaceElevatorWrenchClientHandler {
 			return;
 		}
 
-		if (trackedAnchor == null || !trackedAnchor.equals(anchorPos)) {
+		if (!anchorPos.equals(trackedAnchor)) {
 			trackedAnchor = anchorPos.immutable();
 			holdTicks = 0;
 			packetSent = false;
