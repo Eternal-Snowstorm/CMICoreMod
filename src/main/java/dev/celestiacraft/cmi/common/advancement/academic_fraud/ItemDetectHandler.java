@@ -38,9 +38,10 @@ public class ItemDetectHandler {
 		if (!(player instanceof ServerPlayer serverPlayer)) {
 			return;
 		}
+		CompoundTag data = serverPlayer.getPersistentData();
 		if (stack.is(Items.BLAST_FURNACE)) {
-			serverPlayer.getPersistentData().putBoolean(HAS_BLAST_FURNACE, true);
-			serverPlayer.getPersistentData().putBoolean(CHECKED, true);
+			data.putBoolean(HAS_BLAST_FURNACE, true);
+			data.putBoolean(CHECKED, true);
 		}
 	}
 

@@ -21,8 +21,8 @@ public interface IFanProcessingTarget {
 	 * 检查目标是否可被指定类型的风扇处理
 	 * 用于阻止无效的处理交互
 	 *
-	 * @param processingType 要检查的风扇处理类型
+	 * @param type 要检查的风扇处理类型
 	 * @return 若目标支持该处理类型则返回true，否则返回false
 	 */
-	boolean cmi$canProcess(FanProcessingType processingType);
+	boolean cmi$canProcess(FanProcessingType type);
 }
