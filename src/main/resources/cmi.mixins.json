@@ -12,7 +12,6 @@
 		"BiomeMixin",
 		"BulkFermenterBlockEntityMixin",
 		"CampfireBlockMixin",
-		"CastingBlockEntityMixin",
 		"CauldronBlockMixin",
 		"ChemicalLogicAccessor",
 		"ChemicalStateAccessor",
