@@ -1,11 +1,13 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console;
 
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.capability.*;
-import dev.celestiacraft.cmi.common.block.space_elevator_base_console.transfer.SpaceElevatorConsoleFluidTransferEvent;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.transfer.SpaceElevatorConsoleTransferEvent;
 import dev.celestiacraft.cmi.common.entity.space_elevator.ElevatorEnergyAnchor;
+import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorConsoleDisplayState;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
+import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorLinkHandler;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorMaterialsPacket;
 import lombok.Getter;
@@ -70,6 +72,8 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 
 	@Getter
 	private boolean elevatorPresent = false;
+	@Getter
+	private SpaceElevatorConsoleDisplayState elevatorDisplayState = SpaceElevatorConsoleDisplayState.READY;
 
 	@Getter
 	private final ItemStackHandler inputItems = new ItemStackHandler(ITEM_SLOT_COUNT) {
@@ -228,10 +232,16 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 		if (!(level instanceof ServerLevel serverLevel)) {
 			return;
 		}
+		SpaceElevatorEntity elevator = null;
 		if ((serverLevel.getGameTime() + pos.asLong()) % ELEVATOR_CHECK_INTERVAL_TICKS == 0) {
-			boolean nowPresent = SpaceElevatorConstructionHandler.hasNearbyElevator(serverLevel, pos);
-			if (nowPresent != entity.elevatorPresent) {
+			elevator = SpaceElevatorConstructionHandler.getNearbyElevator(serverLevel, pos);
+			boolean nowPresent = elevator != null || SpaceElevatorConstructionHandler.hasOrbitalCounterpart(serverLevel, pos);
+			SpaceElevatorConsoleDisplayState displayState = elevator != null
+					? elevator.getConsoleDisplayState()
+					: SpaceElevatorLinkHandler.getElevatorDisplayState(serverLevel, pos);
+			if (nowPresent != entity.elevatorPresent || displayState != entity.elevatorDisplayState) {
 				entity.elevatorPresent = nowPresent;
+				entity.elevatorDisplayState = displayState;
 				entity.setChanged();
 				serverLevel.sendBlockUpdated(pos, state, state, 3);
 			}
@@ -239,7 +249,9 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 		if ((serverLevel.getGameTime() + pos.asLong()) % INPUT_PULL_INTERVAL_TICKS != 0) {
 			return;
 		}
-		SpaceElevatorEntity elevator = SpaceElevatorConstructionHandler.getNearbyElevator(serverLevel, pos);
+		if (elevator == null) {
+			elevator = SpaceElevatorConstructionHandler.getNearbyElevator(serverLevel, pos);
+		}
 		if (elevator != null) {
 			entity.pushInputsToElevatorCargo(serverLevel, elevator);
 		} else {
@@ -266,11 +278,11 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 			int moved = transferFluidToCargo(cargo);
 			if (moved > 0) {
 				changed[0] = true;
-				MinecraftForge.EVENT_BUS.post(new SpaceElevatorConsoleFluidTransferEvent(level, worldPosition, moved));
 			}
 		});
 		if (changed[0]) {
 			setChanged();
+			MinecraftForge.EVENT_BUS.post(new SpaceElevatorConsoleTransferEvent(level, worldPosition));
 		}
 	}
 
@@ -333,6 +345,7 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 		super.saveAdditional(tag);
 		tag.putInt("Energy", energyStored);
 		tag.putBoolean("ElevatorPresent", elevatorPresent);
+		tag.putString("ElevatorDisplayState", elevatorDisplayState.getSerializedName());
 		tag.put("InputItems", inputItems.serializeNBT());
 		tag.put("OutputItems", outputItems.serializeNBT());
 		tag.put("InputFluids", serializeTanks(inputFluids));
@@ -344,6 +357,7 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 		super.load(tag);
 		energyStored = tag.getInt("Energy");
 		elevatorPresent = tag.getBoolean("ElevatorPresent");
+		elevatorDisplayState = SpaceElevatorConsoleDisplayState.fromSerializedName(tag.getString("ElevatorDisplayState"));
 		inputItems.deserializeNBT(tag.getCompound("InputItems"));
 		outputItems.deserializeNBT(tag.getCompound("OutputItems"));
 		deserializeTanks(inputFluids, tag, "InputFluids", "InputFluid");

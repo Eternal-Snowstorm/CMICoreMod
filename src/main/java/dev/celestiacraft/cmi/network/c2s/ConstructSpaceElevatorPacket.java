@@ -3,11 +3,13 @@ package dev.celestiacraft.cmi.network.c2s;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
 import dev.celestiacraft.cmi.network.CmiNetwork;
+import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorConsoleConstructionPacket;
 import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorMaterialsPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -41,6 +43,13 @@ public class ConstructSpaceElevatorPacket {
 
 			SpaceElevatorConstructionHandler.ConstructResult result = SpaceElevatorConstructionHandler.tryConstruct(player, msg.anchorPos);
 			player.displayClientMessage(Component.translatable(result.translationKey()), false);
+			if (result == SpaceElevatorConstructionHandler.ConstructResult.SUCCESS) {
+				LevelChunk chunk = player.serverLevel().getChunkAt(msg.anchorPos);
+				CmiNetwork.CHANNEL.send(
+						PacketDistributor.TRACKING_CHUNK.with(() -> chunk),
+						new SyncSpaceElevatorConsoleConstructionPacket(msg.anchorPos)
+				);
+			}
 			SpaceElevatorConstructionRecipe recipe = SpaceElevatorConstructionHandler.getRecipe(player.serverLevel());
 			int ingredientCount = recipe == null ? 0 : recipe.ingredients().size();
 			int fluidIngredientCount = recipe == null ? 0 : recipe.fluidIngredients().size();

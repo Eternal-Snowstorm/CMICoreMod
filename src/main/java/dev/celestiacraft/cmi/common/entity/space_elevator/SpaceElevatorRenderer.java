@@ -29,14 +29,14 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 	}
 
 	@Override
-	public void render(SpaceElevatorEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+	public void render(SpaceElevatorEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+				MultiBufferSource buffer, int packedLight) {
 		super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
 		if (!entity.shouldRenderCables()) {
 			return;
 		}
-
-		for (int i = 0; i < entity.cableCount(); i++) {
-			renderCable(entity, partialTick, poseStack, buffer, i);
+		for (int cableIndex = 0; cableIndex < entity.cableCount(); cableIndex++) {
+			renderCable(entity, partialTick, poseStack, buffer, cableIndex);
 		}
 	}
 
@@ -46,9 +46,10 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 		super.applyRotations(animatable, poseStack, ageInTicks, yRot, partialTick);
 	}
 
-	private void renderCable(SpaceElevatorEntity entity, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int cableIndex) {
+	private void renderCable(SpaceElevatorEntity entity, float partialTick, PoseStack poseStack,
+				MultiBufferSource buffer, int cableIndex) {
 		Vec3 cameraPos = entityRenderDispatcher.camera.getPosition();
-		CableEndpoints endpoints = resolveCableEndpoints(entity, partialTick, cableIndex, cameraPos);
+		CableEndpoints endpoints = resolveCableEndpoints(entity, cableIndex, cameraPos);
 		Vec3 start = endpoints.start();
 		Vec3 end = endpoints.end();
 		Vec3 cable = end.subtract(start);
@@ -59,20 +60,17 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 		double entityX = Mth.lerp(partialTick, entity.xo, entity.getX());
 		double entityY = Mth.lerp(partialTick, entity.yo, entity.getY());
 		double entityZ = Mth.lerp(partialTick, entity.zo, entity.getZ());
-
 		poseStack.pushPose();
 		poseStack.translate(start.x - entityX, start.y - entityY, start.z - entityZ);
 
 		VertexConsumer consumer = buffer.getBuffer(RenderType.leash());
 		Matrix4f matrix = poseStack.last().pose();
-
 		BlockPos lightPos = entity.getAnchor();
-		int startBlockLight = getBlockLightLevel(entity, lightPos);
-		int startSkyLight = entity.level().getBrightness(LightLayer.SKY, lightPos);
+		int blockLight = getBlockLightLevel(entity, lightPos);
+		int skyLight = entity.level().getBrightness(LightLayer.SKY, lightPos);
 		Vec3 midpoint = start.add(end).scale(0.5D);
-		Vec3 view = cameraPos.subtract(midpoint);
 		Vec3 direction = cable.normalize();
-		Vec3 widthAxis = direction.cross(view);
+		Vec3 widthAxis = direction.cross(cameraPos.subtract(midpoint));
 		if (widthAxis.lengthSqr() <= 1.0E-6D) {
 			widthAxis = direction.cross(new Vec3(0.0D, 1.0D, 0.0D));
 		}
@@ -81,63 +79,59 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 		}
 		widthAxis = widthAxis.normalize().scale(CABLE_HALF_WIDTH);
 
-		renderCablePlane(consumer, matrix, cable, startBlockLight, startSkyLight, widthAxis);
+		renderCablePlane(consumer, matrix, cable, blockLight, skyLight, widthAxis);
 		poseStack.popPose();
 	}
 
-	private static CableEndpoints resolveCableEndpoints(SpaceElevatorEntity entity, float partialTick, int cableIndex, Vec3 cameraPos) {
-		Vec3 start = entity.getCableStart(cableIndex, partialTick);
+	private static CableEndpoints resolveCableEndpoints(SpaceElevatorEntity entity, int cableIndex, Vec3 cameraPos) {
+		Vec3 start = entity.getCableStart(cableIndex);
 		Vec3 end = entity.getCableEnd(cableIndex);
-		double renderExtent = Math.max(MIN_CABLE_RENDER_EXTENT, Minecraft.getInstance().options.getEffectiveRenderDistance() * CABLE_RENDER_DISTANCE_SCALE);
-
+		double renderExtent = Math.max(
+				MIN_CABLE_RENDER_EXTENT,
+				Minecraft.getInstance().options.getEffectiveRenderDistance() * CABLE_RENDER_DISTANCE_SCALE
+		);
 		if (Planet.EARTH_ORBIT.equals(entity.level().dimension())) {
 			double farBottomY = Math.min(Math.min(start.y, end.y), cameraPos.y) - renderExtent;
 			return new CableEndpoints(new Vec3(start.x, farBottomY, start.z), end);
 		}
-
 		double farTopY = Math.max(Math.max(start.y, end.y), cameraPos.y) + renderExtent;
 		return new CableEndpoints(start, new Vec3(end.x, farTopY, end.z));
 	}
 
-	private static void renderCablePlane(
-			VertexConsumer consumer,
-			Matrix4f matrix,
-			Vec3 cable,
-			int startBlockLight,
-			int startSkyLight,
-			Vec3 widthAxis
-	) {
-		for (int i = 0; i <= CABLE_STEPS; ++i) {
-			addCableVertexPair(consumer, matrix, cable, startBlockLight, startSkyLight, widthAxis, CABLE_HALF_WIDTH, CABLE_HALF_WIDTH, i, false);
+	private static void renderCablePlane(VertexConsumer consumer, Matrix4f matrix, Vec3 cable,
+				int blockLight, int skyLight, Vec3 widthAxis) {
+		for (int i = 0; i <= CABLE_STEPS; i++) {
+			addCableVertexPair(consumer, matrix, cable, blockLight, skyLight, widthAxis,
+					CABLE_HALF_WIDTH, CABLE_HALF_WIDTH, i, false);
 		}
-		for (int i = CABLE_STEPS; i >= 0; --i) {
-			addCableVertexPair(consumer, matrix, cable, startBlockLight, startSkyLight, widthAxis, CABLE_HALF_WIDTH, 0.0F, i, true);
+		for (int i = CABLE_STEPS; i >= 0; i--) {
+			addCableVertexPair(consumer, matrix, cable, blockLight, skyLight, widthAxis,
+					CABLE_HALF_WIDTH, 0.0F, i, true);
 		}
 	}
 
-	private static void addCableVertexPair(
-			VertexConsumer consumer, Matrix4f matrix, Vec3 cable,
-			int startBlockLight, int startSkyLight,
-			Vec3 widthAxis,
-			float widthA, float widthB, int index, boolean alternate) {
+	private static void addCableVertexPair(VertexConsumer consumer, Matrix4f matrix, Vec3 cable,
+				int startBlockLight, int startSkyLight, Vec3 widthAxis,
+				float widthA, float widthB, int index, boolean alternate) {
 		float progress = (float) index / (float) CABLE_STEPS;
 		int blockLight = (int) Mth.lerp(progress, startBlockLight, 15);
 		int skyLight = (int) Mth.lerp(progress, startSkyLight, 15);
 		int packedLight = LightTexture.pack(blockLight, skyLight);
-
 		float shade = index % 2 == (alternate ? 1 : 0) ? 0.7F : 1.0F;
-		float r = 0.42F * shade;
-		float g = 0.44F * shade;
-		float b = 0.48F * shade;
-
 		float x = (float) (cable.x * progress);
 		float y = (float) (cable.y * progress);
 		float z = (float) (cable.z * progress);
 		float wx = (float) widthAxis.x;
 		float wy = (float) widthAxis.y;
 		float wz = (float) widthAxis.z;
-		consumer.vertex(matrix, x - wx, y - wy + widthB, z - wz).color(r, g, b, 1.0F).uv2(packedLight).endVertex();
-		consumer.vertex(matrix, x + wx, y + wy + widthA - widthB, z + wz).color(r, g, b, 1.0F).uv2(packedLight).endVertex();
+		consumer.vertex(matrix, x - wx, y - wy + widthB, z - wz)
+				.color(0.42F * shade, 0.44F * shade, 0.48F * shade, 1.0F)
+				.uv2(packedLight)
+				.endVertex();
+		consumer.vertex(matrix, x + wx, y + wy + widthA - widthB, z + wz)
+				.color(0.42F * shade, 0.44F * shade, 0.48F * shade, 1.0F)
+				.uv2(packedLight)
+				.endVertex();
 	}
 
 	@Override
