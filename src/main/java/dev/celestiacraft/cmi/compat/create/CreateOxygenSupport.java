@@ -31,6 +31,6 @@ public class CreateOxygenSupport {
 	public static int getVisualBacktankAir(LivingEntity entity) {
 		return Math.round(BacktankUtil.getAllWithAir(entity).stream()
 				.map(BacktankUtil::getAir)
-				.reduce(0f, Float::sum));
+				.reduce(0.0f, Float::sum));
 	}
 }
