@@ -21,7 +21,7 @@ public class TestMultiblockBlock extends ControllerBlock<TestMultiblockBlockEnti
 		return TestMultiblockBlockEntity.class;
 	}
 
-	public BlockEntityType<? extends TestMultiblockBlockEntity> getBlockEntityType() {
+	public BlockEntityType<TestMultiblockBlockEntity> getBlockEntityType() {
 		return CmiBlockEntity.TEST_MULTIBLOCK.get();
 	}
 }

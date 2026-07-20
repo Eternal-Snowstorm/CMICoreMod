@@ -22,7 +22,7 @@ public class LavaWellBlock extends ControllerBlock<LavaWellBlockEntity> {
 	}
 
 	@Override
-	public BlockEntityType<? extends LavaWellBlockEntity> getBlockEntityType() {
+	public BlockEntityType<LavaWellBlockEntity> getBlockEntityType() {
 		return CmiBlockEntity.LAVA_WELL.get();
 	}
 

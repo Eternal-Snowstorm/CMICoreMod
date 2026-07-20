@@ -42,7 +42,7 @@ public class TestCokeOvenBlock extends ControllerBlock<TestCokeOvenBlockEntity> 
 		return TestCokeOvenBlockEntity.class;
 	}
 
-	public BlockEntityType<? extends TestCokeOvenBlockEntity> getBlockEntityType() {
+	public BlockEntityType<TestCokeOvenBlockEntity> getBlockEntityType() {
 		return CmiBlockEntity.TEST_COKE_OVEN.get();
 	}
 }

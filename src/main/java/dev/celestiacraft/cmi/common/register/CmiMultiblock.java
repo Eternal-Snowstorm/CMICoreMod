@@ -8,6 +8,7 @@ import dev.celestiacraft.cmi.common.register.block.OtherBlocks;
 import dev.celestiacraft.cmi.common.register.block.WallBlocks;
 import dev.celestiacraft.cmi.tags.CmiBlockTags;
 import dev.celestiacraft.cmi.utils.ModResources;
+import dev.celestiacraft.libs.compat.patchouli.multiblock.DefineBlockBuilder;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.StructureBuilder;
 import net.minecraft.world.level.block.SlabBlock;
@@ -59,9 +60,7 @@ public class CmiMultiblock {
 				.define('D', (builder) -> {
 					builder.block(IEBlocks.WoodenDecoration.TREATED_SCAFFOLDING.get());
 				})
-				.define(' ', (builder) -> {
-					builder.any();
-				})
+				.define(' ', DefineBlockBuilder::any)
 				.define('E', (builder) -> {
 					builder.map(ModResources.TREATED_WOOD_SLAB.getBlock(), PropertyImmutableMap.create()
 							.add(SlabBlock.TYPE, SlabType.TOP)
@@ -102,9 +101,7 @@ public class CmiMultiblock {
 				.define('D', (builder) -> {
 					builder.block(OtherBlocks.NAHUATL_SCAFFOLD.get());
 				})
-				.define(' ', (builder) -> {
-					builder.any();
-				})
+				.define(' ', DefineBlockBuilder::any)
 				.define('E', (builder) -> {
 					builder.map(ModResources.NAHUATL_SLAB.getBlock(), PropertyImmutableMap.create()
 							.add(SlabBlock.TYPE, SlabType.TOP)
@@ -145,9 +142,7 @@ public class CmiMultiblock {
 				.define('D', (builder) -> {
 					builder.block(OtherBlocks.BLAZEWOOD_SCAFFOLD.get());
 				})
-				.define(' ', (builder) -> {
-					builder.any();
-				})
+				.define(' ', DefineBlockBuilder::any)
 				.define('E', (builder) -> {
 					builder.map(ModResources.BLAZEWOOD_SLAB.getBlock(), PropertyImmutableMap.create()
 							.add(SlabBlock.TYPE, SlabType.TOP)

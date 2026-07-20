@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.common.block.mars_geothermal_vent;
+package dev.celestiacraft.cmi.common.block.geothermal_generator.mars_geothermal_vent;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.client.particle.ACParticleRegistry;

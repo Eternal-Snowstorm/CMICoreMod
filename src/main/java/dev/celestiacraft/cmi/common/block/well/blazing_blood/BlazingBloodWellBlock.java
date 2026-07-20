@@ -22,7 +22,7 @@ public class BlazingBloodWellBlock extends ControllerBlock<BlazingBloodWellBlock
 	}
 
 	@Override
-	public BlockEntityType<? extends BlazingBloodWellBlockEntity> getBlockEntityType() {
+	public BlockEntityType<BlazingBloodWellBlockEntity> getBlockEntityType() {
 		return CmiBlockEntity.BLAZING_BLOOD_WELL.get();
 	}
 

@@ -3,7 +3,7 @@ package dev.celestiacraft.cmi.common.register.block;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.ItemModelGen;
-import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlock;
+import dev.celestiacraft.cmi.common.block.geothermal_generator.mars_geothermal_vent.MarsGeothermalVentBlock;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlock;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.Tags;

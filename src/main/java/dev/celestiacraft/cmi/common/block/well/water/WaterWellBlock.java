@@ -22,7 +22,7 @@ public class WaterWellBlock extends ControllerBlock<WaterWellBlockEntity> {
 	}
 
 	@Override
-	public BlockEntityType<? extends WaterWellBlockEntity> getBlockEntityType() {
+	public BlockEntityType<WaterWellBlockEntity> getBlockEntityType() {
 		return CmiBlockEntity.WATER_WELL.get();
 	}
 

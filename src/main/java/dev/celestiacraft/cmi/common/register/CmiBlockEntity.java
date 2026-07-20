@@ -17,7 +17,7 @@ import dev.celestiacraft.cmi.common.block.fluid_burner.bronze.BronzeFluidBurnerB
 import dev.celestiacraft.cmi.common.block.fluid_burner.cast_iron.CastIronFluidBurnerBlockEntity;
 import dev.celestiacraft.cmi.common.block.fluid_burner.steel.SteelFluidBurnerBlockEntity;
 import dev.celestiacraft.cmi.common.block.geothermal_generator.GGBlockEntity;
-import dev.celestiacraft.cmi.common.block.mars_geothermal_vent.MarsGeothermalVentBlockEntity;
+import dev.celestiacraft.cmi.common.block.geothermal_generator.mars_geothermal_vent.MarsGeothermalVentBlockEntity;
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlockEntity;
 import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlockEntity;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockEntity;

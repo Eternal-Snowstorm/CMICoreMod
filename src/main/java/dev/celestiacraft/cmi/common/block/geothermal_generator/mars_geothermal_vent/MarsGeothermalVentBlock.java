@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.common.block.mars_geothermal_vent;
+package dev.celestiacraft.cmi.common.block.geothermal_generator.mars_geothermal_vent;
 
 import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;
