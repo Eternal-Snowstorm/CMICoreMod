@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_top;
 
+import dev.celestiacraft.cmi.common.entity.space_elevator.ElevatorEnergyAnchor;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +25,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlockEntity, dev.celestiacraft.cmi.common.entity.space_elevator.ElevatorEnergyAnchor {
+public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlockEntity, ElevatorEnergyAnchor {
 	public static final int ENERGY_CAPACITY = 10_000_000;
 	public static final int ENERGY_MAX_RECEIVE = 50_000;
 	public static final int LAUNCH_ENERGY_COST = 1_000_000;

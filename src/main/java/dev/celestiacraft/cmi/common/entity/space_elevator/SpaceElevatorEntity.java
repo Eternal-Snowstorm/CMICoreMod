@@ -93,8 +93,6 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	private static final int STATE_DEPART_DOWN = 5;
 	private static final int STATE_ARRIVE_GROUND = 6;
 
-	private static final double ANCHOR_Y_OFFSET = 2.01D;
-	private static final double ORBIT_DOCK_Y_OFFSET = -3.75D;
 	private static final double ORBIT_EXIT_Y_OFFSET = 4.02D;
 	private static final int COUNTDOWN_TICKS = Rocket.COUNTDOWN_LENGTH;
 	private static final double GROUND_ASCENT_BLOCKS_PER_TICK = 192.0D / 180.0D;
@@ -108,16 +106,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	private static final double CONFLICT_SEARCH_RADIUS = 3.5D;
 	private static final double CONFLICT_SEARCH_HEIGHT = 256.0D;
 	private static final double CABLE_BOTTOM_Y = -64.0D;
-	private static final double CABLE_X_OFFSET = 33.24264D / 16.0D;
-	private static final double CABLE_Z_OFFSET = 34.24264D / 16.0D;
 	public static final int CARGO_ITEM_SLOTS = 60;
 	public static final int CARGO_FLUID_CAPACITY = 64_000;
-	private static final Vec3[] CABLE_OFFSETS = new Vec3[] {
-			new Vec3(-CABLE_X_OFFSET, 20.0D / 16.0D, -CABLE_Z_OFFSET),
-			new Vec3(-CABLE_X_OFFSET, 20.0D / 16.0D, CABLE_Z_OFFSET),
-			new Vec3(CABLE_X_OFFSET, 20.0D / 16.0D, CABLE_Z_OFFSET),
-			new Vec3(CABLE_X_OFFSET, 20.0D / 16.0D, -CABLE_Z_OFFSET)
-	};
 
 	private static CameraType previousCameraType;
 	private static boolean jumpWasDown;
@@ -248,12 +238,9 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 			}
 		}
 
-		SpaceElevatorEntity counterpart = findOrCreateElevator(target.level(), target.targetAnchor());
-		if (counterpart == null) {
-			player.displayClientMessage(Component.translatable("text.cmi.space_elevator.spawn_failed"), false);
-			return false;
-		}
-		if (counterpart.isTransporting() || counterpart.getFirstPassenger() != null) {
+		loadAnchorChunk(target.level(), target.targetAnchor());
+		SpaceElevatorEntity counterpart = findElevator(target.level(), target.targetAnchor());
+		if (counterpart != null && (counterpart.isTransporting() || counterpart.getFirstPassenger() != null)) {
 			player.displayClientMessage(Component.translatable("text.cmi.space_elevator.spawn_failed"), false);
 			return false;
 		}
@@ -471,7 +458,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 			return;
 		}
 
-		SpaceElevatorEntity counterpart = findOrCreateElevator(targetLevel, pendingDestinationAnchor);
+		SpaceElevatorEntity counterpart = findOrCreateElevator(targetLevel, pendingDestinationAnchor, STATE_ARRIVE_ORBIT);
 		if (counterpart == null) {
 			player.displayClientMessage(Component.translatable("text.cmi.space_elevator.spawn_failed"), false);
 			resetToAnchor();
@@ -480,7 +467,6 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 
 		transferCargoTo(counterpart);
 		transferringToCounterpart = true;
-		counterpart.beginState(STATE_ARRIVE_ORBIT);
 		movePassengerToCounterpart(player, targetLevel, counterpart);
 		discard();
 	}
@@ -499,7 +485,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 			return;
 		}
 
-		SpaceElevatorEntity counterpart = findOrCreateElevator(targetLevel, pendingDestinationAnchor);
+		SpaceElevatorEntity counterpart = findOrCreateElevator(targetLevel, pendingDestinationAnchor, STATE_ARRIVE_GROUND);
 		if (counterpart == null) {
 			player.displayClientMessage(Component.translatable("text.cmi.space_elevator.spawn_failed"), false);
 			resetToAnchor();
@@ -508,7 +494,6 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 
 		transferCargoTo(counterpart);
 		transferringToCounterpart = true;
-		counterpart.beginState(STATE_ARRIVE_GROUND);
 		movePassengerToCounterpart(player, targetLevel, counterpart);
 		discard();
 	}
@@ -592,7 +577,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		}
 
 		Level level = level();
-		for (Vec3 offset : CABLE_OFFSETS) {
+		for (int cableIndex = 0; cableIndex < SpaceElevatorCableGeometry.cableCount(); cableIndex++) {
+			Vec3 offset = SpaceElevatorCableGeometry.cableOffset(cableIndex);
 			level.addParticle(
 					ParticleTypes.ELECTRIC_SPARK,
 					getX() + offset.x,
@@ -674,6 +660,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		this.entityData.set(TRANSPORT_STATE, state);
 		setTransportTicks(0);
 		applyStateStartPosition(state);
+		syncConsoleDisplayState();
 	}
 
 	private void applyStateStartPosition(int state) {
@@ -695,6 +682,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		setTransportTicks(0);
 		this.pendingDestinationDimension = null;
 		this.pendingDestinationAnchor = null;
+		syncConsoleDisplayState();
 	}
 
 	private void resetToAnchor() {
@@ -724,6 +712,25 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		return isTransporting();
 	}
 
+	public SpaceElevatorConsoleDisplayState getConsoleDisplayState() {
+		return switch (getTransportState()) {
+			case STATE_COUNTDOWN_UP -> SpaceElevatorConsoleDisplayState.COUNTDOWN;
+			case STATE_DEPART_UP -> SpaceElevatorConsoleDisplayState.ASCENDING;
+			case STATE_ARRIVE_ORBIT -> SpaceElevatorConsoleDisplayState.APPROACHING_STATION;
+			case STATE_COUNTDOWN_DOWN -> SpaceElevatorConsoleDisplayState.DOCKED;
+			case STATE_DEPART_DOWN -> SpaceElevatorConsoleDisplayState.APPROACHING_STATION;
+			case STATE_ARRIVE_GROUND -> SpaceElevatorConsoleDisplayState.ASCENDING;
+			case STATE_IDLE -> isOrbitSide() ? SpaceElevatorConsoleDisplayState.DOCKED : SpaceElevatorConsoleDisplayState.READY;
+			default -> SpaceElevatorConsoleDisplayState.READY;
+		};
+	}
+
+	private void syncConsoleDisplayState() {
+		if (level() instanceof ServerLevel serverLevel && hasAnchor()) {
+			SpaceElevatorLinkHandler.markElevatorDisplayState(serverLevel, getAnchor(), getConsoleDisplayState());
+		}
+	}
+
 	private boolean isOrbitSide() {
 		return Planet.EARTH_ORBIT.equals(level().dimension());
 	}
@@ -733,7 +740,10 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	private double getDockY() {
-		return getAnchor().getY() + (isOrbitSide() ? ORBIT_DOCK_Y_OFFSET : ANCHOR_Y_OFFSET);
+		double dockYOffset = isOrbitSide()
+				? SpaceElevatorCableGeometry.ORBIT_DOCK_Y_OFFSET
+				: SpaceElevatorCableGeometry.GROUND_DOCK_Y_OFFSET;
+		return getAnchor().getY() + dockYOffset;
 	}
 
 	private double getDockZ() {
@@ -764,11 +774,11 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	int cableCount() {
-		return CABLE_OFFSETS.length;
+		return SpaceElevatorCableGeometry.cableCount();
 	}
 
-	Vec3 getCableStart(int index, float partialTick) {
-		Vec3 offset = cableOffset(index);
+	Vec3 getCableStart(int index) {
+		Vec3 offset = SpaceElevatorCableGeometry.cableOffset(index);
 		if (isOrbitSide()) {
 			return new Vec3(getDockX() + offset.x, CABLE_BOTTOM_Y, getDockZ() + offset.z);
 		}
@@ -776,15 +786,11 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	Vec3 getCableEnd(int index) {
-		Vec3 offset = cableOffset(index);
+		Vec3 offset = SpaceElevatorCableGeometry.cableOffset(index);
 		if (isOrbitSide()) {
 			return new Vec3(getDockX() + offset.x, getDockY() + offset.y, getDockZ() + offset.z);
 		}
 		return new Vec3(getDockX() + offset.x, getGroundTransferY(), getDockZ() + offset.z);
-	}
-
-	private Vec3 cableOffset(int index) {
-		return CABLE_OFFSETS[Mth.clamp(index, 0, CABLE_OFFSETS.length - 1)];
 	}
 
 	@Nullable
@@ -793,16 +799,22 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	@Nullable
-	private static SpaceElevatorEntity findOrCreateElevator(ServerLevel level, BlockPos anchorPos) {
+	private static SpaceElevatorEntity findOrCreateElevator(ServerLevel level, BlockPos anchorPos, int arrivalState) {
 		loadAnchorChunk(level, anchorPos);
 		SpaceElevatorEntity result = findElevator(level, anchorPos);
+		if (result != null && (result.isTransporting() || result.getFirstPassenger() != null)) {
+			return null;
+		}
 		if (result == null) {
 			result = CmiEntity.SPACE_ELEVATOR.get().create(level);
 			if (result == null) {
 				return null;
 			}
 			result.setAnchor(anchorPos);
+			result.beginState(arrivalState);
 			level.addFreshEntity(result);
+		} else {
+			result.beginState(arrivalState);
 		}
 		SpaceElevatorLinkHandler.markElevatorPresent(level, anchorPos, true);
 		return result;
@@ -810,13 +822,17 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 
 	@Override
 	public void remove(@NotNull RemovalReason reason) {
-		if (!level().isClientSide()
-				&& hasAnchor()
-				&& reason.shouldDestroy()
-				&& !transferringToCounterpart) {
-			SpaceElevatorLinkHandler.markElevatorPresent((ServerLevel) level(), getAnchor(), false);
+		if (level().isClientSide() || !hasAnchor() || !reason.shouldDestroy() || transferringToCounterpart) {
+			super.remove(reason);
+			return;
 		}
+
+		ServerLevel serverLevel = (ServerLevel) level();
+		BlockPos anchorPos = getAnchor();
 		super.remove(reason);
+		if (findElevator(serverLevel, anchorPos) == null) {
+			SpaceElevatorLinkHandler.markElevatorPresent(serverLevel, anchorPos, false);
+		}
 	}
 
 	@Nullable
@@ -975,6 +991,14 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	@Override
+	public boolean shouldRenderAtSqrDistance(double sqrDistance) {
+		if (shouldRenderCables()) {
+			return true;
+		}
+		return super.shouldRenderAtSqrDistance(sqrDistance);
+	}
+
+	@Override
 	public void markAsDirty() {
 
 	}
@@ -1093,9 +1117,4 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		}
 	}
 
-	@Override
-	public boolean shouldRenderAtSqrDistance(double sqrDistance) {
-		if (shouldRenderCables()) return true;
-		return super.shouldRenderAtSqrDistance(sqrDistance);
-	}
 }

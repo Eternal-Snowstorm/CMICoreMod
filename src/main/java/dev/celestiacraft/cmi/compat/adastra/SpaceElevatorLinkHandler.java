@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.compat.adastra;
 
 import com.teamresourceful.resourcefullib.common.utils.SaveHandler;
+import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorConsoleDisplayState;
 import earth.terrarium.adastra.api.planets.Planet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 	private static final String GROUND_ANCHOR_KEY = "GroundAnchor";
 	private static final String GROUND_DIMENSION_KEY = "GroundDimension";
 	private static final String ELEVATOR_PRESENT_KEY = "ElevatorPresent";
+	private static final String ELEVATOR_DISPLAY_STATE_KEY = "ElevatorDisplayState";
 
 	private final Map<Long, SpaceElevatorLink> links = new HashMap<>();
 
@@ -50,6 +53,11 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 				link.groundDimension = ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(linkTag.getString(GROUND_DIMENSION_KEY)));
 			}
 			link.elevatorPresent = linkTag.getBoolean(ELEVATOR_PRESENT_KEY);
+			if (linkTag.contains(ELEVATOR_DISPLAY_STATE_KEY, Tag.TAG_STRING)) {
+				link.elevatorDisplayState = SpaceElevatorConsoleDisplayState.fromSerializedName(linkTag.getString(ELEVATOR_DISPLAY_STATE_KEY));
+			} else if (link.elevatorPresent) {
+				link.elevatorDisplayState = SpaceElevatorConsoleDisplayState.DOCKED;
+			}
 			links.put(stationPos, link);
 		}
 	}
@@ -76,6 +84,7 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 			if (link.elevatorPresent) {
 				linkTag.putBoolean(ELEVATOR_PRESENT_KEY, true);
 			}
+			linkTag.putString(ELEVATOR_DISPLAY_STATE_KEY, link.elevatorDisplayState.getSerializedName());
 			linkTags.add(linkTag);
 		}
 		tag.put(LINKS_KEY, linkTags);
@@ -100,7 +109,11 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 	}
 
 	public static void setElevatorPresent(ServerLevel level, ChunkPos stationPos, boolean present) {
-		read(level).getOrCreate(stationPos).elevatorPresent = present;
+		SpaceElevatorLink link = read(level).getOrCreate(stationPos);
+		link.elevatorPresent = present;
+		if (!present) {
+			link.elevatorDisplayState = SpaceElevatorConsoleDisplayState.READY;
+		}
 	}
 
 	public static boolean isElevatorPresent(ServerLevel level, ChunkPos stationPos) {
@@ -129,6 +142,38 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 		if (link != null) {
 			setElevatorPresent(orbitLevel, link.stationPos(), present);
 		}
+	}
+
+	public static void markElevatorDisplayState(ServerLevel level, BlockPos anchorPos, SpaceElevatorConsoleDisplayState state) {
+		ServerLevel orbitLevel = level;
+		LinkTarget link;
+		if (Planet.EARTH_ORBIT.equals(level.dimension())) {
+			link = findByOrbitDockAnchor(level, anchorPos);
+			if (link == null) {
+				link = findByOrbitAnchor(level, anchorPos);
+			}
+		} else {
+			orbitLevel = level.getServer().getLevel(Planet.EARTH_ORBIT);
+			if (orbitLevel == null) {
+				return;
+			}
+			link = findByGroundAnchor(orbitLevel, level.dimension(), anchorPos);
+		}
+		if (link != null) {
+			read(orbitLevel).getOrCreate(link.stationPos()).elevatorDisplayState = state;
+		}
+	}
+
+	public static SpaceElevatorConsoleDisplayState getElevatorDisplayState(ServerLevel groundLevel, BlockPos groundAnchor) {
+		ServerLevel orbitLevel = groundLevel.getServer().getLevel(Planet.EARTH_ORBIT);
+		if (orbitLevel == null) {
+			return SpaceElevatorConsoleDisplayState.READY;
+		}
+		LinkTarget link = findByGroundAnchor(orbitLevel, groundLevel.dimension(), groundAnchor);
+		if (link == null) {
+			return SpaceElevatorConsoleDisplayState.READY;
+		}
+		return read(orbitLevel).getOrCreate(link.stationPos()).elevatorDisplayState;
 	}
 
 	@Nullable
@@ -214,7 +259,7 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 		return links.computeIfAbsent(stationPos.toLong(), key -> new SpaceElevatorLink());
 	}
 
-	public static java.util.Collection<SpaceElevatorLink> getAllLinks(ServerLevel level) {
+	public static Collection<SpaceElevatorLink> getAllLinks(ServerLevel level) {
 		return read(level).links.values();
 	}
 
@@ -224,6 +269,7 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 		public BlockPos groundAnchor;
 		ResourceKey<Level> groundDimension;
 		public boolean elevatorPresent;
+		SpaceElevatorConsoleDisplayState elevatorDisplayState = SpaceElevatorConsoleDisplayState.READY;
 	}
 
 	@Override

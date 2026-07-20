@@ -3,14 +3,15 @@ package dev.celestiacraft.cmi.network;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.network.c2s.*;
 import dev.celestiacraft.cmi.network.s2c.SeedPacket;
-import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorConsoleFluidTransferPacket;
 import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorBaseStatePacket;
+import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorConsoleConstructionPacket;
+import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorConsoleTransferPacket;
 import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorMaterialsPacket;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 public class CmiNetwork {
-	private static final String PROTOCOL = "1";
+	private static final String PROTOCOL = "2";
 
 	public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
 			Cmi.loadResource("main"),
@@ -80,10 +81,17 @@ public class CmiNetwork {
 		);
 		CHANNEL.registerMessage(
 				id++,
-				SyncSpaceElevatorConsoleFluidTransferPacket.class,
-				SyncSpaceElevatorConsoleFluidTransferPacket::encode,
-				SyncSpaceElevatorConsoleFluidTransferPacket::decode,
-				SyncSpaceElevatorConsoleFluidTransferPacket::handle
+				SyncSpaceElevatorConsoleTransferPacket.class,
+				SyncSpaceElevatorConsoleTransferPacket::encode,
+				SyncSpaceElevatorConsoleTransferPacket::decode,
+				SyncSpaceElevatorConsoleTransferPacket::handle
+		);
+		CHANNEL.registerMessage(
+				id++,
+				SyncSpaceElevatorConsoleConstructionPacket.class,
+				SyncSpaceElevatorConsoleConstructionPacket::encode,
+				SyncSpaceElevatorConsoleConstructionPacket::decode,
+				SyncSpaceElevatorConsoleConstructionPacket::handle
 		);
 		CHANNEL.registerMessage(
 				id++,
