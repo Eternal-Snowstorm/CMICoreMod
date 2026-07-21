@@ -6,6 +6,8 @@
 	"refmap": "cmi.refmap.json",
 	"mixins": [
 		"AnimatedBlazeBurnerMixin",
+		"BacktankBlockEntityMixin",
+		"BacktankUtilMixin",
 		"BasinBlockEntityMixin",
 		"BasinCategoryMixin",
 		"BiomeMixin",
@@ -40,7 +42,8 @@
 	],
 	"client": [
 		"LevelRendererMixin",
-		"BulkFermenterRendererMixin"
+		"BulkFermenterRendererMixin",
+		"BacktankJadeProviderMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

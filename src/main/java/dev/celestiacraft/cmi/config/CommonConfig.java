@@ -16,6 +16,7 @@ public class CommonConfig {
 	public static final SpaceElevatorConfig SPACE_ELEVATOR;
 	public static final GeothermalGeneratorConfig GEOTHERMAL_GENERATOR;
 	public static final MetalDetectorConfig METAL_DETECTOR;
+	public static final BacktankConfig BACKTANK;
 
 	public static final ReinforcedCokeOvenConfig REINFORCED_COKE;
 
@@ -31,6 +32,7 @@ public class CommonConfig {
 		SPACE_ELEVATOR = new SpaceElevatorConfig(BUILDER);
 		GEOTHERMAL_GENERATOR = new GeothermalGeneratorConfig(BUILDER);
 		METAL_DETECTOR = new MetalDetectorConfig(BUILDER);
+		BACKTANK = new BacktankConfig(BUILDER);
 
 		REINFORCED_COKE = new ReinforcedCokeOvenConfig(BUILDER);
 
