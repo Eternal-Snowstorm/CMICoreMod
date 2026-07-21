@@ -52,11 +52,16 @@ public class ModifyTitle {
 				title = "Create: Mechanism and Innovation";
 			}
 
-			String greeting = FestivalUtils.getFestivalGreeting();
+			String greeting;
 
 			// 非节日随机普通标题
-			if (greeting == null) {
-				greeting = getRandomNormalGreeting();
+			if (FestivalUtils.isToday(7, 21)) {
+				greeting = "Ciallo~∠(>ω·)~☆";
+			} else {
+				greeting = FestivalUtils.getFestivalGreeting();
+				if (greeting == null) {
+					greeting = getRandomNormalGreeting();
+				}
 			}
 
 			title += " - " + greeting;
