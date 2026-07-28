@@ -5,9 +5,8 @@ import com.simibubi.create.api.behaviour.spouting.BlockSpoutingBehaviour;
 import com.simibubi.create.content.fluids.FluidFX;
 import com.simibubi.create.content.fluids.spout.FillingBySpout;
 import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
-import com.simibubi.create.content.kinetics.belt.behaviour.BeltProcessingBehaviour.ProcessingResult;
+import com.simibubi.create.content.kinetics.belt.behaviour.BeltProcessingBehaviour;
 import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour;
-import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
@@ -22,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,34 +59,39 @@ public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
 	}
 
 	@Override
-	protected ProcessingResult whenItemHeld(TransportedItemStack transported, TransportedItemStackHandlerBehaviour handler) {
+	protected BeltProcessingBehaviour.ProcessingResult whenItemHeld(TransportedItemStack transported, TransportedItemStackHandlerBehaviour handler) {
 		if (isPowered()) {
-			return ProcessingResult.HOLD;
+			return BeltProcessingBehaviour.ProcessingResult.HOLD;
 		}
 
 		if (processingTicks != -1 && processingTicks != 5) {
-			return ProcessingResult.HOLD;
+			return BeltProcessingBehaviour.ProcessingResult.HOLD;
 		}
 		if (level == null || !FillingBySpout.canItemBeFilled(level, transported.stack)) {
-			return ProcessingResult.PASS;
+			return BeltProcessingBehaviour.ProcessingResult.PASS;
 		}
 		if (getTank().isEmpty()) {
-			return ProcessingResult.HOLD;
+			return BeltProcessingBehaviour.ProcessingResult.HOLD;
 		}
 		FluidStack fluid = getCurrentFluid();
 		int requiredAmountForItem = FillingBySpout.getRequiredAmountForItem(level, transported.stack, fluid.copy());
 		if (requiredAmountForItem == -1) {
-			return ProcessingResult.PASS;
+			return BeltProcessingBehaviour.ProcessingResult.PASS;
 		}
 		if (requiredAmountForItem > fluid.getAmount()) {
-			return ProcessingResult.HOLD;
+			return BeltProcessingBehaviour.ProcessingResult.HOLD;
 		}
 
 		if (processingTicks == -1) {
 			processingTicks = getFillingTime();
 			notifyUpdate();
-			AllSoundEvents.SPOUTING.playOnServer(level, worldPosition, 0.75f, 0.9f + 0.2f * (float) Math.random());
-			return ProcessingResult.HOLD;
+			AllSoundEvents.SPOUTING.playOnServer(
+					level,
+					worldPosition,
+					0.75f,
+					0.9f + 0.2f * new SecureRandom().nextFloat()
+			);
+			return BeltProcessingBehaviour.ProcessingResult.HOLD;
 		}
 
 		ItemStack out = FillingBySpout.fillItem(level, requiredAmountForItem, transported.stack, fluid);
@@ -99,13 +104,13 @@ public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
 				held = transported.copy();
 			}
 			outList.add(result);
-			handler.handleProcessingOnItem(transported, TransportedResult.convertToAndLeaveHeld(outList, held));
+			handler.handleProcessingOnItem(transported, TransportedItemStackHandlerBehaviour.TransportedResult.convertToAndLeaveHeld(outList, held));
 		}
 
 		getTank().getPrimaryHandler().setFluid(fluid);
 		sendSplash = true;
 		notifyUpdate();
-		return ProcessingResult.HOLD;
+		return BeltProcessingBehaviour.ProcessingResult.HOLD;
 	}
 
 	@Override
@@ -179,8 +184,8 @@ public class AdvancedSpoutBlockEntity extends SpoutBlockEntity {
 			return;
 		}
 		Vec3 vec = VecHelper.getCenterOf(worldPosition);
-		vec = vec.subtract(0, 8 / 16f, 0);
+		vec = vec.subtract(0, 8 / 16.0f, 0);
 		ParticleOptions particle = FluidFX.getFluidParticle(fluid);
-		level.addAlwaysVisibleParticle(particle, vec.x, vec.y, vec.z, 0, -.1f, 0);
+		level.addAlwaysVisibleParticle(particle, vec.x, vec.y, vec.z, 0, -0.1f, 0);
 	}
 }

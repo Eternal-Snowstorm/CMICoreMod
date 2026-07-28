@@ -1,24 +1,20 @@
 package dev.celestiacraft.cmi.common.block.accelerator_motor;
 
-import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.CreateLang;
 import dev.celestiacraft.cmi.api.client.CmiLang;
+import dev.celestiacraft.cmi.api.register.block.BasicCreateBlockItem;
 import dev.celestiacraft.cmi.config.common.AcceleratorMotorConfig;
+import dev.celestiacraft.libs.api.client.context.TooltipContext;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-public class AcceleratorMotorItem extends AssemblyOperatorBlockItem {
+public class AcceleratorMotorItem extends BasicCreateBlockItem {
 	public AcceleratorMotorItem(Block block, Properties properties) {
 		super(block, properties);
 	}
@@ -34,13 +30,12 @@ public class AcceleratorMotorItem extends AssemblyOperatorBlockItem {
 	 *   <li>支持动态参数（如蒸汽消耗量）</li>
 	 * </ol>
 	 *
-	 * @param stack   物品堆
-	 * @param level   当前世界（可能为 null）
-	 * @param tooltip Tooltip 行列表，向其中添加内容
-	 * @param flag    Tooltip 标志（普通/高级）
+	 * @param context
 	 */
 	@Override
-	public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
+	public void addTooltips(TooltipContext context) {
+		List<Component> tooltip = context.getTooltip();
+
 		int maxSpeedValue = AcceleratorMotorConfig.MAX_SPEED.get();
 		/*
 		 * "按住 [Shift] 查看详情" 提示 - 始终显示
