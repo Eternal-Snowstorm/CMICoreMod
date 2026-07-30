@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(BacktankBlockEntity.class)
-public abstract class BacktankBlockEntityMixin {
+public class BacktankBlockEntityMixin {
 	@Redirect(
 			method = {"tick", "getComparatorOutput", "read"},
 			at = @At(

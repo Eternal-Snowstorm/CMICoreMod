@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.config.common;
 
 import com.simibubi.create.infrastructure.config.AllConfigs;
-import dev.celestiacraft.cmi.config.base.ConfigModule;
+import dev.celestiacraft.libs.config.api.ConfigModule;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class BacktankConfig extends ConfigModule {

@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.config.common.mbd2;
 
-import dev.celestiacraft.cmi.config.base.ConfigModule;
+import dev.celestiacraft.libs.config.api.ConfigModule;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ReinforcedCokeOvenConfig extends ConfigModule {

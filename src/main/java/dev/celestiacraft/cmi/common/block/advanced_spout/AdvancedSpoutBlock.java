@@ -95,7 +95,7 @@ public class AdvancedSpoutBlock extends BasicBlock implements IWrenchable, IBE<A
 		return SUPPORT_SHAPE;
 	}
 
-	public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState(){
+	public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState() {
 		return (context, provider) -> {
 			provider.getVariantBuilder(context.get())
 					.forAllStatesExcept((state) -> {

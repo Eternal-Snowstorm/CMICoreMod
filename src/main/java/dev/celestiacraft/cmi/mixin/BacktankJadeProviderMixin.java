@@ -9,14 +9,17 @@ import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import snownee.jade.addon.create.BacktankProvider;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 
 @Pseudo
-@Mixin(value = BacktankProvider.class, remap = false)
+@Mixin(
+		targets = "snownee.jade.addon.create.BacktankProvider",
+		remap = false
+)
 public class BacktankJadeProviderMixin {
+
 	@Redirect(
 			method = "appendTooltip",
 			at = @At(
@@ -27,7 +30,20 @@ public class BacktankJadeProviderMixin {
 			remap = false
 	)
 	private int cmi$maxAir(int enchantLevel, ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-		boolean netherite = AllBlocks.NETHERITE_BACKTANK.has(accessor.getBlockState());
-		return BacktankConfig.maxAir(netherite, enchantLevel);
+		try {
+			Object state = accessor
+					.getClass()
+					.getMethod("getBlockState")
+					.invoke(accessor);
+
+			boolean netherite = AllBlocks.NETHERITE_BACKTANK.has(
+					(net.minecraft.world.level.block.state.BlockState) state
+			);
+
+			return BacktankConfig.maxAir(netherite, enchantLevel);
+
+		} catch (Exception e) {
+			return BacktankConfig.maxAir(false, enchantLevel);
+		}
 	}
 }
