@@ -39,8 +39,7 @@
 	],
 	"client": [
 		"LevelRendererMixin",
-		"BulkFermenterRendererMixin",
-		"BacktankJadeProviderMixin"
+		"BulkFermenterRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
