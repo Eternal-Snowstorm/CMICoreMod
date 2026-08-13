@@ -38,7 +38,6 @@ public class CmiGlobal {
 	/**
 	 * Modpack数字版本号
 	 */
-
 	@Getter
 	private static String modpackNumberVersion = "2.5.0";
 

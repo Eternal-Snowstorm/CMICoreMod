@@ -62,12 +62,12 @@ public class AcceleratorScene {
 
 		scene.idle(40);
 
-		scene.world().setBlock(util.grid().at(3, 1, 4), Blocks.IRON_ORE.defaultBlockState(), false);
-		scene.world().setBlock(util.grid().at(4, 1, 3), Blocks.IRON_ORE.defaultBlockState(), false);
-		scene.world().setBlock(util.grid().at(3, 1, 5), Blocks.REDSTONE_ORE.defaultBlockState(), false);
-		scene.world().setBlock(util.grid().at(3, 1, 2), Blocks.IRON_ORE.defaultBlockState(), false);
-		scene.world().setBlock(util.grid().at(2, 1, 5), Blocks.IRON_ORE.defaultBlockState(), false);
-		scene.world().setBlock(util.grid().at(1, 1, 1), Blocks.IRON_ORE.defaultBlockState(), false);
+		scene.world().setBlock(util.grid().at(3, 1, 4), Blocks.IRON_ORE.defaultBlockState(), true);
+		scene.world().setBlock(util.grid().at(4, 1, 3), Blocks.IRON_ORE.defaultBlockState(), true);
+		scene.world().setBlock(util.grid().at(3, 1, 5), Blocks.REDSTONE_ORE.defaultBlockState(), true);
+		scene.world().setBlock(util.grid().at(3, 1, 2), Blocks.IRON_ORE.defaultBlockState(), true);
+		scene.world().setBlock(util.grid().at(2, 1, 5), Blocks.IRON_ORE.defaultBlockState(), true);
+		scene.world().setBlock(util.grid().at(1, 1, 1), Blocks.IRON_ORE.defaultBlockState(), true);
 
 		scene.overlay().showText(30)
 				.text("...随后它周围的石头便会变成矿石!")
