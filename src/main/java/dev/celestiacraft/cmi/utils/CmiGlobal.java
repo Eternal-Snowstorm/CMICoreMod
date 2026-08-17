@@ -18,6 +18,8 @@ public class CmiGlobal {
 
 	public static final String DEBUG_MESSAGE = "[CMIDebugMessage]";
 
+	public static boolean isDebug = false;
+
 	/**
 	 * 整合包最终版本号
 	 */
