@@ -14,9 +14,9 @@
 		"ChemicalLogicAccessor",
 		"ChemicalStateAccessor",
 		"ChemicalStateMixin",
+		"ClassFilterMixin",
 		"CokeOvenLogicMixin",
 		"CokeOvenStateAccessor",
-		"ClassFilterMixin",
 		"CryoFreezingCategoryMixin",
 		"FluidStackJSMixin",
 		"FluidWrapperMixin",
@@ -34,12 +34,13 @@
 		"PlanetsScreenAccessor",
 		"RocketMixin",
 		"RoverMixin",
+		"StructureTemplatePoolMixin",
 		"VehicleItemMixin",
 		"WrenchItemMixin"
 	],
 	"client": [
-		"LevelRendererMixin",
-		"BulkFermenterRendererMixin"
+		"BulkFermenterRendererMixin",
+		"LevelRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

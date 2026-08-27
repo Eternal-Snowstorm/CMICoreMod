@@ -31,9 +31,6 @@ public class CmiGlobal {
 	@Getter
 	private static String modPackState = "Beta";
 
-	/**
-	 * 是否为热修复版本
-	 */
 	@Getter
 	public static boolean isHotfix = false;
 
