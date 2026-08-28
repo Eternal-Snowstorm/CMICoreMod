@@ -2,7 +2,7 @@ package dev.celestiacraft.cmi.client.ponder.scene.cmi;
 
 import dev.celestiacraft.cmi.common.register.CmiMechanism;
 import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
-import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class AcceleratorScene {
 	public static void usage(SceneBuilder builder, SceneBuildingUtil util) {
-		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
+		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
 		scene.title("accelerator", "如何使用催生器");
 		scene.showBasePlate();
@@ -28,7 +28,7 @@ public class AcceleratorScene {
 
 		scene.overlay().showOutline(
 				PonderPalette.BLUE,
-				NebulaSceneBuilder.OBJECT,
+				CreateNebulaSceneBuilder.OBJECT,
 				util.select().position(3, 1, 3),
 				35
 		);
@@ -107,7 +107,7 @@ public class AcceleratorScene {
 
 		scene.overlay().showOutline(
 				PonderPalette.RED,
-				NebulaSceneBuilder.OBJECT,
+				CreateNebulaSceneBuilder.OBJECT,
 				util.select().fromTo(1, 1, 1, 5, 1, 5),
 				45
 		);

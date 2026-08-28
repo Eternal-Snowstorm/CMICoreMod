@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
-import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;
@@ -31,10 +31,10 @@ import java.util.List;
 
 public class SmelteryScene {
 	public static void building(SceneBuilder builder, SceneBuildingUtil util) {
-		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
+		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 		scene.title("smeltery_building", "搭建冶炼炉");
 
-		NebulaSceneBuilder.init9x9(scene, util);
+		CreateNebulaSceneBuilder.init9x9(scene, util);
 
 		BlockPos bottomCenter = util.grid().at(4, 1, 4);
 		BlockPos controllerPos = util.grid().at(4, 2, 2);
@@ -116,7 +116,7 @@ public class SmelteryScene {
 				.attachKeyFrame();
 		scene.idle(60);
 
-		NebulaSceneBuilder.rotateAround(scene, 60, 90);
+		CreateNebulaSceneBuilder.rotateAround(scene, 60, 90);
 
 		scene.idle(30);
 
@@ -201,7 +201,7 @@ public class SmelteryScene {
 	public static void using(SceneBuilder builder, SceneBuildingUtil util) {
 		builder.title("smeltery_using", "使用冶炼炉");
 
-		NebulaSceneBuilder.init9x9(builder, util);
+		CreateNebulaSceneBuilder.init9x9(builder, util);
 
 		BlockPos controllerPos = util.grid().at(4, 2, 2);
 		BlockPos tankPos = util.grid().at(3, 2, 2);
@@ -235,7 +235,7 @@ public class SmelteryScene {
 				.colored(PonderPalette.MEDIUM);
 		builder.idle(15);
 
-		NebulaSceneBuilder.rotate(builder, 15, -90);
+		CreateNebulaSceneBuilder.rotate(builder, 15, -90);
 
 		builder.idle(30);
 		builder.overlay().showOutline(PonderPalette.GREEN, chute, chute, 30);
@@ -348,14 +348,14 @@ public class SmelteryScene {
 	public static void mini(SceneBuilder builder, SceneBuildingUtil util) {
 		builder.title("smeltery_mini", "迷你冶炼炉");
 
-		NebulaSceneBuilder.init7x7(builder, util);
+		CreateNebulaSceneBuilder.init7x7(builder, util);
 
 		builder.idle(5);
 		builder.world().showSection(util.select().layers(1, 2), Direction.UP);
 
 		builder.idle(25);
 
-		NebulaSceneBuilder.rotateAround(builder, 100, 90);
+		CreateNebulaSceneBuilder.rotateAround(builder, 100, 90);
 
 		builder.idle(60);
 		builder.markAsFinished();

@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
-import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
@@ -18,10 +18,10 @@ import slimeknights.tconstruct.smeltery.block.entity.ProxyTankBlockEntity;
 
 public class TankScene {
 	public static void tank(SceneBuilder builder, SceneBuildingUtil util) {
-		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
+		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 		scene.title("tank", "使用流体容器");
 
-		NebulaSceneBuilder.init5x5(scene, util);
+		CreateNebulaSceneBuilder.init5x5(scene, util);
 
 		BlockPos center = util.grid().at(2, 2, 2);
 
@@ -47,7 +47,7 @@ public class TankScene {
 				.attachKeyFrame();
 		scene.idle(60);
 
-		NebulaSceneBuilder.rotate(scene, 35, 180);
+		CreateNebulaSceneBuilder.rotate(scene, 35, 180);
 
 		scene.overlay().showOutline(PonderPalette.GREEN, tank, util.select().position(tank), 50);
 		scene.overlay().showText(55)
@@ -57,7 +57,7 @@ public class TankScene {
 				.attachKeyFrame();
 		scene.idle(60);
 
-		NebulaSceneBuilder.rotate(scene, 35, -90);
+		CreateNebulaSceneBuilder.rotate(scene, 35, -90);
 
 		scene.overlay().showOutline(PonderPalette.GREEN, cast, util.select().position(cast), 50);
 		scene.overlay().showText(55)
@@ -89,7 +89,7 @@ public class TankScene {
 
 		scene.idle(30);
 
-		NebulaSceneBuilder.rotate(scene, 35, 180);
+		CreateNebulaSceneBuilder.rotate(scene, 35, 180);
 
 		scene.overlay().showOutline(PonderPalette.GREEN, proxy, util.select().position(proxy), 50);
 		scene.overlay().showText(55)

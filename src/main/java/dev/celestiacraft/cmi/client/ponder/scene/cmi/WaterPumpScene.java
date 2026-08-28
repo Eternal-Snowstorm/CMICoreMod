@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder.scene.cmi;
 
-import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.api.element.WorldSectionElement;
@@ -10,7 +10,7 @@ import net.minecraft.core.Direction;
 
 public class WaterPumpScene {
 	public static void getSeaWater(SceneBuilder builder, SceneBuildingUtil util) {
-		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
+		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
 		scene.title("sea_water", "海水井");
 		scene.scaleSceneView(0.5f);
@@ -38,7 +38,7 @@ public class WaterPumpScene {
 
 		scene.overlay().showOutline(
 				PonderPalette.BLUE,
-				NebulaSceneBuilder.OBJECT,
+				CreateNebulaSceneBuilder.OBJECT,
 				util.select().fromTo(1, 3, 3, 3, 6, 1),
 				40
 		);
@@ -72,7 +72,7 @@ public class WaterPumpScene {
 
 		scene.overlay().showOutline(
 				PonderPalette.BLUE,
-				NebulaSceneBuilder.OBJECT,
+				CreateNebulaSceneBuilder.OBJECT,
 				util.select().fromTo(1, 3, 3, 3, 6, 1),
 				50
 		);
@@ -88,7 +88,7 @@ public class WaterPumpScene {
 
 		scene.overlay().showOutline(
 				PonderPalette.BLUE,
-				NebulaSceneBuilder.OBJECT,
+				CreateNebulaSceneBuilder.OBJECT,
 				util.select().fromTo(4, 4, 4, 6, 6, 6),
 				50
 		);

@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder.scene.mekanism;
 
-import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
 import dev.celestiacraft.libs.server.block.state.StateHelper;
 import mekanism.common.block.prefab.BlockBasicMultiblock;
 import mekanism.common.block.prefab.BlockTile;
@@ -33,7 +33,7 @@ public class SpsScene {
 			> SUPERCHARGED_COIL = MekanismBlocks.SUPERCHARGED_COIL;
 
 	public static void building(SceneBuilder builder, SceneBuildingUtil util) {
-		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
+		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
 		scene.title("sps_building", "超临界移相器搭建");
 
@@ -48,7 +48,7 @@ public class SpsScene {
 		scene.idle(15);
 		scene.overlay().showOutline(
 				PonderPalette.BLUE,
-				NebulaSceneBuilder.OBJECT,
+				CreateNebulaSceneBuilder.OBJECT,
 				util.select().fromTo(1, 2, 1, 7, 2, 7),
 				60
 		);
@@ -97,7 +97,7 @@ public class SpsScene {
 		scene.addKeyframe();
 		scene.overlay().showOutline(
 				PonderPalette.BLUE,
-				NebulaSceneBuilder.OBJECT,
+				CreateNebulaSceneBuilder.OBJECT,
 				util.select().fromTo(4, 2, 4, 4, 2, 4),
 				60
 		);
@@ -111,7 +111,7 @@ public class SpsScene {
 		scene.idle(20);
 		scene.overlay().showOutline(
 				PonderPalette.BLUE,
-				NebulaSceneBuilder.OBJECT,
+				CreateNebulaSceneBuilder.OBJECT,
 				util.select().fromTo(7, 5, 5, 7, 5, 5),
 				60
 		);

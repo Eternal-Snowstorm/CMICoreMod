@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.client.ponder.scene.cmi;
 
 import dev.celestiacraft.cmi.utils.ModResources;
-import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
 import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.api.element.EntityElement;
 import net.createmod.ponder.api.scene.SceneBuilder;
@@ -11,7 +11,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class CrucibleScene {
 	public static void usage(SceneBuilder builder, SceneBuildingUtil util) {
-		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
+		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
 		scene.title("crucible_usage", "坩埚使用");
 		scene.showBasePlate();

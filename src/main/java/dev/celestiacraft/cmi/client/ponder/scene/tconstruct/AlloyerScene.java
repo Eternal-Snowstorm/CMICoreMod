@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
-import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
@@ -20,10 +20,10 @@ import java.util.Objects;
 
 public class AlloyerScene {
 	public static void building(SceneBuilder builder, SceneBuildingUtil util) {
-		NebulaSceneBuilder scene = new NebulaSceneBuilder(builder);
+		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
 		scene.title("alloyer_building", "搭建合金炉");
-		NebulaSceneBuilder.init5x5(scene, util);
+		CreateNebulaSceneBuilder.init5x5(scene, util);
 
 		BlockPos fuelTank = util.grid().at(2, 1, 2);
 		BlockPos alloyer = util.grid().at(2, 2, 2);
@@ -39,7 +39,7 @@ public class AlloyerScene {
 		scene.world().showSection(main, Direction.NORTH);
 
 		scene.idle(20);
-		scene.overlay().showOutline(PonderPalette.GREEN, NebulaSceneBuilder.OBJECT, main, 130);
+		scene.overlay().showOutline(PonderPalette.GREEN, CreateNebulaSceneBuilder.OBJECT, main, 130);
 		scene.overlay().showText(35)
 				.colored(PonderPalette.GREEN)
 				.text("合金炉和熔化炉非常相似")
@@ -59,7 +59,7 @@ public class AlloyerScene {
 
 		Selection s = util.select().fromTo(materialTank1, materialTank2);
 		scene.idle(35);
-		scene.overlay().showOutline(PonderPalette.GREEN, NebulaSceneBuilder.OBJECT, s, 50);
+		scene.overlay().showOutline(PonderPalette.GREEN, CreateNebulaSceneBuilder.OBJECT, s, 50);
 		scene.overlay().showText(35)
 				.colored(PonderPalette.GREEN)
 				.text("将容器放置在合金炉的侧面")

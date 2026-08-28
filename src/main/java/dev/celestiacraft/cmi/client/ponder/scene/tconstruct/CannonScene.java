@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
-import dev.celestiacraft.libs.client.ponder.NebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
@@ -13,10 +13,10 @@ import slimeknights.tconstruct.smeltery.block.entity.FluidCannonBlockEntity;
 
 public class CannonScene {
 	public static void using(SceneBuilder scene, SceneBuildingUtil util) {
-		NebulaSceneBuilder builder = new NebulaSceneBuilder(scene);
+		CreateNebulaSceneBuilder builder = new CreateNebulaSceneBuilder(scene);
 		scene.title("fluid_cannon_using", "使用流体加农炮");
 
-		NebulaSceneBuilder.init5x5(scene, util);
+		CreateNebulaSceneBuilder.init5x5(scene, util);
 
 		BlockPos copper = util.grid().at(1, 1, 2);
 		BlockPos cobalt = util.grid().at(3, 1, 2);
