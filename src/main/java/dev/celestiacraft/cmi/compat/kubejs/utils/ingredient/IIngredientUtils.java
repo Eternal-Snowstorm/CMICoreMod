@@ -42,11 +42,13 @@ public interface IIngredientUtils {
 		Integer priorityValue = null;
 
 		for (ItemStack stack : stacks) {
-			ResourceLocation rl = ForgeRegistries.ITEMS.getKey(stack.getItem());
-			if (rl == null) continue;
+			ResourceLocation location = ForgeRegistries.ITEMS.getKey(stack.getItem());
+			if (location == null) {
+				continue;
+			}
 
-			String currentNamespace = rl.getNamespace();
-			String id = rl.toString();
+			String currentNamespace = location.getNamespace();
+			String id = location.toString();
 
 			// 遍历优先级
 			for (int i = 0; i < namespacePriority.size(); i++) {
