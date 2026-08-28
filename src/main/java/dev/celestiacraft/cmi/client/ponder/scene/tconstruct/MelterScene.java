@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
 import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.INebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;
@@ -32,7 +33,7 @@ public class MelterScene {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 		scene.title("melter_building", "搭建熔化炉");
 
-		CreateNebulaSceneBuilder.init5x5(scene, util);
+		INebulaSceneBuilder.init5x5(scene, util);
 
 		Selection smeltery = util.select().fromTo(2, 1, 2, 2, 2, 2);
 		Selection basin = util.select().fromTo(1, 1, 2, 1, 2, 2);
@@ -120,7 +121,7 @@ public class MelterScene {
 	public static void using(SceneBuilder builder, SceneBuildingUtil util) {
 		builder.title("melter_using", "熔化与铸造");
 
-		CreateNebulaSceneBuilder.init5x5(builder, util);
+		INebulaSceneBuilder.init5x5(builder, util);
 
 		BlockPos table = util.grid().at(1, 1, 2);
 		BlockPos basin = util.grid().at(3, 1, 2);

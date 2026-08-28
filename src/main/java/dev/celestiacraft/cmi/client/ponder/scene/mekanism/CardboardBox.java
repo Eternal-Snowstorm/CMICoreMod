@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.client.ponder.scene.mekanism;
 
 import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.INebulaSceneBuilder;
 import dev.celestiacraft.libs.server.block.state.StateHelper;
 import mekanism.common.block.BlockCardboardBox;
 import mekanism.common.item.block.ItemBlockCardboardBox;
@@ -23,7 +24,7 @@ public class CardboardBox {
 	public static void usage(SceneBuilder builder, SceneBuildingUtil util) {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
-		CreateNebulaSceneBuilder.init5x5(scene, util);
+		INebulaSceneBuilder.init5x5(scene, util);
 
 		scene.title("cardboard_box", "集装箱用法");
 		scene.idle(25);

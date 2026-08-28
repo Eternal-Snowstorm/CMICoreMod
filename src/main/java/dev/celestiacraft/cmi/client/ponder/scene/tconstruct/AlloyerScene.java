@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
 import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.INebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
@@ -23,7 +24,7 @@ public class AlloyerScene {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
 		scene.title("alloyer_building", "搭建合金炉");
-		CreateNebulaSceneBuilder.init5x5(scene, util);
+		INebulaSceneBuilder.init5x5(scene, util);
 
 		BlockPos fuelTank = util.grid().at(2, 1, 2);
 		BlockPos alloyer = util.grid().at(2, 2, 2);

@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
 import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.INebulaSceneBuilder;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
@@ -15,7 +16,7 @@ public class FoundryScene {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 		scene.title("foundry_building", "搭建熔铸炉");
 
-		CreateNebulaSceneBuilder.init9x9(scene, util);
+		INebulaSceneBuilder.init9x9(scene, util);
 
 		BlockPos bottomCenter = util.grid().at(4, 1, 4);
 
@@ -42,7 +43,7 @@ public class FoundryScene {
 				.attachKeyFrame();
 		scene.idle(60);
 
-		CreateNebulaSceneBuilder.rotateAround(scene, 60, 90);
+		INebulaSceneBuilder.rotateAround(scene, 60, 90);
 
 		scene.idle(20);
 

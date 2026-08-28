@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
 import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.INebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
@@ -26,7 +27,7 @@ public class CastingScene {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 		scene.title("casting", "浇筑");
 
-		CreateNebulaSceneBuilder.init5x5(scene, util);
+		INebulaSceneBuilder.init5x5(scene, util);
 
 		BlockPos table0 = util.grid().at(2, 1, 1);
 
@@ -72,7 +73,7 @@ public class CastingScene {
 
 		scene.idle(5);
 
-		CreateNebulaSceneBuilder.rotate(scene, 15, 90);
+		INebulaSceneBuilder.rotate(scene, 15, 90);
 		scene.idle(15);
 		scene.addLazyKeyframe();
 
@@ -124,7 +125,7 @@ public class CastingScene {
 		scene.idle(200);
 		scene.addLazyKeyframe();
 
-		CreateNebulaSceneBuilder.rotate(scene, 15, -180);
+		INebulaSceneBuilder.rotate(scene, 15, -180);
 
 		scene.idle(15);
 		scene.overlay().showText(240)
@@ -207,7 +208,7 @@ public class CastingScene {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 		scene.title("sand_casting", "使用沙子铸模");
 
-		CreateNebulaSceneBuilder.init5x5(scene, util);
+		INebulaSceneBuilder.init5x5(scene, util);
 
 		BlockPos table = util.grid().at(2, 1, 1);
 		BlockPos center = util.grid().at(2, 2, 2);

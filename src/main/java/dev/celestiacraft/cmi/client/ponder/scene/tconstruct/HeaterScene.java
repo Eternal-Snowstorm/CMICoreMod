@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.client.ponder.scene.tconstruct;
 
 import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
+import dev.celestiacraft.libs.client.ponder.INebulaSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
@@ -16,7 +17,7 @@ public class HeaterScene {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 		scene.title("heater_using", "使用加热器");
 
-		CreateNebulaSceneBuilder.init5x5(scene, util);
+		INebulaSceneBuilder.init5x5(scene, util);
 
 		BlockPos center = util.grid().at(2, 1, 2);
 
