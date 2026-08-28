@@ -9,6 +9,7 @@ import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketT
 import dev.celestiacraft.cmi.common.item.*;
 import dev.celestiacraft.cmi.common.item.tool.MetalDetector;
 import dev.celestiacraft.cmi.common.item.tool.crafting_table.HandheleCraftingTableItem;
+import dev.celestiacraft.cmi.common.register.item.TConTools;
 import dev.celestiacraft.cmi.tags.CmiItemTags;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -99,6 +100,7 @@ public class CmiItem {
 	}
 
 	public static void register() {
+		TConTools.register();
 		Cmi.LOGGER.info("CMI Core Items Registered!");
 	}
 }
