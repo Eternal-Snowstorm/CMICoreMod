@@ -2,16 +2,25 @@ package dev.celestiacraft.cmi.client.ponder;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.register.CmiMechanism;
+import mekanism.common.Mekanism;
 import mekanism.common.registries.MekanismBlocks;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
 public class CmiPonderTags {
-	public static final ResourceLocation TCONSTRUCT = Cmi.loadResource("tconstruct");
-	public static final ResourceLocation CMI = Cmi.loadResource("cmi");
-	public static final ResourceLocation MEKANISM = Cmi.loadResource("mekanism");
+	public static final ResourceLocation
+			TCONSTRUCT,
+			CMI,
+			MEKANISM;
+
+	static {
+		TCONSTRUCT = Cmi.loadResource(TConstruct.MOD_ID);
+		CMI = Cmi.loadResource(Cmi.MODID);
+		MEKANISM = Cmi.loadResource(Mekanism.MODID);
+	}
 
 	public static void register(@NotNull PonderTagRegistrationHelper<ResourceLocation> helper) {
 		helper.registerTag(TCONSTRUCT)
