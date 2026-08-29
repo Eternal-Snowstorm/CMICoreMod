@@ -5,6 +5,7 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "cmi.refmap.json",
 	"mixins": [
+		"AnimatedBlazeBurnerMixin",
 		"BasinBlockEntityMixin",
 		"BasinCategoryMixin",
 		"BiomeMixin",

@@ -11,4 +11,9 @@ public enum CmiHeatLevel {
 	SUPERHEATED("superheated");
 
 	private final String id;
+
+	@Override
+	public String toString() {
+		return id;
+	}
 }
