@@ -29,14 +29,6 @@ public class MysticPomeloItem extends BasicItem implements IUIHolder.ItemUI {
 				.fireResistant());
 	}
 
-	/**
-	 * Open UI
-	 *
-	 * @param level
-	 * @param player
-	 * @param hand
-	 * @return
-	 */
 	@Override
 	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
 		if (player instanceof ServerPlayer serverPlayer) {
@@ -46,12 +38,6 @@ public class MysticPomeloItem extends BasicItem implements IUIHolder.ItemUI {
 		return InteractionResultHolder.success(player.getItemInHand(hand));
 	}
 
-	/**
-	 * 获取世界种子
-	 *
-	 * @param level
-	 * @return
-	 */
 	private long getWorldSeed(Level level) {
 		if (level instanceof ServerLevel server) {
 			return server.getSeed();
@@ -59,13 +45,6 @@ public class MysticPomeloItem extends BasicItem implements IUIHolder.ItemUI {
 		return 0L;
 	}
 
-	/**
-	 * 获取世界种子的指定部分
-	 *
-	 * @param level
-	 * @param segmentIndex
-	 * @return
-	 */
 	private int getSeedSegment(Level level, int segmentIndex) {
 		String seedStr = String.valueOf(getWorldSeed(level));
 
@@ -85,11 +64,6 @@ public class MysticPomeloItem extends BasicItem implements IUIHolder.ItemUI {
 		return Integer.parseInt(part);
 	}
 
-	/**
-	 * 读取value.txt文件
-	 *
-	 * @return
-	 */
 	private String readValueFile() {
 		Path path = FMLPaths.CONFIGDIR.get().resolve("nebula/value.txt");
 
@@ -104,12 +78,6 @@ public class MysticPomeloItem extends BasicItem implements IUIHolder.ItemUI {
 		return "";
 	}
 
-	/**
-	 * 解析value.txt文件中的值
-	 *
-	 * @param key
-	 * @return
-	 */
 	private String getValue(String key) {
 		String content = readValueFile();
 		if (content.isEmpty()) {

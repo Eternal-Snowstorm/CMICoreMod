@@ -27,7 +27,9 @@ public class AddCreativeModeTabs {
 			List.of(
 					VentBlocks.MARS_GEO,
 					VentBlocks.MERCURY_GEO,
-					OtherBlocks.WIND_VANE
+					OtherBlocks.WIND_VANE,
+					OtherBlocks.NAHUATL_SCAFFOLD,
+					OtherBlocks.BLAZEWOOD_SCAFFOLD
 			).forEach((block) -> {
 				event.accept(block.asItem());
 			});

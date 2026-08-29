@@ -92,10 +92,10 @@ public abstract class SolarBoilerBlockEntity extends SmartBlockEntity implements
 	 * <p>
 	 * 太阳能锅炉依靠光照运行, 不同光照下效率不同:
 	 * <ul>
-	 *     <li><b>自然光照 (效率 100%)</b>: 顶部能够直接看到天空, 且处于白天、天气晴朗;
+	 *     <li><b>自然光照 (效率 100%)</b>: 顶部能够直接看到天空, 且处于白天, 天气晴朗;
 	 *     在末地中不存在昼夜循环和天气系统, 因此只要顶部无遮挡即可</li>
 	 *     <li><b>人造光照 (效率由 {@link SolarBoilerConfig#ARTIFICIAL_LIGHT_EFFICIENCY_MULTIPLIER} 决定, 默认 50%)</b>:
-	 *     当无法获得自然光照时 (如顶部有遮挡、夜晚、雨雪天气或室内), 只要所在位置的人造光照
+	 *     当无法获得自然光照时 (如顶部有遮挡, 夜晚, 雨雪天气或室内), 只要所在位置的人造光照
 	 *     达到 {@link #ARTIFICIAL_LIGHT_THRESHOLD} 即可继续以较低效率运行</li>
 	 * </ul>
 	 * 当两种光照均不满足时, 锅炉将停止产热和消耗水
@@ -137,7 +137,16 @@ public abstract class SolarBoilerBlockEntity extends SmartBlockEntity implements
 			return false;
 		}
 
-		return level.getBrightness(LightLayer.BLOCK, worldPosition) >= ARTIFICIAL_LIGHT_THRESHOLD;
+		/*
+		 * 锅炉本体为不透明方块, 光照不会进入其内部, 因此自身位置存储的方块光照始终为 0;
+		 * 需要检查其上方的空气方块 (或其它可透光方块) 处的人造光照
+		 */
+		int blockLight = Math.max(
+				level.getBrightness(LightLayer.BLOCK, worldPosition),
+				level.getBrightness(LightLayer.BLOCK, worldPosition.above())
+		);
+
+		return blockLight >= ARTIFICIAL_LIGHT_THRESHOLD;
 	}
 
 	/**

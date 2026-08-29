@@ -203,7 +203,7 @@ public class TooltipLanguage extends LanguageGenerate {
 		);
 		addTooltipLang(
 				"solar_boiler.artificial_light",
-				"Light Source: Artificia (%s%% Efficiency)",
+				"Light Source: Artificial (%s%% Efficiency)",
 				"当前光源: 人造光(效率%s%%)"
 		);
 		addTooltipLang(
