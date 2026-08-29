@@ -22,6 +22,11 @@ public class SolarBoilerConfig extends ConfigModule {
 	public static ForgeConfigSpec.IntValue STEEL_EFFICIENCY;
 	public static ForgeConfigSpec.IntValue STEEL_CAPACITY;
 
+	/**
+	 * 人造光照效率倍率: 当锅炉无法获得自然光照时, 依靠人造光照(方块光照)运行时的效率倍率
+	 */
+	public static ForgeConfigSpec.DoubleValue ARTIFICIAL_LIGHT_EFFICIENCY_MULTIPLIER;
+
 	@Override
 	protected void addConfigs() {
 		BRONZE_EFFICIENCY = builder.comment(CONSUM_COMMENT)
@@ -53,5 +58,11 @@ public class SolarBoilerConfig extends ConfigModule {
 				.comment("type: int")
 				.comment("default: 12000")
 				.defineInRange("steel" + CAPACITY_TEXT_COMMENT, 12000, 1, 100000000);
+
+		ARTIFICIAL_LIGHT_EFFICIENCY_MULTIPLIER = builder.comment("Efficiency multiplier when the boiler runs on artificial light (block light)")
+				.comment("1.0 = same as natural light, 0.5 = half efficiency. Set to 0.0 to disable artificial light mode.")
+				.comment("type: double")
+				.comment("default: 0.5")
+				.defineInRange("artificial_light_efficiency_multiplier", 0.5, 0.0, 1.0);
 	}
 }

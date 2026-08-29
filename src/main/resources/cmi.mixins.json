@@ -34,7 +34,6 @@
 		"PlanetsScreenAccessor",
 		"RocketMixin",
 		"RoverMixin",
-		"StructureTemplatePoolMixin",
 		"VehicleItemMixin",
 		"WrenchItemMixin"
 	],

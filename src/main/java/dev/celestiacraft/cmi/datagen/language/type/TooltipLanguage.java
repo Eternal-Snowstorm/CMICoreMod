@@ -157,6 +157,11 @@ public class TooltipLanguage extends LanguageGenerate {
 				" ● 效率: %s mB / Tick"
 		);
 		addTooltipLang(
+				"solar_boiler.artificial_efficiency",
+				" ● Artificial light efficiency: %s mB / Tick",
+				" ● 人造光照效率: %s mB / Tick"
+		);
+		addTooltipLang(
 				"solar_boiler.capacity",
 				" ● Capacity: %s mB",
 				" ● 容量: %s mB"
@@ -168,33 +173,43 @@ public class TooltipLanguage extends LanguageGenerate {
 		);
 		addTooltipLang(
 				"solar_boiler.summary",
-				"A boiler that uses _Solar Energy_ to produce steam",
-				"一种利用_太阳能_生产蒸汽的锅炉"
+				"A boiler that produces steam using _natural_ or _artificial light_",
+				"一种利用_自然光_或_人造光_生产蒸汽的锅炉"
 		);
 		addTooltipLang(
 				"solar_boiler.workCondition",
-				"The following conditions _Must_ be met before operation:",
-				"工作前_必须_确保满足以下条件:"
+				"The boiler runs on light, and efficiency depends on the light source:",
+				"锅炉依靠光照运行, 效率取决于光源:"
 		);
 		addTooltipLang(
 				"solar_boiler.condition.1",
-				" ● The current time is _Daytime_ or _Dusk_",
-				" ● 当前时间处于_白天_或_黄昏_"
+				" ● _Natural light_ (no occlusion above, daytime, clear weather): _100%_ efficiency",
+				" ● _自然光照_(顶部无遮挡, 白天, 天气晴朗): _100%_ 效率"
 		);
 		addTooltipLang(
 				"solar_boiler.condition.2",
-				" ● The weather is clear, with no _Rain_ or _Snow_",
-				" ● 天气晴朗, 未处于_雨雪_天气"
+				" ● _Artificial light_ (block light _%1$s_ or higher, e.g. indoors, at night, in rain/snow or when covered): _%2$s%%_ efficiency",
+				" ● _人造光照_(方块光照_%1$s_及以上, 如室内, 夜晚, 雨雪天或顶部有遮挡): 效率_%2$s%%_"
 		);
 		addTooltipLang(
 				"solar_boiler.condition.3",
-				" ● No full _Cube_ block is obstructing the top",
-				" ● 顶上不存在_任何_完整方块遮挡"
+				" ● _In The End_, only the no-occlusion condition needs to be met (_100%_ efficiency)",
+				" ● 在_末地_只需满足_无遮挡_条件即可(_100%_ 效率)"
 		);
 		addTooltipLang(
-				"solar_boiler.condition.4",
-				" ● At The End of the ground only need to follow the condition of no occlusion",
-				" ● 在末地只需要遵循_无遮挡_的条件"
+				"solar_boiler.natural_light",
+				"Light Source: Natural(100% Efficiency)",
+				"当前光源: 自然光(100%效率)"
+		);
+		addTooltipLang(
+				"solar_boiler.artificial_light",
+				"Light Source: Artificia (%s%% Efficiency)",
+				"当前光源: 人造光(效率%s%%)"
+		);
+		addTooltipLang(
+				"solar_boiler.no_light",
+				"Light Source: None(Cannot Work)",
+				"当前光源: 无(无法工作)"
 		);
 	}
 }

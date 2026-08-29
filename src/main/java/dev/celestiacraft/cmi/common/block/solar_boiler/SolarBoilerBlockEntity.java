@@ -16,6 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -79,18 +80,40 @@ public abstract class SolarBoilerBlockEntity extends SmartBlockEntity implements
 	}
 
 	/**
+	 * 判定"人造光照"模式所需的最低方块光照等级 (0-15)
+	 * <p>
+	 * 当锅炉无法获得自然光照时, 若所在位置的人造光照达到该等级,
+	 * 则仍可以按配置的人造光照效率倍率 (默认 50%) 运行。
+	 */
+	public static final int ARTIFICIAL_LIGHT_THRESHOLD = 8;
+
+	/**
 	 * 判断当前是否满足太阳能锅炉的运行条件
 	 * <p>
-	 * 太阳能锅炉需要接收到充足的自然光照才能运行, 因此其顶部必须能够直接看到天空
+	 * 太阳能锅炉依靠光照运行, 不同光照下效率不同:
 	 * <ul>
-	 *     <li>在主世界中, 仅可在白天且未降雨时运行</li>
-	 *     <li>在末地中, 由于不存在昼夜循环和天气系统, 因此只要能够看到天空即可运行</li>
+	 *     <li><b>自然光照 (效率 100%)</b>: 顶部能够直接看到天空, 且处于白天、天气晴朗;
+	 *     在末地中不存在昼夜循环和天气系统, 因此只要顶部无遮挡即可</li>
+	 *     <li><b>人造光照 (效率由 {@link SolarBoilerConfig#ARTIFICIAL_LIGHT_EFFICIENCY_MULTIPLIER} 决定, 默认 50%)</b>:
+	 *     当无法获得自然光照时 (如顶部有遮挡、夜晚、雨雪天气或室内), 只要所在位置的人造光照
+	 *     达到 {@link #ARTIFICIAL_LIGHT_THRESHOLD} 即可继续以较低效率运行</li>
 	 * </ul>
-	 * 当任意条件不满足时, 锅炉将停止产热和消耗水
+	 * 当两种光照均不满足时, 锅炉将停止产热和消耗水
 	 *
 	 * @return {@code true} 如果当前满足运行条件, 否则返回 {@code false}
 	 */
 	protected boolean canWork() {
+		return hasNaturalLight() || hasArtificialLight();
+	}
+
+	/**
+	 * 当前是否处于"自然光照"模式 (效率 100%)
+	 */
+	public boolean hasNaturalLight() {
+		if (level == null) {
+			return false;
+		}
+
 		if (level.dimension().equals(Level.END)) {
 			return hasOpenSky();
 		}
@@ -102,6 +125,53 @@ public abstract class SolarBoilerBlockEntity extends SmartBlockEntity implements
 				&& !level.isRainingAt(worldPosition);
 	}
 
+	/**
+	 * 当前是否处于"人造光照"模式 (效率由配置决定, 默认 50%)
+	 */
+	public boolean hasArtificialLight() {
+		if (level == null) {
+			return false;
+		}
+
+		if (SolarBoilerConfig.ARTIFICIAL_LIGHT_EFFICIENCY_MULTIPLIER.get() <= 0) {
+			return false;
+		}
+
+		return level.getBrightness(LightLayer.BLOCK, worldPosition) >= ARTIFICIAL_LIGHT_THRESHOLD;
+	}
+
+	/**
+	 * 人造光照模式下的效率百分比 (如 0.5 倍率对应 50)
+	 */
+	public static int getArtificialLightEfficiencyPercent() {
+		return (int) Math.round(SolarBoilerConfig.ARTIFICIAL_LIGHT_EFFICIENCY_MULTIPLIER.get() * 100);
+	}
+
+	/**
+	 * 计算人造光照模式下的实际效率 (mB / Tick)
+	 *
+	 * @param baseEfficiency 自然光照 (100%) 下的效率
+	 */
+	public static int getArtificialLightEfficiency(int baseEfficiency) {
+		double multiplier = SolarBoilerConfig.ARTIFICIAL_LIGHT_EFFICIENCY_MULTIPLIER.get();
+		return Math.max(1, (int) Math.round(baseEfficiency * multiplier));
+	}
+
+	/**
+	 * 当前光照模式下实际的每 Tick 消耗/产量
+	 * <p>
+	 * 自然光照为 100%, 人造光照则乘以配置的人造光照效率倍率 (默认 50%)。
+	 *
+	 * @return 实际的 mB / Tick
+	 */
+	public int getCurrentConsumption() {
+		int base = getWaterConsumptionPerTick();
+		if (hasNaturalLight()) {
+			return base;
+		}
+		return getArtificialLightEfficiency(base);
+	}
+
 	private boolean hasOpenSky() {
 		return level.getHeight(
 				Heightmap.Types.MOTION_BLOCKING,
@@ -111,7 +181,7 @@ public abstract class SolarBoilerBlockEntity extends SmartBlockEntity implements
 	}
 
 	protected void process() {
-		int consume = getWaterConsumptionPerTick();
+		int consume = getCurrentConsumption();
 		if (consume <= 0) {
 			return;
 		}
@@ -218,6 +288,24 @@ public abstract class SolarBoilerBlockEntity extends SmartBlockEntity implements
 					.forGoggles(tooltip);
 		}
 
+		// 当前光照模式
+		if (hasNaturalLight()) {
+			CmiLang.builder()
+					.translate("tooltip.solar_boiler.natural_light")
+					.style(ChatFormatting.AQUA)
+					.forGoggles(tooltip);
+		} else if (hasArtificialLight()) {
+			CmiLang.builder()
+					.translate("tooltip.solar_boiler.artificial_light", getArtificialLightEfficiencyPercent())
+					.style(ChatFormatting.YELLOW)
+					.forGoggles(tooltip);
+		} else {
+			CmiLang.builder()
+					.translate("tooltip.solar_boiler.no_light")
+					.style(ChatFormatting.RED)
+					.forGoggles(tooltip);
+		}
+
 		CmiLang.isCtrlDown(tooltip);
 		if (Screen.hasControlDown()) {
 			CmiLang.builder()
@@ -227,6 +315,11 @@ public abstract class SolarBoilerBlockEntity extends SmartBlockEntity implements
 
 			CmiLang.builder()
 					.translate("tooltip.solar_boiler.efficiency", efficiency)
+					.style(ChatFormatting.GRAY)
+					.forGoggles(tooltip);
+
+			CmiLang.builder()
+					.translate("tooltip.solar_boiler.artificial_efficiency", getArtificialLightEfficiency(efficiency))
 					.style(ChatFormatting.GRAY)
 					.forGoggles(tooltip);
 

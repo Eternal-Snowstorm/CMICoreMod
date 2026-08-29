@@ -20,7 +20,7 @@ public class CmiArmorMaterial implements ArmorMaterial {
 	private final Supplier<Ingredient> material;
 
 	// 原版基础耐久
-	private static final int[] BASE_DURABILITY = new int[]{
+	private static final int[] BASE_DURABILITY = {
 			11,
 			16,
 			15,
@@ -32,7 +32,7 @@ public class CmiArmorMaterial implements ArmorMaterial {
 		this.maxDamageFactor = maxDamageFactor;
 		this.defense = defense;
 		this.enchantability = enchantability;
-		this.soundEvent = sound;
+		soundEvent = sound;
 		this.toughness = toughness;
 		this.knockbackResistance = knockbackResistance;
 		this.material = material;
@@ -40,7 +40,7 @@ public class CmiArmorMaterial implements ArmorMaterial {
 
 	@Override
 	public int getDurabilityForType(ArmorItem.@NotNull Type type) {
-		return BASE_DURABILITY[type.ordinal()] * this.maxDamageFactor;
+		return BASE_DURABILITY[type.ordinal()] * maxDamageFactor;
 	}
 
 	@Override

@@ -15,6 +15,11 @@ public class BlockLanguage extends LanguageGenerate {
 				"多方块水井"
 		);
 		addBlockLanguage(
+				"lava_well",
+				"Lava Well",
+				"多方块熔岩井"
+		);
+		addBlockLanguage(
 				"blazing_blood_well",
 				"Blazing Blood Well",
 				"多方块烈焰血井"

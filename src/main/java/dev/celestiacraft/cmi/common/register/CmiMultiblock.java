@@ -21,6 +21,7 @@ import vazkii.patchouli.api.IMultiblock;
 public class CmiMultiblock {
 	public static final Lazy<IMultiblock>
 			WATER_PUMP,
+			LAVA_PUMP,
 			BLAZING_BLOOD_PUMP,
 			TEST_MULTIBLOCK,
 			TEST_COKE_OVEN;
@@ -63,6 +64,47 @@ public class CmiMultiblock {
 				.define(' ', DefineBlockBuilder::any)
 				.define('E', (builder) -> {
 					builder.map(ModResources.TREATED_WOOD_SLAB.getBlock(), PropertyImmutableMap.create()
+							.add(SlabBlock.TYPE, SlabType.TOP)
+							.build());
+				}));
+
+		LAVA_PUMP = structure(StructureBuilder.create(new String[][] {
+						{
+								"DED",
+								"E E",
+								"DED"
+						},
+						{
+								"C C",
+								"   ",
+								"C C"
+						},
+						{
+								"C C",
+								"   ",
+								"C C"
+						},
+						{
+								"AAA",
+								"A0A",
+								"AAA"
+						}
+				})
+				.define('A', (builder) -> {
+					builder.block(TinkerMaterials.nahuatl.get());
+				})
+				.define('0', (builder) -> {
+					builder.block(WallBlocks.LAVA_WELL.get());
+				})
+				.define('C', (builder) -> {
+					builder.block(ModResources.NAHUATL_FENCE.getBlock());
+				})
+				.define('D', (builder) -> {
+					builder.block(OtherBlocks.NAHUATL_SCAFFOLD.get());
+				})
+				.define(' ', DefineBlockBuilder::any)
+				.define('E', (builder) -> {
+					builder.map(ModResources.NAHUATL_SLAB.getBlock(), PropertyImmutableMap.create()
 							.add(SlabBlock.TYPE, SlabType.TOP)
 							.build());
 				}));

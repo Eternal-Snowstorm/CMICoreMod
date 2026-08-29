@@ -70,18 +70,16 @@ public class SolarBoilerItem extends BasicBlockItem {
 					FontHelper.Palette.STANDARD_CREATE.highlight()
 			));
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
-					CmiLang.translateDirect("tooltip.solar_boiler.condition.2").getString(),
+					CmiLang.translateDirect(
+							"tooltip.solar_boiler.condition.2",
+							SolarBoilerBlockEntity.ARTIFICIAL_LIGHT_THRESHOLD,
+							SolarBoilerBlockEntity.getArtificialLightEfficiencyPercent()
+					).getString(),
 					FontHelper.Palette.STANDARD_CREATE.primary(),
 					FontHelper.Palette.STANDARD_CREATE.highlight()
 			));
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					CmiLang.translateDirect("tooltip.solar_boiler.condition.3").getString(),
-					FontHelper.Palette.STANDARD_CREATE.primary(),
-					FontHelper.Palette.STANDARD_CREATE.highlight()
-			));
-
-			tooltip.addAll(TooltipHelper.cutStringTextComponent(
-					CmiLang.translateDirect("tooltip.solar_boiler.condition.4").getString(),
 					FontHelper.Palette.STANDARD_CREATE.primary(),
 					FontHelper.Palette.STANDARD_CREATE.highlight()
 			));
@@ -111,6 +109,15 @@ public class SolarBoilerItem extends BasicBlockItem {
 
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					CmiLang.translateDirect(
+							"tooltip.solar_boiler.artificial_efficiency",
+							SolarBoilerBlockEntity.getArtificialLightEfficiency(efficiency)
+					).withStyle(ChatFormatting.GRAY).getString(),
+					FontHelper.Palette.STANDARD_CREATE.primary(),
+					FontHelper.Palette.STANDARD_CREATE.highlight()
+			));
+
+			tooltip.addAll(TooltipHelper.cutStringTextComponent(
+					CmiLang.translateDirect(
 							"tooltip.solar_boiler.capacity",
 							capacity
 					).withStyle(ChatFormatting.GRAY).getString(),
@@ -121,7 +128,7 @@ public class SolarBoilerItem extends BasicBlockItem {
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
 					CmiLang.translateDirect(
 							"tooltip.solar_boiler.total_capacity",
-							capacity * 2
+							capacity << 1
 					).withStyle(ChatFormatting.GRAY).getString(),
 					FontHelper.Palette.STANDARD_CREATE.primary(),
 					FontHelper.Palette.STANDARD_CREATE.highlight()
