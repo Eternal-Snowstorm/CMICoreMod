@@ -56,12 +56,12 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 	@Override
 	public void init() {
 		RegistryInfo.ITEM.addType(
-				"createdieselgenerators:hammer",
+				CreateDieselGenerators.rl("hammer").toString(),
 				CdgHammerItemBuilder.class,
 				CdgHammerItemBuilder::new
 		);
 		RegistryInfo.ITEM.addType(
-				"createdieselgenerators:wire_cutter",
+				CreateDieselGenerators.rl("wire_cutter").toString(),
 				CdgCuttersItemBuilder.class,
 				CdgCuttersItemBuilder::new
 		);
