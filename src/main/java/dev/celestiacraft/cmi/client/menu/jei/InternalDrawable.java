@@ -25,14 +25,14 @@ public class InternalDrawable implements IDrawable {
 			"textures/gui/jei/config_button/5.png",
 			"textures/gui/jei/config_button/6.png",
 			"textures/gui/jei/config_button/7.png"
-	).map((textures) -> {
-		return Cmi.loadResource(textures);
+	).map((texture) -> {
+		return Cmi.loadResource(texture);
 	}).toList();
 
 	public InternalDrawable(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.tickTimer = new TickTimer(15, 7, false);
+		tickTimer = new TickTimer(15, 7, false);
 	}
 
 	@Override

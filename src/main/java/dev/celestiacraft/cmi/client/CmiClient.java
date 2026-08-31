@@ -3,6 +3,7 @@ package dev.celestiacraft.cmi.client;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
+import dev.celestiacraft.cmi.client.tip.CmiTips;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.event.radial.CmiRadialAction;
 import dev.celestiacraft.cmi.client.key.CmiKeyMapping;
@@ -53,6 +54,7 @@ public class CmiClient {
 			EntityRenderers.register(CmiEntity.prospectingRocket(tier).get(), ProspectingRocketRenderer::new);
 		}
 
+		CmiTips.register();
 		CmiRadialMenu.register();
 		CmiRadialAction.register();
 	}
