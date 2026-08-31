@@ -50,7 +50,7 @@ public enum ModResources {
 	}
 
 	public ResourceLocation id() {
-		return entry.getLocation();
+		return entry.getId();
 	}
 
 	public String toString() {
@@ -110,7 +110,7 @@ public enum ModResources {
 	}
 
 	public static ResourcesEntry loadResource(ResourceLocation location) {
-		return new ResourcesEntry(location);
+		return ResourcesEntry.of(location);
 	}
 
 	public static ResourcesEntry loadResource(String path) {

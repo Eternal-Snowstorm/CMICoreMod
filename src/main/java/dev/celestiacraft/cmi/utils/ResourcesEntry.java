@@ -12,20 +12,24 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ResourcesEntry {
 	@Getter
-	private final ResourceLocation location;
+	private final ResourceLocation id;
 
 	private Item itemCache;
 	private Block blockCache;
 	private Fluid fluidCache;
 
-	public ResourcesEntry(ResourceLocation location) {
-		this.location = location;
+	private ResourcesEntry(ResourceLocation id) {
+		this.id = id;
+	}
+
+	public static ResourcesEntry of(ResourceLocation id) {
+		return new ResourcesEntry(id);
 	}
 
 	private <T> T requireNonNull(T obj, String type) {
 		if (obj == null) {
 			throw new IllegalStateException(
-					"[ModResources] Missing %s for id: %s".formatted(type, location)
+					"[ModResources] Missing %s for id: %s".formatted(type, id)
 			);
 		}
 		return obj;
@@ -34,7 +38,7 @@ public class ResourcesEntry {
 	public Item getItem() {
 		if (itemCache == null) {
 			itemCache = requireNonNull(
-					ForgeRegistries.ITEMS.getValue(location),
+					ForgeRegistries.ITEMS.getValue(id),
 					"Item"
 			);
 		}
@@ -44,7 +48,7 @@ public class ResourcesEntry {
 	public Block getBlock() {
 		if (blockCache == null) {
 			blockCache = requireNonNull(
-					ForgeRegistries.BLOCKS.getValue(location),
+					ForgeRegistries.BLOCKS.getValue(id),
 					"Block"
 			);
 		}
@@ -54,7 +58,7 @@ public class ResourcesEntry {
 	public Fluid getFluid() {
 		if (fluidCache == null) {
 			fluidCache = requireNonNull(
-					ForgeRegistries.FLUIDS.getValue(location),
+					ForgeRegistries.FLUIDS.getValue(id),
 					"Fluid"
 			);
 		}
@@ -86,15 +90,15 @@ public class ResourcesEntry {
 	}
 
 	public boolean hasItem() {
-		return ForgeRegistries.ITEMS.containsKey(location);
+		return ForgeRegistries.ITEMS.containsKey(id);
 	}
 
 	public boolean hasBlock() {
-		return ForgeRegistries.BLOCKS.containsKey(location);
+		return ForgeRegistries.BLOCKS.containsKey(id);
 	}
 
 	public boolean hasFluid() {
-		return ForgeRegistries.FLUIDS.containsKey(location);
+		return ForgeRegistries.FLUIDS.containsKey(id);
 	}
 
 	private String typeHint() {
@@ -107,6 +111,6 @@ public class ResourcesEntry {
 
 	@Override
 	public String toString() {
-		return location + " " + typeHint();
+		return id + " " + typeHint();
 	}
 }

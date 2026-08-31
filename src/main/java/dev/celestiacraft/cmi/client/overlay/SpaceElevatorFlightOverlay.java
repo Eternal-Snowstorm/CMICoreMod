@@ -19,8 +19,8 @@ public class SpaceElevatorFlightOverlay implements IGuiOverlay {
 	private static final ResourceLocation ROCKET;
 
 	static {
-		ROCKET_BAR = ModResources.loadAd("textures/gui/sprites/overlay/rocket_bar.png").getLocation();
-		ROCKET = ModResources.loadAd("textures/gui/sprites/overlay/rocket.png").getLocation();
+		ROCKET_BAR = ModResources.loadAd("textures/gui/sprites/overlay/rocket_bar.png").getId();
+		ROCKET = ModResources.loadAd("textures/gui/sprites/overlay/rocket.png").getId();
 	}
 
 	public static void register(RegisterGuiOverlaysEvent event) {
