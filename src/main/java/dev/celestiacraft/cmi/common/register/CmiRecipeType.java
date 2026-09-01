@@ -52,6 +52,6 @@ public class CmiRecipeType {
 
 	public static void register(IEventBus bus) {
 		RECIPE_TYPES.register(bus);
-		Cmi.LOGGER.info("CMI Core RecipeTypes Registered!");
+		Cmi.LOGGER.info("{} RecipeTypes Registered!", Cmi.NAME);
 	}
 }

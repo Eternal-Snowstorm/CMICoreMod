@@ -79,6 +79,6 @@ public class MultiblockBlocks {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("{} Multiblocks Blocks Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Multiblocks Blocks Registered!", Cmi.NAME);
 	}
 }

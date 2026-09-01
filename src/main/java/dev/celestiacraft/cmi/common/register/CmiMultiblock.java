@@ -207,6 +207,6 @@ public class CmiMultiblock {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("{} Multiblock Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Multiblocks Registered!", Cmi.NAME);
 	}
 }

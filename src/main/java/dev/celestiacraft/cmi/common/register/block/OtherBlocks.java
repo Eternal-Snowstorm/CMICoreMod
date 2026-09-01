@@ -90,6 +90,6 @@ public class OtherBlocks {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("{} Other Blocks Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Other Blocks Registered!", Cmi.NAME);
 	}
 }

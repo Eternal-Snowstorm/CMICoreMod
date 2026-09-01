@@ -54,6 +54,6 @@ public class TConTools {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("CMI Core TCon Tools Registered!");
+		Cmi.LOGGER.info("{} TCon Tools Registered!", Cmi.NAME);
 	}
 }

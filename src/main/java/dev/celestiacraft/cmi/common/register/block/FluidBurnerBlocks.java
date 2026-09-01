@@ -62,6 +62,6 @@ public class FluidBurnerBlocks {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("{} Fluid Burners Blocks Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Fluid Burners Blocks Registered!", Cmi.NAME);
 	}
 }

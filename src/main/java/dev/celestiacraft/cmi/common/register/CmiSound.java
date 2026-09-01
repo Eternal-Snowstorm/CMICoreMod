@@ -27,6 +27,7 @@ public class CmiSound {
 	}
 
 	public static void register(IEventBus bus) {
+		Cmi.LOGGER.info("{} SoundEvents Registered!", Cmi.NAME);
 		SOUND_EVENTS.register(bus);
 	}
 }

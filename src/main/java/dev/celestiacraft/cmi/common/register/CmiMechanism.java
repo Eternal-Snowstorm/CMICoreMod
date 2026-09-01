@@ -116,6 +116,6 @@ public class CmiMechanism extends MechanismRegister {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("CMI Core Mechanisms Registered!");
+		Cmi.LOGGER.info("{} Mechanisms Registered!", Cmi.NAME);
 	}
 }

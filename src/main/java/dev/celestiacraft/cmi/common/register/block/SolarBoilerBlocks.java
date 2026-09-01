@@ -61,6 +61,6 @@ public class SolarBoilerBlocks {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("{} Solar Boiler Blocks Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Solar Boiler Blocks Registered!", Cmi.NAME);
 	}
 }

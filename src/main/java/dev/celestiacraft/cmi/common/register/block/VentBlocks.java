@@ -33,6 +33,6 @@ public class VentBlocks {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("{} Vent Blocks Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Vent Blocks Registered!", Cmi.NAME);
 	}
 }

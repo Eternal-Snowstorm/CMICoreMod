@@ -76,6 +76,7 @@ public class CmiCreateRecipe {
 	}
 
 	public static void register(IEventBus bus) {
+		Cmi.LOGGER.info("{} Recipes Registered!", Cmi.NAME);
 		SERIALIZERS.register(bus);
 		TYPES.register(bus);
 	}

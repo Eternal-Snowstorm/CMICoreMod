@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 public class CmiCapability {
 	@SubscribeEvent
 	public static void registerCapability(RegisterCapabilitiesEvent event) {
+		Cmi.LOGGER.info("{} Capability Registered!", Cmi.NAME);
+
 		// 水井
 		event.register(WaterWellFluidCapability.class);
 		// 虚空粉末收集器

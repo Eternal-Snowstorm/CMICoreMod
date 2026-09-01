@@ -17,6 +17,6 @@ public class CmiCogwheel extends MetalCogWheelRegister {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("CMI Core CogWheels Registered!");
+		Cmi.LOGGER.info("{} Cogwheel Registered!", Cmi.NAME);
 	}
 }

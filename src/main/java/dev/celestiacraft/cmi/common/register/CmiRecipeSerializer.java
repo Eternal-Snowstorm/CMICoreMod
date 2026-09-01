@@ -39,6 +39,6 @@ public class CmiRecipeSerializer {
 
 	public static void register(IEventBus bus) {
 		SERIALIZERS.register(bus);
-		Cmi.LOGGER.info("CMI Core RecipeSerializers Registered!");
+		Cmi.LOGGER.info("{} RecipeSerializers Registered!", Cmi.NAME);
 	}
 }

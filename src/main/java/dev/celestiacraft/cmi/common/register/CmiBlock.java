@@ -14,6 +14,6 @@ public class CmiBlock {
 		VentBlocks.register();
 		WallBlocks.register();
 
-		Cmi.LOGGER.info("{} Blocks Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Blocks Registered!", Cmi.NAME);
 	}
 }

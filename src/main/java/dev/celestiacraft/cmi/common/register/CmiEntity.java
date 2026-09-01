@@ -54,6 +54,6 @@ public class CmiEntity {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("CMI Core Entities Registered!");
+		Cmi.LOGGER.info("{} Entities Registered!", Cmi.NAME);
 	}
 }

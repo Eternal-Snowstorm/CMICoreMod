@@ -186,6 +186,6 @@ public class CmiBlockEntity {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("{} BlockEntities Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} BlockEntities Registered!", Cmi.NAME);
 	}
 }

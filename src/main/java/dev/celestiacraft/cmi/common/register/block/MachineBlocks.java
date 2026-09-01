@@ -111,6 +111,6 @@ public class MachineBlocks {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("{} Machine Blocks Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Machine Blocks Registered!", Cmi.NAME);
 	}
 }

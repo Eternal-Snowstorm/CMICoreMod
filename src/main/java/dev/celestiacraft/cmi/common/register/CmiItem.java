@@ -101,6 +101,6 @@ public class CmiItem {
 
 	public static void register() {
 		TConTools.register();
-		Cmi.LOGGER.info("CMI Core Items Registered!");
+		Cmi.LOGGER.info("{} Items Registered!", Cmi.NAME);
 	}
 }

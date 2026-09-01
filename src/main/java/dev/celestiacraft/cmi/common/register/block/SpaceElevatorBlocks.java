@@ -49,6 +49,6 @@ public class SpaceElevatorBlocks {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("{} Space Elevator Blocks Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Space Elevator Blocks Registered!", Cmi.NAME);
 	}
 }

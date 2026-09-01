@@ -53,7 +53,7 @@ public class CmiCreativeTabs {
 	}
 
 	public static void register(IEventBus bus) {
-		Cmi.LOGGER.info("{} Creative Tabs Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Creative Tabs Registered!", Cmi.NAME);
 		TABS.register(bus);
 	}
 }

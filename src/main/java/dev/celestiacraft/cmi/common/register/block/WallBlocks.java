@@ -51,6 +51,6 @@ public class WallBlocks {
 	}
 
 	public static void register() {
-		Cmi.LOGGER.info("{} Wall Blocks Registered!", Cmi.MODID);
+		Cmi.LOGGER.info("{} Wall Blocks Registered!", Cmi.NAME);
 	}
 }
