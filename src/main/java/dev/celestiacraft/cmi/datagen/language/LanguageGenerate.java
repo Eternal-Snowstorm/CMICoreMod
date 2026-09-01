@@ -17,6 +17,7 @@ public class LanguageGenerate {
 		JeiLanguage.addLang();
 		GuiLanguage.addLang();
 		EntityLanguage.addLang();
+		ModifierLanguage.addLang();
 	}
 
 	protected static void addLanguage(String type, String key, String english, String chinese) {
@@ -46,12 +47,12 @@ public class LanguageGenerate {
 		TRANSLATION_LIST.add(newList);
 	}
 
-	protected static void addBlockLanguage(String key, String english, String chinese) {
-		addLanguage("block", key, english, chinese);
-	}
-
 	protected static void addItemLanguage(String key, String english, String chinese) {
 		addLanguage("item", key, english, chinese);
+	}
+
+	protected static void addBlockLanguage(String key, String english, String chinese) {
+		addLanguage("block", key, english, chinese);
 	}
 
 	protected static void addBiomeLanguage(String key, String english, String chinese) {
@@ -84,5 +85,9 @@ public class LanguageGenerate {
 
 	protected static void addRadialLang(String key, String english, String chinese) {
 		addLanguage("radial", key, english, chinese);
+	}
+
+	protected static void addModifierLanguage(String key, String english, String chinese) {
+		addLanguage("modifier", key, english, chinese);
 	}
 }
