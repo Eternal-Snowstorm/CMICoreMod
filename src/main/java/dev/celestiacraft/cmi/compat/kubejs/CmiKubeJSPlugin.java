@@ -10,7 +10,7 @@ import dev.celestiacraft.cmi.compat.kubejs.recipe.*;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.cdg.CdgRecipesSchema;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.celestiacraft.cmi.utils.CmiGlobal;
-import dev.celestiacraft.cmi.utils.metal.CmiMetalRegistry;
+import dev.celestiacraft.cmi.utils.metal.CmiMetal;
 import dev.celestiacraft.cmi.utils.tool.CmiMiningLevel;
 import dev.celestiacraft.cmi.utils.tool.CmiToolType;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
@@ -48,7 +48,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		event.add("ClientSeedHandler", ClientSeedHandler.class);
 		event.add("CmiHeatLevel", CmiHeatLevel.class);
 		event.add("CmiGlobal", CmiGlobal.class);
-		event.add("CmiMetalRegistry", CmiMetalRegistry.class);
+		event.add("CmiMetal", CmiMetal.class);
 		event.add("CmiToolType", CmiToolType.class);
 		event.add("CmiMiningLevel", CmiMiningLevel.class);
 	}

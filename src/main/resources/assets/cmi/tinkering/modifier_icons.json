@@ -1,3 +1,5 @@
 {
-	"cmi:extendo": "create:item/brass_hand"
+	"cmi:extendo": [
+		"create:item/brass_hand"
+	]
 }

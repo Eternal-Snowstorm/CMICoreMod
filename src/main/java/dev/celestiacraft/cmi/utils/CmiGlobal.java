@@ -1,8 +1,6 @@
 package dev.celestiacraft.cmi.utils;
 
 import com.simibubi.create.Create;
-import dev.celestiacraft.cmi.utils.metal.CmiMetal;
-import dev.celestiacraft.cmi.utils.metal.CmiMetalRegistry;
 import dev.latvian.mods.kubejs.fluid.FluidStackJS;
 import dev.latvian.mods.kubejs.util.ConsoleJS;
 import lombok.Getter;
@@ -13,10 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public class CmiGlobal {
-	public static CmiMetal registerMetal(String id, int meltingPoint, String namespace, String byProduct) {
-		return CmiMetalRegistry.register(id, meltingPoint, namespace, byProduct);
-	}
-
 	public static final String DEBUG_MESSAGE = "[CMIDebugMessage]";
 
 	public static boolean isDebug = false;
