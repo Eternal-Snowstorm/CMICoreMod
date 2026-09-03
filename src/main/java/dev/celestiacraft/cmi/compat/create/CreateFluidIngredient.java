@@ -8,10 +8,10 @@ import net.minecraft.world.level.material.Fluid;
 
 public abstract class CreateFluidIngredient extends FluidIngredient {
 	public static FluidIngredient ofTag(TagKey<Fluid> tag, int amount) {
-		return FluidIngredient.fromTag(tag, amount);
+		return fromTag(tag, amount);
 	}
 
 	public static FluidIngredient ofTagId(ResourceLocation tag, int amount) {
-		return FluidIngredient.fromTag(FluidTags.create(tag), amount);
+		return fromTag(FluidTags.create(tag), amount);
 	}
 }

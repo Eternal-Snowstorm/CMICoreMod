@@ -120,8 +120,8 @@ public class CdgRecipeJS extends RecipeJS {
 	}
 
 	private OutputItem applyChance(Object from, OutputItem item) {
-		if (from instanceof JsonObject json && json.has("chance")) {
-			return item.withChance(json.get("chance").getAsDouble());
+		if (from instanceof JsonObject object && object.has("chance")) {
+			return item.withChance(object.get("chance").getAsDouble());
 		}
 		return item;
 	}
@@ -135,9 +135,6 @@ public class CdgRecipeJS extends RecipeJS {
 	}
 
 	private RecipeJS setHeat(HeatCondition condition) {
-		return setValue(
-				CdgRecipesSchema.HEAT_REQUIREMENT,
-				condition.serialize()
-		);
+		return setValue(CdgRecipesSchema.HEAT_REQUIREMENT, condition.serialize());
 	}
 }

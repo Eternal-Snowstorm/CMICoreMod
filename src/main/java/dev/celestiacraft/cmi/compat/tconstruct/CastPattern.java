@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.compat.tconstruct;
 
-import slimeknights.tconstruct.library.recipe.partbuilder.Pattern;
 import dev.celestiacraft.cmi.Cmi;
+import slimeknights.tconstruct.library.recipe.partbuilder.Pattern;
 
 public class CastPattern {
 	Pattern mechanism = register("mechanism");

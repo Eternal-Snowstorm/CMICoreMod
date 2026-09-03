@@ -16,18 +16,18 @@ public class MBDFluidIngredient extends FluidIngredient {
 	}
 
 	public static FluidIngredient ofTag(TagKey<Fluid> tag, long amount) {
-		return FluidIngredient.of(tag, amount);
+		return of(tag, amount);
 	}
 
 	public static FluidIngredient ofTag(TagKey<Fluid> tag, long amount, @Nullable CompoundTag nbt) {
-		return FluidIngredient.of(tag, amount, nbt);
+		return of(tag, amount, nbt);
 	}
 
 	public static FluidIngredient ofTagId(ResourceLocation tag, long amount) {
-		return FluidIngredient.of(FluidTags.create(tag), amount);
+		return of(FluidTags.create(tag), amount);
 	}
 
 	public static FluidIngredient ofTagId(ResourceLocation tag, long amount, @Nullable CompoundTag nbt) {
-		return FluidIngredient.of(FluidTags.create(tag), amount, nbt);
+		return of(FluidTags.create(tag), amount, nbt);
 	}
 }
