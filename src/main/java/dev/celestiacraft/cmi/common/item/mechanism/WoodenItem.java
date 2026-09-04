@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.item.mechanism;
 
 import com.simibubi.create.AllItems;
-import dev.celestiacraft.cmi.common.item.MechanismItem;
+import dev.celestiacraft.cmi.api.register.item.MechanismItem;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 

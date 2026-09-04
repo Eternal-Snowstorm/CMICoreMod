@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.item.mechanism;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.item.MechanismItem;
+import dev.celestiacraft.cmi.api.register.item.MechanismItem;
 import dev.celestiacraft.cmi.common.register.CmiMechanism;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;

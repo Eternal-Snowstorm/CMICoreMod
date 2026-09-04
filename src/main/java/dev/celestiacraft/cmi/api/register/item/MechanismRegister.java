@@ -6,7 +6,6 @@ import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.ItemModelGen;
-import dev.celestiacraft.cmi.common.item.MechanismItem;
 import dev.celestiacraft.cmi.tags.CmiItemTags;
 import dev.celestiacraft.libs.utils.TabUtils;
 import net.minecraft.world.item.Item;

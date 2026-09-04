@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.item.mechanism;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.item.MechanismItem;
+import dev.celestiacraft.cmi.api.register.item.MechanismItem;
 import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;

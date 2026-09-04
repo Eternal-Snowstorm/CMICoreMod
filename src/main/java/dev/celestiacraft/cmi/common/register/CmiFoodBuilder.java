@@ -1,16 +1,17 @@
 package dev.celestiacraft.cmi.common.register;
 
-import dev.celestiacraft.libs.common.food.FoodBuilders;
+import net.minecraft.world.food.FoodProperties;
 
 public class CmiFoodBuilder {
-	public static final FoodBuilders PIG_IRON;
+	public static final FoodProperties PIG_IRON;
 
 	static {
-		PIG_IRON = FoodBuilders.food((builder) -> {
-			builder.nutrition(8)
-					.saturationMod(1.0f)
-					.alwaysEat()
-					.fast();
-		});
+		PIG_IRON = new FoodProperties.Builder()
+				.nutrition(10)
+				.saturationMod(1.0f)
+				.alwaysEat()
+				.fast()
+				.build()
+		;
 	}
 }

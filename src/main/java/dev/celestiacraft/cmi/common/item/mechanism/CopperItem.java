@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.common.item.mechanism;
 
-import dev.celestiacraft.cmi.common.item.MechanismItem;
+import dev.celestiacraft.cmi.api.register.item.MechanismItem;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;

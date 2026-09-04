@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.common.item;
+package dev.celestiacraft.cmi.api.register.item;
 
 import dev.celestiacraft.libs.api.register.item.BasicItem;
 import net.minecraft.world.InteractionHand;
@@ -305,6 +305,14 @@ public abstract class MechanismItem extends BasicItem {
 		ItemStack stack = player.getItemInHand(hand);
 		if (hand == InteractionHand.OFF_HAND && !player.getMainHandItem().isEmpty()) {
 			return InteractionResultHolder.pass(stack);
+		}
+
+		/*
+		 * 食物物品(如 PigIronItem)直接交给原版进食流程处理
+		 * 否则下面的机制使用逻辑会把进食拦截掉导致食物无法食用
+		 */
+		if (stack.isEdible()) {
+			return super.use(level, player, hand);
 		}
 
 		InteractionResultHolder<ItemStack> holder = onMechanismUse(level, player, hand);
