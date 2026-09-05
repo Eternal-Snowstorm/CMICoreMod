@@ -4,6 +4,7 @@ import com.lowdragmc.lowdraglib.gui.modular.IUIHolder;
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import dev.celestiacraft.cmi.client.gui.ProspectingRocketCargoUI;
 import dev.celestiacraft.cmi.client.gui.ProspectingRocketUIFactory;
+import lombok.Getter;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +12,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
@@ -44,10 +44,12 @@ import software.bernie.geckolib.core.object.PlayState;
 public class ProspectingRocketEntity extends Entity implements GeoEntity, IUIHolder {
 	private static final TagKey<Fluid> FUEL_TAG = TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath("forge", "fuel"));
 
+	@Getter
 	private final ProspectingRocketTier tier;
 	private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-
+	@Getter
 	private final SimpleContainer cargoItems;
+	@Getter
 	private final FluidTank fuelTank;
 	private LazyOptional<IItemHandler> cargoItemsCap = LazyOptional.empty();
 	private LazyOptional<IFluidHandler> fuelTankCap = LazyOptional.empty();
@@ -55,22 +57,10 @@ public class ProspectingRocketEntity extends Entity implements GeoEntity, IUIHol
 	public ProspectingRocketEntity(EntityType<?> type, Level level, ProspectingRocketTier tier) {
 		super(type, level);
 		this.tier = tier;
-		this.cargoItems = new SimpleContainer(tier.cargoSlots());
-		this.fuelTank = new FluidTank(tier.fuelCapacity(), stack -> stack.getFluid().is(FUEL_TAG));
-		this.noCulling = true;
+		cargoItems = new SimpleContainer(tier.cargoSlots());
+		fuelTank = new FluidTank(tier.fuelCapacity(), stack -> stack.getFluid().is(FUEL_TAG));
+		noCulling = true;
 		rebuildCaps();
-	}
-
-	public ProspectingRocketTier getTier() {
-		return tier;
-	}
-
-	public Container getCargoItems() {
-		return cargoItems;
-	}
-
-	public FluidTank getFuelTank() {
-		return fuelTank;
 	}
 
 	public boolean isFueled() {
@@ -130,8 +120,8 @@ public class ProspectingRocketEntity extends Entity implements GeoEntity, IUIHol
 	}
 
 	private void rebuildCaps() {
-		this.cargoItemsCap = LazyOptional.of(() -> new InvWrapper(cargoItems));
-		this.fuelTankCap = LazyOptional.of(() -> fuelTank);
+		cargoItemsCap = LazyOptional.of(() -> new InvWrapper(cargoItems));
+		fuelTankCap = LazyOptional.of(() -> fuelTank);
 	}
 
 	@Override
@@ -187,7 +177,7 @@ public class ProspectingRocketEntity extends Entity implements GeoEntity, IUIHol
 
 	@Override
 	public boolean isInvalid() {
-		return this.isRemoved();
+		return isRemoved();
 	}
 
 	@Override

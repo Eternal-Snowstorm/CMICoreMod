@@ -10,7 +10,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class ProspectingRocketRenderer extends GeoEntityRenderer<ProspectingRocketEntity> {
 	public ProspectingRocketRenderer(EntityRendererProvider.Context context) {
 		super(context, new ProspectingRocketModel());
-		this.shadowRadius = 0.8F;
+		shadowRadius = 0.8F;
 	}
 
 	@Override

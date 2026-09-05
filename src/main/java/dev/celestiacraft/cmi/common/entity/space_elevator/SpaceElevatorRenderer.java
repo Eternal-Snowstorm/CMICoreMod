@@ -29,8 +29,8 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 	}
 
 	@Override
-	public void render(SpaceElevatorEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
-				MultiBufferSource buffer, int packedLight) {
+	public void render(@NotNull SpaceElevatorEntity entity, float entityYaw, float partialTick, @NotNull PoseStack poseStack,
+	                   @NotNull MultiBufferSource buffer, int packedLight) {
 		super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
 		if (!entity.shouldRenderCables()) {
 			return;
@@ -47,7 +47,7 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 	}
 
 	private void renderCable(SpaceElevatorEntity entity, float partialTick, PoseStack poseStack,
-				MultiBufferSource buffer, int cableIndex) {
+	                         MultiBufferSource buffer, int cableIndex) {
 		Vec3 cameraPos = entityRenderDispatcher.camera.getPosition();
 		CableEndpoints endpoints = resolveCableEndpoints(entity, cableIndex, cameraPos);
 		Vec3 start = endpoints.start();
@@ -99,7 +99,7 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 	}
 
 	private static void renderCablePlane(VertexConsumer consumer, Matrix4f matrix, Vec3 cable,
-				int blockLight, int skyLight, Vec3 widthAxis) {
+	                                     int blockLight, int skyLight, Vec3 widthAxis) {
 		for (int i = 0; i <= CABLE_STEPS; i++) {
 			addCableVertexPair(consumer, matrix, cable, blockLight, skyLight, widthAxis,
 					CABLE_HALF_WIDTH, CABLE_HALF_WIDTH, i, false);
@@ -110,10 +110,19 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 		}
 	}
 
-	private static void addCableVertexPair(VertexConsumer consumer, Matrix4f matrix, Vec3 cable,
-				int startBlockLight, int startSkyLight, Vec3 widthAxis,
-				float widthA, float widthB, int index, boolean alternate) {
-		float progress = (float) index / (float) CABLE_STEPS;
+	private static void addCableVertexPair(
+			VertexConsumer consumer,
+			Matrix4f matrix,
+			Vec3 cable,
+			int startBlockLight,
+			int startSkyLight,
+			Vec3 widthAxis,
+			float widthA,
+			float widthB,
+			int index,
+			boolean alternate
+	) {
+		float progress = index / (float) CABLE_STEPS;
 		int blockLight = (int) Mth.lerp(progress, startBlockLight, 15);
 		int skyLight = (int) Mth.lerp(progress, startSkyLight, 15);
 		int packedLight = LightTexture.pack(blockLight, skyLight);

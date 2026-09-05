@@ -23,7 +23,7 @@ public class WindVaneBlockEntity extends BlockEntity {
 
 	@Override
 	public void setRemoved() {
-		if (this.level != null && registered) {
+		if (level != null && registered) {
 			WindVaneManager.remove(level, worldPosition);
 			registered = false;
 		}

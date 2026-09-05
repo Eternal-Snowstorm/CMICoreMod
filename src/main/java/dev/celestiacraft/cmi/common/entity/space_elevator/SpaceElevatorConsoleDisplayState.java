@@ -1,5 +1,8 @@
 package dev.celestiacraft.cmi.common.entity.space_elevator;
 
+import lombok.Getter;
+
+@Getter
 public enum SpaceElevatorConsoleDisplayState {
 	READY("ready"),
 	COUNTDOWN("countdown"),
@@ -11,10 +14,6 @@ public enum SpaceElevatorConsoleDisplayState {
 
 	SpaceElevatorConsoleDisplayState(String serializedName) {
 		this.serializedName = serializedName;
-	}
-
-	public String getSerializedName() {
-		return serializedName;
 	}
 
 	public static SpaceElevatorConsoleDisplayState fromSerializedName(String serializedName) {

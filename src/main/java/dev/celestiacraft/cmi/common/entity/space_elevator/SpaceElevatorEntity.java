@@ -109,7 +109,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	public static final int CARGO_ITEM_SLOTS = 60;
 	public static final int CARGO_FLUID_CAPACITY = 64_000;
 
-	private static CameraType previousCameraType;
+	private static @Nullable CameraType previousCameraType;
 	private static boolean jumpWasDown;
 
 	private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
@@ -135,7 +135,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 
 	public SpaceElevatorEntity(EntityType<? extends Entity> type, Level level) {
 		super(type, level);
-		this.noCulling = true;
+		noCulling = true;
 		rebuildCargoCaps();
 	}
 
@@ -190,19 +190,19 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	private void setAnchor(BlockPos anchorPos, boolean snapNow) {
-		this.entityData.set(ANCHOR_POS, anchorPos.immutable());
-		this.entityData.set(HAS_ANCHOR, true);
+		entityData.set(ANCHOR_POS, anchorPos.immutable());
+		entityData.set(HAS_ANCHOR, true);
 		if (snapNow) {
 			snapToAnchor();
 		}
 	}
 
 	public boolean hasAnchor() {
-		return this.entityData.get(HAS_ANCHOR);
+		return entityData.get(HAS_ANCHOR);
 	}
 
 	public BlockPos getAnchor() {
-		return this.entityData.get(ANCHOR_POS);
+		return entityData.get(ANCHOR_POS);
 	}
 
 	public boolean isAnchoredTo(BlockPos pos) {
@@ -250,8 +250,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 			return false;
 		}
 
-		this.pendingDestinationDimension = target.level().dimension();
-		this.pendingDestinationAnchor = target.targetAnchor().immutable();
+		pendingDestinationDimension = target.level().dimension();
+		pendingDestinationAnchor = target.targetAnchor().immutable();
 		if (isOrbitSide()) {
 			SpaceElevatorAnchors.onElevatorDeparting(serverLevel, getAnchor());
 		}
@@ -303,11 +303,11 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 			return;
 		}
 
-		double x = getX() + (lerpX - getX()) / (double) lerpSteps;
-		double y = getY() + (lerpY - getY()) / (double) lerpSteps;
-		double z = getZ() + (lerpZ - getZ()) / (double) lerpSteps;
-		float yRot = getYRot() + (float) Mth.wrapDegrees(lerpYRot - getYRot()) / (float) lerpSteps;
-		float xRot = getXRot() + (float) (lerpXRot - getXRot()) / (float) lerpSteps;
+		double x = getX() + (lerpX - getX()) / lerpSteps;
+		double y = getY() + (lerpY - getY()) / lerpSteps;
+		double z = getZ() + (lerpZ - getZ()) / lerpSteps;
+		float yRot = getYRot() + (float) Mth.wrapDegrees(lerpYRot - getYRot()) / lerpSteps;
+		float xRot = getXRot() + (float) (lerpXRot - getXRot()) / lerpSteps;
 		lerpSteps--;
 		setPos(x, y, z);
 		setRot(yRot, xRot);
@@ -389,7 +389,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	private void moveAlongPath(double startY, double targetY, int duration) {
-		double deltaY = (targetY - startY) / (double) duration;
+		double deltaY = (targetY - startY) / duration;
 		setDeltaMovement(0.0D, deltaY, 0.0D);
 		move(MoverType.SELF, getDeltaMovement());
 		if (getTransportTicks() + 1 >= duration) {
@@ -657,7 +657,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	private void beginState(int state) {
-		this.entityData.set(TRANSPORT_STATE, state);
+		entityData.set(TRANSPORT_STATE, state);
 		setTransportTicks(0);
 		applyStateStartPosition(state);
 		syncConsoleDisplayState();
@@ -678,10 +678,10 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	private void clearTransport() {
-		this.entityData.set(TRANSPORT_STATE, STATE_IDLE);
+		entityData.set(TRANSPORT_STATE, STATE_IDLE);
 		setTransportTicks(0);
-		this.pendingDestinationDimension = null;
-		this.pendingDestinationAnchor = null;
+		pendingDestinationDimension = null;
+		pendingDestinationAnchor = null;
 		syncConsoleDisplayState();
 	}
 
@@ -693,15 +693,15 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	private int getTransportState() {
-		return this.entityData.get(TRANSPORT_STATE);
+		return entityData.get(TRANSPORT_STATE);
 	}
 
 	private int getTransportTicks() {
-		return this.entityData.get(TRANSPORT_TICKS);
+		return entityData.get(TRANSPORT_TICKS);
 	}
 
 	private void setTransportTicks(int ticks) {
-		this.entityData.set(TRANSPORT_TICKS, ticks);
+		entityData.set(TRANSPORT_TICKS, ticks);
 	}
 
 	private boolean isTransporting() {
@@ -715,12 +715,11 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	public SpaceElevatorConsoleDisplayState getConsoleDisplayState() {
 		return switch (getTransportState()) {
 			case STATE_COUNTDOWN_UP -> SpaceElevatorConsoleDisplayState.COUNTDOWN;
-			case STATE_DEPART_UP -> SpaceElevatorConsoleDisplayState.ASCENDING;
-			case STATE_ARRIVE_ORBIT -> SpaceElevatorConsoleDisplayState.APPROACHING_STATION;
+			case STATE_DEPART_UP, STATE_ARRIVE_GROUND -> SpaceElevatorConsoleDisplayState.ASCENDING;
+			case STATE_ARRIVE_ORBIT, STATE_DEPART_DOWN -> SpaceElevatorConsoleDisplayState.APPROACHING_STATION;
 			case STATE_COUNTDOWN_DOWN -> SpaceElevatorConsoleDisplayState.DOCKED;
-			case STATE_DEPART_DOWN -> SpaceElevatorConsoleDisplayState.APPROACHING_STATION;
-			case STATE_ARRIVE_GROUND -> SpaceElevatorConsoleDisplayState.ASCENDING;
-			case STATE_IDLE -> isOrbitSide() ? SpaceElevatorConsoleDisplayState.DOCKED : SpaceElevatorConsoleDisplayState.READY;
+			case STATE_IDLE ->
+					isOrbitSide() ? SpaceElevatorConsoleDisplayState.DOCKED : SpaceElevatorConsoleDisplayState.READY;
 			default -> SpaceElevatorConsoleDisplayState.READY;
 		};
 	}
@@ -870,10 +869,10 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 
 	@Override
 	protected void defineSynchedData() {
-		this.entityData.define(ANCHOR_POS, BlockPos.ZERO);
-		this.entityData.define(HAS_ANCHOR, false);
-		this.entityData.define(TRANSPORT_STATE, STATE_IDLE);
-		this.entityData.define(TRANSPORT_TICKS, 0);
+		entityData.define(ANCHOR_POS, BlockPos.ZERO);
+		entityData.define(HAS_ANCHOR, false);
+		entityData.define(TRANSPORT_STATE, STATE_IDLE);
+		entityData.define(TRANSPORT_TICKS, 0);
 	}
 
 	@Override
@@ -887,7 +886,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		if (tag.contains("CargoFluid")) {
 			cargoFluid.readFromNBT(tag.getCompound("CargoFluid"));
 		}
-		this.transferringToCounterpart = tag.getBoolean("TransferringToCounterpart");
+		transferringToCounterpart = tag.getBoolean("TransferringToCounterpart");
 		clearTransport();
 	}
 
@@ -946,8 +945,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	}
 
 	private void rebuildCargoCaps() {
-		this.cargoItemsCap = LazyOptional.of(() -> new InvWrapper(cargoItems));
-		this.cargoFluidCap = LazyOptional.of(() -> cargoFluid);
+		cargoItemsCap = LazyOptional.of(() -> new InvWrapper(cargoItems));
+		cargoFluidCap = LazyOptional.of(() -> cargoFluid);
 	}
 
 	@Override
@@ -981,12 +980,12 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 
 	@Override
 	public boolean isInvalid() {
-		return this.isRemoved();
+		return isRemoved();
 	}
 
 	@Override
 	public boolean isRemote() {
-		Level level = this.level();
+		Level level = level();
 		return level.isClientSide;
 	}
 
@@ -1007,17 +1006,17 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
 		super.onSyncedDataUpdated(key);
 		if (TRANSPORT_STATE.equals(key)) {
-			this.lerpSteps = 0;
+			lerpSteps = 0;
 		}
 	}
 
 	@Override
 	public void lerpTo(double x, double y, double z, float yRot, float xRot, int lerpSteps, boolean teleport) {
-		this.lerpX = x;
-		this.lerpY = y;
-		this.lerpZ = z;
-		this.lerpYRot = yRot;
-		this.lerpXRot = xRot;
+		lerpX = x;
+		lerpY = y;
+		lerpZ = z;
+		lerpYRot = yRot;
+		lerpXRot = xRot;
 		this.lerpSteps = lerpSteps;
 	}
 
@@ -1116,5 +1115,4 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 			function.accept(passenger, getX(), getY() - 0.5D, getZ());
 		}
 	}
-
 }

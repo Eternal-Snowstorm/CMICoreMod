@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.Nullable;
 
-public final class SpaceElevatorAnchors {
+public class SpaceElevatorAnchors {
 	private SpaceElevatorAnchors() {
 	}
 

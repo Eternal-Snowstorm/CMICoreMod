@@ -11,8 +11,8 @@ public class SpaceElevatorTravelSoundInstance extends AbstractTickableSoundInsta
 	public SpaceElevatorTravelSoundInstance(SpaceElevatorEntity elevator) {
 		super(ModSoundEvents.ROCKET.get(), SoundSource.AMBIENT, SoundInstance.createUnseededRandom());
 		this.elevator = elevator;
-		this.looping = true;
-		this.delay = 0;
+		looping = true;
+		delay = 0;
 	}
 
 	@Override
