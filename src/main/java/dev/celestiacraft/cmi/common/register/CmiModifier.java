@@ -18,6 +18,7 @@ public class CmiModifier {
 	}
 
 	public static void register(IEventBus bus) {
+		MODIFIERS.register(bus);
 		Cmi.LOGGER.info("{} TCon Modifiers Registered!", Cmi.NAME);
 	}
 }

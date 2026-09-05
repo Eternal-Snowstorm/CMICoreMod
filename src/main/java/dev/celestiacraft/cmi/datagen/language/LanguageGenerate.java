@@ -90,4 +90,12 @@ public class LanguageGenerate {
 	protected static void addModifierLanguage(String key, String english, String chinese) {
 		addLanguage("modifier", key, english, chinese);
 	}
+
+	protected static void addModifierFlavorLanguage(String key, String english, String chinese) {
+		addLanguage("modifier", key + ".flavor", english, chinese);
+	}
+
+	protected static void addModifierDescriptionLanguage(String key, String english, String chinese) {
+		addLanguage("modifier", key + ".description", english, chinese);
+	}
 }
