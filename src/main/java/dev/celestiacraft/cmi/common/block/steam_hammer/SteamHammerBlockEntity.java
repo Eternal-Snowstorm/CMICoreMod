@@ -2,9 +2,13 @@ package dev.celestiacraft.cmi.common.block.steam_hammer;
 
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
+import com.simibubi.create.content.processing.basin.BasinRecipe;
 import com.simibubi.create.foundation.item.ItemHelper;
+import dev.celestiacraft.cmi.common.block.steam_hammer.capability.SteamHammerFluid;
 import dev.celestiacraft.cmi.config.common.SteamHammerConfig;
-import dev.celestiacraft.cmi.tags.CmiFluidTags;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -25,73 +29,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class SteamHammerBlockEntity extends MechanicalPressBlockEntity {
-	private static final int STEAM_CAPACITY = SteamHammerConfig.STEAM_CAPACITY.get();
+	public static final int STEAM_CAPACITY = SteamHammerConfig.STEAM_CAPACITY.get();
+	@Getter
+	@Setter
+	private FluidStack steam = FluidStack.EMPTY;
+
+	private final IFluidHandler fluidHandler = new SteamHammerFluid(this);
 
 	public SteamHammerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
-
-	private FluidStack steam = FluidStack.EMPTY;
-
-	private final IFluidHandler fluidHandler = new IFluidHandler() {
-		@Override
-		public int getTanks() {
-			return 1;
-		}
-
-		@Override
-		public @NotNull FluidStack getFluidInTank(int tank) {
-			return steam;
-		}
-
-		@Override
-		public int getTankCapacity(int tank) {
-			return STEAM_CAPACITY;
-		}
-
-		@Override
-		public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-			return stack.getFluid().is(CmiFluidTags.STEAM);
-		}
-
-		@Override
-		public int fill(FluidStack resource, FluidAction action) {
-			if (!isFluidValid(0, resource) || resource.isEmpty()) {
-				return 0;
-			}
-
-			if (steam.isEmpty()) {
-				int fill = Math.min(resource.getAmount(), STEAM_CAPACITY);
-				if (action.execute()) {
-					steam = new FluidStack(resource.getFluid(), fill);
-					setChanged();
-				}
-				return fill;
-			}
-
-			if (!steam.isFluidEqual(resource)) {
-				return 0;
-			}
-
-			int fill = Math.min(resource.getAmount(), STEAM_CAPACITY - steam.getAmount());
-			if (fill > 0 && action.execute()) {
-				steam.grow(fill);
-				setChanged();
-			}
-
-			return fill;
-		}
-
-		@Override
-		public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
-			return FluidStack.EMPTY;
-		}
-
-		@Override
-		public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
-			return FluidStack.EMPTY;
-		}
-	};
 
 	private boolean hasEnoughSteam() {
 		return !steam.isEmpty() && steam.getAmount() >= SteamHammerConfig.STEAM_CONSUMPTION.get();
@@ -116,6 +63,48 @@ public class SteamHammerBlockEntity extends MechanicalPressBlockEntity {
 	public void onPressingCompleted() {
 		super.onPressingCompleted();
 		consumeSteam();
+	}
+
+	@Override
+	public boolean tryProcessInBasin(boolean simulate) {
+		if (!hasEnoughSteam()) {
+			return false;
+		}
+		return super.tryProcessInBasin(simulate);
+	}
+
+	@Override
+	protected boolean updateBasin() {
+		if (!hasEnoughSteam()) {
+			return true;
+		}
+		return super.updateBasin();
+	}
+
+	@Override
+	protected void applyBasinRecipe() {
+		super.applyBasinRecipe();
+
+		/*
+		 * 批量处理: 只要剩余输入足够, 就持续应用匹配的盆配方,
+		 * 与传送带/置物台上的批量压制处理方式保持一致
+		 */
+		if (!canProcessInBulk() || currentRecipe == null) {
+			return;
+		}
+
+		BasinBlockEntity basin = getBasin().orElse(null);
+		if (basin == null) {
+			return;
+		}
+
+		Recipe<?> recipe = currentRecipe;
+		for (int i = 0; i < 256 && matchBasinRecipe((Recipe<Container>) recipe); i++) {
+			if (!BasinRecipe.apply(basin, recipe)) {
+				break;
+			}
+			basin.notifyChangeOfContents();
+		}
 	}
 
 	@Override

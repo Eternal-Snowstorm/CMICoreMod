@@ -26,8 +26,8 @@ public class TooltipLanguage extends LanguageGenerate {
 		// Steam Hammer
 		addTooltipLang(
 				"steam_hammer.summary",
-				"Pressing _stacks_ of items while working (Invalid for _Automated Packing_)",
-				"工作时可以处理_一整组_物品(对_自动打包_无效)"
+				"Processes _whole stacks_ in a single working cycle, covering _Pressing_, _Compression Molding_, _Compacting_ and _Automated Packing_ recipes",
+				"一次工作可批量处理_一整组_物品, 支持_金属压片_, _铸模冲压_, _压块塑形_与_自动打包_配方"
 		);
 		addTooltipLang(
 				"steam_hammer.condition1",

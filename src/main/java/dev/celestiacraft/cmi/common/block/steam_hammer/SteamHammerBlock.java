@@ -44,6 +44,7 @@ public class SteamHammerBlock extends MechanicalPressBlock {
 					.forAllStatesExcept((state) -> {
 						BlockModelProvider models = provider.models();
 						Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
+
 						return ConfiguredModel.builder()
 								.modelFile(models.getExistingFile(provider.modLoc("block/steam_hammer/block")))
 								.rotationY((int) facing.toYRot())
