@@ -35,6 +35,13 @@ public class CobaltItem extends MechanismItem implements ICuriosHelper {
 				false,
 				false
 		));
+		player.addEffect(new MobEffectInstance(
+				MobEffects.DIG_SPEED,
+				20 * 20,
+				10,
+				false,
+				false
+		));
 	}
 
 	@Override
