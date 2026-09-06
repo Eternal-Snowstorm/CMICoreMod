@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.event;
 
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.modifier.diving.DivingModifier;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
 import dev.celestiacraft.cmi.compat.create.CreateOxygenSupport;
 import net.minecraft.world.entity.player.Player;
@@ -27,9 +28,10 @@ public class NetherBreathingHandler {
 		}
 
 		boolean hasCreateSupport = CreateOxygenSupport.hasBacktankSupport(player);
+		boolean hasDivingModifierSupport = DivingModifier.isActive(player);
 		boolean hasAdAstraSupport = AdAstraOxygenCompat.hasSpaceSuitSupport(player);
 
-		if (hasCreateSupport) {
+		if (hasCreateSupport || hasDivingModifierSupport) {
 			event.setCanBreathe(true);
 			event.setCanRefillAir(false);
 			event.setConsumeAirAmount(0);

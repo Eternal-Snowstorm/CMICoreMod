@@ -1,5 +1,8 @@
 {
 	"cmi:extendo": [
 		"create:item/brass_hand"
+	],
+	"cmi:diving": [
+		"create:item/copper_diving_helmet"
 	]
 }

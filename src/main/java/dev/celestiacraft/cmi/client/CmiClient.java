@@ -8,6 +8,7 @@ import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.event.radial.CmiRadialAction;
 import dev.celestiacraft.cmi.client.key.CmiKeyMapping;
 import dev.celestiacraft.cmi.client.menu.CmiRadialMenu;
+import dev.celestiacraft.cmi.client.overlay.DivingBacktankAirOverlay;
 import dev.celestiacraft.cmi.client.overlay.NetherBacktankAirOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorConstructionOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorFlightOverlay;
@@ -37,6 +38,7 @@ public class CmiClient {
 		bus.addListener(CmiClient::onRegisterRenderers);
 		bus.addListener(SpaceElevatorHudRenderer::registerShaders);
 		bus.addListener(NetherBacktankAirOverlay::register);
+		bus.addListener(DivingBacktankAirOverlay::register);
 		bus.addListener(SpaceElevatorFlightOverlay::register);
 		bus.addListener(SpaceElevatorConstructionOverlay::register);
 	}
