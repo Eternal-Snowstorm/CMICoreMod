@@ -3,6 +3,7 @@
 		"create:item/brass_hand"
 	],
 	"cmi:diving": [
-		"create:item/copper_diving_helmet"
+		"create:item/copper_diving_helmet",
+		"create:item/netherite_diving_helmet"
 	]
 }

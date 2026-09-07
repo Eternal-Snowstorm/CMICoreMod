@@ -25,13 +25,6 @@ import net.minecraftforge.common.ForgeMod;
 
 import java.util.List;
 
-/**
- * Diving 强化专用 Backtank 余量显示。
- * <p>
- * 参照 {@link NetherBacktankAirOverlay}：当玩家的头盔带有
- * {@link DivingModifier}，并且处于水中或 minecraft:the_nether 维度时，
- * 在 HUD 上显示当前剩余的可呼吸 Backtank 空气。
- */
 public class DivingBacktankAirOverlay implements IGuiOverlay {
 	public static final DivingBacktankAirOverlay INSTANCE = new DivingBacktankAirOverlay();
 
@@ -58,7 +51,6 @@ public class DivingBacktankAirOverlay implements IGuiOverlay {
 			return;
 		}
 
-		// 水中若可自然呼吸（水下呼吸效果、气泡柱等）则不消耗背罐空气，也不显示
 		if (!inNether) {
 			boolean isBubbleColumn = level.getBlockState(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ()))
 					.is(Blocks.BUBBLE_COLUMN);
@@ -86,7 +78,7 @@ public class DivingBacktankAirOverlay implements IGuiOverlay {
 		GuiGameElement.of(backtank).at(0, 0).render(graphics);
 		int color = 0xFF_FFFFFF;
 		if (timeLeft < 60 && timeLeft % 2 == 0) {
-			color = Color.mixColors(0xFF_FF0000, color, Math.max(timeLeft / 60f, .25f));
+			color = Color.mixColors(0xFF_FF0000, color, Math.max(timeLeft / 60.0f, 0.25f));
 		}
 		graphics.drawString(mc.font, text, 16, 5, color);
 
