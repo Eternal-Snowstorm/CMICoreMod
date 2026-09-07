@@ -61,7 +61,7 @@ public class NetherBacktankAirOverlay implements IGuiOverlay {
 		GuiGameElement.of(backtank).at(0, 0).render(graphics);
 		int color = 0xFF_FFFFFF;
 		if (timeLeft < 60 && timeLeft % 2 == 0) {
-			color = Color.mixColors(0xFF_FF0000, color, Math.max(timeLeft / 60f, .25f));
+			color = Color.mixColors(0xFF_FF0000, color, Math.max(timeLeft / 60.0f, 0.25f));
 		}
 		graphics.drawString(mc.font, text, 16, 5, color);
 

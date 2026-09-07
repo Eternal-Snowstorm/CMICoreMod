@@ -78,6 +78,11 @@ public class OtherLanguage extends LanguageGenerate {
 				"Freezing",
 				"冷冻"
 		);
+		addRecipeLang(
+				"grinding",
+				"Grinding",
+				"打磨"
+		);
 		addKeyLang(
 				"categories",
 				"CMI",
