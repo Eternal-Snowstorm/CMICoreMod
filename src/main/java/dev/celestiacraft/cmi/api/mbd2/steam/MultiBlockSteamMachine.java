@@ -4,6 +4,7 @@ import com.lowdragmc.lowdraglib.misc.FluidStorage;
 import com.lowdragmc.mbd2.api.block.RotationState;
 import com.lowdragmc.mbd2.api.machine.IMultiPart;
 import com.lowdragmc.mbd2.api.pattern.BlockPattern;
+import com.lowdragmc.mbd2.api.pattern.MultiblockShapeInfo;
 import com.lowdragmc.mbd2.common.machine.MBDMachine;
 import com.lowdragmc.mbd2.common.machine.MBDMultiblockMachine;
 import com.lowdragmc.mbd2.common.machine.definition.MBDMachineDefinition;
@@ -124,7 +125,19 @@ public class MultiBlockSteamMachine extends AbstractSteamMachine<MultiBlockSteam
 
 		MultiblockMachineDefinition definition = builder.build();
 		if (patternFactory != null) {
-			definition.blockPatternFactory((machine) -> pattern());
+			definition.blockPatternFactory((machine) -> {
+				return pattern();
+			});
+			// JEI 多方块信息页会无条件调用 shapeInfoFactory (null 会 NPE 崩 JEI)
+			definition.shapeInfoFactory((def) -> {
+				BlockPattern p = pattern();
+				if (p == null) {
+					return new MultiblockShapeInfo[0];
+				}
+				int[] repetitions = new int[p.aisleRepetitions.length];   // 层数 = aisle 数 (fingerLength 是 protected)
+				java.util.Arrays.fill(repetitions, 1);   // 每层重复 1 次 (非 repeatable 结构)
+				return new MultiblockShapeInfo[] {new MultiblockShapeInfo(p.getPreview(repetitions))};
+			});
 		}
 		return definition;
 	}

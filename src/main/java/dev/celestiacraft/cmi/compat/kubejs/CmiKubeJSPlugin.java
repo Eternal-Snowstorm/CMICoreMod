@@ -4,7 +4,9 @@ import com.jesz.createdieselgenerators.CreateDieselGenerators;
 import com.lowdragmc.mbd2.api.block.RotationState;
 import com.lowdragmc.mbd2.api.capability.recipe.IO;
 import com.lowdragmc.mbd2.api.pattern.FactoryBlockPattern;
+import com.lowdragmc.mbd2.api.pattern.MultiblockShapeInfo;
 import com.lowdragmc.mbd2.api.pattern.Predicates;
+import com.lowdragmc.mbd2.common.gui.editor.multiblock.MultiblockShapeInfoPanel;
 import com.lowdragmc.mbd2.common.machine.definition.config.*;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
 import dev.celestiacraft.cmi.Cmi;
@@ -29,7 +31,9 @@ import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.registry.RegistryInfo;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
 
+import java.lang.reflect.Array;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class CmiKubeJSPlugin extends KubeJSPlugin {
 	@Override
@@ -55,6 +59,9 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 
 	@Override
 	public void registerBindings(BindingsEvent event) {
+		event.add("IntStream", IntStream.class);
+		event.add("JavaArray", Array.class);
+
 		bindCmi(event);
 		bindCmiMBD(event);
 		bindMBD(event);
@@ -75,9 +82,12 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 	private void bindMBD(BindingsEvent event) {
 		List<Class<?>> mbdClass = List.of(
 				MachineState.class,
+				MultiblockShapeInfo.class,
+				MultiblockShapeInfoPanel.class,
 				ConfigBlockProperties.class,
 				ConfigItemProperties.class,
 				ConfigMachineSettings.class,
+				ConfigMultiblockSettings.class,
 				ConfigRecipeLogicSettings.class,
 				ConfigPartSettings.class,
 				RotationState.class,
