@@ -9,6 +9,7 @@ import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTrait;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
+import java.util.function.DoubleSupplier;
 
 /**
  * 机器 GUI 的链式 DSL：坐标 + 按 trait 名自动绑定，常用件自动接 machine。
@@ -145,11 +146,18 @@ public class UISpec {
 			return steamBar(AbstractSteamMachine.STEAM_TRAIT_NAME, x, y, width, height);
 		}
 
+		/** 按控制器自身 trait 名显示水位 (单方块用; 多方块控制器没有 steam trait 会抛异常) */
 		public Builder steamBar(String tankTraitName, int x, int y, int width, int height) {
 			FluidTankCapabilityTrait trait = trait(machine, FluidTankCapabilityTrait.class, tankTraitName);
 			group.addWidget(new ProgressWidget(() -> {
 				return (double) trait.storages[0].getFluidAmount() / Math.max(1, trait.storages[0].getCapacity());
 			}, x, y, width, height));
+			return this;
+		}
+
+		/** 自定义水位 supplier (多方块聚合水位等场景) */
+		public Builder steamBar(DoubleSupplier fillRatio, int x, int y, int width, int height) {
+			group.addWidget(new ProgressWidget(fillRatio, x, y, width, height));
 			return this;
 		}
 

@@ -1,13 +1,20 @@
 package dev.celestiacraft.cmi.api.mbd2.steam;
 
+import com.lowdragmc.lowdraglib.misc.FluidStorage;
 import com.lowdragmc.mbd2.api.block.RotationState;
+import com.lowdragmc.mbd2.api.machine.IMultiPart;
 import com.lowdragmc.mbd2.api.pattern.BlockPattern;
+import com.lowdragmc.mbd2.common.machine.MBDMachine;
+import com.lowdragmc.mbd2.common.machine.MBDMultiblockMachine;
 import com.lowdragmc.mbd2.common.machine.definition.MBDMachineDefinition;
 import com.lowdragmc.mbd2.common.machine.definition.MultiblockMachineDefinition;
 import com.lowdragmc.mbd2.common.machine.definition.config.*;
+import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTrait;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 /**
@@ -16,11 +23,13 @@ import java.util.function.Supplier;
  * 用法:
  * new MultiBlockSteamMachine(id("cmi:steam_oven"))
  * .recipeType(id("cmi:steam_oven_rt"))
- * .steamCapacity(64000)
  * .steamPerTick(4)
  * .model(off, on)
- * .pattern(FactoryBlockPattern.start().aisle(...)...build())
+ * .pattern(() -> FactoryBlockPattern.start().aisle(...)...build())
  * .build()
+ * <p>
+ * 注意: 多方块没有自己的蒸汽槽 —— 蒸汽仓 = 成型结构里的蒸汽输入总线 (GT 模型),
+ * 容量由总线等级决定; steamCapacity 链式只存在于 SingleSteamMachine。
  */
 public class MultiBlockSteamMachine extends AbstractSteamMachine<MultiBlockSteamMachine> {
 	@Nullable
@@ -47,7 +56,7 @@ public class MultiBlockSteamMachine extends AbstractSteamMachine<MultiBlockSteam
 	 */
 	public MultiBlockSteamMachine pattern(Supplier<BlockPattern> patternFactory) {
 		this.patternFactory = patternFactory;
-		this.cachedPattern = null;
+		cachedPattern = null;
 		return this;
 	}
 
@@ -57,6 +66,38 @@ public class MultiBlockSteamMachine extends AbstractSteamMachine<MultiBlockSteam
 			cachedPattern = patternFactory.get();
 		}
 		return cachedPattern;
+	}
+
+	/**
+	 * 多方块没有自己的蒸汽槽 (蒸汽仓 = 输入总线), 机器设置不含 steam trait。
+	 * 机器作者可覆盖追加物品/流体槽。
+	 */
+	@Override
+	protected ConfigMachineSettings createSettings() {
+		return ConfigMachineSettings.builder()
+				.hasUI(true)
+				.dropMachineItem(true)
+				.build();
+	}
+
+	/**
+	 * 蒸汽源: 成型结构中所有输入总线的蒸汽仓 (并联)。
+	 */
+	@Override
+	protected List<FluidStorage> findSteamStorages(MBDMachine machine) {
+		List<FluidStorage> result = new ArrayList<>();
+		if (machine instanceof MBDMultiblockMachine controller) {
+			for (IMultiPart part : controller.getParts()) {
+				if (part instanceof MBDMachine partMachine) {
+					FluidTankCapabilityTrait tank = partMachine.getTraitByName(
+							FluidTankCapabilityTrait.class, STEAM_TRAIT_NAME);
+					if (tank != null && tank.storages.length > 0) {
+						result.add(tank.storages[0]);
+					}
+				}
+			}
+		}
+		return result;
 	}
 
 	@Override

@@ -16,8 +16,28 @@ import net.minecraft.resources.ResourceLocation;
  * .build()
  */
 public class SingleSteamMachine extends AbstractSteamMachine<SingleSteamMachine> {
+	private int steamCapacity = 16000;
+
 	public SingleSteamMachine(ResourceLocation id) {
 		super(id);
+	}
+
+	/**
+	 * 内部蒸汽槽容量 (mB), 默认 16000; 管道直接贴机器泵蒸汽 (槽六面全 IN)
+	 *
+	 * @param mB
+	 * @return
+	 */
+	public SingleSteamMachine steamCapacity(int mB) {
+		steamCapacity = mB;
+		return this;
+	}
+
+	@Override
+	protected ConfigMachineSettings createSettings() {
+		ConfigMachineSettings settings = super.createSettings();
+		settings.addTraitDefinition(createSteamTank(steamCapacity));
+		return settings;
 	}
 
 	@Override

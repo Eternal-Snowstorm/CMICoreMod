@@ -12,17 +12,17 @@ import net.minecraft.world.phys.shapes.Shapes;
 import java.util.List;
 
 /**
- * 蒸汽输入总线 (部件): 外部蒸汽经它泵入控制器蒸汽槽。
+ * 蒸汽输入总线 (部件): 多方块的蒸汽仓 (GT 模型)。
  * <p>
- * GT 风格多等级: 容量分级 = 总线自带蒸汽缓冲槽容量 (缓冲外部输入峰值),
- * 同时代理控制器蒸汽槽 (traitNameFilter="steam")。
+ * 总线自带蒸汽槽 (name="steam"), 容量 = 等级参数; 多方块工作时从成型结构中
+ * 所有总线的蒸汽槽并联抽取 (见 MultiBlockSteamMachine.findSteamStorages)。
  * <p>
  * 用法:
  * SteamInputBus.build(id("cmi:bronze_steam_input_bus"), "cmi:block/machine/io/bronze_steam_input", 4000);
  * SteamInputBus.build(id("cmi:steel_steam_input_bus"),  "cmi:block/machine/io/steel_steam_input",  16000);
  */
 public class SteamInputBus {
-	public static final String BUFFER_TRAIT_NAME = "steam_buffer";
+	public static final String BUFFER_TRAIT_NAME = "steam";
 
 	public static MBDMachineDefinition build(ResourceLocation id, String modelPath, int capacity) {
 		MachineState base = MachineState.builder()
@@ -31,10 +31,10 @@ public class SteamInputBus {
 				.shape(Shapes.block())
 				.build();
 
-		// 蒸汽缓冲槽: 总线自己的容量 (分级)
+		// 蒸汽仓: 总线自己的容量 (等级), 多方块消耗靠 trait 名 "steam" 找到它
 		FluidTankCapabilityTraitDefinition buffer = new FluidTankCapabilityTraitDefinition();
 
-		buffer.setName(BUFFER_TRAIT_NAME);
+		buffer.setName(BUFFER_TRAIT_NAME); // = AbstractSteamMachine.STEAM_TRAIT_NAME
 		buffer.setPriority(0);
 		buffer.setRecipeHandlerIO(IO.NONE);
 		buffer.setGuiIO(IO.NONE);
@@ -68,29 +68,6 @@ public class SteamInputBus {
 				.build();
 		settings.addTraitDefinition(buffer);
 
-		// 代理控制器蒸汽槽 (traitNameFilter 是 private 字段, 反射设置)
-		ConfigPartSettings.ProxyCapability proxy = new ConfigPartSettings.ProxyCapability();
-
-		AbstractSteamMachine.setPrivateField(proxy, "traitNameFilter", AbstractSteamMachine.STEAM_TRAIT_NAME);
-		proxy.capabilityIO()
-				.setInternal(IO.IN);
-		proxy.capabilityIO()
-				.setFrontIO(IO.IN);
-		proxy.capabilityIO()
-				.setBackIO(IO.NONE);
-		proxy.capabilityIO()
-				.setLeftIO(IO.NONE);
-		proxy.capabilityIO()
-				.setRightIO(IO.NONE);
-		proxy.capabilityIO()
-				.setTopIO(IO.NONE);
-		proxy.capabilityIO()
-				.setBottomIO(IO.NONE);
-		proxy.autoIO()
-				.setEnable(false);
-		proxy.autoIO()
-				.setInterval(20);
-
 		MBDMachineDefinition.Builder builder = MBDMachineDefinition.builder();
 
 		builder.id(id);
@@ -110,7 +87,6 @@ public class SteamInputBus {
 			return ConfigPartSettings.builder()
 					.enable(true)
 					.canShare(true)
-					.proxyControllerCapabilities(List.of(proxy))
 					.build();
 		});
 		return builder.build();

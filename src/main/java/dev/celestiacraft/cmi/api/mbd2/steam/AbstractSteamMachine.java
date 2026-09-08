@@ -1,6 +1,8 @@
 package dev.celestiacraft.cmi.api.mbd2.steam;
 
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
+import com.lowdragmc.lowdraglib.misc.FluidStorage;
+import com.lowdragmc.lowdraglib.side.fluid.FluidStack;
 import com.lowdragmc.mbd2.api.capability.recipe.IO;
 import com.lowdragmc.mbd2.api.recipe.MBDRecipe;
 import com.lowdragmc.mbd2.api.recipe.RecipeLogic;
@@ -43,8 +45,6 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 	@Getter
 	protected ResourceLocation recipeTypeId;
 	@Getter
-	protected int steamCapacity = 16000;
-	@Getter
 	protected int steamPerTick = 2;
 	@Nullable
 	protected Function<String, ResourceLocation> stateModels;
@@ -61,17 +61,6 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 	 */
 	public M recipeType(ResourceLocation recipeTypeId) {
 		this.recipeTypeId = recipeTypeId;
-		return self();
-	}
-
-	/**
-	 * 内部蒸汽槽容量 (mB), 默认 16000
-	 *
-	 * @param mB
-	 * @return
-	 */
-	public M steamCapacity(int mB) {
-		steamCapacity = mB;
 		return self();
 	}
 
@@ -156,9 +145,9 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 	}
 
 	/**
-	 * 蒸汽槽 trait: 只收 forge:steam, 容量 steamCapacity, 全方向 IN
+	 * 蒸汽槽 trait: 只收 forge:steam, 全方向 IN; 容量由调用方给定 (单方块形态用)
 	 */
-	protected TraitDefinition createSteamTank() {
+	protected TraitDefinition createSteamTank(int capacity) {
 		FluidTankCapabilityTraitDefinition tank = new FluidTankCapabilityTraitDefinition();
 
 		tank.setName(STEAM_TRAIT_NAME);
@@ -166,7 +155,7 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 		tank.setRecipeHandlerIO(IO.IN);
 		tank.setGuiIO(IO.IN);
 		tank.setTankSize(1);
-		tank.setCapacity(steamCapacity);
+		tank.setCapacity(capacity);
 		tank.setAllowSameFluids(true);
 		tank.getFluidFilterSettings()
 				.setFilterTags(List.of(CmiFluidTags.STEAM.location()));
@@ -192,17 +181,16 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 	}
 
 	/**
-	 * 机器设置: 蒸汽槽 + 基础开关 (机器作者可覆盖追加物品/流体槽)
+	 * 机器设置: 基础开关。蒸汽槽是单方块形态的特征, 由 SingleSteamMachine 添加;
+	 * 多方块没有蒸汽槽 (蒸汽仓 = 输入总线)。机器作者可覆盖追加物品/流体槽。
 	 *
 	 * @return
 	 */
 	protected ConfigMachineSettings createSettings() {
-		ConfigMachineSettings settings = ConfigMachineSettings.builder()
+		return ConfigMachineSettings.builder()
 				.hasUI(true)
 				.dropMachineItem(true)
 				.build();
-		settings.addTraitDefinition(createSteamTank());
-		return settings;
 	}
 
 	/**
@@ -254,7 +242,7 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 		return UISpec.create(machine, 176, 166, (builder) -> {
 			builder.background("ldlib:textures/gui/background.png")
 					.title(70, 5)
-					.steamBar(60, 20, 18, 52)
+					.steamBar(() -> steamFillRatio(machine), 60, 20, 18, 52) // 聚合水位 (多方块 = 所有蒸汽仓)
 					.progressBar(79, 42);
 
 			// 物品槽按配方 IO 自动两列排布
@@ -272,8 +260,11 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 				}
 			}
 
-			// 蒸汽槽固定在右侧
-			builder.tank(STEAM_TRAIT_NAME, 141, 22, 18, 58);
+			// 蒸汽槽固定在右侧 (多方块无控制器蒸汽槽, 蒸汽在输入总线里, 只显示聚合条)
+			FluidTankCapabilityTrait steamTank = machine.getTraitByName(FluidTankCapabilityTrait.class, STEAM_TRAIT_NAME);
+			if (steamTank != null) {
+				builder.tank(STEAM_TRAIT_NAME, 141, 22, 18, 58);
+			}
 		});
 	}
 
@@ -297,17 +288,24 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 	 * @param recipe
 	 */
 	protected void consumeSteamWhileWorking(MBDMachine machine, MBDRecipe recipe) {
-		FluidTankCapabilityTrait tank = machine.getTraitByName(FluidTankCapabilityTrait.class, STEAM_TRAIT_NAME);
-		if (tank == null || tank.storages.length == 0) {
-			return;
-		}
-		var storage = tank.storages[0];
+		List<FluidStorage> storages = findSteamStorages(machine);
 		int perTick = getSteamPerTickFor(recipe);
-		if (storage.getFluidAmount() >= perTick) {
-			storage.drain(perTick, storage.getFluid(), true, true);
-		} else {
+		long total = storages.stream().mapToLong(FluidStorage::getFluidAmount).sum();
+		if (total < perTick) {
 			machine.getRecipeLogic().setStatus(RecipeLogic.Status.SUSPEND);
 			machine.setMachineState("suspend");
+			return;
+		}
+		// 按顺序从蒸汽仓抽取 (多方块 = 并联的输入总线)
+		int remain = perTick;
+		for (FluidStorage storage : storages) {
+			if (remain <= 0) {
+				break;
+			}
+			FluidStack drained = storage.drain(remain, storage.getFluid(), true, true);
+			if (drained != null && !drained.isEmpty()) {
+				remain = (int) (remain - drained.getAmount());
+			}
 		}
 	}
 
@@ -320,14 +318,31 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 		if (!machine.getRecipeLogic().isSuspend()) {
 			return;
 		}
-		FluidTankCapabilityTrait tank = machine.getTraitByName(FluidTankCapabilityTrait.class, STEAM_TRAIT_NAME);
-		if (tank == null || tank.storages.length == 0) {
-			return;
-		}
-		if (tank.storages[0].getFluidAmount() >= steamPerTick) {
+		long total = findSteamStorages(machine).stream()
+				.mapToLong(FluidStorage::getFluidAmount).sum();
+		if (total >= steamPerTick) {
 			machine.getRecipeLogic().setStatus(RecipeLogic.Status.WORKING);
 			machine.setMachineState("working");
 		}
+	}
+
+	/**
+	 * 蒸汽源: 单方块 = 自身蒸汽槽; 多方块 = 成型结构中所有输入总线的蒸汽仓 (子类覆盖)。
+	 */
+	protected List<FluidStorage> findSteamStorages(MBDMachine machine) {
+		FluidTankCapabilityTrait tank = machine.getTraitByName(FluidTankCapabilityTrait.class, STEAM_TRAIT_NAME);
+		if (tank == null || tank.storages.length == 0) {
+			return List.of();
+		}
+		return List.of(tank.storages[0]);
+	}
+
+	/** 蒸汽水位 (聚合量 / 聚合容量), UI 用 */
+	protected double steamFillRatio(MBDMachine machine) {
+		List<FluidStorage> storages = findSteamStorages(machine);
+		long total = storages.stream().mapToLong(FluidStorage::getFluidAmount).sum();
+		long capacity = storages.stream().mapToLong(FluidStorage::getCapacity).sum();
+		return capacity > 0 ? (double) total / capacity : 0;
 	}
 
 	/**
