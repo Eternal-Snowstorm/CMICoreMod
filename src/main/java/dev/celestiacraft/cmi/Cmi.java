@@ -14,6 +14,7 @@ import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
 import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
+import dev.celestiacraft.cmi.api.mbd2.steam.SteamRegistry;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
 import dev.celestiacraft.cmi.config.CommonConfig;
@@ -69,6 +70,7 @@ public class Cmi {
 		CmiItem.register();
 		CmiMechanism.register();
 		CmiRecipeType.register(bus);
+		SteamRegistry.init();
 		CmiRecipeSerializer.register(bus);
 		CmiCreateRecipe.register(bus);
 		CmiAdvanmentTrigger.register();
