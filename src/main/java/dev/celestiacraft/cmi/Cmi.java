@@ -27,6 +27,8 @@ import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -54,6 +56,10 @@ public class Cmi {
 						.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
 			});
 
+	private void onServerStarted(ServerStartedEvent event) {
+		SteamRegistry.init();
+	}
+
 	public static ResourceLocation loadResource(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
@@ -70,7 +76,6 @@ public class Cmi {
 		CmiItem.register();
 		CmiMechanism.register();
 		CmiRecipeType.register(bus);
-		SteamRegistry.init();
 		CmiRecipeSerializer.register(bus);
 		CmiCreateRecipe.register(bus);
 		CmiAdvanmentTrigger.register();
@@ -80,6 +85,7 @@ public class Cmi {
 		CmiCreativeTabs.register(bus);
 
 		CmiBlockPartialModel.init();
+		MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
 		CmiSpriteShiftEntry.init();
 
 //		MetalCogWheelPartial.init();
@@ -140,13 +146,13 @@ public class Cmi {
 	}
 
 	private void onConfigLoad(ModConfigEvent.Loading event) {
-		if (STRESS_VALUES != null && event.getConfig().getSpec() == STRESS_VALUES_SPEC) {
+		if (STRESS_VALUES != null && event.getConfig().getSpec().equals(STRESS_VALUES_SPEC)) {
 			STRESS_VALUES.onLoad();
 		}
 	}
 
 	private void onConfigReload(ModConfigEvent.Reloading event) {
-		if (STRESS_VALUES != null && event.getConfig().getSpec() == STRESS_VALUES_SPEC) {
+		if (STRESS_VALUES != null && event.getConfig().getSpec().equals(STRESS_VALUES_SPEC)) {
 			STRESS_VALUES.onReload();
 		}
 	}

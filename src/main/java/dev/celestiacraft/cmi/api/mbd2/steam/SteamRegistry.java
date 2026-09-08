@@ -47,7 +47,11 @@ public class SteamRegistry {
 	}
 
 	/**
-	 * 在 mod 构造器调用一次: 注册全局机器事件 (蒸汽抽取 / 恢复)。
+	 * 注册全局机器事件 (蒸汽抽取 / 恢复)。
+	 * <p>
+	 * 必须在服务器启动后调用 —— listenJava 依赖 KubeJS ServerScriptManager,
+	 * 它在服务器启动阶段才创建 (mod 构造期调用会 NPE)。建议挂在 ServerStartedEvent;
+	 * 幂等, 可重复调用。
 	 */
 	public static void init() {
 		SteamMachineEvents.init();

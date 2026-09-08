@@ -11,7 +11,13 @@ import dev.latvian.mods.kubejs.script.ScriptType;
  * 由 SteamRegistry.init() 一次性注册。
  */
 public class SteamMachineEvents {
+	private static boolean initialized;
+
 	static void init() {
+		if (initialized) {
+			return;
+		}
+		initialized = true;
 		MBDServerEvents.ON_RECIPE_WORKING.listenJava(ScriptType.SERVER, SteamMachineEvents.class, (event) -> {
 			MachineOnRecipeWorkingEvent e = ((MBDMachineEvents.MachineEventJS<MachineOnRecipeWorkingEvent>) event).getEvent();
 			handleWorking(e);
