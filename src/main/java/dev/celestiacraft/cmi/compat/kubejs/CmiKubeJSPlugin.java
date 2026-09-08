@@ -1,13 +1,24 @@
 package dev.celestiacraft.cmi.compat.kubejs;
 
 import com.jesz.createdieselgenerators.CreateDieselGenerators;
+import com.lowdragmc.mbd2.api.block.RotationState;
+import com.lowdragmc.mbd2.api.capability.recipe.IO;
+import com.lowdragmc.mbd2.api.pattern.FactoryBlockPattern;
+import com.lowdragmc.mbd2.api.pattern.Predicates;
+import com.lowdragmc.mbd2.common.machine.definition.config.*;
+import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
+import dev.celestiacraft.cmi.api.mbd2.steam.MultiBlockSteamMachine;
+import dev.celestiacraft.cmi.api.mbd2.steam.SingleSteamMachine;
+import dev.celestiacraft.cmi.api.mbd2.steam.SteamInputBus;
+import dev.celestiacraft.cmi.api.mbd2.steam.UISpec;
 import dev.celestiacraft.cmi.compat.create.CmiHeatLevel;
 import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgCuttersItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgHammerItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.*;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.cdg.CdgRecipesSchema;
+import dev.celestiacraft.cmi.compat.mbd2.MBDFluidIngredient;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.celestiacraft.cmi.utils.CmiGlobal;
 import dev.celestiacraft.cmi.utils.metal.CmiMetal;
@@ -17,6 +28,8 @@ import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.registry.RegistryInfo;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
+
+import java.util.List;
 
 public class CmiKubeJSPlugin extends KubeJSPlugin {
 	@Override
@@ -42,6 +55,12 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 
 	@Override
 	public void registerBindings(BindingsEvent event) {
+		bindCmi(event);
+		bindCmiMBD(event);
+		bindMBD(event);
+	}
+
+	private void bindCmi(BindingsEvent event) {
 		event.add("Cmi", Cmi.class);
 		event.add("CmiLang", CmiLang.class);
 		event.add("CmiLang$JeiLang", CmiLang.JeiLang.class);
@@ -51,6 +70,34 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		event.add("CmiMetal", CmiMetal.class);
 		event.add("CmiToolType", CmiToolType.class);
 		event.add("CmiMiningLevel", CmiMiningLevel.class);
+	}
+
+	private void bindMBD(BindingsEvent event) {
+		List<Class<?>> mbdClass = List.of(
+				MachineState.class,
+				ConfigBlockProperties.class,
+				ConfigItemProperties.class,
+				ConfigMachineSettings.class,
+				ConfigRecipeLogicSettings.class,
+				ConfigPartSettings.class,
+				RotationState.class,
+				ItemSlotCapabilityTraitDefinition.class,
+				IO.class,
+				FactoryBlockPattern.class,
+				Predicates.class
+		);
+		mbdClass.forEach((clazz) -> {
+			event.add(clazz.getSimpleName(), clazz);
+		});
+	}
+
+	private void bindCmiMBD(BindingsEvent event) {
+		event.add("MBDFluidIngredient", MBDFluidIngredient.class);
+
+		event.add("SingleSteamMachine", SingleSteamMachine.class);
+		event.add("MultiBlockSteamMachine", MultiBlockSteamMachine.class);
+		event.add("SteamInputBus", SteamInputBus.class);
+		event.add("UISpec", UISpec.class);
 	}
 
 	@Override
