@@ -20,6 +20,6 @@ public class ColorfulItem extends MechanismItem {
 
 	@Override
 	public ItemStack getCraftingRemainingItem(ItemStack stack) {
-		return stack.copy();
+		return stack.copyWithCount(1);
 	}
 }
