@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.stream.Stream;
 
@@ -15,11 +15,19 @@ public class MBDFluidIngredient extends FluidIngredient {
 		super(Stream.empty(), 0, null);
 	}
 
+	public static FluidIngredient of(FluidStack fluid, long amount) {
+		return of(fluid, amount);
+	}
+
+	public static FluidIngredient of(FluidStack fluid, long amount, CompoundTag nbt) {
+		return of(fluid, amount, nbt);
+	}
+
 	public static FluidIngredient ofTag(TagKey<Fluid> tag, long amount) {
 		return of(tag, amount);
 	}
 
-	public static FluidIngredient ofTag(TagKey<Fluid> tag, long amount, @Nullable CompoundTag nbt) {
+	public static FluidIngredient ofTag(TagKey<Fluid> tag, long amount, CompoundTag nbt) {
 		return of(tag, amount, nbt);
 	}
 
@@ -27,7 +35,7 @@ public class MBDFluidIngredient extends FluidIngredient {
 		return of(FluidTags.create(tag), amount);
 	}
 
-	public static FluidIngredient ofTagId(ResourceLocation tag, long amount, @Nullable CompoundTag nbt) {
+	public static FluidIngredient ofTagId(ResourceLocation tag, long amount, CompoundTag nbt) {
 		return of(FluidTags.create(tag), amount, nbt);
 	}
 }
