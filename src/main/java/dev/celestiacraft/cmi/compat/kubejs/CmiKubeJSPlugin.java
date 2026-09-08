@@ -98,6 +98,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		event.add("MultiBlockSteamMachine", MultiBlockSteamMachine.class);
 		event.add("SteamInputBus", SteamInputBus.class);
 		event.add("UISpec", UISpec.class);
+		event.add("UISpec$Builder", UISpec.Builder.class);
 	}
 
 	@Override
