@@ -16,6 +16,8 @@ import com.lowdragmc.mbd2.common.machine.definition.config.toggle.ToggleRenderer
 import com.lowdragmc.mbd2.common.trait.AutoWorldIO;
 import com.lowdragmc.mbd2.common.trait.ToggleAutoIO;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidFilterSettings;
+import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTraitDefinition;
+import com.lowdragmc.mbd2.common.trait.forgeenergy.ForgeEnergyCapabilityTraitDefinition;
 import com.lowdragmc.mbd2.common.trait.item.ItemFilterSettings;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
 import dev.celestiacraft.cmi.Cmi;
@@ -41,6 +43,7 @@ import dev.latvian.mods.kubejs.registry.RegistryInfo;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -70,6 +73,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 	public void registerBindings(BindingsEvent event) {
 		event.add("IntStream", IntStream.class);
 		event.add("JavaArray", Array.class);
+		event.add("JavaArrays", Arrays.class);
 
 		bindCmi(event);
 		bindCmiMBD(event);
@@ -89,7 +93,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 	}
 
 	private void bindMBD(BindingsEvent event) {
-		List<Class<?>> mbdClass = List.of(
+		List<Class<?>> mbdClasses = List.of(
 				MachineState.class,
 				MultiblockShapeInfo.class,
 				MultiblockShapeInfoPanel.class,
@@ -99,8 +103,11 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				ConfigMultiblockSettings.class,
 				ConfigRecipeLogicSettings.class,
 				ConfigPartSettings.class,
+				ConfigPartSettings.ProxyCapability.class,
 				RotationState.class,
 				ItemSlotCapabilityTraitDefinition.class,
+				FluidTankCapabilityTraitDefinition.class,
+				ForgeEnergyCapabilityTraitDefinition.class,
 				IO.class,
 				AutoWorldIO.class,
 				ToggleAutoIO.class,
@@ -116,8 +123,14 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				IModelRenderer.class,
 				ToggleMachineSound.class
 		);
-		mbdClass.forEach((clazz) -> {
-			event.add(clazz.getSimpleName(), clazz);
+		mbdClasses.forEach((clazz) -> {
+			String name = clazz.getSimpleName();
+
+			if (clazz.getEnclosingClass() != null) {
+				name = clazz.getEnclosingClass().getSimpleName() + "$" + name;
+			}
+
+			event.add(name, clazz);
 		});
 	}
 
