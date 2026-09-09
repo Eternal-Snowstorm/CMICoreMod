@@ -1,13 +1,22 @@
 package dev.celestiacraft.cmi.compat.kubejs;
 
 import com.jesz.createdieselgenerators.CreateDieselGenerators;
+import com.lowdragmc.lowdraglib.client.renderer.impl.IModelRenderer;
 import com.lowdragmc.mbd2.api.block.RotationState;
 import com.lowdragmc.mbd2.api.capability.recipe.IO;
 import com.lowdragmc.mbd2.api.pattern.FactoryBlockPattern;
 import com.lowdragmc.mbd2.api.pattern.MultiblockShapeInfo;
 import com.lowdragmc.mbd2.api.pattern.Predicates;
+import com.lowdragmc.mbd2.api.recipe.content.ContentModifier;
 import com.lowdragmc.mbd2.common.gui.editor.multiblock.MultiblockShapeInfoPanel;
 import com.lowdragmc.mbd2.common.machine.definition.config.*;
+import com.lowdragmc.mbd2.common.machine.definition.config.toggle.ToggleCreativeTab;
+import com.lowdragmc.mbd2.common.machine.definition.config.toggle.ToggleMachineSound;
+import com.lowdragmc.mbd2.common.machine.definition.config.toggle.ToggleRenderer;
+import com.lowdragmc.mbd2.common.trait.AutoWorldIO;
+import com.lowdragmc.mbd2.common.trait.ToggleAutoIO;
+import com.lowdragmc.mbd2.common.trait.fluid.FluidFilterSettings;
+import com.lowdragmc.mbd2.common.trait.item.ItemFilterSettings;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
@@ -93,8 +102,19 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				RotationState.class,
 				ItemSlotCapabilityTraitDefinition.class,
 				IO.class,
+				AutoWorldIO.class,
+				ToggleAutoIO.class,
+				ItemFilterSettings.class,
+				FluidFilterSettings.class,
+				RecipeModifier.class,
+				ContentModifier.class,
+				StateMachine.class,
 				FactoryBlockPattern.class,
-				Predicates.class
+				Predicates.class,
+				ToggleCreativeTab.class,
+				ToggleRenderer.class,
+				IModelRenderer.class,
+				ToggleMachineSound.class
 		);
 		mbdClass.forEach((clazz) -> {
 			event.add(clazz.getSimpleName(), clazz);
