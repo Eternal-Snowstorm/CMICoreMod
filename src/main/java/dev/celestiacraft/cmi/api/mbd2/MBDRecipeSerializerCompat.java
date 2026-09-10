@@ -41,7 +41,9 @@ public class MBDRecipeSerializerCompat {
 			for (MBDRecipeType type : MBDRegistries.RECIPE_TYPES) {
 				ResourceLocation id = type.getRegistryName();
 				if (!ForgeRegistries.RECIPE_TYPES.containsKey(id)) {
-					event.register(ForgeRegistries.Keys.RECIPE_TYPES, id, () -> (RecipeType<?>) type);
+					event.register(ForgeRegistries.Keys.RECIPE_TYPES, id, () -> {
+						return (RecipeType<?>) type;
+					});
 				}
 			}
 			return;
