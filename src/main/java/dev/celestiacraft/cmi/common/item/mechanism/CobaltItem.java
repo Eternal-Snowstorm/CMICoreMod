@@ -31,7 +31,7 @@ public class CobaltItem extends MechanismItem implements ICuriosHelper {
 		player.addEffect(new MobEffectInstance(
 				MobEffects.DIG_SPEED,
 				20 * 20,
-				10,
+				9,
 				false,
 				false
 		));
