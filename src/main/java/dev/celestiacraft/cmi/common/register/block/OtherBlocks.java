@@ -13,6 +13,7 @@ import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlock;
 import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlock;
 import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlockItem;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -23,6 +24,7 @@ public class OtherBlocks {
 	public static final BlockEntry<GoldenSaplingBlock> GOLD_SAPLING;
 	public static final BlockEntry<ScaffoldingBlock> NAHUATL_SCAFFOLD;
 	public static final BlockEntry<ScaffoldingBlock> BLAZEWOOD_SCAFFOLD;
+	public static final BlockEntry<ScaffoldingBlock> IRON_SCAFFOLD;
 	public static final BlockEntry<WindVaneBlock> WIND_VANE;
 
 	static {
@@ -65,6 +67,27 @@ public class OtherBlocks {
 				.model(ItemModelGen.withModel("block/scaffold/blazewood"))
 				.build()
 				.register();
+
+		IRON_SCAFFOLD = Cmi.REGISTRATE.block("iron_scaffold", ScaffoldingBlock::new)
+				.properties(BlockBehaviour.Properties::noOcclusion)
+				.initialProperties(SharedProperties::softMetal)
+				.transform(TagGen.pickaxeOnly())
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_STONE_TOOL)
+				.blockstate((context, provider) -> {
+					provider.getVariantBuilder(context.get())
+							.forAllStates((state) -> {
+								BlockModelProvider models = provider.models();
+								return ConfiguredModel.builder()
+										.modelFile(models.getExistingFile(provider.modLoc("block/scaffold/iron")))
+										.build();
+							});
+				})
+				.item()
+				.model(ItemModelGen.withModel("block/scaffold/iron"))
+				.build()
+				.register();
+
 
 		WIND_VANE = Cmi.REGISTRATE.block("wind_vane", WindVaneBlock::new)
 				.initialProperties(SharedProperties::copperMetal)
