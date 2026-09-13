@@ -100,6 +100,11 @@ public class BlockLanguage extends LanguageGenerate {
 				"烈焰木脚手架"
 		);
 		addBlockLanguage(
+				"iron_scaffold",
+				"Iron Scaffold",
+				"铁脚手架"
+		);
+		addBlockLanguage(
 				"space_elevator_base_console",
 				"Space Elevator Base Console",
 				"太空电梯基座控制台"
