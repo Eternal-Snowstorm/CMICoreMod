@@ -16,6 +16,7 @@ import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.api.mbd2.steam.SteamRegistry;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
+import dev.celestiacraft.cmi.compat.mbd2.MBDUI;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
 import dev.celestiacraft.cmi.config.CommonConfig;
 import dev.celestiacraft.cmi.datagen.worldgen.region.CmiOverworldRegion;
@@ -138,6 +139,8 @@ public class Cmi {
 			);
 			AdAstraOxygenCompat.register();
 			CargoGridRules.load();
+
+			MBDUI.attachAll();
 		});
 	}
 

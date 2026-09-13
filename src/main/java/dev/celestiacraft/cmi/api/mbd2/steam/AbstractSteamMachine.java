@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.api.mbd2.steam;
 
+import com.lowdragmc.lowdraglib.LDLib;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.misc.FluidStorage;
 import com.lowdragmc.lowdraglib.side.fluid.FluidStack;
@@ -13,6 +14,7 @@ import com.lowdragmc.mbd2.common.trait.TraitDefinition;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTrait;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTraitDefinition;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
+import dev.celestiacraft.cmi.api.mbd2.UISpec;
 import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;
 import dev.celestiacraft.cmi.tags.CmiFluidTags;
 import lombok.Getter;
@@ -241,7 +243,7 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 	 */
 	protected WidgetGroup createStandardUI(MBDMachine machine) {
 		return UISpec.create(machine, 176, 166, (builder) -> {
-			builder.background("ldlib:textures/gui/background.png")
+			builder.background(LDLib.location("textures/gui/background.png"))
 					.title(70, 5)
 					.steamBar(() -> steamFillRatio(machine), 60, 20, 18, 52) // 聚合水位 (多方块 = 所有蒸汽仓)
 					.progressBar(79, 42);

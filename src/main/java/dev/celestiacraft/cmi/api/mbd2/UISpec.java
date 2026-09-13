@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.api.mbd2.steam;
+package dev.celestiacraft.cmi.api.mbd2;
 
 import com.lowdragmc.lowdraglib.gui.texture.ResourceTexture;
 import com.lowdragmc.lowdraglib.gui.util.ClickData;
@@ -6,6 +6,8 @@ import com.lowdragmc.lowdraglib.gui.widget.*;
 import com.lowdragmc.mbd2.common.machine.MBDMachine;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTrait;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTrait;
+import dev.celestiacraft.cmi.api.mbd2.steam.AbstractSteamMachine;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
@@ -50,17 +52,6 @@ public class UISpec {
 		 * @param texture
 		 * @return
 		 */
-		public Builder background(String texture) {
-			group.setBackground(new ResourceTexture(texture));
-			return this;
-		}
-
-		/**
-		 * 整体背景贴图
-		 *
-		 * @param texture
-		 * @return
-		 */
 		public Builder background(ResourceLocation texture) {
 			group.setBackground(new ResourceTexture(texture));
 			return this;
@@ -74,8 +65,18 @@ public class UISpec {
 		 * @return
 		 */
 		public Builder title(int x, int y) {
-			group.addWidget(new TextTextureWidget(x, y, 40, 20)
-					.setId("ui:machine_name"));
+			return title(x, y, 40);
+		}
+
+		public Builder title(int x, int y, int width) {
+			TextTextureWidget widget = new TextTextureWidget(x, y, width, 20);
+			widget.setId("ui:machine_name");
+			// 纯代码机器不走 MBDMachineDefinition#bindMachineUI, 那个 id 没人填文本 -> 自己塞
+			widget.setText(() -> {
+				Component name = machine.getCustomName();
+				return name != null ? name : machine.getDefinition().block().getName();
+			});
+			group.addWidget(widget);
 			return this;
 		}
 
@@ -163,11 +164,6 @@ public class UISpec {
 
 		public Builder button(int x, int y, int widget, int height, Consumer<ClickData> onClick) {
 			group.addWidget(new ButtonWidget(x, y, widget, height, onClick));
-			return this;
-		}
-
-		public Builder image(int x, int y, int widget, int height, String texture) {
-			group.addWidget(new ImageWidget(x, y, widget, height, new ResourceTexture(texture)));
 			return this;
 		}
 

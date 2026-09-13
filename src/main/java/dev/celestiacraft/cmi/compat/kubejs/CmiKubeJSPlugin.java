@@ -29,7 +29,7 @@ import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.api.mbd2.steam.MultiBlockSteamMachine;
 import dev.celestiacraft.cmi.api.mbd2.steam.SingleSteamMachine;
 import dev.celestiacraft.cmi.api.mbd2.steam.SteamInputBus;
-import dev.celestiacraft.cmi.api.mbd2.steam.UISpec;
+import dev.celestiacraft.cmi.api.mbd2.UISpec;
 import dev.celestiacraft.cmi.compat.create.CmiHeatLevel;
 import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgCuttersItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgHammerItemBuilder;
@@ -37,6 +37,7 @@ import dev.celestiacraft.cmi.compat.kubejs.recipe.*;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.cdg.CdgRecipesSchema;
 import dev.celestiacraft.cmi.compat.mbd2.MBDFluidIngredient;
 import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;
+import dev.celestiacraft.cmi.compat.mbd2.MBDUI;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.celestiacraft.cmi.utils.CmiGlobal;
 import dev.celestiacraft.cmi.utils.metal.CmiMetal;
@@ -161,6 +162,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 	private void bindCmiMBD(BindingsEvent event) {
 		event.add("MBDFluidIngredient", MBDFluidIngredient.class);
 		event.add("MBDHelpers", MBDHelpers.class);
+		event.add("MBDUI", MBDUI.class);
 
 		event.add("SingleSteamMachine", SingleSteamMachine.class);
 		event.add("MultiBlockSteamMachine", MultiBlockSteamMachine.class);
