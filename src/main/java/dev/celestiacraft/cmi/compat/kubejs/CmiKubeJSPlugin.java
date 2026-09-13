@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.compat.kubejs;
 
 import com.jesz.createdieselgenerators.CreateDieselGenerators;
 import com.lowdragmc.lowdraglib.client.renderer.impl.IModelRenderer;
+import com.lowdragmc.lowdraglib.gui.widget.TextTextureWidget;
 import com.lowdragmc.mbd2.api.block.RotationState;
 import com.lowdragmc.mbd2.api.capability.recipe.IO;
 import com.lowdragmc.mbd2.api.pattern.FactoryBlockPattern;
@@ -16,9 +17,12 @@ import com.lowdragmc.mbd2.common.machine.definition.config.toggle.ToggleRenderer
 import com.lowdragmc.mbd2.common.trait.AutoWorldIO;
 import com.lowdragmc.mbd2.common.trait.ToggleAutoIO;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidFilterSettings;
+import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTrait;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTraitDefinition;
+import com.lowdragmc.mbd2.common.trait.forgeenergy.ForgeEnergyCapabilityTrait;
 import com.lowdragmc.mbd2.common.trait.forgeenergy.ForgeEnergyCapabilityTraitDefinition;
 import com.lowdragmc.mbd2.common.trait.item.ItemFilterSettings;
+import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTrait;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
@@ -32,6 +36,7 @@ import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgHammerItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.*;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.cdg.CdgRecipesSchema;
 import dev.celestiacraft.cmi.compat.mbd2.MBDFluidIngredient;
+import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.celestiacraft.cmi.utils.CmiGlobal;
 import dev.celestiacraft.cmi.utils.metal.CmiMetal;
@@ -78,6 +83,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		bindCmi(event);
 		bindCmiMBD(event);
 		bindMBD(event);
+		bindLDLIB(event);
 	}
 
 	private void bindCmi(BindingsEvent event) {
@@ -108,6 +114,9 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				ItemSlotCapabilityTraitDefinition.class,
 				FluidTankCapabilityTraitDefinition.class,
 				ForgeEnergyCapabilityTraitDefinition.class,
+				ItemSlotCapabilityTrait.class,
+				FluidTankCapabilityTrait.class,
+				ForgeEnergyCapabilityTrait.class,
 				IO.class,
 				AutoWorldIO.class,
 				ToggleAutoIO.class,
@@ -134,8 +143,24 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		});
 	}
 
+	private void bindLDLIB(BindingsEvent event) {
+		List<Class<?>> ldlibClasses = List.of(
+				TextTextureWidget.class
+		);
+		ldlibClasses.forEach((clazz) -> {
+			String name = clazz.getSimpleName();
+
+			if (clazz.getEnclosingClass() != null) {
+				name = clazz.getEnclosingClass().getSimpleName() + "$" + name;
+			}
+
+			event.add(name, clazz);
+		});
+	}
+
 	private void bindCmiMBD(BindingsEvent event) {
 		event.add("MBDFluidIngredient", MBDFluidIngredient.class);
+		event.add("MBDHelpers", MBDHelpers.class);
 
 		event.add("SingleSteamMachine", SingleSteamMachine.class);
 		event.add("MultiBlockSteamMachine", MultiBlockSteamMachine.class);

@@ -13,6 +13,7 @@ import com.lowdragmc.mbd2.common.trait.TraitDefinition;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTrait;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTraitDefinition;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
+import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;
 import dev.celestiacraft.cmi.tags.CmiFluidTags;
 import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
@@ -274,7 +275,7 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 	 * 不需要 UI 的子类可覆盖本方法留空。
 	 */
 	protected void injectUI(MBDMachineDefinition definition) {
-		setPrivateField(
+		MBDHelpers.setPrivateField(
 				definition,
 				"uiCreator",
 				(Function<MBDMachine, WidgetGroup>) this::createStandardUI
@@ -356,22 +357,5 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 			return recipe.data.getInt(STEAM_PER_TICK_KEY);
 		}
 		return steamPerTick;
-	}
-
-	/**
-	 * 设置 Java 对象的 private 字段 (绕开 MB2 缺失的 setter)
-	 *
-	 * @param target
-	 * @param fieldName
-	 * @param value
-	 */
-	protected static void setPrivateField(Object target, String fieldName, Object value) {
-		try {
-			var field = target.getClass().getDeclaredField(fieldName);
-			field.setAccessible(true);
-			field.set(target, value);
-		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException("Failed to set private field " + fieldName + " on " + target.getClass(), e);
-		}
 	}
 }
