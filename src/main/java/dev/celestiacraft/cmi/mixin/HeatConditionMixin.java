@@ -14,6 +14,7 @@ import java.util.Arrays;
 
 @Mixin(value = HeatCondition.class, remap = false)
 public abstract class HeatConditionMixin implements StringRepresentable {
+	@SuppressWarnings("target")
 	@Final
 	@Shadow
 	@Mutable

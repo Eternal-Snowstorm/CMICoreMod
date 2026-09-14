@@ -1,10 +1,8 @@
 package dev.celestiacraft.cmi.compat.mbd2;
 
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
-import com.lowdragmc.mbd2.api.recipe.ingredient.FluidIngredient;
 import com.lowdragmc.mbd2.common.machine.MBDMachine;
 import com.lowdragmc.mbd2.common.machine.definition.MBDMachineDefinition;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 
 import java.lang.reflect.Field;
@@ -16,18 +14,6 @@ public class MBDHelpers {
 	// 占位界面尺寸, 与 mb2 默认机器界面一致
 	private static final int UI_WIDTH = 176;
 	private static final int UI_HEIGHT = 166;
-
-	public static FluidIngredient withFluidTag(ResourceLocation tag, long amount, CompoundTag nbt) {
-		return MBDFluidIngredient.ofTagId(tag, amount, nbt);
-	}
-
-	public static FluidIngredient withFluidTag(ResourceLocation tag, long amount) {
-		return withFluidTag(tag, amount, null);
-	}
-
-	public static FluidIngredient withFluidTag(ResourceLocation tag) {
-		return withFluidTag(tag, 1000, null);
-	}
 
 	public static boolean isMachine(MBDMachine machine, ResourceLocation name) {
 		MBDMachineDefinition definition = machine.getDefinition();

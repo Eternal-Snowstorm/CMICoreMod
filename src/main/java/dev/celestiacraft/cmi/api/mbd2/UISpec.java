@@ -65,11 +65,11 @@ public class UISpec {
 		 * @return
 		 */
 		public Builder title(int x, int y) {
-			return title(x, y, 40);
+			return title(x, y, 40, 20);
 		}
 
-		public Builder title(int x, int y, int width) {
-			TextTextureWidget widget = new TextTextureWidget(x, y, width, 20);
+		public Builder title(int x, int y, int width, int height) {
+			TextTextureWidget widget = new TextTextureWidget(x, y, width, height);
 			widget.setId("ui:machine_name");
 			// 纯代码机器不走 MBDMachineDefinition#bindMachineUI, 那个 id 没人填文本 -> 自己塞
 			widget.setText(() -> {
@@ -147,7 +147,9 @@ public class UISpec {
 			return steamBar(AbstractSteamMachine.STEAM_TRAIT_NAME, x, y, width, height);
 		}
 
-		/** 按控制器自身 trait 名显示水位 (单方块用; 多方块控制器没有 steam trait 会抛异常) */
+		/**
+		 * 按控制器自身 trait 名显示水位 (单方块用; 多方块控制器没有 steam trait 会抛异常)
+		 */
 		public Builder steamBar(String tankTraitName, int x, int y, int width, int height) {
 			FluidTankCapabilityTrait trait = trait(machine, FluidTankCapabilityTrait.class, tankTraitName);
 			group.addWidget(new ProgressWidget(() -> {
@@ -156,7 +158,9 @@ public class UISpec {
 			return this;
 		}
 
-		/** 自定义水位 supplier (多方块聚合水位等场景) */
+		/**
+		 * 自定义水位 supplier (多方块聚合水位等场景)
+		 */
 		public Builder steamBar(DoubleSupplier fillRatio, int x, int y, int width, int height) {
 			group.addWidget(new ProgressWidget(fillRatio, x, y, width, height));
 			return this;

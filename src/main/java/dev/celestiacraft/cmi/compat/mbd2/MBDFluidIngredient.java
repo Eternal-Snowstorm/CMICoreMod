@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.compat.mbd2;
 
 import com.lowdragmc.mbd2.api.recipe.ingredient.FluidIngredient;
+import dev.latvian.mods.rhino.util.RemapForJS;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
@@ -16,26 +17,30 @@ public class MBDFluidIngredient extends FluidIngredient {
 	}
 
 	public static FluidIngredient of(FluidStack fluid, long amount) {
-		return of(fluid, amount);
+		return of(fluid, amount, null);
 	}
 
 	public static FluidIngredient of(FluidStack fluid, long amount, CompoundTag nbt) {
-		return of(fluid, amount, nbt);
+		return FluidIngredient.of(Stream.of(fluid.getFluid()), amount, nbt);
 	}
 
-	public static FluidIngredient ofTag(TagKey<Fluid> tag, long amount) {
-		return of(tag, amount);
+	@RemapForJS("ofTag")
+	public static FluidIngredient of(TagKey<Fluid> tag, long amount) {
+		return FluidIngredient.of(tag, amount);
 	}
 
-	public static FluidIngredient ofTag(TagKey<Fluid> tag, long amount, CompoundTag nbt) {
-		return of(tag, amount, nbt);
+	@RemapForJS("ofTag")
+	public static FluidIngredient of(TagKey<Fluid> tag, long amount, CompoundTag nbt) {
+		return FluidIngredient.of(tag, amount, nbt);
 	}
 
-	public static FluidIngredient ofTagId(ResourceLocation tag, long amount) {
-		return of(FluidTags.create(tag), amount);
+	@RemapForJS("ofTagId")
+	public static FluidIngredient of(ResourceLocation tag, long amount) {
+		return FluidIngredient.of(FluidTags.create(tag), amount);
 	}
 
-	public static FluidIngredient ofTagId(ResourceLocation tag, long amount, CompoundTag nbt) {
-		return of(FluidTags.create(tag), amount, nbt);
+	@RemapForJS("ofTagId")
+	public static FluidIngredient of(ResourceLocation tag, long amount, CompoundTag nbt) {
+		return FluidIngredient.of(FluidTags.create(tag), amount, nbt);
 	}
 }
