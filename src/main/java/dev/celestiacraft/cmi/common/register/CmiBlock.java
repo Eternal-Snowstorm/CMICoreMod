@@ -5,6 +5,7 @@ import dev.celestiacraft.cmi.common.register.block.*;
 
 public class CmiBlock {
 	public static void register() {
+		CoilBlocks.register();
 		FluidBurnerBlocks.register();
 		MachineBlocks.register();
 		MultiblockBlocks.register();

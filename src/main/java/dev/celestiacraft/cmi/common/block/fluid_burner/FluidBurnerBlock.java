@@ -45,7 +45,8 @@ public abstract class FluidBurnerBlock extends BasicBlock implements IBE<FluidBu
 						String path = String.format("block/fluid_burner/%s/%s", material, stateName);
 						BlockModelProvider models = provider.models();
 
-						BlockModelBuilder modelFile = models.withExistingParent(path, "block/orientable").texture("top", models.modLoc("block/fluid_burner/%s/top".formatted(material)))
+						BlockModelBuilder modelFile = models.withExistingParent(path, "block/orientable")
+								.texture("top", models.modLoc("block/fluid_burner/%s/top".formatted(material)))
 								.texture("bottom", models.modLoc("block/fluid_burner/%s/down".formatted(material)))
 								.texture("side", models.modLoc("block/fluid_burner/%s/side".formatted(material)))
 								.texture("front", models.modLoc("block/fluid_burner/%s/%s".formatted(material, (lit ? "on" : "off"))));

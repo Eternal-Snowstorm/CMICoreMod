@@ -11,7 +11,8 @@ public class CmiBlockTags {
 			COKE_OVEN_STRUCTURE,
 			COGWHEEL,
 			SMOKE_SOURCE,
-			LARGE_COGWHEEL;
+			LARGE_COGWHEEL,
+			COILS;
 
 	static {
 		GRILL_SOURCES = TagsBuilder.block("grill_sources").cmi();
@@ -20,5 +21,6 @@ public class CmiBlockTags {
 		COGWHEEL = TagsBuilder.block("cogwheel").create();
 		SMOKE_SOURCE = TagsBuilder.block("smoke_source").cmi();
 		LARGE_COGWHEEL = TagsBuilder.block("large_cogwheel").create();
+		COILS = TagsBuilder.block("coils").cmi();
 	}
 }

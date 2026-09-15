@@ -139,6 +139,21 @@ public class BlockLanguage extends LanguageGenerate {
 				"Steel",
 				"钢"
 		);
+		addCoilLang(
+				"copper",
+				"Copper",
+				"铜"
+		);
+		addCoilLang(
+				"electrum",
+				"Electrum",
+				"琥珀金"
+		);
+		addCoilLang(
+				"steel",
+				"High-Voltage",
+				"高压"
+		);
 	}
 
 	private static void addCogWheelLang(String material, String english, String chinese) {
@@ -151,6 +166,14 @@ public class BlockLanguage extends LanguageGenerate {
 				"%s_large_cogwheel".formatted(material),
 				"%s Large Cogwheel".formatted(english),
 				"%s大齿轮".formatted(chinese)
+		);
+	}
+
+	private static void addCoilLang(String material, String english, String chinese) {
+		addBlockLanguage(
+				"%s_coil".formatted(material),
+				"%s Coil Block".formatted(english),
+				"%s线圈".formatted(chinese)
 		);
 	}
 }
