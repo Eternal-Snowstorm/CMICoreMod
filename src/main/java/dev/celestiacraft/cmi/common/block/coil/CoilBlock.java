@@ -71,7 +71,6 @@ public class CoilBlock extends BasicBlock {
 			return;
 		}
 
-		// 成型时 MultiblockState 的 cache 一定有效, 趁这时候把线圈位置记下来并设好状态
 		boolean fever = machine.getRecipeLogic().getStatus().equals(RecipeLogic.Status.WORKING);
 		Set<BlockPos> positions = write(level, multiblock, fever);
 
@@ -123,7 +122,6 @@ public class CoilBlock extends BasicBlock {
 		Set<BlockPos> positions = FEVER_COILS.get(machine);
 
 		if (positions == null) {
-			// 还没有记录 (没成型过 / 记录被清了): 扫一遍结构缓存
 			Set<BlockPos> collected = write(level, multiblock, fever);
 
 			if (fever && !collected.isEmpty()) {
