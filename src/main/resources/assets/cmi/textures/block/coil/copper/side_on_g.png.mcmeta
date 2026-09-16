@@ -4,7 +4,7 @@
 		"type": "CTM",
 		"layer": "SOLID",
 		"textures": [
-			"cmi:block/coil/copper/side_on_g_ctm"
+			"cmi:block/coil/copper/side_on_ctm_g"
 		]
 	}
 }
