@@ -40,7 +40,8 @@
 	],
 	"client": [
 		"BulkFermenterRendererMixin",
-		"LevelRendererMixin"
+		"LevelRendererMixin",
+		"PackRepositoryMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

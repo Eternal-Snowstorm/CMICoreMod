@@ -5,10 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.celestiacraft.cmi.Cmi;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.IOException;
@@ -45,7 +42,6 @@ import java.util.zip.ZipFile;
  *
  * @author CelestiaCraft
  */
-@Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class AutoGlowGenerator {
 	// 发光贴图后缀
 	private static final List<String> SUFFIXES = List.of("_g", "_e");
@@ -70,7 +66,6 @@ public class AutoGlowGenerator {
 			"sctm",
 			"custom"
 	);
-
 	private final Path assets;
 	private final Path mods;
 	private final Map<String, JsonObject> builtin = new LinkedHashMap<>();
@@ -84,6 +79,7 @@ public class AutoGlowGenerator {
 	private final List<String> warnings = new ArrayList<>();
 	private final Set<String> unknownParents = new TreeSet<>();
 	private final Set<String> usedGlow = new LinkedHashSet<>();
+	private Map<ResourceLocation, byte[]> output;
 	private int files;
 	private int jarCount;
 
@@ -93,21 +89,14 @@ public class AutoGlowGenerator {
 		registerBuiltin();
 	}
 
-	private AutoGlowGenerator() {
+	/**
+	 * @param output 生成结果(ResourceLocation -> 内容), 直接交给虚拟资源包
+	 */
+	public AutoGlowGenerator(Map<ResourceLocation, byte[]> output) {
 		this(FMLPaths.GAMEDIR.get());
+		this.output = output;
 	}
-
-	@SubscribeEvent
-	public static void onClientSetup(FMLClientSetupEvent event) {
-		// 生成失败也不能影响启动
-		try {
-			new AutoGlowGenerator().generate();
-		} catch (Throwable e) {
-			Cmi.LOGGER.error("[AutoGlow] 生成失败", e);
-		}
-	}
-
-	private void generate() {
+	public void generate() {
 		scanTextures();
 		scanModels();
 		patchModels();
@@ -224,7 +213,14 @@ public class AutoGlowGenerator {
 				continue;
 			}
 
-			Resolved resolved = resolve(id, entry.getValue());
+			JsonObject own = entry.getValue();
+
+			if (own.has("__autoglow") || isLayered(own)) {
+				// 已经生成过 / 已经挂双层父模型了, 别再动它
+				continue;
+			}
+
+			Resolved resolved = resolve(id, own);
 
 			if (resolved == null || resolved.elements().isEmpty()) {
 				continue;
@@ -280,11 +276,13 @@ public class AutoGlowGenerator {
 			JsonObject layered = layeredModel(resolved.textures(), base, ns);
 
 			if (layered != null) {
+				layered.addProperty("__autoglow", true);
 				writeModel(id, ns, path, layered);
 				continue;
 			}
 
-			JsonObject patched = entry.getValue().deepCopy();
+			JsonObject patched = own.deepCopy();
+			patched.addProperty("__autoglow", true);
 			JsonArray elements = new JsonArray();
 			base.forEach(elements::add);
 			glowElements.forEach(elements::add);
@@ -382,6 +380,22 @@ public class AutoGlowGenerator {
 		return result;
 	}
 
+	/**
+	 * 模型自己没写 elements, 父模型已经是双层结构 -> 不用再生成
+	 *
+	 * @param json 模型
+	 * @return 是否已经是双层
+	 */
+	private static boolean isLayered(JsonObject json) {
+		if (json.has("elements")) {
+			return false;
+		}
+
+		String parent = getString(json, "parent");
+
+		return parent != null && (parent.contains("double_layered") || parent.equals("nebula_libs:block/ore/simple_double_layered"));
+	}
+
 	private static boolean isFullCube(JsonObject element) {
 		if (!(element.get("from") instanceof JsonArray from) || !(element.get("to") instanceof JsonArray to)) {
 			return false;
@@ -392,22 +406,9 @@ public class AutoGlowGenerator {
 				&& to.get(0).getAsDouble() == 16.0 && to.get(1).getAsDouble() == 16.0 && to.get(2).getAsDouble() == 16.0;
 	}
 
-	private void writeModel(String id, String ns, String path, JsonObject json) {
-		Path target = assets.resolve(ns).resolve("models").resolve(path + ".json");
-		Path source = modelFiles.get(id);
-		String text = write(json);
-
-		if (source != null && text.equals(read(source))) {
-			return;
-		}
-
-		try {
-			Files.createDirectories(target.getParent());
-			Files.writeString(target, text, StandardCharsets.UTF_8);
-			changedModels.add(id);
-		} catch (IOException e) {
-			warnings.add("写不了 " + target + ": " + e.getMessage());
-		}
+	private void writeModel(String id, String namespace, String path, JsonObject json) {
+		output.put(ResourceLocation.fromNamespaceAndPath(namespace, "models/" + path + ".json"), write(json).getBytes(StandardCharsets.UTF_8));
+		changedModels.add(id);
 	}
 
 	private Resolved resolve(String id, JsonObject json) {
@@ -527,16 +528,14 @@ public class AutoGlowGenerator {
 	private void writeMcmetas() {
 		for (String glowId : usedGlow) {
 			Path png = textures.get(glowId);
-			String[] matched = match("assets/" + glowId.replace(':', '/'), "textures", ".png");
 
-			if (png == null && matched == null) {
+			if (glowId.indexOf(':') < 0) {
 				continue;
 			}
 
-			Path file = png != null
-					? Path.of(png + ".mcmeta")
-					: assets.resolve(matched[0]).resolve("textures").resolve(matched[1] + ".png.mcmeta");
-			JsonObject json = parse(read(file));
+			String mcmetaNs = glowId.substring(0, glowId.indexOf(':'));
+			String mcmetaPath = glowId.substring(glowId.indexOf(':') + 1);
+			JsonObject json = parse(png != null ? read(Path.of(png + ".mcmeta")) : null);
 
 			if (json == null) {
 				json = new JsonObject();
@@ -585,13 +584,8 @@ public class AutoGlowGenerator {
 				continue;
 			}
 
-			try {
-				Files.createDirectories(file.getParent());
-				Files.writeString(file, write(json), StandardCharsets.UTF_8);
-				changedMcmetas.add(file.toString());
-			} catch (IOException e) {
-				warnings.add("写不了 " + file + ": " + e.getMessage());
-			}
+			output.put(ResourceLocation.fromNamespaceAndPath(mcmetaNs, "textures/" + mcmetaPath + ".png.mcmeta"), write(json).getBytes(StandardCharsets.UTF_8));
+			changedMcmetas.add(glowId);
 		}
 	}
 
