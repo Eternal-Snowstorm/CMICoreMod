@@ -39,31 +39,10 @@ import java.util.WeakHashMap;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CoilBlock extends BasicBlock {
-	/**
-	 * 是否正在发热
-	 * <p>
-	 * 只有成型 (formed) 的线圈才会真正发光
-	 */
 	public static final BooleanProperty FEVER = BooleanProperty.create("fever");
-
-	/**
-	 * 是否是某个已成型 (formed) 的 MBD2 多方块结构的一部分
-	 * <p>
-	 * 未成型时恒为 false, 此时方块模型使用 idle 纹理且不发光
-	 */
 	public static final BooleanProperty FORMED = BooleanProperty.create("formed");
-
-	/**
-	 * formed && fever 时, 降温 (fever -> false) 延迟生效的时长, 单位 tick
-	 * <p>
-	 * 用于抹平连续配方之间一闪而过的状态抖动
-	 */
 	private static final int COOLDOWN_DELAY = 5;
-
-	/** 记录每个多方块结构里的线圈位置 */
 	private static final Map<MBDMachine, Set<BlockPos>> MACHINE_COILS = new WeakHashMap<>();
-
-	/** 待生效的降温请求: 生效的游戏刻 */
 	private static final Map<Level, Map<BlockPos, Long>> PENDING_COOLDOWN = new WeakHashMap<>();
 
 	private static boolean updating;
@@ -72,9 +51,7 @@ public class CoilBlock extends BasicBlock {
 		super(properties.strength(3, 3)
 				.requiresCorrectToolForDrops()
 				.mapColor(MapColor.METAL)
-				.sound(SoundType.METAL)
-				// 只有成型且正在发热的线圈才发光
-				.lightLevel(state -> state.getValue(FORMED) && state.getValue(FEVER) ? 15 : 0));
+				.sound(SoundType.METAL));
 		registerDefaultState(defaultBlockState()
 				.setValue(FORMED, false)
 				.setValue(FEVER, false));
