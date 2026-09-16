@@ -23,12 +23,15 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,8 +39,32 @@ import java.util.WeakHashMap;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CoilBlock extends BasicBlock {
+	/**
+	 * 是否正在发热
+	 * <p>
+	 * 只有成型 (formed) 的线圈才会真正发光
+	 */
 	public static final BooleanProperty FEVER = BooleanProperty.create("fever");
-	private static final Map<MBDMachine, Set<BlockPos>> FEVER_COILS = new WeakHashMap<>();
+
+	/**
+	 * 是否是某个已成型 (formed) 的 MBD2 多方块结构的一部分
+	 * <p>
+	 * 未成型时恒为 false, 此时方块模型使用 idle 纹理且不发光
+	 */
+	public static final BooleanProperty FORMED = BooleanProperty.create("formed");
+
+	/**
+	 * formed && fever 时, 降温 (fever -> false) 延迟生效的时长, 单位 tick
+	 * <p>
+	 * 用于抹平连续配方之间一闪而过的状态抖动
+	 */
+	private static final int COOLDOWN_DELAY = 5;
+
+	/** 记录每个多方块结构里的线圈位置 */
+	private static final Map<MBDMachine, Set<BlockPos>> MACHINE_COILS = new WeakHashMap<>();
+
+	/** 待生效的降温请求: 生效的游戏刻 */
+	private static final Map<Level, Map<BlockPos, Long>> PENDING_COOLDOWN = new WeakHashMap<>();
 
 	private static boolean updating;
 
@@ -46,8 +73,10 @@ public class CoilBlock extends BasicBlock {
 				.requiresCorrectToolForDrops()
 				.mapColor(MapColor.METAL)
 				.sound(SoundType.METAL)
-				.lightLevel(litBlockEmission(FEVER, 15)));
+				// 只有成型且正在发热的线圈才发光
+				.lightLevel(state -> state.getValue(FORMED) && state.getValue(FEVER) ? 15 : 0));
 		registerDefaultState(defaultBlockState()
+				.setValue(FORMED, false)
 				.setValue(FEVER, false));
 	}
 
@@ -55,6 +84,7 @@ public class CoilBlock extends BasicBlock {
 	protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 		builder.add(FEVER);
+		builder.add(FORMED);
 	}
 
 	@SubscribeEvent
@@ -72,10 +102,10 @@ public class CoilBlock extends BasicBlock {
 		}
 
 		boolean fever = machine.getRecipeLogic().getStatus().equals(RecipeLogic.Status.WORKING);
-		Set<BlockPos> positions = write(level, multiblock, fever);
+		Set<BlockPos> positions = markFormed(level, multiblock, fever);
 
 		if (!positions.isEmpty()) {
-			FEVER_COILS.put(machine, positions);
+			MACHINE_COILS.put(machine, positions);
 		}
 	}
 
@@ -98,16 +128,59 @@ public class CoilBlock extends BasicBlock {
 
 	@SubscribeEvent
 	public static void onStructureInvalid(MachineStructureInvalidEvent event) {
-		setCoils(event.getMachine(), false);
-		FEVER_COILS.remove(event.getMachine());
+		clearCoils(event.getMachine());
 	}
 
 	@SubscribeEvent
 	public static void onMachineRemoved(MachineRemovedEvent event) {
-		setCoils(event.getMachine(), false);
-		FEVER_COILS.remove(event.getMachine());
+		clearCoils(event.getMachine());
 	}
 
+	/**
+	 * 处理延迟生效的降温请求
+	 * <p>
+	 * formed && fever 的线圈收到的降温请求会被推迟 {@link #COOLDOWN_DELAY} tick, 在这里统一结算
+	 */
+	@SubscribeEvent
+	public static void onLevelTick(TickEvent.LevelTickEvent event) {
+		if (event.phase != TickEvent.Phase.END || event.level.isClientSide) {
+			return;
+		}
+
+		Map<BlockPos, Long> pending = PENDING_COOLDOWN.get(event.level);
+
+		if (pending == null || pending.isEmpty()) {
+			return;
+		}
+
+		long time = event.level.getGameTime();
+		updating = true;
+
+		try {
+			Iterator<Map.Entry<BlockPos, Long>> iterator = pending.entrySet().iterator();
+
+			while (iterator.hasNext()) {
+				Map.Entry<BlockPos, Long> entry = iterator.next();
+
+				if (entry.getValue() > time) {
+					continue;
+				}
+
+				iterator.remove();
+				applyCooldown(event.level, entry.getKey());
+			}
+		} finally {
+			updating = false;
+		}
+
+		if (pending.isEmpty()) {
+			PENDING_COOLDOWN.remove(event.level);
+		}
+	}
+
+	/**
+	 * 配方状态变化: 只改 fever, formed 保持 true
+	 */
 	private static void setCoils(MBDMachine machine, boolean fever) {
 		if (updating || !(machine instanceof MBDMultiblockMachine multiblock)) {
 			return;
@@ -119,13 +192,18 @@ public class CoilBlock extends BasicBlock {
 			return;
 		}
 
-		Set<BlockPos> positions = FEVER_COILS.get(machine);
+		Set<BlockPos> positions = MACHINE_COILS.get(machine);
 
 		if (positions == null) {
-			Set<BlockPos> collected = write(level, multiblock, fever);
+			// 没有记录: 只有确实成型了才值得回头扫一遍结构缓存
+			if (!multiblock.isFormed()) {
+				return;
+			}
 
-			if (fever && !collected.isEmpty()) {
-				FEVER_COILS.put(machine, collected);
+			Set<BlockPos> collected = markFormed(level, multiblock, fever);
+
+			if (!collected.isEmpty()) {
+				MACHINE_COILS.put(machine, collected);
 			}
 
 			return;
@@ -135,14 +213,50 @@ public class CoilBlock extends BasicBlock {
 
 		try {
 			for (BlockPos pos : positions) {
-				setFever(level, pos, fever);
+				setCoil(level, pos, true, fever);
 			}
 		} finally {
 			updating = false;
 		}
 	}
 
-	private static Set<BlockPos> write(Level level, MBDMultiblockMachine multiblock, boolean fever) {
+	/**
+	 * 结构失效 / 机器被移除: 线圈立刻回到未成型状态, 并取消挂起的降温
+	 */
+	private static void clearCoils(MBDMachine machine) {
+		Set<BlockPos> positions = MACHINE_COILS.remove(machine);
+
+		if (updating || !(machine instanceof MBDMultiblockMachine multiblock)) {
+			return;
+		}
+
+		Level level = machine.getLevel();
+
+		if (level == null || level.isClientSide) {
+			return;
+		}
+
+		// 没有记录时退回到结构缓存兜底
+		Collection<BlockPos> targets = positions == null ? getCachedPositions(multiblock) : positions;
+
+		updating = true;
+
+		try {
+			for (BlockPos pos : targets) {
+				cancelCooldown(level, pos);
+				setCoil(level, pos, false, false);
+			}
+		} finally {
+			updating = false;
+		}
+	}
+
+	/**
+	 * 把结构缓存里的线圈全部标记为成型, 并按参数设置 fever
+	 *
+	 * @return 实际被处理的线圈位置
+	 */
+	private static Set<BlockPos> markFormed(Level level, MBDMultiblockMachine multiblock, boolean fever) {
 		updating = true;
 
 		try {
@@ -156,7 +270,7 @@ public class CoilBlock extends BasicBlock {
 		Set<BlockPos> positions = new HashSet<>();
 
 		for (BlockPos pos : getCachedPositions(multiblock)) {
-			if (setFever(level, pos, fever)) {
+			if (setCoil(level, pos, true, fever)) {
 				positions.add(pos);
 			}
 		}
@@ -174,34 +288,119 @@ public class CoilBlock extends BasicBlock {
 		return state.getCache();
 	}
 
-	private static boolean setFever(Level level, BlockPos pos, boolean fever) {
+	/**
+	 * 设置某个位置线圈的 formed / fever
+	 *
+	 * @return 该位置确实是一个线圈方块时返回 true
+	 */
+	private static boolean setCoil(Level level, BlockPos pos, boolean formed, boolean fever) {
+		BlockState state = getCoilState(level, pos);
+
+		if (state == null) {
+			return false;
+		}
+
+		// formed 先落地: 结构失效时 formed 立刻变 false, 紧随其后的降温就不会再走延迟
+		if (state.getValue(FORMED) != formed) {
+			state = state.setValue(FORMED, formed);
+			applyCoilState(level, pos, state);
+		}
+
+		setFever(level, pos, state, fever);
+
+		return true;
+	}
+
+	/**
+	 * 设置 fever
+	 * <p>
+	 * 当线圈当前为 formed && fever 时, 降温会延后 {@link #COOLDOWN_DELAY} tick 生效, 期间重新升温则取消
+	 */
+	private static void setFever(Level level, BlockPos pos, BlockState state, boolean fever) {
+		if (fever) {
+			cancelCooldown(level, pos);
+
+			if (!state.getValue(FEVER)) {
+				applyCoilState(level, pos, state.setValue(FEVER, true));
+			}
+
+			return;
+		}
+
+		if (!state.getValue(FEVER)) {
+			cancelCooldown(level, pos);
+			return;
+		}
+
+		// 成型且正在发热: 先把降温挂起来, 避免连续配方之间来回抖
+		if (state.getValue(FORMED)) {
+			scheduleCooldown(level, pos);
+			return;
+		}
+
+		applyCoilState(level, pos, state.setValue(FEVER, false));
+	}
+
+	/**
+	 * 读取该位置线圈当前的状态, 不是线圈时返回 {@code null}
+	 * <p>
+	 * 被 MBD2 换成代理部件的线圈, 状态存在 BlockEntity 里
+	 */
+	private static BlockState getCoilState(Level level, BlockPos pos) {
 		BlockEntity entity = level.getBlockEntity(pos);
 
 		if (entity instanceof ProxyPartBlockEntity proxy) {
 			BlockState original = proxy.getOriginalState();
 
-			if (original == null || !(original.getBlock() instanceof CoilBlock)) {
-				return false;
-			}
-
-			if (!original.getValue(FEVER).equals(fever)) {
-				proxy.setOriginalData(original.setValue(FEVER, fever), proxy.getOriginalData(), proxy.getControllerPos());
-			}
-
-			return true;
+			return original != null && original.getBlock() instanceof CoilBlock ? original : null;
 		}
 
 		BlockState state = level.getBlockState(pos);
 
-		if (!(state.getBlock() instanceof CoilBlock)) {
-			return false;
+		return state.getBlock() instanceof CoilBlock ? state : null;
+	}
+
+	/**
+	 * 把状态写回该位置
+	 */
+	private static void applyCoilState(Level level, BlockPos pos, BlockState state) {
+		BlockEntity entity = level.getBlockEntity(pos);
+
+		if (entity instanceof ProxyPartBlockEntity proxy) {
+			proxy.setOriginalData(state, proxy.getOriginalData(), proxy.getControllerPos());
+			return;
 		}
 
-		if (!state.getValue(FEVER).equals(fever)) {
-			level.setBlockAndUpdate(pos, state.setValue(FEVER, fever));
+		level.setBlockAndUpdate(pos, state);
+	}
+
+	private static void scheduleCooldown(Level level, BlockPos pos) {
+		PENDING_COOLDOWN.computeIfAbsent(level, key -> new HashMap<>())
+				.put(pos.immutable(), level.getGameTime() + COOLDOWN_DELAY);
+	}
+
+	private static void cancelCooldown(Level level, BlockPos pos) {
+		Map<BlockPos, Long> pending = PENDING_COOLDOWN.get(level);
+
+		if (pending == null) {
+			return;
 		}
 
-		return true;
+		pending.remove(pos);
+
+		if (pending.isEmpty()) {
+			PENDING_COOLDOWN.remove(level);
+		}
+	}
+
+	private static void applyCooldown(Level level, BlockPos pos) {
+		BlockState state = getCoilState(level, pos);
+
+		if (state == null || !state.getValue(FORMED) || !state.getValue(FEVER)) {
+			return;
+		}
+
+		applyCoilState(level, pos, state.setValue(FEVER, false));
 	}
 
 	public static <T extends Block, P> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> genBlockState(String material) {
@@ -216,10 +415,22 @@ public class CoilBlock extends BasicBlock {
 					.texture("end", models.modLoc("block/coil/%s/top_on".formatted(material)))
 					.texture("side", models.modLoc("block/coil/%s/side_on".formatted(material)));
 
+			BlockModelBuilder idle = models.withExistingParent("block/coil/%s/idle".formatted(material), "block/cube_column")
+					.texture("end", models.modLoc("block/coil/%s/top_idle".formatted(material)))
+					.texture("side", models.modLoc("block/coil/%s/side_idle".formatted(material)));
+
 			provider.getVariantBuilder(context.get())
 					.forAllStates((state) -> {
+						BlockModelBuilder model;
+
+						if (state.getValue(FORMED)) {
+							model = state.getValue(FEVER) ? on : off;
+						} else {
+							model = idle;
+						}
+
 						return ConfiguredModel.builder()
-								.modelFile(state.getValue(FEVER) ? on : off)
+								.modelFile(model)
 								.build();
 					});
 		};

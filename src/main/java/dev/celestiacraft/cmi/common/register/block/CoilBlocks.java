@@ -23,7 +23,7 @@ public class CoilBlocks {
 		String id = String.format("%s_coil", material);
 		return Cmi.REGISTRATE.block(id, CoilBlock::new)
 				.item()
-				.model(ItemModelGen.withModel("block/coil/%s/off".formatted(material)))
+				.model(ItemModelGen.withModel("block/coil/%s/idle".formatted(material)))
 				.tag(CmiItemTags.COILS)
 				.build()
 				.blockstate(CoilBlock.genBlockState(material))
