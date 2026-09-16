@@ -5,13 +5,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
-
-import java.util.function.Supplier;
+import net.minecraftforge.registries.RegistryObject;
 
 public class CmiSound {
 	private static final DeferredRegister<SoundEvent> SOUND_EVENTS;
 
-	public static final Supplier<SoundEvent>
+	public static final RegistryObject<SoundEvent>
 			DING;
 
 	static {
@@ -20,7 +19,7 @@ public class CmiSound {
 		DING = register("meme.ding");
 	}
 
-	private static Supplier<SoundEvent> register(String name) {
+	private static RegistryObject<SoundEvent> register(String name) {
 		return SOUND_EVENTS.register(name, () -> {
 			return SoundEvent.createVariableRangeEvent(Cmi.loadResource(name));
 		});

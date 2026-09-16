@@ -11,16 +11,17 @@ import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_base.SpaceElevatorBaseRecipe;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
 public class CmiRecipeType {
 	public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES;
-	public static final Supplier<RecipeType<AcceleratorRecipe>> ACCELERATOR;
-	public static final Supplier<RecipeType<SpaceElevatorBaseRecipe>> SPACE_ELEVATOR_BASE;
-	public static final Supplier<RecipeType<SpaceElevatorConstructionRecipe>> SPACE_ELEVATOR_CONSTRUCTION;
-	public static final Supplier<RecipeType<FluidBurnRecipe>> FLUID_BURN;
-	public static final Supplier<RecipeType<MachineRecipe>> TEST_COKE_OVEN;
+	public static final RegistryObject<RecipeType<AcceleratorRecipe>> ACCELERATOR;
+	public static final RegistryObject<RecipeType<SpaceElevatorBaseRecipe>> SPACE_ELEVATOR_BASE;
+	public static final RegistryObject<RecipeType<SpaceElevatorConstructionRecipe>> SPACE_ELEVATOR_CONSTRUCTION;
+	public static final RegistryObject<RecipeType<FluidBurnRecipe>> FLUID_BURN;
+	public static final RegistryObject<RecipeType<MachineRecipe>> TEST_COKE_OVEN;
 
 	static {
 		RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Cmi.MODID);
@@ -40,11 +41,11 @@ public class CmiRecipeType {
 		TEST_COKE_OVEN = register("test_coke_oven");
 	}
 
-	private static <T extends Recipe<?>> Supplier<RecipeType<T>> register(String path, Supplier<RecipeType<T>> supplier) {
+	private static <T extends Recipe<?>> RegistryObject<RecipeType<T>> register(String path, Supplier<RecipeType<T>> supplier) {
 		return RECIPE_TYPES.register(path, supplier);
 	}
 
-	private static <T extends Recipe<?>> Supplier<RecipeType<T>> register(String path) {
+	private static <T extends Recipe<?>> RegistryObject<RecipeType<T>> register(String path) {
 		return RECIPE_TYPES.register(path, () -> {
 			return RecipeType.simple(Cmi.loadResource(path));
 		});

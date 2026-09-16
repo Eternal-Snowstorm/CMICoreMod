@@ -12,16 +12,15 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.function.Supplier;
+import net.minecraftforge.registries.RegistryObject;
 
 public class CmiRecipeSerializer {
 	public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS;
-	public static final Supplier<RecipeSerializer<AcceleratorRecipe>> ACCELERATOR;
-	public static final Supplier<RecipeSerializer<SpaceElevatorBaseRecipe>> SPACE_ELEVATOR_BASE;
-	public static final Supplier<RecipeSerializer<SpaceElevatorConstructionRecipe>> SPACE_ELEVATOR_CONSTRUCTION;
-	public static final Supplier<RecipeSerializer<FluidBurnRecipe>> FLUID_BURN;
-	public static final Supplier<RecipeSerializer<MachineRecipe>> TEST_COKE_OVEN;
+	public static final RegistryObject<RecipeSerializer<AcceleratorRecipe>> ACCELERATOR;
+	public static final RegistryObject<RecipeSerializer<SpaceElevatorBaseRecipe>> SPACE_ELEVATOR_BASE;
+	public static final RegistryObject<RecipeSerializer<SpaceElevatorConstructionRecipe>> SPACE_ELEVATOR_CONSTRUCTION;
+	public static final RegistryObject<RecipeSerializer<FluidBurnRecipe>> FLUID_BURN;
+	public static final RegistryObject<RecipeSerializer<MachineRecipe>> TEST_COKE_OVEN;
 
 	static {
 		SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Cmi.MODID);
@@ -33,7 +32,7 @@ public class CmiRecipeSerializer {
 		TEST_COKE_OVEN = register("test_coke_oven", new MachineRecipeSerializer(Cmi.loadResource("test_coke_oven")));
 	}
 
-	private static <T extends Recipe<?>> Supplier<RecipeSerializer<T>> register(String path, RecipeSerializer<T> serializer) {
+	private static <T extends Recipe<?>> RegistryObject<RecipeSerializer<T>> register(String path, RecipeSerializer<T> serializer) {
 		return SERIALIZERS.register(path, () -> serializer);
 	}
 
