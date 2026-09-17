@@ -74,7 +74,7 @@ public class CoilBlock extends BasicBlock {
 
 		Level level = machine.getLevel();
 
-		if (level == null || level.isClientSide) {
+		if (level == null || level.isClientSide()) {
 			return;
 		}
 

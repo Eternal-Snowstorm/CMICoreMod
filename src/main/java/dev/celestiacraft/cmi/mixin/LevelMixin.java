@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Level.class)
 public class LevelMixin {
 	@Inject(
-			method = "isRainingAt(Lnet/minecraft/core/BlockPos;)Z",
+			method = "isRainingAt",
 			at = @At("HEAD"),
 			cancellable = true
 	)
