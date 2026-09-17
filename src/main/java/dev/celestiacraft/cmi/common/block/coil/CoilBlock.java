@@ -352,8 +352,9 @@ public class CoilBlock extends BasicBlock {
 	}
 
 	private static void scheduleCooldown(Level level, BlockPos pos) {
-		PENDING_COOLDOWN.computeIfAbsent(level, key -> new HashMap<>())
-				.put(pos.immutable(), level.getGameTime() + COOLDOWN_DELAY);
+		PENDING_COOLDOWN.computeIfAbsent(level, (key) -> {
+			return new HashMap<>();
+		}).put(pos.immutable(), level.getGameTime() + COOLDOWN_DELAY);
 	}
 
 	private static void cancelCooldown(Level level, BlockPos pos) {
