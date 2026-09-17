@@ -97,11 +97,16 @@ public class AutoGlowGenerator {
 		this.output = output;
 	}
 	public void generate() {
-		scanTextures();
-		scanModels();
-		patchModels();
-		writeMcmetas();
-		report();
+		// =====================================================================
+		// [已停用] AutoGlow 自动发光层 / 发光纹理模型生成功能存在严重问题,
+		// 全部生成逻辑在此注释掉, 使该功能不再运行。
+		// 如需恢复, 取消下面几行的注释即可。
+		// =====================================================================
+		// scanTextures();
+		// scanModels();
+		// patchModels();
+		// writeMcmetas();
+		// report();
 	}
 
 	private void scanTextures() {

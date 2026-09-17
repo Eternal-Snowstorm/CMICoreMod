@@ -48,26 +48,34 @@ public class AutoGlowPack implements PackResources {
 	public static PackResources create() {
 		Map<ResourceLocation, byte[]> files = new HashMap<>();
 
-		try {
-			new AutoGlowGenerator(files).generate();
-		} catch (Throwable e) {
-			Cmi.LOGGER.error("[AutoGlow] 生成失败", e);
-		}
+		// =====================================================================
+		// [已停用] AutoGlow 生成逻辑存在严重问题, 暂时注释掉, 不再现场生成虚拟包内容。
+		// 如需恢复, 取消下面整段注释即可。
+		// =====================================================================
+		// try {
+		// 	new AutoGlowGenerator(files).generate();
+		// } catch (Throwable e) {
+		// 	Cmi.LOGGER.error("[AutoGlow] 生成失败", e);
+		// }
 
-		if (WRITE_TO_DISK) {
-			// 双保险: 同时写一份到 kubejs/assets(确认虚拟包没问题后把这个开关关掉)
-			Path root = FMLPaths.GAMEDIR.get().resolve("kubejs/assets");
-
-			for (Map.Entry<ResourceLocation, byte[]> entry : files.entrySet()) {
-				try {
-					Path target = root.resolve(entry.getKey().getNamespace()).resolve(entry.getKey().getPath());
-					Files.createDirectories(target.getParent());
-					Files.write(target, entry.getValue());
-				} catch (IOException e) {
-					Cmi.LOGGER.warn("[AutoGlow] 落盘失败 {}", entry.getKey(), e);
-				}
-			}
-		}
+		// =====================================================================
+		// [已停用] 同时把生成结果写一份到 kubejs/assets 的落盘逻辑也一并停用。
+		// 如需恢复, 取消下面整段注释即可。
+		// =====================================================================
+		// if (WRITE_TO_DISK) {
+		// 	// 双保险: 同时写一份到 kubejs/assets(确认虚拟包没问题后把这个开关关掉)
+		// 	Path root = FMLPaths.GAMEDIR.get().resolve("kubejs/assets");
+		//
+		// 	for (Map.Entry<ResourceLocation, byte[]> entry : files.entrySet()) {
+		// 		try {
+		// 			Path target = root.resolve(entry.getKey().getNamespace()).resolve(entry.getKey().getPath());
+		// 			Files.createDirectories(target.getParent());
+		// 			Files.write(target, entry.getValue());
+		// 		} catch (IOException e) {
+		// 			Cmi.LOGGER.warn("[AutoGlow] 落盘失败 {}", entry.getKey(), e);
+		// 		}
+		// 	}
+		// }
 
 		return new AutoGlowPack(files);
 	}
