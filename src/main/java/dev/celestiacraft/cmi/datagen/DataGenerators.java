@@ -9,13 +9,13 @@ import dev.celestiacraft.cmi.datagen.tags.CmiBlockTagsProvider;
 import dev.celestiacraft.cmi.datagen.tags.CmiFluidTagsProvider;
 import dev.celestiacraft.cmi.datagen.tags.CmiItemTagsProvider;
 import dev.celestiacraft.cmi.datagen.worldgen.CmiWorldGenProvider;
+import dev.celestiacraft.libs.compat.ICheckModLoaded;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.concurrent.CompletableFuture;
@@ -53,7 +53,7 @@ public class DataGenerators {
 
 	/** KubeJS 在 datagen 时会误启一个非守护后台线程, 导致 runData 永不结束 */
 	private static void stopKubeJsBackgroundThread() {
-		if (!ModList.get().isLoaded("kubejs")) {
+		if (!ICheckModLoaded.hasKubeJS()) {
 			return;
 		}
 		try {
