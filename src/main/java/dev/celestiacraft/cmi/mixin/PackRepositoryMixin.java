@@ -22,8 +22,12 @@ import java.util.List;
 public class PackRepositoryMixin {
 	@Inject(method = "openAllSelected", at = @At("RETURN"), cancellable = true)
 	private void cmi$openAllSelected(CallbackInfoReturnable<List<PackResources>> callback) {
-		List<PackResources> packs = new ArrayList<>(callback.getReturnValue());
-		packs.add(0, AutoGlowPack.create());
-		callback.setReturnValue(packs);
+		// =====================================================================
+		// [已停用] AutoGlow 虚拟资源包注入存在严重问题, 这里不再往 pack 列表里插包。
+		// 如需恢复, 取消下面几行的注释即可。
+		// =====================================================================
+		// List<PackResources> packs = new ArrayList<>(callback.getReturnValue());
+		// packs.add(0, AutoGlowPack.create());
+		// callback.setReturnValue(packs);
 	}
 }
