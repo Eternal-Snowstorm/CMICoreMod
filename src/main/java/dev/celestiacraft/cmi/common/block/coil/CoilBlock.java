@@ -278,7 +278,7 @@ public class CoilBlock extends BasicBlock {
 		}
 
 		// formed 先落地: 结构失效时 formed 立刻变 false, 紧随其后的降温就不会再走延迟
-		if (state.getValue(FORMED) != formed) {
+		if (!state.getValue(FORMED).equals(formed)) {
 			state = state.setValue(FORMED, formed);
 			applyCoilState(level, pos, state);
 		}

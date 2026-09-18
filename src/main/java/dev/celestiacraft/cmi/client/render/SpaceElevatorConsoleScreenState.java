@@ -4,18 +4,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-public final class SpaceElevatorConsoleScreenState {
+public class SpaceElevatorConsoleScreenState {
 	private static final int ACTIVE_DISPLAY_TICKS = 22;
 	private static final int FINISHED_DISPLAY_TICKS = 100;
 	private static final int CONSTRUCTION_DISPLAY_TICKS = 40;
 	private static final Map<BlockPos, TransferState> TRANSFER_STATES = new HashMap<>();
 	private static final Map<BlockPos, Long> CONSTRUCTION_STATES = new HashMap<>();
-
-	private SpaceElevatorConsoleScreenState() {
-	}
 
 	public static void markTransfer(BlockPos pos) {
 		long gameTime = getClientGameTime();
@@ -65,12 +61,9 @@ public final class SpaceElevatorConsoleScreenState {
 	}
 
 	private static void cleanupExpired(long gameTime) {
-		Iterator<Map.Entry<BlockPos, TransferState>> iterator = TRANSFER_STATES.entrySet().iterator();
-		while (iterator.hasNext()) {
-			if (gameTime >= iterator.next().getValue().finishedUntilTick) {
-				iterator.remove();
-			}
-		}
+		TRANSFER_STATES.entrySet().removeIf((entry) -> {
+			return gameTime >= entry.getValue().finishedUntilTick;
+		});
 	}
 
 	private record TransferState(long activeUntilTick, long finishedUntilTick) {

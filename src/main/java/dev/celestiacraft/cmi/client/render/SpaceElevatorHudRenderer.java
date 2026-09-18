@@ -15,12 +15,9 @@ import org.joml.Matrix4f;
 import java.io.IOException;
 import java.util.Objects;
 
-public final class SpaceElevatorHudRenderer {
+public class SpaceElevatorHudRenderer {
 	private static ShaderInstance lineShader;
 	private static ShaderInstance panelShader;
-
-	private SpaceElevatorHudRenderer() {
-	}
 
 	public static void registerShaders(RegisterShadersEvent event) {
 		try {
