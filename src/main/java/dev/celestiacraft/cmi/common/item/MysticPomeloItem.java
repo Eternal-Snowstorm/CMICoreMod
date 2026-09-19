@@ -65,7 +65,7 @@ public class MysticPomeloItem extends BasicItem implements IUIHolder.ItemUI {
 	}
 
 	private String readValueFile() {
-		Path path = FMLPaths.CONFIGDIR.get().resolve("nebula/value.txt");
+		Path path = FMLPaths.CONFIGDIR.get().resolve("nebula/cmi/value.txt");
 
 		try {
 			if (Files.exists(path)) {
