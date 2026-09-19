@@ -28,7 +28,7 @@ public class MetalCogWheelRegister {
 	public static final List<String> MATERIAL_LIST = new ArrayList<>();
 	public static final Map<Block, MetalCogWheelInfo> BLOCK_TO_SET = new HashMap<>();
 
-	private static <T extends MetalCogWheelBlock> BlockBuilder<T, CreateRegistrate> registerSmall(String material, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+	private static <T extends MetalCogWheelBlock> BlockBuilder<T, CreateRegistrate> small(String material, NonNullFunction<BlockBehaviour.Properties, T> factory) {
 		String name = String.format("%s_cogwheel", material);
 		BlockBuilder<T, CreateRegistrate> builder = Cmi.REGISTRATE.block(name, factory);
 
@@ -46,7 +46,7 @@ public class MetalCogWheelRegister {
 		return builder;
 	}
 
-	private static <T extends MetalCogWheelBlock> BlockBuilder<T, CreateRegistrate> registerLarge(String material, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+	private static <T extends MetalCogWheelBlock> BlockBuilder<T, CreateRegistrate> large(String material, NonNullFunction<BlockBehaviour.Properties, T> factory) {
 		String name = String.format("%s_large_cogwheel", material);
 		BlockBuilder<T, CreateRegistrate> builder = Cmi.REGISTRATE.block(name, factory);
 
@@ -65,8 +65,8 @@ public class MetalCogWheelRegister {
 	}
 
 	public static MetalCogWheelInfo register(String material) {
-		BlockBuilder<MetalCogWheelBlock, CreateRegistrate> smallBuilder = registerSmall(material, MetalCogWheelBlock::small);
-		BlockBuilder<MetalCogWheelBlock, CreateRegistrate> largeBuilder = registerLarge(material, MetalCogWheelBlock::large);
+		BlockBuilder<MetalCogWheelBlock, CreateRegistrate> smallBuilder = small(material, MetalCogWheelBlock::small);
+		BlockBuilder<MetalCogWheelBlock, CreateRegistrate> largeBuilder = large(material, MetalCogWheelBlock::large);
 		final MetalCogWheelInfo[] holder = new MetalCogWheelInfo[1];
 
 		smallBuilder.onRegister((block) -> {
