@@ -8,10 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MetalCogWheelPartial {
-	public static final Map<String, PartialModel> SMALL = new HashMap<>();
-	public static final Map<String, PartialModel> LARGE = new HashMap<>();
-	public static final Map<String, PartialModel> SMALL_WITH_SHAFT = new HashMap<>();
-	public static final Map<String, PartialModel> LARGE_WITH_SHAFT = new HashMap<>();
+	public static final Map<String, PartialModel>
+			SMALL = new HashMap<>(),
+			LARGE = new HashMap<>(),
+			SMALL_WITH_SHAFT = new HashMap<>(),
+			LARGE_WITH_SHAFT = new HashMap<>();
 
 	public static void register() {
 		if (MetalCogWheelRegister.MATERIAL_LIST.isEmpty()) {

@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
 public class CmiWorldGenProvider extends DatapackBuiltinEntriesProvider {
 	public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
 			.add(Registries.CONFIGURED_FEATURE, CmiConfiguredFeatures::bootstrap)
+			.add(Registries.PLACED_FEATURE, CmiPlacedFeatures::bootstrap)
 			.add(Registries.BIOME, CmiBiome::bootstrap);
 
 	public CmiWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

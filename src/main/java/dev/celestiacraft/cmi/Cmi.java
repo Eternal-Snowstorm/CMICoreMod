@@ -83,6 +83,9 @@ public class Cmi {
 		CmiAdvanmentTrigger.register();
 		CmiSound.register(bus);
 		CmiModifier.register(bus);
+		CmiTrunkPlacer.register(bus);
+		CmiFoliagePlacer.register(bus);
+		CmiTreeDecorator.register(bus);
 
 		CmiCreativeTabs.register(bus);
 

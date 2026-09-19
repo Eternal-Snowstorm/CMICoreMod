@@ -1,9 +1,10 @@
 package dev.celestiacraft.cmi.common.register;
 
 import com.simibubi.create.AllItems;
-import com.simibubi.create.foundation.data.CreateRegistrate;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
+import dev.latvian.mods.kubejs.KubeJS;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -18,12 +19,16 @@ import java.util.function.Supplier;
 public class CmiCreativeTabs {
 	public static final DeferredRegister<CreativeModeTab> TABS;
 
+	public static final ResourceKey<CreativeModeTab> CMI;
+
 	public static final RegistryObject<CreativeModeTab>
 			MECHANISMS,
 			MACHINES;
 
 	static {
 		TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Cmi.MODID);
+
+		CMI = ResourceKey.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), KubeJS.id("tab"));
 
 		MECHANISMS = addCreativeModeTab("mechanisms", AllItems.PRECISION_MECHANISM::asStack);
 		MACHINES = addCreativeModeTab("machines", MachineBlocks.STEAM_HAMMER::asStack);
@@ -37,20 +42,6 @@ public class CmiCreativeTabs {
 					.title(Component.translatable(tranKey))
 					.build();
 		});
-	}
-
-	public static CreateRegistrate getTab(String name) {
-		return Cmi.REGISTRATE.defaultCreativeTab(ResourceKey.create(
-				Registries.CREATIVE_MODE_TAB,
-				Cmi.loadResource(name)
-		));
-	}
-
-	public static ResourceKey<CreativeModeTab> getTabKey(String name) {
-		return ResourceKey.create(
-				Registries.CREATIVE_MODE_TAB,
-				Cmi.loadResource(name)
-		);
 	}
 
 	public static void register(IEventBus bus) {

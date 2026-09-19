@@ -24,6 +24,8 @@ import java.util.concurrent.CompletableFuture;
 public class DataGenerators {
 	@SubscribeEvent
 	public static void onDatagen(GatherDataEvent event) {
+		stopKubeJsBackgroundThread();
+
 		DataGenerator generator = event.getGenerator();
 		PackOutput output = generator.getPackOutput();
 		ExistingFileHelper helper = event.getExistingFileHelper();

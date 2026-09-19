@@ -154,6 +154,11 @@ public class BlockLanguage extends LanguageGenerate {
 				"High-Voltage",
 				"高压"
 		);
+		addBlockLanguage(
+				"glacian_sapling",
+				"Glacian Sapling",
+				"冰川树苗"
+		);
 	}
 
 	private static void addCogWheelLang(String material, String english, String chinese) {

@@ -8,12 +8,13 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.ItemModelGen;
-import dev.celestiacraft.cmi.common.block.golden_sapling.GoldenSaplingBlock;
+import dev.celestiacraft.cmi.common.block.sapling.glacian.GlacianSaplingBlock;
+import dev.celestiacraft.cmi.common.block.sapling.golden.GoldenSaplingBlock;
 import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlock;
 import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlock;
 import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlockItem;
+import dev.celestiacraft.cmi.common.register.CmiCreativeTabs;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -22,6 +23,7 @@ import net.minecraftforge.common.Tags;
 public class OtherBlocks {
 	public static final BlockEntry<TestGravelBlock> TEST_GRAVEL;
 	public static final BlockEntry<GoldenSaplingBlock> GOLD_SAPLING;
+	public static final BlockEntry<GlacianSaplingBlock> GLACIAN_SAPLING;
 	public static final BlockEntry<ScaffoldingBlock> NAHUATL_SCAFFOLD;
 	public static final BlockEntry<ScaffoldingBlock> BLAZEWOOD_SCAFFOLD;
 	public static final BlockEntry<ScaffoldingBlock> IRON_SCAFFOLD;
@@ -88,7 +90,6 @@ public class OtherBlocks {
 				.build()
 				.register();
 
-
 		WIND_VANE = Cmi.REGISTRATE.block("wind_vane", WindVaneBlock::new)
 				.initialProperties(SharedProperties::copperMetal)
 				.item(WindVaneBlockItem::new)
@@ -107,7 +108,19 @@ public class OtherBlocks {
 
 		GOLD_SAPLING = Cmi.REGISTRATE.block("gold_sapling", GoldenSaplingBlock::new)
 				.blockstate(NonNullBiConsumer.noop())
+				.tag(BlockTags.SAPLINGS)
 				.item()
+				.model(NonNullBiConsumer.noop())
+				.build()
+				.register();
+
+		GLACIAN_SAPLING = Cmi.REGISTRATE.block("glacian_sapling", GlacianSaplingBlock::new)
+				.initialProperties(SharedProperties::wooden)
+				.blockstate(GlacianSaplingBlock.genBlockState())
+				.tag(BlockTags.SAPLINGS)
+				.item()
+				.model(ItemModelGen.generated("block/sapling/glacian"))
+				.tab(CmiCreativeTabs.CMI)
 				.build()
 				.register();
 	}

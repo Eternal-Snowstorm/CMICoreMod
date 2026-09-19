@@ -35,8 +35,9 @@ public class MetalCogWheelRenderer extends KineticBlockEntityRenderer<BracketedK
 			int light,
 			int overlay
 	) {
-		if (VisualizationManager.supportsVisualization(entity.getLevel()))
+		if (VisualizationManager.supportsVisualization(entity.getLevel())) {
 			return;
+		}
 
 		BlockState blockState = entity.getBlockState();
 		MetalCogWheelInfo info = MetalCogWheelRegister.BLOCK_TO_SET.get(blockState.getBlock());
