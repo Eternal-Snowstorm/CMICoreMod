@@ -41,8 +41,7 @@
 	"client": [
 		"BulkFermenterRendererMixin",
 		"LDLibJEIIngredientRendererMixin",
-		"LevelRendererMixin",
-		"PackRepositoryMixin"
+		"LevelRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -21,6 +21,7 @@ import dev.celestiacraft.cmi.common.block.geothermal_generator.mars_geothermal_v
 import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlockEntity;
 import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlockEntity;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockEntity;
+import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelRenderer;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelVisual;
 import dev.celestiacraft.cmi.common.block.solar_boiler.bronze.BronzeSolarBoilerBlockEntity;
 import dev.celestiacraft.cmi.common.block.solar_boiler.cast_iron.CastIronSolarBoilerBlockEntity;
@@ -180,6 +181,8 @@ public class CmiBlockEntity {
 		CreateBlockEntityBuilder<MetalCogWheelBlockEntity, CreateRegistrate> cogwheelBuilder = Cmi.REGISTRATE
 				.blockEntity("cogwheel", MetalCogWheelBlockEntity::new)
 				.visual(() -> MetalCogWheelVisual::create);
+		// renderer() 返回的是 Registrate 的 BlockEntityBuilder, 会丢掉 CreateBlockEntityBuilder 类型, 所以单独调用
+		cogwheelBuilder.renderer(() -> MetalCogWheelRenderer::new);
 		MetalCogWheelRegister.COMMON_LIST.forEach(cogwheelBuilder::validBlock);
 
 		COGWHEEL = cogwheelBuilder.register();

@@ -3,9 +3,6 @@ package dev.celestiacraft.cmi.client;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
-import dev.celestiacraft.cmi.client.tip.CmiTips;
-import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
-import dev.celestiacraft.cmi.event.radial.CmiRadialAction;
 import dev.celestiacraft.cmi.client.key.CmiKeyMapping;
 import dev.celestiacraft.cmi.client.menu.CmiRadialMenu;
 import dev.celestiacraft.cmi.client.overlay.DivingBacktankAirOverlay;
@@ -13,6 +10,8 @@ import dev.celestiacraft.cmi.client.overlay.NetherBacktankAirOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorConstructionOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorFlightOverlay;
 import dev.celestiacraft.cmi.client.render.SpaceElevatorHudRenderer;
+import dev.celestiacraft.cmi.client.tip.CmiTips;
+import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.render.SpaceElevatorBaseConsoleRenderer;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopRenderer;
 import dev.celestiacraft.cmi.common.entity.dev.qi_month.QiMonthRenderer;
@@ -21,6 +20,7 @@ import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketT
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorRenderer;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
+import dev.celestiacraft.cmi.event.radial.CmiRadialAction;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -32,7 +32,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, value = Dist.CLIENT)
 public class CmiClient {
-	public static void onCtorClient(IEventBus bus) {
+	public static void onCmiClient(IEventBus bus) {
 		bus.addListener(CmiClient::onClientSetup);
 		bus.addListener(CmiClient::onRegisterKeys);
 		bus.addListener(CmiClient::onRegisterRenderers);
@@ -45,20 +45,22 @@ public class CmiClient {
 
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {
-		CmiBlockPartialModel.init();
-		CmiSpriteShiftEntry.init();
+		event.enqueueWork(() -> {
+			CmiBlockPartialModel.init();
+			CmiSpriteShiftEntry.init();
 
-		MetalCogWheelPartial.init();
+			MetalCogWheelPartial.register();
 
-		EntityRenderers.register(CmiEntity.QI_MONTH.get(), QiMonthRenderer::new);
-		EntityRenderers.register(CmiEntity.SPACE_ELEVATOR.get(), SpaceElevatorRenderer::new);
-		for (ProspectingRocketTier tier : ProspectingRocketTier.values()) {
-			EntityRenderers.register(CmiEntity.prospectingRocket(tier).get(), ProspectingRocketRenderer::new);
-		}
+			EntityRenderers.register(CmiEntity.QI_MONTH.get(), QiMonthRenderer::new);
+			EntityRenderers.register(CmiEntity.SPACE_ELEVATOR.get(), SpaceElevatorRenderer::new);
+			for (ProspectingRocketTier tier : ProspectingRocketTier.values()) {
+				EntityRenderers.register(CmiEntity.prospectingRocket(tier).get(), ProspectingRocketRenderer::new);
+			}
 
-		CmiTips.register();
-		CmiRadialMenu.register();
-		CmiRadialAction.register();
+			CmiTips.register();
+			CmiRadialMenu.register();
+			CmiRadialAction.register();
+		});
 	}
 
 	@SubscribeEvent

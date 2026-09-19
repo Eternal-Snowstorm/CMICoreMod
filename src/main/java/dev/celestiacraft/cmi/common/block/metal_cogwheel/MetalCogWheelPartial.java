@@ -14,6 +14,9 @@ public class MetalCogWheelPartial {
 	public static final Map<String, PartialModel> LARGE_WITH_SHAFT = new HashMap<>();
 
 	public static void register() {
+		if (MetalCogWheelRegister.MATERIAL_LIST.isEmpty())
+			return;
+
 		MetalCogWheelRegister.MATERIAL_LIST.forEach((material) -> {
 			SMALL.put(material, partial(material, "small_gear"));
 			LARGE.put(material, partial(material, "large_gear"));
@@ -25,8 +28,5 @@ public class MetalCogWheelPartial {
 	private static PartialModel partial(String material, String type) {
 		String path = String.format("block/cogwheel/%s/%s", material, type);
 		return PartialModel.of(Cmi.loadResource(path));
-	}
-
-	public static void init() {
 	}
 }

@@ -6,18 +6,19 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
+import dev.celestiacraft.cmi.api.mbd2.steam.SteamRegistry;
 import dev.celestiacraft.cmi.client.CmiClient;
 import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.client.gui.ProspectingRocketUIFactory;
 import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
 import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
+import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
-import dev.celestiacraft.cmi.api.mbd2.steam.SteamRegistry;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
-import dev.celestiacraft.cmi.compat.mbd2.MBDUI;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
+import dev.celestiacraft.cmi.compat.mbd2.MBDUI;
 import dev.celestiacraft.cmi.config.CommonConfig;
 import dev.celestiacraft.cmi.datagen.worldgen.region.CmiOverworldRegion;
 import dev.celestiacraft.cmi.datagen.worldgen.surfacerule.CmiSurfaceRuleData;
@@ -71,7 +72,7 @@ public class Cmi {
 		REGISTRATE.registerEventListeners(bus);
 
 		CmiBlock.register();
-//		CmiCogwheel.register();
+		CmiCogwheel.register();
 		CmiBlockEntity.register();
 		CmiEntity.register();
 		CmiItem.register();
@@ -89,7 +90,7 @@ public class Cmi {
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
 		CmiSpriteShiftEntry.init();
 
-//		MetalCogWheelPartial.init();
+		MetalCogWheelPartial.register();
 
 		CmiNetwork.register();
 
@@ -102,7 +103,11 @@ public class Cmi {
 
 		registerConfig(context);
 
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> CmiClient.onCtorClient(bus));
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> {
+			return () -> {
+				CmiClient.onCmiClient(bus);
+			};
+		});
 	}
 
 	private static void registerConfig(FMLJavaModLoadingContext context) {

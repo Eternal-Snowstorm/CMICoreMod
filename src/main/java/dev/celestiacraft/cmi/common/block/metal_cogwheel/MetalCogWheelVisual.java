@@ -14,8 +14,9 @@ import dev.engine_room.flywheel.api.model.Model;
 import dev.engine_room.flywheel.api.visual.BlockEntityVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.Models;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.Consumer;
 
@@ -25,39 +26,46 @@ public class MetalCogWheelVisual {
 			BracketedKineticBlockEntity entity,
 			float pt
 	) {
-		Block block = entity.getBlockState().getBlock();
-		MetalCogWheelInfo info = MetalCogWheelRegister.BLOCK_TO_SET.get(block);
+		BlockState state = entity.getBlockState();
+		MetalCogWheelInfo info = MetalCogWheelRegister.BLOCK_TO_SET.get(state.getBlock());
+		boolean large = ICogWheel.isLargeCog(state);
 
-		if (info == null) {
-			return new SingleAxisRotatingVisual<>(
-					context,
-					entity,
-					pt,
-					Models.partial(AllPartialModels.SHAFT)
-			);
+		PartialModel partial = null;
+
+		if (info != null) {
+			String material = info.getMaterial();
+
+			// 大齿轮用不带轴的模型, 轴由 LargeCogVisual 单独补一根(和 Create 一致)
+			partial = large
+					? MetalCogWheelPartial.LARGE.get(material)
+					: MetalCogWheelPartial.SMALL_WITH_SHAFT.get(material);
 		}
 
-		String material = info.getMaterial();
-		boolean large = ICogWheel.isLargeCog(entity.getBlockState());
-
-		boolean hasShaft = true;
-
-		Model model;
+		// 模型没有烘焙出来时不能直接丢给 Flywheel, 否则会在创建 visual 阶段抛异常,
+		// 表现就是齿轮整个消失, 这里退回 Create 的原版模型保证看得见
+		if (partial == null || partial.get() == null) {
+			return createFallback(context, entity, pt, large);
+		}
 
 		if (large) {
-			model = Models.partial(hasShaft
-					? MetalCogWheelPartial.LARGE_WITH_SHAFT.get(material)
-					: MetalCogWheelPartial.LARGE.get(material)
-			);
-			return new LargeCogVisual(context, entity, pt, model);
+			return new LargeCogVisual(context, entity, pt, Models.partial(partial));
 		}
 
-		model = Models.partial(hasShaft
-				? MetalCogWheelPartial.SMALL_WITH_SHAFT.get(material)
-				: MetalCogWheelPartial.SMALL.get(material)
-		);
+		return new SingleAxisRotatingVisual<>(context, entity, pt, Models.partial(partial));
+	}
 
-		return new SingleAxisRotatingVisual<>(context, entity, pt, model);
+	private static BlockEntityVisual<BracketedKineticBlockEntity> createFallback(
+			VisualizationContext context,
+			BracketedKineticBlockEntity entity,
+			float pt,
+			boolean large
+	) {
+		if (large) {
+			// LargeCogVisual 内部会额外补一根 COGWHEEL_SHAFT
+			return new LargeCogVisual(context, entity, pt, Models.partial(AllPartialModels.SHAFTLESS_LARGE_COGWHEEL));
+		}
+
+		return new SingleAxisRotatingVisual<>(context, entity, pt, Models.partial(AllPartialModels.COGWHEEL));
 	}
 
 	public static class LargeCogVisual extends SingleAxisRotatingVisual<BracketedKineticBlockEntity> {

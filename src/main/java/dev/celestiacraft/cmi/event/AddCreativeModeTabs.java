@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.event;
 
 import com.simibubi.create.AllItems;
+import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
 import dev.celestiacraft.cmi.common.register.CmiCreativeTabs;
 import dev.celestiacraft.cmi.common.register.CmiItem;
 import dev.celestiacraft.cmi.common.register.block.*;
@@ -43,9 +44,9 @@ public class AddCreativeModeTabs {
 				event.accept(item.asItem());
 			});
 
-//			MetalCogWheelRegister.COMMON_LIST.forEach((cogwheel) -> {
-//				event.accept(cogwheel.asItem());
-//			});
+			MetalCogWheelRegister.COMMON_LIST.forEach((cogwheel) -> {
+				event.accept(cogwheel.asItem());
+			});
 		}
 
 		if (key.equals(CmiCreativeTabs.getTabKey("machines"))) {
