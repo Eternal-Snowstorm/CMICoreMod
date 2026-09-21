@@ -1,6 +1,5 @@
 package dev.celestiacraft.cmi.api.mbd2.steam;
 
-import com.lowdragmc.lowdraglib.LDLib;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.misc.FluidStorage;
 import com.lowdragmc.lowdraglib.side.fluid.FluidStack;
@@ -13,9 +12,8 @@ import com.lowdragmc.mbd2.common.machine.definition.config.*;
 import com.lowdragmc.mbd2.common.trait.TraitDefinition;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTrait;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTraitDefinition;
-import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
 import dev.celestiacraft.cmi.api.mbd2.UISpec;
-import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;
+import dev.celestiacraft.cmi.compat.mbd2.MBDUI;
 import dev.celestiacraft.cmi.tags.CmiFluidTags;
 import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
@@ -235,53 +233,33 @@ public abstract class AbstractSteamMachine<M extends AbstractSteamMachine<M>> {
 		return definition;
 	}
 
+	/** 蒸汽机屏幕高度 (普通控制器 68, 这里多留一条聚合水位条) */
+	protected static final int UI_SCREEN_HEIGHT = 84;
+
 	/**
-	 * 标准蒸汽机 UI: 标题 + 蒸汽条 + 进度条 + 蒸汽槽 + 物品槽自动排布
+	 * 标准蒸汽机 UI: 统一控制器版式 (大屏幕 + 自动化槽位 + 玩家物品栏),
+	 * 屏幕上多一条聚合水位条 (多方块 = 成型结构里所有蒸汽仓加起来)。
 	 *
 	 * @param machine
 	 * @return
 	 */
 	protected WidgetGroup createStandardUI(MBDMachine machine) {
-		return UISpec.create(machine, 176, 166, (builder) -> {
-			builder.background(LDLib.location("textures/gui/background.png"))
-					.title(70, 5)
-					.steamBar(() -> steamFillRatio(machine), 60, 20, 18, 52) // 聚合水位 (多方块 = 所有蒸汽仓)
-					.progressBar(79, 42);
-
-			// 物品槽按配方 IO 自动两列排布
-			int inX = 34;
-			int outX = 108;
-			for (TraitDefinition trait : machine.getDefinition().machineSettings().traitDefinitions()) {
-				if (trait instanceof ItemSlotCapabilityTraitDefinition slot) {
-					if (slot.getRecipeHandlerIO() == IO.OUT) {
-						builder.slot(slot.getName(), outX, 42);
-						outX += 22;
-					} else {
-						builder.slot(slot.getName(), inX, 42);
-						inX += 22;
-					}
-				}
-			}
-
-			// 蒸汽槽固定在右侧 (多方块无控制器蒸汽槽, 蒸汽在输入总线里, 只显示聚合条)
-			FluidTankCapabilityTrait steamTank = machine.getTraitByName(FluidTankCapabilityTrait.class, STEAM_TRAIT_NAME);
-			if (steamTank != null) {
-				builder.tank(STEAM_TRAIT_NAME, 141, 22, 18, 58);
-			}
+		return UISpec.controllerWithSlots(machine, UI_SCREEN_HEIGHT, (screen) -> {
+			// 聚合水位: 单方块 = 自己的蒸汽槽; 多方块 = 所有输入总线的蒸汽仓
+			screen.steamBar(() -> steamFillRatio(machine), UISpec.SCREEN_TEXT_X, 68, 140, 12);
 		});
 	}
 
 	/**
-	 * 把 {@link #createStandardUI} 注入机器的 uiCreator (private 字段无 setter, 反射)。
-	 * build() 自动调用; 子类覆盖 createStandardUI 即自动生效 (虚方法分发)。
+	 * 把 {@link #createStandardUI} 登记给蒸汽机。
+	 * <p>
+	 * 走 {@link MBDUI#register} 而不是直接反射塞 uiCreator: MBDUI 会记账, 这样
+	 * {@link dev.celestiacraft.cmi.compat.mbd2.MachineUIKit} 的统一版式会跳过蒸汽机
+	 * (否则聚合水位条就没了)。build() 自动调用; 子类覆盖 createStandardUI 即自动生效。
 	 * 不需要 UI 的子类可覆盖本方法留空。
 	 */
 	protected void injectUI(MBDMachineDefinition definition) {
-		MBDHelpers.setPrivateField(
-				definition,
-				"uiCreator",
-				(Function<MBDMachine, WidgetGroup>) this::createStandardUI
-		);
+		MBDUI.register(definition.id(), this::createStandardUI);
 	}
 
 	/**

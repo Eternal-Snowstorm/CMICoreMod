@@ -20,6 +20,7 @@ import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
 import dev.celestiacraft.cmi.compat.mbd2.MBDUI;
+import dev.celestiacraft.cmi.compat.mbd2.MachineUIKit;
 import dev.celestiacraft.cmi.config.CommonConfig;
 import dev.celestiacraft.cmi.datagen.worldgen.region.CmiOverworldRegion;
 import dev.celestiacraft.cmi.datagen.worldgen.surfacerule.CmiSurfaceRuleData;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegisterEvent;
 import org.apache.commons.lang3.tuple.Pair;
@@ -111,6 +113,7 @@ public class Cmi {
 		PonderIndex.addPlugin(new CmiPonderPlugin());
 
 		bus.addListener(this::onCommonSetup);
+		bus.addListener(this::onLoadComplete);
 		bus.addListener(this::onRegister);
 		bus.addListener(this::onConfigLoad);
 		bus.addListener(this::onConfigReload);
@@ -159,6 +162,22 @@ public class Cmi {
 			AdAstraOxygenCompat.register();
 			CargoGridRules.load();
 
+			// 统一界面: 所有机器 (工程文件 + KubeJS 注册的) 套 UISpec 版式, 必须在 attachAll 之前
+			MachineUIKit.applyAll();
+			MBDUI.attachAll();
+		});
+	}
+
+	/**
+	 * 兜底: 再套一次统一界面。
+	 * <p>
+	 * MBD2 的机器注册跑在 FMLConstructModEvent 的 enqueueWork 里, KubeJS 注册的机器还要更晚 —— 都可能晚于
+	 * common setup。那时 definition 的 uiCreator 还是 null, 而 MBDMachine#createUI 是裸调 uiCreator.apply,
+	 * 点一下机器服务端就 NPE。这里在全部加载完成后再补一次 (幂等)。
+	 */
+	private void onLoadComplete(FMLLoadCompleteEvent event) {
+		event.enqueueWork(() -> {
+			MachineUIKit.applyAll();
 			MBDUI.attachAll();
 		});
 	}

@@ -1,11 +1,20 @@
 package dev.celestiacraft.cmi.compat.mbd2;
 
+import com.lowdragmc.lowdraglib.gui.widget.TextTextureWidget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.mbd2.common.machine.MBDMachine;
 import com.lowdragmc.mbd2.common.machine.definition.MBDMachineDefinition;
+import com.lowdragmc.mbd2.common.trait.ITrait;
+import com.lowdragmc.mbd2.common.trait.IUIProviderTrait;
+import com.lowdragmc.mbd2.common.trait.TraitDefinition;
+import com.lowdragmc.mbd2.utils.WidgetUtils;
+import dev.celestiacraft.cmi.Cmi;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.function.Function;
 
 public class MBDHelpers {
@@ -47,6 +56,95 @@ public class MBDHelpers {
 	 */
 	public static <D extends MBDMachineDefinition> D attachUIPlaceholder(D definition) {
 		return attachUI(definition, null);
+	}
+
+	/**
+	 * 按 MBD2 的 id 约定接线整棵界面树 (等价 {@code MBDMachineDefinition#bindMachineUI})。
+	 * <p>
+	 * 为什么需要它: {@code bindMachineUI} 只在"从工程文件反序列化 UI"那条路上被调用, 而纯代码机器
+	 * (KubeJS / Java 注入 uiCreator 的) 走不到那段 -> ui:machine_name / ui:progress_bar /
+	 * ui:&lt;trait&gt;_&lt;下标&gt; 这些 id 就没人认领, 槽位会是空的。
+	 * <p>
+	 * 优先反射调 MBD2 本体 (这样 part:xxx@ui:xxx、xei_lookup 这些特殊约定跟版本一起走),
+	 * 失败则退回自己接线 (机器名 + 所有 trait)。
+	 */
+	public static void bindUI(MBDMachine machine, WidgetGroup group) {
+		MBDMachineDefinition definition = machine.getDefinition();
+
+		try {
+			Method method = findMethod(definition.getClass(), "bindMachineUI", MBDMachine.class, WidgetGroup.class);
+
+			method.setAccessible(true);
+			method.invoke(definition, machine, group);
+			return;
+		} catch (ReflectiveOperationException | RuntimeException exception) {
+			Cmi.LOGGER.warn("MBDHelpers.bindUI: bindMachineUI 调用失败, 退回手动接线 ({})", exception.toString());
+		}
+
+		bindFallback(machine, group);
+	}
+
+	/**
+	 * 手动接线 (MBD2 的 bindMachineUI 够不着时的兜底): 机器名 + 每个 trait 的 initTraitUI。
+	 */
+	private static void bindFallback(MBDMachine machine, WidgetGroup group) {
+		WidgetUtils.widgetByIdForEach(group, "^ui:machine_name$", TextTextureWidget.class, widget -> widget.setText(() -> {
+			Component name = machine.getCustomName();
+
+			return name != null ? name : machine.getDefinition().block().getName();
+		}));
+
+		for (TraitDefinition definition : machine.getDefinition().machineSettings().traitDefinitions()) {
+			if (definition instanceof IUIProviderTrait provider) {
+				ITrait trait = machine.getTraitByDefinition(definition);
+
+				if (trait != null) {
+					provider.initTraitUI(trait, group);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 沿父类链找方法 (bindMachineUI 是 protected, Class#getMethod 找不到)。
+	 */
+	private static Method findMethod(Class<?> type, String name, Class<?>... parameters) throws NoSuchMethodException {
+		Class<?> current = type;
+
+		while (current != null) {
+			try {
+				return current.getDeclaredMethod(name, parameters);
+			} catch (NoSuchMethodException exception) {
+				current = current.getSuperclass();
+			}
+		}
+
+		throw new NoSuchMethodException(String.format("%s#%s", type.getName(), name));
+	}
+
+	/**
+	 * 读 private 字段 (沿父类链查找), 读不到返回 null。
+	 * <p>
+	 * 用途: 自检某台机器的 uiCreator 到底挂上没有 —— 它是 null 的话点开界面会 NPE。
+	 */
+	@Nullable
+	public static Object getPrivateField(Object target, String fieldName) {
+		Class<?> type = target.getClass();
+
+		while (type != null) {
+			try {
+				Field field = type.getDeclaredField(fieldName);
+
+				field.setAccessible(true);
+				return field.get(target);
+			} catch (NoSuchFieldException exception) {
+				type = type.getSuperclass();
+			} catch (ReflectiveOperationException exception) {
+				return null;
+			}
+		}
+
+		return null;
 	}
 
 	/**

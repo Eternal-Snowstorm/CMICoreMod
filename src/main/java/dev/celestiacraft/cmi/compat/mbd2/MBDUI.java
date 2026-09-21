@@ -71,6 +71,33 @@ public class MBDUI {
 		attach(machineId);
 	}
 
+	/**
+	 * 内部注册 (给 {@link MachineUIKit} 用): 不做"注册期之后"的警告。
+	 * <p>
+	 * MachineUIKit 会在 FMLLoadCompleteEvent 兜底再跑一次, 那时 registrationClosed 已经是 true,
+	 * 用 {@link #register} 会刷一屏无用警告。
+	 */
+	public static void registerInternal(ResourceLocation machineId, Function<MBDMachine, WidgetGroup> factory) {
+		if (machineId == null || factory == null) {
+			return;
+		}
+
+		FACTORIES.put(machineId, factory);
+		attach(machineId);
+	}
+
+	/**
+	 * 把已经登记过的工厂重新挂一遍 (不设 registrationClosed, 不打警告)。
+	 * <p>
+	 * 场景: JS 的 register 跑在机器定义注册之前 -> 那次 attach 找不到 definition, 工厂留在表里没生效。
+	 * 每次 {@link MachineUIKit#applyAll()} 开头都会调一遍。
+	 */
+	public static void reattachAll() {
+		for (ResourceLocation machineId : FACTORIES.keySet()) {
+			attach(machineId);
+		}
+	}
+
 	public static boolean hasUI(String machineId) {
 		ResourceLocation id = ResourceLocation.tryParse(machineId);
 
