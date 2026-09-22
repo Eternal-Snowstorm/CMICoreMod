@@ -6,11 +6,13 @@ import dev.celestiacraft.cmi.common.entity.coin_projectile.CoinProjectileEntity;
 import dev.celestiacraft.cmi.common.entity.coin_projectile.CoinProjectileType;
 import dev.celestiacraft.cmi.common.entity.coin_projectile.CoinProjectileTypes;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
+import dev.celestiacraft.cmi.tags.CmiItemTags;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -59,7 +61,7 @@ public class CoilItem extends MechanismItem {
 			return InteractionResultHolder.pass(coil);
 		}
 
-		ItemStack ammo = CoinAmmo.find(player);
+		ItemStack ammo = find(player);
 
 		if (ammo.isEmpty()) {
 			return InteractionResultHolder.fail(coil);
@@ -77,7 +79,7 @@ public class CoilItem extends MechanismItem {
 				level.addFreshEntity(projectile);
 			}
 
-			CoinAmmo.consume(player, ammo);
+			consume(player, ammo);
 
 			level.playSound(null, player.getX(), player.getY(), player.getZ(), type.getShootSound(), SoundSource.PLAYERS, type.getShootVolume(), 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F));
 
@@ -113,5 +115,48 @@ public class CoilItem extends MechanismItem {
 		}
 
 		return (index - (count - 1) / 2.0F) * SCATTER_ANGLE_STEP;
+	}
+
+	/**
+	 * 该物品是否可以作为弹药
+	 */
+	private static boolean isCoin(ItemStack stack) {
+		return !stack.isEmpty() && stack.is(CmiItemTags.COINS);
+	}
+
+	/**
+	 * 在玩家背包中找到第一组可用弹药, 找不到返回 {@link ItemStack#EMPTY}
+	 */
+	private static @NotNull ItemStack find(Player player) {
+		Inventory inventory = player.getInventory();
+
+		ItemStack offhand = inventory.offhand.get(0);
+		if (isCoin(offhand)) {
+			return offhand;
+		}
+
+		for (ItemStack stack : inventory.items) {
+			if (isCoin(stack)) {
+				return stack;
+			}
+		}
+
+		return ItemStack.EMPTY;
+	}
+
+	/**
+	 * 消耗一枚弹药
+	 *
+	 * <p>
+	 * 创造模式不消耗
+	 * </p>
+	 */
+	private static void consume(Player player, ItemStack ammo) {
+		if (player.isCreative() || ammo.isEmpty()) {
+			return;
+		}
+
+		ammo.shrink(1);
+		player.getInventory().setChanged();
 	}
 }

@@ -97,28 +97,28 @@ public class CoinProjectileEntity extends AbstractArrow implements IEntityAdditi
 	 * </ul>
 	 */
 	public void setCoin(ItemStack stack, CoinProjectileType type) {
-		this.coin = stack.copyWithCount(1);
-		this.projectileType = type;
-		this.fireType = type.getFireType();
-		this.renderMode = type.getRenderMode();
-		this.renderScale = type.getScale();
-		this.renderSpin = type.getSpin();
+		coin = stack.copyWithCount(1);
+		projectileType = type;
+		fireType = type.getFireType();
+		renderMode = type.getRenderMode();
+		renderScale = type.getScale();
+		renderSpin = type.getSpin();
 
-		this.setBaseDamage(type.getDamage());
-		this.setSoundEvent(type.getHitSound());
+		setBaseDamage(type.getDamage());
+		setSoundEvent(type.getHitSound());
 
 		switch (fireType) {
 			case KNOCKBACK -> {
-				this.setNoGravity(false);
-				this.setKnockback(type.getKnockbackStrength());
+				setNoGravity(false);
+				setKnockback(type.getKnockbackStrength());
 			}
 			case PIERCE -> {
-				this.setNoGravity(true);
-				this.setPierceLevel((byte) Mth.clamp(type.getPierceLevel(), 0, CoinProjectileType.MAX_PIERCE_LEVEL));
+				setNoGravity(true);
+				setPierceLevel((byte) Mth.clamp(type.getPierceLevel(), 0, CoinProjectileType.MAX_PIERCE_LEVEL));
 			}
 			case SCATTER -> {
-				this.setNoGravity(false);
-				this.pickup = Pickup.DISALLOWED;
+				setNoGravity(false);
+				pickup = Pickup.DISALLOWED;
 			}
 		}
 	}
@@ -150,8 +150,8 @@ public class CoinProjectileEntity extends AbstractArrow implements IEntityAdditi
 	@Override
 	protected void onHitBlock(@NotNull BlockHitResult result) {
 		if (fireType == CoinFireType.SCATTER) {
-			this.playSound(this.getHitGroundSoundEvent(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
-			this.discard();
+			playSound(getHitGroundSoundEvent(), 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
+			discard();
 			return;
 		}
 

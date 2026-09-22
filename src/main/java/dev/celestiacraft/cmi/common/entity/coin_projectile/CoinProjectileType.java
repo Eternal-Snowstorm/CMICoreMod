@@ -248,7 +248,7 @@ public class CoinProjectileType {
 		}
 
 		String value = element.getAsString();
-		if (value.startsWith("#")) {
+		if (!value.isEmpty() && value.charAt(0) == '#') {
 			return Ingredient.of(parseTag(value.substring(1)));
 		}
 

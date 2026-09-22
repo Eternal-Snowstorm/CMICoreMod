@@ -36,7 +36,7 @@ public class CoinProjectileRenderer extends EntityRenderer<CoinProjectileEntity>
 
 	public CoinProjectileRenderer(EntityRendererProvider.Context context) {
 		super(context);
-		this.itemRenderer = context.getItemRenderer();
+		itemRenderer = context.getItemRenderer();
 	}
 
 	@Override
