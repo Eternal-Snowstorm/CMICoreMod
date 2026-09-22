@@ -15,9 +15,11 @@ import com.lowdragmc.mbd2.integration.mekanism.trait.chemical.ChemicalTankCapabi
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -45,12 +47,25 @@ public class BusKit {
 	public static final int ITEM_SLOTS = 27;
 	/** 单格上限 */
 	public static final int SLOT_LIMIT = 64;
-	/** 流体 / 气体总线单罐容量 (mB) */
-	public static final int TANK_CAPACITY = 16000;
+	/** 流体 / 气体总线的格数 (和物品一样多) */
+	public static final int TANK_COUNT = 27;
+	/** 流体总线每格容量 (mB) */
+	public static final int FLUID_SLOT_CAPACITY = 16000;
+	/** 气体总线每格容量 (mB) */
+	public static final int GAS_SLOT_CAPACITY = 16000;
 	/** 能量总线缓存 (FE) */
 	public static final int ENERGY_CAPACITY = 1_000_000;
 
-	private static final Set<ResourceLocation> CONVERTED = new HashSet<>();
+	/** 总线能装的东西 */
+	public enum Kind {
+		ITEM,
+		FLUID,
+		GAS,
+		ENERGY
+	}
+
+	/** 已经处理过的总线: id -> 这台总线实际有哪些储物 */
+	private static final Map<ResourceLocation, Set<Kind>> CONVERTED = new HashMap<>();
 
 	/** 这台机器算不算总线 */
 	public static boolean isBus(ResourceLocation id) {
@@ -60,61 +75,63 @@ public class BusKit {
 	/**
 	 * 给总线补储物槽 (幂等, 按 id 记账)。
 	 *
-	 * @return 是否真的加了东西
+	 * @return 这台总线实际有哪些储物 (空集 = 不是总线 / 没有定义)
 	 */
-	public static boolean addStorage(ResourceLocation id, MBDMachineDefinition definition) {
-		if (!isBus(id) || definition == null || CONVERTED.contains(id)) {
-			return false;
+	public static Set<Kind> addStorage(ResourceLocation id, MBDMachineDefinition definition) {
+		if (!isBus(id) || definition == null) {
+			return Set.of();
+		}
+
+		Set<Kind> cached = CONVERTED.get(id);
+
+		if (cached != null) {
+			return cached;
 		}
 
 		ConfigMachineSettings settings = definition.machineSettings();
 
 		if (settings == null) {
-			return false;
+			return Set.of();
 		}
 
 		IO io = directionOf(definition);
-
-		boolean item = false;
-		boolean fluid = false;
-		boolean gas = false;
-		boolean energy = false;
+		Set<Kind> kinds = EnumSet.noneOf(Kind.class);
 
 		for (TraitDefinition source : sourcesOf(filtersOf(definition))) {
 			if (source instanceof ItemSlotCapabilityTraitDefinition) {
-				item = true;
+				kinds.add(Kind.ITEM);
 			} else if (source instanceof FluidTankCapabilityTraitDefinition) {
-				fluid = true;
+				kinds.add(Kind.FLUID);
 			} else if (isGasTank(source)) {
-				gas = true;
+				kinds.add(Kind.GAS);
 			} else if (source instanceof ForgeEnergyCapabilityTraitDefinition) {
-				energy = true;
+				kinds.add(Kind.ENERGY);
 			}
 		}
 
 		// 认不出角色 (没有代理 / 代理没写过滤器) 就当普通物品总线
-		if (!item && !fluid && !gas && !energy) {
-			item = true;
+		if (kinds.isEmpty()) {
+			kinds.add(Kind.ITEM);
 		}
 
-		if (item) {
+		if (kinds.contains(Kind.ITEM)) {
 			settings.addTraitDefinition(itemTrait(io));
 		}
 
-		if (fluid) {
+		if (kinds.contains(Kind.FLUID)) {
 			settings.addTraitDefinition(fluidTrait(io));
 		}
 
-		if (gas) {
+		if (kinds.contains(Kind.GAS)) {
 			settings.addTraitDefinition(gasTrait(io));
 		}
 
-		if (energy) {
+		if (kinds.contains(Kind.ENERGY)) {
 			settings.addTraitDefinition(energyTrait(io));
 		}
 
-		CONVERTED.add(id);
-		return true;
+		CONVERTED.put(id, kinds);
+		return kinds;
 	}
 
 	// ------------------------------------------------------------------
@@ -223,8 +240,8 @@ public class BusKit {
 		FluidTankCapabilityTraitDefinition trait = new FluidTankCapabilityTraitDefinition();
 
 		trait.setName(FLUID_TRAIT);
-		trait.setTankSize(1);
-		trait.setCapacity(TANK_CAPACITY);
+		trait.setTankSize(TANK_COUNT);
+		trait.setCapacity(FLUID_SLOT_CAPACITY);
 		trait.setAllowSameFluids(true);
 		applyIO(trait, io);
 
@@ -235,8 +252,8 @@ public class BusKit {
 		ChemicalTankCapabilityTraitDefinition.Gas trait = new ChemicalTankCapabilityTraitDefinition.Gas();
 
 		trait.setName(GAS_TRAIT);
-		trait.setTankSize(1);
-		trait.setCapacity(TANK_CAPACITY);
+		trait.setTankSize(TANK_COUNT);
+		trait.setCapacity(GAS_SLOT_CAPACITY);
 		applyIO(trait, io);
 
 		return trait;
@@ -254,19 +271,26 @@ public class BusKit {
 		return trait;
 	}
 
-	/** 配方 IO / 界面 IO / 六面 capability 全部对齐 (总线方向由总管决定) */
+	/**
+	 * 配方 IO 按总线方向走, 但**界面 IO 一律 BOTH**。
+	 * <p>
+	 * 原来把 guiIO 也设成 IN 时, MBD2 会 {@code setCanTakeItems(guiIO.support(OUT))} = false ——
+	 * 东西放得进总线却拿不出来。
+	 */
 	private static void applyIO(SimpleCapabilityTraitDefinition trait, IO io) {
 		trait.setRecipeHandlerIO(io);
-		trait.setGuiIO(io);
+		trait.setGuiIO(IO.BOTH);
 
+		// 对外的 capability 一律 BOTH: 管道要能双向, 机器 (自动输出) 也要能把产物推进来。
+		// 只按总线方向设 IO 的话, 输出总线对外是"只出不进", 产物就永远进不来。
 		CapabilityIO capabilityIO = trait.getCapabilityIO();
 
-		capabilityIO.setInternal(io);
-		capabilityIO.setFrontIO(io);
-		capabilityIO.setBackIO(io);
-		capabilityIO.setLeftIO(io);
-		capabilityIO.setRightIO(io);
-		capabilityIO.setTopIO(io);
-		capabilityIO.setBottomIO(io);
+		capabilityIO.setInternal(IO.BOTH);
+		capabilityIO.setFrontIO(IO.BOTH);
+		capabilityIO.setBackIO(IO.BOTH);
+		capabilityIO.setLeftIO(IO.BOTH);
+		capabilityIO.setRightIO(IO.BOTH);
+		capabilityIO.setTopIO(IO.BOTH);
+		capabilityIO.setBottomIO(IO.BOTH);
 	}
 }

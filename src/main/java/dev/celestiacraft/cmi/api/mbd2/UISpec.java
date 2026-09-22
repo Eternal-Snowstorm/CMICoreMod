@@ -21,6 +21,7 @@ import com.lowdragmc.mbd2.common.machine.MBDMultiblockMachine;
 import com.lowdragmc.mbd2.common.trait.IUIProviderTrait;
 import com.lowdragmc.mbd2.common.trait.TraitDefinition;
 import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTrait;
+import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTraitDefinition;
 import com.lowdragmc.mbd2.common.trait.forgeenergy.ForgeEnergyCapabilityTrait;
 import com.lowdragmc.mbd2.common.trait.forgeenergy.ForgeEnergyCapabilityTraitDefinition;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTrait;
@@ -32,6 +33,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -107,8 +109,8 @@ public class UISpec {
 	 * 屏幕里文字的左/上边距与行高 (一行行往下排)
 	 */
 	public static final int SCREEN_TEXT_X = 18;
-	public static final int SCREEN_TEXT_Y = 14;
-	public static final int SCREEN_TEXT_GAP = 18;
+	public static final int SCREEN_TEXT_Y = 12;
+	public static final int SCREEN_TEXT_GAP = 16;
 	public static final int SCREEN_TEXT_WIDTH = DEFAULT_WIDTH - 8 - 2 * SCREEN_TEXT_X;
 	public static final int SCREEN_TEXT_HEIGHT = 14;
 
@@ -147,6 +149,15 @@ public class UISpec {
 	 * 注意别再用 background(贴图) 直接铺这张 16x16 —— 那是整张拉伸, 1px 边会变成十几像素的粗白边。
 	 */
 	public static final ResourceBorderTexture BACKGROUND = ResourceBorderTexture.BORDERED_BACKGROUND;
+
+	/** 总线上的流体格贴图 (18x18, 九宫格边 1) */
+	public static final ResourceLocation FLUID_SLOT_TEXTURE = Cmi.loadResource("textures/gui/slot/fluid_slot.png");
+
+	/** 总线上的气体格贴图 (18x18, 九宫格边 1) */
+	public static final ResourceLocation GAS_SLOT_TEXTURE = Cmi.loadResource("textures/gui/slot/gas_slot.png");
+
+	/** 上面两张格贴图的九宫格边宽 */
+	public static final int SLOT_TEXTURE_BORDER = 1;
 
 	/**
 	 * 进度条默认贴图 (ldlib 的箭头条: 上半是空, 下半是填充)
@@ -202,7 +213,9 @@ public class UISpec {
 		builder.background(BACKGROUND);
 		builder.autoTraits(margin, margin, columns, false);   // false: 不排能量条 (有 Jade 了)
 
-		int height = Math.max(builder.cursorY() + GAP, margin + PLAYER_INV_HEIGHT + 4) + 8;
+		// 注意是相加: 内容底部 + 间隔 + 物品栏 + 下边距。
+		// 写成 Math.max(...) 会让物品栏直接压在内容上面 (槽位被盖住, 面板还矮一截)。
+		int height = Math.max(builder.cursorY(), margin) + GAP + PLAYER_INV_HEIGHT + 8;
 		builder.size(width, height);
 		builder.playerInventory();
 
@@ -630,6 +643,15 @@ public class UISpec {
 					continue;
 				}
 
+				// 流体 / 气体: 不摆那根 20x58 的竖罐, 换成和物品一样的 18x18 格子 (贴图见上面的常量)
+				boolean gas = definition.getClass().getName().contains("ChemicalTank");
+
+				if (gas || definition instanceof FluidTankCapabilityTraitDefinition) {
+					for (Widget widget : widgets) {
+						styleTankSlot(widget, gas);
+					}
+				}
+
 				if (allOf(widgets, SlotWidget.class)) {
 					items.addAll(widgets);
 				} else if (allIndexed(widgets)) {
@@ -642,7 +664,7 @@ public class UISpec {
 			int cursor = px(y);
 
 			cursor = grid(items, px(x), cursor, columns);
-			cursor = grid(tanks, px(x), cursor, Math.max(1, (px(DEFAULT_WIDTH) - 2 * px(x)) / px(20)));
+			cursor = grid(tanks, px(x), cursor, 0);   // 0 = 按可用宽度自动算列数
 
 			for (List<Widget> widgets : groups) {
 				cursor = placeWidgets(widgets, px(x), cursor, columns);
@@ -650,6 +672,53 @@ public class UISpec {
 
 			cursorY = cursor;
 			return this;
+		}
+
+		/**
+		 * 在 (x, y) 摆一个 trait 的槽位, 并换成指定贴图的格子。
+		 * <p>
+		 * 给"只有一个格、但有专属外观"的槽用 (例: 电解机的石墨电极)。
+		 * 只取 MBD2 模板生成的第一个 widget; 罐类会顺手清掉罐身叠图。
+		 */
+		public Builder traitSlot(String traitName, int x, int y, ResourceLocation texture, int size, int border) {
+			for (TraitDefinition definition : machine.getDefinition().machineSettings().traitDefinitions()) {
+				if (!traitName.equals(definition.getName())) {
+					continue;
+				}
+
+				if (!(definition instanceof IUIProviderTrait provider)) {
+					return this;
+				}
+
+				List<Widget> widgets = templateWidgets(provider);
+
+				if (widgets.isEmpty()) {
+					return this;
+				}
+
+				Widget widget = widgets.get(0);
+
+				widget.setSize(size, size);
+				widget.setBackground(new ResourceBorderTexture(texture.toString(), size, size, border, border));
+
+				if (widget instanceof TankWidget tank) {
+					tank.setOverlay(IGuiTexture.EMPTY);
+				} else {
+					clearOverlay(widget);
+				}
+
+				widget.setSelfPosition(new Position(px(x), px(y)));
+				group.addWidget(widget);
+
+				cursorY = px(y) + px(size) + px(GAP);
+				return this;
+			}
+
+			throw new IllegalArgumentException(String.format(
+					"UI: trait not found: %s on %s",
+					traitName,
+					machine.getDefinition().id()
+			));
 		}
 
 		public Builder traitWidgets(String traitName, int x, int y, int columns) {
@@ -684,6 +753,37 @@ public class UISpec {
 			return widgets;
 		}
 
+		/**
+		 * 把 MBD2 模板给的竖罐 (20x58) 换成一张 18x18 的格子, 这样流体 / 气体总线看起来就是"一箱格子"。
+		 * <p>
+		 * 尺寸写逻辑值 (SLOT), 由 grid 统一乘 scale; 罐身叠图必须清掉, 否则会拉伸成一条线。
+		 */
+		private static void styleTankSlot(Widget widget, boolean gas) {
+			ResourceLocation texture = gas ? GAS_SLOT_TEXTURE : FLUID_SLOT_TEXTURE;
+
+			widget.setSize(SLOT, SLOT);
+			widget.setBackground(new ResourceBorderTexture(texture.toString(), SLOT, SLOT, SLOT_TEXTURE_BORDER, SLOT_TEXTURE_BORDER));
+
+			if (widget instanceof TankWidget tank) {
+				tank.setOverlay(IGuiTexture.EMPTY);
+			} else {
+				// 气体用的是 MBD2 的 ChemicalTankWidget (不继承 TankWidget), 但它也有 setOverlay。
+				// 不清掉的话那张 20x58 的罐身贴图 (里面全是红色刻度) 会被压进 18x18 的格子里。
+				clearOverlay(widget);
+			}
+		}
+
+		/** 反射清掉罐身叠图 (避免为了一个 setter 去 import Mekanism 的类) */
+		private static void clearOverlay(Widget widget) {
+			try {
+				Method method = widget.getClass().getMethod("setOverlay", IGuiTexture.class);
+
+				method.invoke(widget, IGuiTexture.EMPTY);
+			} catch (ReflectiveOperationException exception) {
+				// 没有这个方法就随它去, 只是外观问题
+			}
+		}
+
 		private int grid(List<Widget> widgets, int x, int y, int columns) {
 			if (widgets.isEmpty()) {
 				return y;
@@ -695,6 +795,11 @@ public class UISpec {
 
 			int pitchX = Math.max(px(SLOT), widgets.get(0).getSizeWidth());
 			int pitchY = Math.max(px(SLOT), widgets.get(0).getSizeHeight());
+
+			if (columns <= 0) {
+				columns = Math.max(1, (px(DEFAULT_WIDTH) - 2 * x) / Math.max(1, pitchX));
+			}
+
 			int rows = (widgets.size() + columns - 1) / columns;
 
 			for (int i = 0; i < widgets.size(); i++) {
