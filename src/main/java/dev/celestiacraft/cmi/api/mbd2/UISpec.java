@@ -80,6 +80,8 @@ public class UISpec {
 	 */
 	public static final int PLAYER_INV_WIDTH = 172;
 	public static final int PLAYER_INV_HEIGHT = 86;
+	/** 物品栏里第一格离它自己左边缘的距离 (LDLib 写死的 5) */
+	public static final int PLAYER_INV_MARGIN = 5;
 
 	/**
 	 * 单个格子的边长
@@ -192,13 +194,15 @@ public class UISpec {
 	}
 
 	public static WidgetGroup bus(MBDMachine machine, int width, int columns) {
-		int margin = 8;
+		// 左边距跟玩家物品栏对齐: 物品栏是自己居中的, 它内部第一格离自己左边缘 5px。
+		// 用 8 这种随手数会和物品栏错开一格多一点, 看起来就是"歪的"。
+		int margin = Math.max(4, (width - PLAYER_INV_WIDTH) / 2 + PLAYER_INV_MARGIN);
 
 		Builder builder = new Builder(machine, new WidgetGroup(0, 0, width, 16));
 		builder.background(BACKGROUND);
-		builder.autoTraits(margin, margin, columns);
+		builder.autoTraits(margin, margin, columns, false);   // false: 不排能量条 (有 Jade 了)
 
-		int height = Math.max(builder.cursorY(), margin) + PLAYER_INV_HEIGHT + 4;
+		int height = Math.max(builder.cursorY() + GAP, margin + PLAYER_INV_HEIGHT + 4) + 8;
 		builder.size(width, height);
 		builder.playerInventory();
 
@@ -600,12 +604,23 @@ public class UISpec {
 		}
 
 		public Builder autoTraits(int x, int y, int columns) {
+			return autoTraits(x, y, columns, false);
+		}
+
+		/**
+		 * @param withEnergy 是否把能量 trait 的条也排进来 (默认不排: 信息用 Jade / 屏幕文字看就够了)
+		 */
+		public Builder autoTraits(int x, int y, int columns, boolean withEnergy) {
 			List<Widget> items = new ArrayList<>();
 			List<Widget> tanks = new ArrayList<>();
 			List<List<Widget>> groups = new ArrayList<>();
 
 			for (TraitDefinition definition : machine.getDefinition().machineSettings().traitDefinitions()) {
 				if (!(definition instanceof IUIProviderTrait provider)) {
+					continue;
+				}
+
+				if (!withEnergy && definition instanceof ForgeEnergyCapabilityTraitDefinition) {
 					continue;
 				}
 

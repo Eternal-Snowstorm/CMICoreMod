@@ -55,6 +55,6 @@ public class CopperItem extends MechanismItem {
 				0.3F
 		);
 
-		return InteractionResultHolder.success(player.getItemInHand(hand));
+		return super.onMechanismUse(level, player, hand);
 	}
 }

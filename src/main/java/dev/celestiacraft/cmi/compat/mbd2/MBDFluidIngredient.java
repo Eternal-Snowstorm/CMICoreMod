@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 
 import java.util.stream.Stream;
 
@@ -16,12 +15,14 @@ public class MBDFluidIngredient extends FluidIngredient {
 		super(Stream.empty(), 0, null);
 	}
 
-	public static FluidIngredient of(FluidStack fluid, long amount) {
+	@RemapForJS("ofFluid")
+	public static FluidIngredient ofFluid(Fluid fluid, long amount) {
 		return of(fluid, amount, null);
 	}
 
-	public static FluidIngredient of(FluidStack fluid, long amount, CompoundTag nbt) {
-		return FluidIngredient.of(Stream.of(fluid.getFluid()), amount, nbt);
+	@RemapForJS("ofFluid")
+	public static FluidIngredient of(Fluid fluid, long amount, CompoundTag nbt) {
+		return FluidIngredient.of(Stream.of(fluid), amount, nbt);
 	}
 
 	@RemapForJS("ofTag")
