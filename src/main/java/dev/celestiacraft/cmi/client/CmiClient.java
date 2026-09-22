@@ -14,6 +14,7 @@ import dev.celestiacraft.cmi.client.tip.CmiTips;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.render.SpaceElevatorBaseConsoleRenderer;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopRenderer;
+import dev.celestiacraft.cmi.common.entity.coin_projectile.CoinProjectileRenderer;
 import dev.celestiacraft.cmi.common.entity.dev.qi_month.QiMonthRenderer;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketRenderer;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
@@ -51,6 +52,7 @@ public class CmiClient {
 
 			MetalCogWheelPartial.register();
 
+			EntityRenderers.register(CmiEntity.COIN_PROJECTILE.get(), CoinProjectileRenderer::new);
 			EntityRenderers.register(CmiEntity.QI_MONTH.get(), QiMonthRenderer::new);
 			EntityRenderers.register(CmiEntity.SPACE_ELEVATOR.get(), SpaceElevatorRenderer::new);
 			for (ProspectingRocketTier tier : ProspectingRocketTier.values()) {

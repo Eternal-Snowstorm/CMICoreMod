@@ -14,7 +14,8 @@ public class CmiItemTags {
 			COGWHEEL,
 			LARGE_COGWHEEL,
 			WORKBENCHES,
-			COILS;
+			COILS,
+			COINS;
 
 	static {
 		MECHANISMS = TagsBuilder.item("mechanisms").create();
@@ -26,6 +27,9 @@ public class CmiItemTags {
 		LARGE_COGWHEEL = TagsBuilder.item("large_cogwheel").create();
 		WORKBENCHES = TagsBuilder.item("workbenches").forge();
 		COILS = TagsBuilder.item("coils").cmi();
+
+		// 线圈发射器的弹药标签: 任何带 forge:coins 的物品都能被打出去
+		COINS = TagsBuilder.item("coins").forge();
 	}
 
 	public static TagKey<Item> mechanism(String name) {

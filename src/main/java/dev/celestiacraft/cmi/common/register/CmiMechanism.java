@@ -21,15 +21,15 @@ public class CmiMechanism extends MechanismRegister {
 	public static final ItemEntry<AndesiteItem> ANDESITE;
 	public static final ItemEntry<BronzeItem> BRONZE;
 	public static final ItemEntry<RailwayItem> RAILWAY;
+	public static final ItemEntry<CoilItem> COIL;
 	public static final ItemEntry<LightEngineeringItem> LIGHT_ENGINEERING;
 	public static final ItemEntry<HeavyEngineeringItem> HEAVY_ENGINEERING;
-	public static final ItemEntry<CoilItem> COIL;
 	public static final ItemEntry<SmartItem> SMART;
 	public static final ItemEntry<CobaltItem> COBALT;
+	public static final ItemEntry<GoldItem> GOLD;
 	public static final ItemEntry<PhotosensitiveItem> PHOTOSENSITIVE;
 	public static final ItemEntry<ThermalItem> THERMAL;
 	public static final ItemEntry<ReinforcedItem> REINFORCED;
-	public static final ItemEntry<GoldItem> GOLD;
 	public static final ItemEntry<BasicMekanismItem> BASIC_MEKANISM;
 	public static final ItemEntry<AdvancedMekanismItem> ADVANCED_MEKANISM;
 	public static final ItemEntry<EliteMekanismItem> ELITE_MEKANISM;
@@ -73,23 +73,23 @@ public class CmiMechanism extends MechanismRegister {
 				.register();
 		RAILWAY = registerMechanism("railway", RailwayItem::new)
 				.register();
+		COIL = registerMechanism("coil", CoilItem::new)
+				.register();
 		LIGHT_ENGINEERING = registerMechanism("light_engineering", LightEngineeringItem::new)
 				.register();
 		HEAVY_ENGINEERING = registerMechanism("heavy_engineering", HeavyEngineeringItem::new)
 				.register();
-		COIL = registerMechanism("coil", CoilItem::new)
-				.register();
 		SMART = registerMechanism("smart", SmartItem::new)
 				.register();
 		COBALT = registerMechanism("cobalt", CobaltItem::new)
+				.register();
+		GOLD = registerMechanism("gold", GoldItem::new)
 				.register();
 		PHOTOSENSITIVE = registerMechanism("photosensitive", PhotosensitiveItem::new)
 				.register();
 		THERMAL = registerMechanism("thermal", ThermalItem::new)
 				.register();
 		REINFORCED = registerMechanism("reinforced", ReinforcedItem::new)
-				.register();
-		GOLD = registerMechanism("gold", GoldItem::new)
 				.register();
 		BASIC_MEKANISM = registerMechanism("basic_mekanism", BasicMekanismItem::new)
 				.register();

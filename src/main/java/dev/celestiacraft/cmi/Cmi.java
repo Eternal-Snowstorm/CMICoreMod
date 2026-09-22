@@ -15,6 +15,7 @@ import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
 import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockItem;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
+import dev.celestiacraft.cmi.common.entity.coin_projectile.CoinProjectileTypes;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
@@ -109,6 +110,9 @@ public class Cmi {
 		MetalCogWheelPartial.register();
 
 		CmiNetwork.register();
+
+		// 硬币发射器: 数据包为各个 coin 物品定义发射速度/伤害/渲染姿态
+		MinecraftForge.EVENT_BUS.addListener(CoinProjectileTypes::onAddReloadListeners);
 
 		PonderIndex.addPlugin(new CmiPonderPlugin());
 

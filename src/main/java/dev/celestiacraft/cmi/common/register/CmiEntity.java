@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.common.register;
 
 import com.tterrag.registrate.util.entry.EntityEntry;
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.entity.coin_projectile.CoinProjectileEntity;
 import dev.celestiacraft.cmi.common.entity.dev.qi_month.QiMonthEntity;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketEntity;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class CmiEntity {
 	public static final EntityEntry<QiMonthEntity> QI_MONTH;
 	public static final EntityEntry<SpaceElevatorEntity> SPACE_ELEVATOR;
+	public static final EntityEntry<CoinProjectileEntity> COIN_PROJECTILE;
 	private static final Map<ProspectingRocketTier, EntityEntry<ProspectingRocketEntity>> PROSPECTING_ROCKETS = new EnumMap<>(ProspectingRocketTier.class);
 
 	public static EntityEntry<ProspectingRocketEntity> prospectingRocket(ProspectingRocketTier tier) {
@@ -36,6 +38,16 @@ public class CmiEntity {
 			PROSPECTING_ROCKETS.put(tier, entry);
 		}
 
+		/*
+		 * 硬币发射器弹射物: 尺寸与原版箭一致; 因为渲染姿态跟随运动方向, 更新频率要高一些
+		 */
+		COIN_PROJECTILE = Cmi.REGISTRATE.<CoinProjectileEntity>entity("coin_projectile", CoinProjectileEntity::new, MobCategory.MISC)
+				.properties((builder) -> {
+					builder.sized(0.25f, 0.25f)
+							.clientTrackingRange(8)
+							.updateInterval(2);
+				})
+				.register();
 		QI_MONTH = Cmi.REGISTRATE.entity("qi_month", QiMonthEntity::new, MobCategory.CREATURE)
 				.properties((builder) -> {
 					builder.sized(0.6f, 1.8f);
