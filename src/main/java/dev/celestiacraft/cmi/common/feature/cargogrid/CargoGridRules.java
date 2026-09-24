@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.feature.cargogrid;
+package dev.celestiacraft.cmi.common.feature.cargogrid;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -19,14 +19,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class CargoGridRules {
+public class CargoGridRules {
 	private static final String FILE_NAME = "nebula/cmi/cargo_grid.json";
 	private static final String ROTATED_NBT_KEY = "CmiCargoGridRotated";
 
 	private static volatile List<CargoGridRule> RULES = Collections.emptyList();
 	private static volatile CargoGridDimensions FALLBACK = CargoGridDimensions.UNIT;
-
-	private CargoGridRules() {}
 
 	public static Path filePath() {
 		return FMLPaths.CONFIGDIR.get().resolve(FILE_NAME);
@@ -41,17 +39,23 @@ public final class CargoGridRules {
 	}
 
 	public static boolean isRotated(ItemStack stack) {
-		if (stack.isEmpty()) return false;
+		if (stack.isEmpty()) {
+			return false;
+		}
 		CompoundTag tag = stack.getTag();
 		return tag != null && tag.getBoolean(ROTATED_NBT_KEY);
 	}
 
 	public static void toggleRotated(ItemStack stack) {
-		if (stack.isEmpty()) return;
+		if (stack.isEmpty()) {
+			return;
+		}
 		CompoundTag tag = stack.getOrCreateTag();
 		if (tag.getBoolean(ROTATED_NBT_KEY)) {
 			tag.remove(ROTATED_NBT_KEY);
-			if (tag.isEmpty()) stack.setTag(null);
+			if (tag.isEmpty()) {
+				stack.setTag(null);
+			}
 		} else {
 			tag.putBoolean(ROTATED_NBT_KEY, true);
 		}
@@ -74,7 +78,9 @@ public final class CargoGridRules {
 
 	@Nullable
 	public static Integer resolveColor(ItemStack stack) {
-		if (stack.isEmpty()) return null;
+		if (stack.isEmpty()) {
+			return null;
+		}
 		for (CargoGridRule rule : RULES) {
 			if (rule.matches(stack) && rule.backgroundColor() != null) {
 				return rule.backgroundColor();
@@ -138,12 +144,14 @@ public final class CargoGridRules {
 			case "item", "id" -> new CargoGridRule.ById(value, dims, color);
 			case "tag" -> {
 				CargoGridRule.ByTag tagRule = CargoGridRule.ByTag.of(value, dims, color);
-				if (tagRule == null) Cmi.LOGGER.warn("[CargoGrid] Rule #{} has invalid tag '{}', skipped", index, value);
+				if (tagRule == null)
+					Cmi.LOGGER.warn("[CargoGrid] Rule #{} has invalid tag '{}', skipped", index, value);
 				yield tagRule;
 			}
 			case "regex" -> {
 				CargoGridRule.ByRegex regexRule = CargoGridRule.ByRegex.of(value, dims, color);
-				if (regexRule == null) Cmi.LOGGER.warn("[CargoGrid] Rule #{} has invalid regex '{}', skipped", index, value);
+				if (regexRule == null)
+					Cmi.LOGGER.warn("[CargoGrid] Rule #{} has invalid regex '{}', skipped", index, value);
 				yield regexRule;
 			}
 			default -> {
@@ -158,7 +166,7 @@ public final class CargoGridRules {
 		if (raw == null) return null;
 		String s = raw.trim();
 		if (s.isEmpty()) return null;
-		if (s.startsWith("#")) s = s.substring(1);
+		if (!s.isEmpty() && s.charAt(0) == '#') s = s.substring(1);
 		else if (s.startsWith("0x") || s.startsWith("0X")) s = s.substring(2);
 		try {
 			long parsed = Long.parseLong(s, 16);

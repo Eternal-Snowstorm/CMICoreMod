@@ -25,7 +25,7 @@ import dev.celestiacraft.cmi.compat.mbd2.MachineUIKit;
 import dev.celestiacraft.cmi.config.CommonConfig;
 import dev.celestiacraft.cmi.datagen.worldgen.region.CmiOverworldRegion;
 import dev.celestiacraft.cmi.datagen.worldgen.surfacerule.CmiSurfaceRuleData;
-import dev.celestiacraft.cmi.feature.cargogrid.CargoGridRules;
+import dev.celestiacraft.cmi.common.feature.cargogrid.CargoGridRules;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import net.createmod.catnip.lang.FontHelper;
 import net.createmod.ponder.foundation.PonderIndex;

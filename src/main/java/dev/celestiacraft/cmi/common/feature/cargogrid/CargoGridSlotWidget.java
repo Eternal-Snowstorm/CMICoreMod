@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.feature.cargogrid;
+package dev.celestiacraft.cmi.common.feature.cargogrid;
 
 import com.lowdragmc.lowdraglib.gui.widget.SlotWidget;
 import com.lowdragmc.lowdraglib.utils.Position;
@@ -35,9 +35,12 @@ public class CargoGridSlotWidget extends SlotWidget {
 
 	@Override
 	public boolean canPutStack(ItemStack stack) {
-		if (!super.canPutStack(stack)) return false;
-		if (stack.isEmpty()) return true;
-
+		if (!super.canPutStack(stack)) {
+			return false;
+		}
+		if (stack.isEmpty()) {
+			return true;
+		}
 		CargoGridLayout layout = owner.snapshotLayout();
 		int currentOwner = layout.ownerOf(slotIndex);
 		if (currentOwner != CargoGridLayout.EMPTY && currentOwner != slotIndex) {
@@ -50,28 +53,44 @@ public class CargoGridSlotWidget extends SlotWidget {
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		if (!isMouseOverElement(mouseX, mouseY)) return false;
-		if (isForwarding) return super.mouseClicked(mouseX, mouseY, button);
+		if (!isMouseOverElement(mouseX, mouseY)) {
+			return false;
+		}
+		if (isForwarding) {
+			return super.mouseClicked(mouseX, mouseY, button);
+		}
 
 		CargoGridSlotWidget anchorSlot = findOccupyingAnchor();
-		if (anchorSlot != null) return forwardClick(anchorSlot, button);
+		if (anchorSlot != null) {
+			return forwardClick(anchorSlot, button);
+		}
 
 		CargoGridSlotWidget redirect = findCarriedPlacementAnchor();
-		if (redirect != null && redirect != this) return forwardClick(redirect, button);
+		if (redirect != null && redirect != this) {
+			return forwardClick(redirect, button);
+		}
 
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
 	@Override
 	public boolean mouseReleased(double mouseX, double mouseY, int button) {
-		if (!isMouseOverElement(mouseX, mouseY)) return false;
-		if (isForwarding) return super.mouseReleased(mouseX, mouseY, button);
+		if (!isMouseOverElement(mouseX, mouseY)) {
+			return false;
+		}
+		if (isForwarding) {
+			return super.mouseReleased(mouseX, mouseY, button);
+		}
 
 		CargoGridSlotWidget anchorSlot = findOccupyingAnchor();
-		if (anchorSlot != null) return forwardRelease(anchorSlot, button);
+		if (anchorSlot != null) {
+			return forwardRelease(anchorSlot, button);
+		}
 
 		CargoGridSlotWidget redirect = findCarriedPlacementAnchor();
-		if (redirect != null && redirect != this) return forwardRelease(redirect, button);
+		if (redirect != null && redirect != this) {
+			return forwardRelease(redirect, button);
+		}
 
 		return super.mouseReleased(mouseX, mouseY, button);
 	}
@@ -112,19 +131,29 @@ public class CargoGridSlotWidget extends SlotWidget {
 	private CargoGridSlotWidget findOccupyingAnchor() {
 		CargoGridLayout layout = owner.snapshotLayout();
 		int ownerIdx = layout.ownerOf(slotIndex);
-		if (ownerIdx == CargoGridLayout.EMPTY || ownerIdx == slotIndex) return null;
+		if (ownerIdx == CargoGridLayout.EMPTY || ownerIdx == slotIndex) {
+			return null;
+		}
 		return owner.slotAt(ownerIdx);
 	}
 
 	private CargoGridSlotWidget findCarriedPlacementAnchor() {
-		if (gui == null) return null;
+		if (gui == null) {
+			return null;
+		}
 		ItemStack carried = gui.getModularUIContainer().getCarried();
-		if (carried.isEmpty()) return null;
+		if (carried.isEmpty()) {
+			return null;
+		}
 		CargoGridDimensions dims = CargoGridRules.resolve(carried);
-		if (dims.width() <= 1 && dims.height() <= 1) return null;
+		if (dims.width() <= 1 && dims.height() <= 1) {
+			return null;
+		}
 		CargoGridLayout layout = owner.snapshotLayout();
 		int target = layout.findAnchor(slotIndex, dims);
-		if (target < 0 || target == slotIndex) return null;
+		if (target < 0 || target == slotIndex) {
+			return null;
+		}
 		return owner.slotAt(target);
 	}
 }

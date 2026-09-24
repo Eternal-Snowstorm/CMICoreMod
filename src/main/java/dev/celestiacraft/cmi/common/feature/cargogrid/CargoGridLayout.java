@@ -1,27 +1,23 @@
-package dev.celestiacraft.cmi.feature.cargogrid;
+package dev.celestiacraft.cmi.common.feature.cargogrid;
 
+import lombok.Getter;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 
-public final class CargoGridLayout {
+public class CargoGridLayout {
 	public static final int EMPTY = -1;
 
+	@Getter
 	private final int cols;
+	@Getter
 	private final int rows;
+	@Getter
 	private final int[] occupiedBy;
 
 	public CargoGridLayout(int cols, int rows) {
 		this.cols = cols;
 		this.rows = rows;
-		this.occupiedBy = new int[cols * rows];
-	}
-
-	public int cols() {
-		return cols;
-	}
-
-	public int rows() {
-		return rows;
+		occupiedBy = new int[cols * rows];
 	}
 
 	public int ownerOf(int slot) {
@@ -45,7 +41,9 @@ public final class CargoGridLayout {
 		int total = Math.min(container.getContainerSize(), occupiedBy.length);
 		for (int slot = 0; slot < total; slot++) {
 			ItemStack stack = container.getItem(slot);
-			if (stack.isEmpty()) continue;
+			if (stack.isEmpty()) {
+				continue;
+			}
 			CargoGridDimensions dims = CargoGridRules.resolve(stack);
 			markFootprint(slot, dims);
 		}
@@ -56,7 +54,9 @@ public final class CargoGridLayout {
 		int anchorRow = rowOf(anchorSlot);
 		for (int dy = 0; dy < dims.height(); dy++) {
 			int row = anchorRow + dy;
-			if (row >= rows) break;
+			if (row >= rows) {
+				break;
+			}
 			for (int dx = 0; dx < dims.width(); dx++) {
 				int col = anchorCol + dx;
 				if (col >= cols) break;
@@ -77,9 +77,15 @@ public final class CargoGridLayout {
 			for (int dx = 0; dx < dims.width(); dx++) {
 				int idx = indexOf(anchorCol + dx, anchorRow + dy);
 				int owner = occupiedBy[idx];
-				if (owner == EMPTY) continue;
-				if (owner == anchorSlot) continue;
-				if (owner == ignoreOwner) continue;
+				if (owner == EMPTY) {
+					continue;
+				}
+				if (owner == anchorSlot) {
+					continue;
+				}
+				if (owner == ignoreOwner) {
+					continue;
+				}
 				return false;
 			}
 		}
@@ -92,7 +98,9 @@ public final class CargoGridLayout {
 		int prefCol = clamp(clickedCol - (dims.width() - 1) / 2, 0, cols - dims.width());
 		int prefRow = clamp(clickedRow - (dims.height() - 1) / 2, 0, rows - dims.height());
 		int preferred = indexOf(prefCol, prefRow);
-		if (canPlace(preferred, dims, EMPTY)) return preferred;
+		if (canPlace(preferred, dims, EMPTY)) {
+			return preferred;
+		}
 
 		int best = -1;
 		int bestDist = Integer.MAX_VALUE;

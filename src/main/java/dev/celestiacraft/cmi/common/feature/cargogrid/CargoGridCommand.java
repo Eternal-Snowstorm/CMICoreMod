@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.feature.cargogrid;
+package dev.celestiacraft.cmi.common.feature.cargogrid;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;

@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.feature.cargogrid;
+package dev.celestiacraft.cmi.common.feature.cargogrid;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;

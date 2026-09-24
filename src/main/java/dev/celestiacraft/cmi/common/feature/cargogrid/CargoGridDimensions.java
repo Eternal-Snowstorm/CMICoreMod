@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.feature.cargogrid;
+package dev.celestiacraft.cmi.common.feature.cargogrid;
 
 public record CargoGridDimensions(int width, int height) {
 	public static final CargoGridDimensions UNIT = new CargoGridDimensions(1, 1);

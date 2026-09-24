@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.feature.cargogrid;
+package dev.celestiacraft.cmi.common.feature.cargogrid;
 
 import com.lowdragmc.lowdraglib.gui.util.DrawerHelper;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
@@ -46,8 +46,13 @@ public class CargoGridWidget extends WidgetGroup {
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
 				int index = row * cols + col;
-				CargoGridSlotWidget slot = new CargoGridSlotWidget(this, container, index,
-						col * SLOT_SIZE, row * SLOT_SIZE);
+				CargoGridSlotWidget slot = new CargoGridSlotWidget(
+						this,
+						container,
+						index,
+						col * SLOT_SIZE,
+						row * SLOT_SIZE
+				);
 				slot.setLocationInfo(false, false);
 				slots[index] = slot;
 				addWidget(slot);
@@ -61,7 +66,9 @@ public class CargoGridWidget extends WidgetGroup {
 	}
 
 	public CargoGridSlotWidget slotAt(int index) {
-		if (index < 0 || index >= slots.length) return null;
+		if (index < 0 || index >= slots.length) {
+			return null;
+		}
 		return slots[index];
 	}
 
@@ -109,17 +116,25 @@ public class CargoGridWidget extends WidgetGroup {
 	}
 
 	private void drawPlacementPreview(GuiGraphics graphics, int mouseX, int mouseY) {
-		if (gui == null) return;
-		if (!isMouseOverElement(mouseX, mouseY)) return;
+		if (gui == null) {
+			return;
+		}
+		if (!isMouseOverElement(mouseX, mouseY)) {
+			return;
+		}
 		ItemStack carried = gui.getModularUIContainer().getCarried();
-		if (carried.isEmpty()) return;
+		if (carried.isEmpty()) {
+			return;
+		}
 
 		Position pos = getPosition();
 		int relX = mouseX - pos.x;
 		int relY = mouseY - pos.y;
 		int hoveredCol = relX / SLOT_SIZE;
 		int hoveredRow = relY / SLOT_SIZE;
-		if (isBoolean(hoveredCol, hoveredRow)) return;
+		if (isBoolean(hoveredCol, hoveredRow)) {
+			return;
+		}
 		int hovered = hoveredRow * cols + hoveredCol;
 
 		layout.recompute(container);
@@ -149,7 +164,9 @@ public class CargoGridWidget extends WidgetGroup {
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-		if (super.keyPressed(keyCode, scanCode, modifiers)) return true;
+		if (super.keyPressed(keyCode, scanCode, modifiers)) {
+			return true;
+		}
 		if (keyCode == GLFW.GLFW_KEY_R && gui != null) {
 			ItemStack carried = gui.getModularUIContainer().getCarried();
 			if (!carried.isEmpty()) {
@@ -208,7 +225,9 @@ public class CargoGridWidget extends WidgetGroup {
 
 	private static int fillColorFor(ItemStack stack) {
 		Integer custom = CargoGridRules.resolveColor(stack);
-		if (custom != null) return darken(custom);
+		if (custom != null) {
+			return darken(custom);
+		}
 		return rarityFill(stack.getRarity());
 	}
 

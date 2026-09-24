@@ -12,6 +12,7 @@ import com.lowdragmc.mbd2.common.trait.fluid.FluidTankCapabilityTraitDefinition;
 import com.lowdragmc.mbd2.common.trait.forgeenergy.ForgeEnergyCapabilityTraitDefinition;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
 import com.lowdragmc.mbd2.integration.mekanism.trait.chemical.ChemicalTankCapabilityTraitDefinition;
+import dev.celestiacraft.cmi.Cmi;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -53,6 +54,9 @@ public class BusKit {
 	public static final int FLUID_SLOT_CAPACITY = 16000;
 	/** 气体总线每格容量 (mB) */
 	public static final int GAS_SLOT_CAPACITY = 16000;
+	/** 总线自动 IO 的间隔 (tick): 输入总线拉料 / 输出总线推产物 */
+	public static final int AUTO_IO_INTERVAL = 5;
+
 	/** 能量总线缓存 (FE) */
 	public static final int ENERGY_CAPACITY = 1_000_000;
 
@@ -292,5 +296,46 @@ public class BusKit {
 		capabilityIO.setRightIO(IO.BOTH);
 		capabilityIO.setTopIO(IO.BOTH);
 		capabilityIO.setBottomIO(IO.BOTH);
+
+		enableAutoIO(trait, io);
+	}
+
+	/**
+	 * 打开 trait 定义上的"自动 IO" (ToggleAutoIO)。
+	 * <p>
+	 * MBD2 的机制 (IAutoIOTrait.serverTick): 每隔 interval tick, 按六面 IO 与相邻容器搬运 ——
+	 * 物品/流体/气体/能量 trait 都实现了这个接口。输入总线六面 IN = 从旁边拉料进来,
+	 * 输出总线六面 OUT = 把产物推出去。
+	 * <p>
+	 * 注意别跟 AutoWorldIO (autoInput / autoOutput) 混: 那个是把流体倒进世界、把物品丢出去。
+	 * <p>
+	 * 基类 SimpleCapabilityTraitDefinition 没有 getAutoIO, 所以走反射 (各个子类都有这个 getter)。
+	 */
+	private static void enableAutoIO(SimpleCapabilityTraitDefinition trait, IO io) {
+		try {
+			Object autoIO = trait.getClass().getMethod("getAutoIO").invoke(trait);
+
+			if (autoIO == null) {
+				return;
+			}
+
+			autoIO.getClass().getMethod("setEnable", boolean.class).invoke(autoIO, true);
+
+			try {
+				autoIO.getClass().getMethod("setInterval", int.class).invoke(autoIO, AUTO_IO_INTERVAL);
+			} catch (ReflectiveOperationException ignored) {
+				// 没有 interval 就用默认值
+			}
+
+			for (String face : new String[]{"setFrontIO", "setBackIO", "setLeftIO", "setRightIO", "setTopIO", "setBottomIO"}) {
+				try {
+					autoIO.getClass().getMethod(face, IO.class).invoke(autoIO, io);
+				} catch (ReflectiveOperationException ignored) {
+					// 少一个面不影响
+				}
+			}
+		} catch (ReflectiveOperationException ignored) {
+			// 这个 trait 没有自动 IO
+		}
 	}
 }
