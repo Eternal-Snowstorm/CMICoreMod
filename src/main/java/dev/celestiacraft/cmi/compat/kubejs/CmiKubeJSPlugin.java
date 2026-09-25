@@ -8,8 +8,13 @@ import com.lowdragmc.mbd2.api.capability.recipe.IO;
 import com.lowdragmc.mbd2.api.pattern.FactoryBlockPattern;
 import com.lowdragmc.mbd2.api.pattern.MultiblockShapeInfo;
 import com.lowdragmc.mbd2.api.pattern.Predicates;
+import com.lowdragmc.mbd2.api.pattern.TraceabilityPredicate;
+import com.lowdragmc.mbd2.api.pattern.predicates.PredicateBlocks;
+import com.lowdragmc.mbd2.api.pattern.predicates.PredicateTags;
+import com.lowdragmc.mbd2.api.pattern.util.RelativeDirection;
 import com.lowdragmc.mbd2.api.recipe.content.ContentModifier;
 import com.lowdragmc.mbd2.common.gui.editor.multiblock.MultiblockShapeInfoPanel;
+import com.lowdragmc.mbd2.common.machine.definition.MultiblockMachineDefinition;
 import com.lowdragmc.mbd2.common.machine.definition.config.*;
 import com.lowdragmc.mbd2.common.machine.definition.config.toggle.ToggleCreativeTab;
 import com.lowdragmc.mbd2.common.machine.definition.config.toggle.ToggleMachineSound;
@@ -24,20 +29,17 @@ import com.lowdragmc.mbd2.common.trait.forgeenergy.ForgeEnergyCapabilityTraitDef
 import com.lowdragmc.mbd2.common.trait.item.ItemFilterSettings;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTrait;
 import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
+import com.lowdragmc.mbd2.integration.mekanism.trait.chemical.ChemicalTankCapabilityTraitDefinition;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
-import dev.celestiacraft.cmi.api.mbd2.steam.MultiBlockSteamMachine;
-import dev.celestiacraft.cmi.api.mbd2.steam.SingleSteamMachine;
-import dev.celestiacraft.cmi.api.mbd2.steam.SteamInputBus;
-import dev.celestiacraft.cmi.api.mbd2.UISpec;
 import dev.celestiacraft.cmi.compat.create.CmiHeatLevel;
 import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgCuttersItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgHammerItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.*;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.cdg.CdgRecipesSchema;
+import dev.celestiacraft.cmi.compat.ldlib.LDLibHelpers;
 import dev.celestiacraft.cmi.compat.mbd2.MBDFluidIngredient;
 import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;
-import dev.celestiacraft.cmi.compat.mbd2.MBDUI;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.celestiacraft.cmi.utils.CmiGlobal;
 import dev.celestiacraft.cmi.utils.metal.CmiMetal;
@@ -84,7 +86,8 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		bindCmi(event);
 		bindCmiMBD(event);
 		bindMBD(event);
-		bindLDLIB(event);
+		bindLDLib(event);
+		bindCmiLDLib(event);
 	}
 
 	private void bindCmi(BindingsEvent event) {
@@ -118,6 +121,11 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				ItemSlotCapabilityTrait.class,
 				FluidTankCapabilityTrait.class,
 				ForgeEnergyCapabilityTrait.class,
+				ChemicalTankCapabilityTraitDefinition.class,
+				ChemicalTankCapabilityTraitDefinition.Gas.class,
+				ChemicalTankCapabilityTraitDefinition.Infuse.class,
+				ChemicalTankCapabilityTraitDefinition.Pigment.class,
+				ChemicalTankCapabilityTraitDefinition.Slurry.class,
 				IO.class,
 				AutoWorldIO.class,
 				ToggleAutoIO.class,
@@ -131,7 +139,12 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				ToggleCreativeTab.class,
 				ToggleRenderer.class,
 				IModelRenderer.class,
-				ToggleMachineSound.class
+				ToggleMachineSound.class,
+				RelativeDirection.class,
+				PredicateTags.class,
+				MultiblockMachineDefinition.class,
+				TraceabilityPredicate.class,
+				PredicateBlocks.class
 		);
 		mbdClasses.forEach((clazz) -> {
 			String name = clazz.getSimpleName();
@@ -144,7 +157,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		});
 	}
 
-	private void bindLDLIB(BindingsEvent event) {
+	private void bindLDLib(BindingsEvent event) {
 		List<Class<?>> ldlibClasses = List.of(
 				TextTextureWidget.class
 		);
@@ -162,13 +175,10 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 	private void bindCmiMBD(BindingsEvent event) {
 		event.add("MBDFluidIngredient", MBDFluidIngredient.class);
 		event.add("MBDHelpers", MBDHelpers.class);
-		event.add("MBDUI", MBDUI.class);
+	}
 
-		event.add("SingleSteamMachine", SingleSteamMachine.class);
-		event.add("MultiBlockSteamMachine", MultiBlockSteamMachine.class);
-		event.add("SteamInputBus", SteamInputBus.class);
-		event.add("UISpec", UISpec.class);
-		event.add("UISpec$Builder", UISpec.Builder.class);
+	private void bindCmiLDLib(BindingsEvent event) {
+		event.add("LDLibHelpers", LDLibHelpers.class);
 	}
 
 	@Override

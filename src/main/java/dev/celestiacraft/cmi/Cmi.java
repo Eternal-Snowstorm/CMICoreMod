@@ -6,7 +6,6 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
-import dev.celestiacraft.cmi.api.mbd2.steam.SteamRegistry;
 import dev.celestiacraft.cmi.client.CmiClient;
 import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
@@ -16,16 +15,14 @@ import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockItem;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.entity.coin_projectile.CoinProjectileTypes;
+import dev.celestiacraft.cmi.common.feature.cargogrid.CargoGridRules;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
-import dev.celestiacraft.cmi.compat.mbd2.MBDUI;
-import dev.celestiacraft.cmi.compat.mbd2.MachineUIKit;
 import dev.celestiacraft.cmi.config.CommonConfig;
 import dev.celestiacraft.cmi.datagen.worldgen.region.CmiOverworldRegion;
 import dev.celestiacraft.cmi.datagen.worldgen.surfacerule.CmiSurfaceRuleData;
-import dev.celestiacraft.cmi.common.feature.cargogrid.CargoGridRules;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import net.createmod.catnip.lang.FontHelper;
 import net.createmod.ponder.foundation.PonderIndex;
@@ -33,14 +30,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegisterEvent;
 import org.apache.commons.lang3.tuple.Pair;
@@ -72,10 +67,6 @@ public class Cmi {
 				return modifier;
 			});
 
-	private void onServerStarted(ServerStartedEvent event) {
-		SteamRegistry.init();
-	}
-
 	public static ResourceLocation loadResource(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
@@ -104,7 +95,6 @@ public class Cmi {
 		CmiCreativeTabs.register(bus);
 
 		CmiBlockPartialModel.init();
-		MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
 		CmiSpriteShiftEntry.init();
 
 		MetalCogWheelPartial.register();
@@ -117,7 +107,6 @@ public class Cmi {
 		PonderIndex.addPlugin(new CmiPonderPlugin());
 
 		bus.addListener(this::onCommonSetup);
-		bus.addListener(this::onLoadComplete);
 		bus.addListener(this::onRegister);
 		bus.addListener(this::onConfigLoad);
 		bus.addListener(this::onConfigReload);
@@ -165,24 +154,6 @@ public class Cmi {
 			);
 			AdAstraOxygenCompat.register();
 			CargoGridRules.load();
-
-			// 统一界面: 所有机器 (工程文件 + KubeJS 注册的) 套 UISpec 版式, 必须在 attachAll 之前
-			MachineUIKit.applyAll();
-			MBDUI.attachAll();
-		});
-	}
-
-	/**
-	 * 兜底: 再套一次统一界面。
-	 * <p>
-	 * MBD2 的机器注册跑在 FMLConstructModEvent 的 enqueueWork 里, KubeJS 注册的机器还要更晚 —— 都可能晚于
-	 * common setup。那时 definition 的 uiCreator 还是 null, 而 MBDMachine#createUI 是裸调 uiCreator.apply,
-	 * 点一下机器服务端就 NPE。这里在全部加载完成后再补一次 (幂等)。
-	 */
-	private void onLoadComplete(FMLLoadCompleteEvent event) {
-		event.enqueueWork(() -> {
-			MachineUIKit.applyAll();
-			MBDUI.attachAll();
 		});
 	}
 

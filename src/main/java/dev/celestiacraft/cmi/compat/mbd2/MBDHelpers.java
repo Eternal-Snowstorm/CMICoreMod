@@ -9,6 +9,7 @@ import com.lowdragmc.mbd2.common.trait.IUIProviderTrait;
 import com.lowdragmc.mbd2.common.trait.TraitDefinition;
 import com.lowdragmc.mbd2.utils.WidgetUtils;
 import dev.celestiacraft.cmi.Cmi;
+import lombok.experimental.UtilityClass;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -17,14 +18,15 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.function.Function;
 
+@UtilityClass
 public class MBDHelpers {
-	public static final String traitNameFilter = "traitNameFilter";
+	public final String traitNameFilter = "traitNameFilter";
 
 	// 占位界面尺寸, 与 mb2 默认机器界面一致
-	private static final int UI_WIDTH = 176;
-	private static final int UI_HEIGHT = 166;
+	private final int UI_WIDTH = 176;
+	private final int UI_HEIGHT = 166;
 
-	public static boolean isMachine(MBDMachine machine, ResourceLocation name) {
+	public boolean isMachine(MBDMachine machine, ResourceLocation name) {
 		MBDMachineDefinition definition = machine.getDefinition();
 		ResourceLocation id = definition.id();
 
@@ -43,7 +45,7 @@ public class MBDHelpers {
 	 *
 	 * @param creator 可以为 null, 此时只注入一个占位 WidgetGroup
 	 */
-	public static <D extends MBDMachineDefinition> D attachUI(D definition, Function<MBDMachine, WidgetGroup> creator) {
+	public <D extends MBDMachineDefinition> D attachUI(D definition, Function<MBDMachine, WidgetGroup> creator) {
 		setPrivateField(definition, "uiCreator", (Function<MBDMachine, WidgetGroup>) (machine) -> {
 			WidgetGroup group = creator == null ? null : creator.apply(machine);
 			return group != null ? group : new WidgetGroup(0, 0, UI_WIDTH, UI_HEIGHT);
@@ -54,7 +56,7 @@ public class MBDHelpers {
 	/**
 	 * 只注入占位界面 (真实界面交给 MachineUIEvent / WidgetGroup.setRoot 接管)。
 	 */
-	public static <D extends MBDMachineDefinition> D attachUIPlaceholder(D definition) {
+	public <D extends MBDMachineDefinition> D attachUIPlaceholder(D definition) {
 		return attachUI(definition, null);
 	}
 
@@ -68,7 +70,7 @@ public class MBDHelpers {
 	 * 优先反射调 MBD2 本体 (这样 part:xxx@ui:xxx、xei_lookup 这些特殊约定跟版本一起走),
 	 * 失败则退回自己接线 (机器名 + 所有 trait)。
 	 */
-	public static void bindUI(MBDMachine machine, WidgetGroup group) {
+	public void bindUI(MBDMachine machine, WidgetGroup group) {
 		MBDMachineDefinition definition = machine.getDefinition();
 
 		try {
@@ -87,7 +89,7 @@ public class MBDHelpers {
 	/**
 	 * 手动接线 (MBD2 的 bindMachineUI 够不着时的兜底): 机器名 + 每个 trait 的 initTraitUI。
 	 */
-	private static void bindFallback(MBDMachine machine, WidgetGroup group) {
+	private void bindFallback(MBDMachine machine, WidgetGroup group) {
 		WidgetUtils.widgetByIdForEach(group, "^ui:machine_name$", TextTextureWidget.class, widget -> widget.setText(() -> {
 			Component name = machine.getCustomName();
 
@@ -108,7 +110,7 @@ public class MBDHelpers {
 	/**
 	 * 沿父类链找方法 (bindMachineUI 是 protected, Class#getMethod 找不到)。
 	 */
-	private static Method findMethod(Class<?> type, String name, Class<?>... parameters) throws NoSuchMethodException {
+	private Method findMethod(Class<?> type, String name, Class<?>... parameters) throws NoSuchMethodException {
 		Class<?> current = type;
 
 		while (current != null) {
@@ -128,7 +130,7 @@ public class MBDHelpers {
 	 * 用途: 自检某台机器的 uiCreator 到底挂上没有 —— 它是 null 的话点开界面会 NPE。
 	 */
 	@Nullable
-	public static Object getPrivateField(Object target, String fieldName) {
+	public Object getPrivateField(Object target, String fieldName) {
 		Class<?> type = target.getClass();
 
 		while (type != null) {
@@ -153,7 +155,7 @@ public class MBDHelpers {
 	 * 例: uiCreator 声明在 {@link MBDMachineDefinition} 上, 而 MultiblockMachineDefinition
 	 * 实例拿到的类是子类, 只用 getDeclaredField 会 NoSuchFieldException。
 	 */
-	public static void setPrivateField(Object target, String fieldName, Object value) {
+	public void setPrivateField(Object target, String fieldName, Object value) {
 		Class<?> type = target.getClass();
 
 		while (type != null) {
