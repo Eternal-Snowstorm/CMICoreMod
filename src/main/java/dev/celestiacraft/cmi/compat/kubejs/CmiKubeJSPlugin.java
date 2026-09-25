@@ -33,6 +33,7 @@ import com.lowdragmc.mbd2.integration.mekanism.trait.chemical.ChemicalTankCapabi
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.compat.create.CmiHeatLevel;
+import dev.celestiacraft.cmi.compat.create.CreateFluidIngredient;
 import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgCuttersItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgHammerItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.*;
@@ -100,6 +101,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		event.add("CmiMetal", CmiMetal.class);
 		event.add("CmiToolType", CmiToolType.class);
 		event.add("CmiMiningLevel", CmiMiningLevel.class);
+		event.add("CreateFluidIngredient", CreateFluidIngredient.class);
 	}
 
 	private void bindMBD(BindingsEvent event) {
