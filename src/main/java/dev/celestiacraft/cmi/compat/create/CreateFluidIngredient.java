@@ -15,8 +15,8 @@ public abstract class CreateFluidIngredient extends FluidIngredient {
 	}
 
 	@RemapForJS("ofStack")
-	public static FluidIngredient of(FluidStack fluid) {
-		return fromFluidStack(fluid);
+	public static FluidIngredient of(FluidStack stack) {
+		return fromFluidStack(stack);
 	}
 
 	@RemapForJS("ofTag")
