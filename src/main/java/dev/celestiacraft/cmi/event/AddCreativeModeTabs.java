@@ -24,7 +24,7 @@ public class AddCreativeModeTabs {
 	public static void onCreativeModeTabContents(BuildCreativeModeTabContentsEvent event) {
 		ResourceKey<CreativeModeTab> key = event.getTabKey();
 
-		if (key.equals(KUBEJS_TAB)) {
+		if (event.getTab().equals(KUBEJS_TAB)) {
 			List.of(
 					VentBlocks.MARS_GEO,
 					VentBlocks.MERCURY_GEO,
@@ -49,7 +49,7 @@ public class AddCreativeModeTabs {
 			});
 		}
 
-		if (key.equals(CmiCreativeTabs.MECHANISMS.getKey())) {
+		if (event.getTab().equals(CmiCreativeTabs.MECHANISMS.get())) {
 			List.of(
 					WallBlocks.WATER_WELL,
 					WallBlocks.LAVA_WELL,
@@ -72,7 +72,7 @@ public class AddCreativeModeTabs {
 			});
 		}
 
-		if (key.equals(CmiCreativeTabs.MECHANISMS.getKey())) {
+		if (event.getTab().equals(CmiCreativeTabs.MECHANISMS.get())) {
 			event.accept(AllItems.PRECISION_MECHANISM.get());
 			event.accept(ModResources.RESSTONE_MODULE.getItem());
 		}
