@@ -20,6 +20,8 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.security.SecureRandom;
+
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ParchmentRightClick {
 	record PlayerPos(double x, double y, double z) {
@@ -40,6 +42,8 @@ public class ParchmentRightClick {
 		Player player = event.getEntity();
 		ItemStack item = player.getItemInHand(event.getHand());
 		BlockPos pos = event.getPos();
+
+		SecureRandom random = new SecureRandom();
 
 		if (level.isClientSide()) {
 			return;
@@ -88,9 +92,9 @@ public class ParchmentRightClick {
 
 			// 释放粒子效果
 			for (int i = 0; i < 30; i++) {
-				double offsetX = (Math.random() - 0.5) * 3;
-				double offsetY = (Math.random() - 0.5) * 2;
-				double offsetZ = (Math.random() - 0.5) * 3;
+				double offsetX = (random.nextDouble() - 0.5) * 3;
+				double offsetY = (random.nextDouble() - 0.5) * 2;
+				double offsetZ = (random.nextDouble() - 0.5) * 3;
 
 				// 粒子效果
 				sl.sendParticles(
