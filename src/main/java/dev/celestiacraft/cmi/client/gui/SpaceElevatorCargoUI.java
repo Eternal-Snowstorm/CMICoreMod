@@ -2,10 +2,16 @@ package dev.celestiacraft.cmi.client.gui;
 
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.texture.ColorBorderTexture;
+import com.lowdragmc.lowdraglib.gui.texture.ColorRectTexture;
+import com.lowdragmc.lowdraglib.gui.texture.GuiTextureGroup;
+import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 import com.lowdragmc.lowdraglib.gui.texture.ResourceBorderTexture;
+import com.lowdragmc.lowdraglib.gui.texture.TextTexture;
+import com.lowdragmc.lowdraglib.gui.widget.ButtonWidget;
 import com.lowdragmc.lowdraglib.gui.widget.LabelWidget;
 import com.lowdragmc.lowdraglib.gui.widget.SlotWidget;
+import com.lowdragmc.lowdraglib.gui.widget.SwitchWidget;
 import com.lowdragmc.lowdraglib.gui.widget.TankWidget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.side.fluid.forge.FluidTransferWrapper;
@@ -32,13 +38,23 @@ public class SpaceElevatorCargoUI {
 	private static final int TANK_X = CARGO_X + CARGO_COLS * SLOT_SIZE + 10;
 	private static final int TANK_Y = CARGO_Y;
 
+	private static final int CONTROL_HEIGHT = 14;
+	private static final int CONTROL_GAP = 4;
+	private static final int CONTROL_Y = CARGO_Y + CARGO_ROWS * SLOT_SIZE + CONTROL_GAP;
+	private static final int AUTO_UNLOAD_WIDTH = 64;
+	private static final int AUTO_UNLOAD_X = TANK_X + TANK_WIDTH - AUTO_UNLOAD_WIDTH;
+	private static final int UNLOAD_WIDTH = 40;
+	private static final int UNLOAD_X = AUTO_UNLOAD_X - CONTROL_GAP - UNLOAD_WIDTH;
+	private static final int AUTO_UNLOAD_ON_TINT = 0x6040C040;
+	private static final int HOVER_BORDER_COLOR = 0xFFFFFFFF;
+
 	private static final int ARMOR_X = 8;
 	private static final int OFFHAND_X_OFFSET = 4;
 
 	private static final int PLAYER_COLS = 9;
 	private static final int CARGO_GRID_CENTER = CARGO_X + (CARGO_COLS * SLOT_SIZE) / 2;
 	private static final int PLAYER_INV_X = CARGO_GRID_CENTER - (PLAYER_COLS * SLOT_SIZE) / 2;
-	private static final int PLAYER_INV_Y = CARGO_Y + CARGO_ROWS * SLOT_SIZE + 18;
+	private static final int PLAYER_INV_Y = CONTROL_Y + CONTROL_HEIGHT + 6;
 	private static final int PLAYER_HOTBAR_Y = PLAYER_INV_Y + 3 * SLOT_SIZE + 4;
 
 	private static final int ARMOR_Y = PLAYER_INV_Y;
@@ -93,6 +109,8 @@ public class SpaceElevatorCargoUI {
 		tank.setBackground(TANK_BORDER);
 		root.addWidget(tank);
 
+		addUnloadControls(root, elevator);
+
 		root.addWidget(new LabelWidget(PLAYER_INV_X, PLAYER_INV_Y - 10, Component.translatable("container.inventory"))
 				.setTextColor(LABEL_COLOR)
 				.setDropShadow(false));
@@ -130,5 +148,31 @@ public class SpaceElevatorCargoUI {
 
 		return new ModularUI(GUI_WIDTH, GUI_HEIGHT, elevator, player)
 				.widget(root);
+	}
+
+	private static void addUnloadControls(WidgetGroup root, SpaceElevatorEntity elevator) {
+		IGuiTexture unloadTexture = new GuiTextureGroup(ResourceBorderTexture.BUTTON_COMMON, new TextTexture("gui.cmi.space_elevator.unload"));
+		root.addWidget(new ButtonWidget(UNLOAD_X, CONTROL_Y, UNLOAD_WIDTH, CONTROL_HEIGHT, unloadTexture, clickData -> {
+			if (!clickData.isRemote) {
+				elevator.unloadCargo();
+			}
+		})
+				.setHoverBorderTexture(1, HOVER_BORDER_COLOR)
+				.setHoverTooltips("gui.cmi.space_elevator.unload.tooltip"));
+
+		String autoUnloadKey = "gui.cmi.space_elevator.auto_unload";
+		root.addWidget(new SwitchWidget(AUTO_UNLOAD_X, CONTROL_Y, AUTO_UNLOAD_WIDTH, CONTROL_HEIGHT, (clickData, pressed) -> {
+			if (!clickData.isRemote) {
+				elevator.setAutoUnload(pressed);
+			}
+		})
+				.setTexture(
+						new GuiTextureGroup(ResourceBorderTexture.BUTTON_COMMON, new TextTexture(autoUnloadKey)),
+						new GuiTextureGroup(ResourceBorderTexture.BUTTON_COMMON, new ColorRectTexture(AUTO_UNLOAD_ON_TINT), new TextTexture(autoUnloadKey))
+				)
+				.setHoverBorderTexture(1, HOVER_BORDER_COLOR)
+				.setPressed(elevator.isAutoUnload())
+				.setSupplier(elevator::isAutoUnload)
+				.setHoverTooltips("gui.cmi.space_elevator.auto_unload.tooltip"));
 	}
 }

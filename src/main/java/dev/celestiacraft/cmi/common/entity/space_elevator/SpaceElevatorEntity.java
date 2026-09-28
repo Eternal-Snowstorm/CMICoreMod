@@ -5,8 +5,10 @@ import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.gui.SpaceElevatorCargoUI;
 import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraSpaceElevatorTravelCompat;
+import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorLinkHandler;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import dev.celestiacraft.cmi.network.c2s.StartSpaceElevatorTransportPacket;
@@ -84,6 +86,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	private static final EntityDataAccessor<Boolean> HAS_ANCHOR = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Integer> TRANSPORT_STATE = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> TRANSPORT_TICKS = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> AWAITING_UNLOAD = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> AUTO_UNLOAD = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.BOOLEAN);
 
 	private static final int STATE_IDLE = 0;
 	private static final int STATE_COUNTDOWN_UP = 1;
@@ -129,7 +133,12 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 
 	private final SimpleContainer cargoItems = new SimpleContainer(CARGO_ITEM_SLOTS);
 	@Getter
-	private final FluidTank cargoFluid = new FluidTank(CARGO_FLUID_CAPACITY);
+	private final FluidTank cargoFluid = new FluidTank(CARGO_FLUID_CAPACITY) {
+		@Override
+		protected void onContentsChanged() {
+			onCargoChanged();
+		}
+	};
 	private LazyOptional<IItemHandler> cargoItemsCap = LazyOptional.empty();
 	private LazyOptional<IFluidHandler> cargoFluidCap = LazyOptional.empty();
 
@@ -137,6 +146,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		super(type, level);
 		noCulling = true;
 		rebuildCargoCaps();
+		cargoItems.addListener(container -> onCargoChanged());
 	}
 
 	@SubscribeEvent
@@ -493,6 +503,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		}
 
 		transferCargoTo(counterpart);
+		counterpart.setAwaitingUnload(counterpart.hasCargo());
 		transferringToCounterpart = true;
 		movePassengerToCounterpart(player, targetLevel, counterpart);
 		discard();
@@ -516,6 +527,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		FluidStack fluid = cargoFluid.getFluid().copy();
 		target.cargoFluid.setFluid(fluid);
 		cargoFluid.setFluid(FluidStack.EMPTY);
+		target.setAutoUnload(isAutoUnload());
 	}
 
 	private void finishArrival() {
@@ -873,6 +885,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		entityData.define(HAS_ANCHOR, false);
 		entityData.define(TRANSPORT_STATE, STATE_IDLE);
 		entityData.define(TRANSPORT_TICKS, 0);
+		entityData.define(AWAITING_UNLOAD, false);
+		entityData.define(AUTO_UNLOAD, false);
 	}
 
 	@Override
@@ -886,6 +900,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		if (tag.contains("CargoFluid")) {
 			cargoFluid.readFromNBT(tag.getCompound("CargoFluid"));
 		}
+		setAwaitingUnload(tag.getBoolean("AwaitingUnload"));
+		setAutoUnload(tag.getBoolean("AutoUnload"));
 		transferringToCounterpart = tag.getBoolean("TransferringToCounterpart");
 		clearTransport();
 	}
@@ -897,6 +913,8 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		}
 		tag.put("CargoItems", saveCargoItems());
 		tag.put("CargoFluid", cargoFluid.writeToNBT(new CompoundTag()));
+		tag.putBoolean("AwaitingUnload", isAwaitingUnload());
+		tag.putBoolean("AutoUnload", isAutoUnload());
 		if (transferringToCounterpart) {
 			tag.putBoolean("TransferringToCounterpart", true);
 		}
@@ -904,6 +922,46 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 
 	public Container getCargoItems() {
 		return cargoItems;
+	}
+
+	public boolean isAwaitingUnload() {
+		return entityData.get(AWAITING_UNLOAD);
+	}
+
+	private void setAwaitingUnload(boolean awaitingUnload) {
+		entityData.set(AWAITING_UNLOAD, awaitingUnload);
+	}
+
+	public boolean isAutoUnload() {
+		return entityData.get(AUTO_UNLOAD);
+	}
+
+	public void setAutoUnload(boolean autoUnload) {
+		entityData.set(AUTO_UNLOAD, autoUnload);
+	}
+
+	boolean shouldRenderUnloadHint() {
+		return isAwaitingUnload() && !isAutoUnload() && !isTransporting();
+	}
+
+	public void unloadCargo() {
+		if (!hasAnchor() || !(level() instanceof ServerLevel serverLevel)) {
+			return;
+		}
+		SpaceElevatorBaseConsoleBlockEntity console = SpaceElevatorConstructionHandler.getConsole(serverLevel, getAnchor());
+		if (console != null) {
+			console.unloadElevatorCargo(serverLevel, this);
+		}
+	}
+
+	private boolean hasCargo() {
+		return !cargoItems.isEmpty() || !cargoFluid.isEmpty();
+	}
+
+	private void onCargoChanged() {
+		if (!level().isClientSide() && isAwaitingUnload() && !hasCargo()) {
+			setAwaitingUnload(false);
+		}
 	}
 
 	private ListTag saveCargoItems() {

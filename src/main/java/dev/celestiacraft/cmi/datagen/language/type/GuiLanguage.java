@@ -223,6 +223,26 @@ public class GuiLanguage extends LanguageGenerate {
 				"太空电梯货舱"
 		);
 		addCustomLang(
+				"gui.cmi.space_elevator.unload",
+				"Unload",
+				"卸货"
+		);
+		addCustomLang(
+				"gui.cmi.space_elevator.unload.tooltip",
+				"Unload cargo items and fluids into the base console's output ports (only while docked on the ground)",
+				"将货舱中的物品和流体卸到地基终端的输出接口（仅在地面停靠时可用）"
+		);
+		addCustomLang(
+				"gui.cmi.space_elevator.auto_unload",
+				"Auto Unload",
+				"自动卸货"
+		);
+		addCustomLang(
+				"gui.cmi.space_elevator.auto_unload.tooltip",
+				"Automatically unload cargo whenever the elevator returns from orbit and docks on the ground",
+				"开启后，电梯每次从太空返回并在地面停稳时自动卸货"
+		);
+		addCustomLang(
 				"gui.cmi.prospecting_rocket.cargo",
 				"Cargo",
 				"货舱"
