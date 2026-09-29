@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.common.entity.space_elevator;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import dev.celestiacraft.cmi.Cmi;
 import earth.terrarium.adastra.api.planets.Planet;
 import net.minecraft.client.Minecraft;
@@ -9,6 +10,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -24,6 +26,12 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 	private static final double MIN_CABLE_RENDER_EXTENT = 2048.0D;
 	private static final double CABLE_RENDER_DISTANCE_SCALE = 256.0D;
 
+	private static final RenderType UNLOAD_HINT_RENDER_TYPE = RenderType.entityCutoutNoCull(Cmi.loadResource("textures/icons/exclamation.png"));
+	private static final float UNLOAD_HINT_SIZE = 1.0F;
+	private static final float UNLOAD_HINT_HEIGHT_ABOVE_TOP = 1.0F;
+	private static final float UNLOAD_HINT_BOB_SPEED = 0.15F;
+	private static final float UNLOAD_HINT_BOB_AMPLITUDE = 0.12F;
+
 	public SpaceElevatorRenderer(EntityRendererProvider.Context context) {
 		super(context, new SpaceElevatiorModel());
 	}
@@ -32,6 +40,9 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 	public void render(@NotNull SpaceElevatorEntity entity, float entityYaw, float partialTick, @NotNull PoseStack poseStack,
 	                   @NotNull MultiBufferSource buffer, int packedLight) {
 		super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
+		if (entity.shouldRenderUnloadHint()) {
+			renderUnloadHint(entity, partialTick, poseStack, buffer);
+		}
 		if (!entity.shouldRenderCables()) {
 			return;
 		}
@@ -44,6 +55,32 @@ public class SpaceElevatorRenderer extends GeoEntityRenderer<SpaceElevatorEntity
 	protected void applyRotations(SpaceElevatorEntity animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
 		float yRot = Mth.rotLerp(partialTick, animatable.yRotO, animatable.getYRot());
 		super.applyRotations(animatable, poseStack, ageInTicks, yRot, partialTick);
+	}
+
+	private void renderUnloadHint(SpaceElevatorEntity entity, float partialTick, PoseStack poseStack, MultiBufferSource buffer) {
+		float bob = Mth.sin((entity.tickCount + partialTick) * UNLOAD_HINT_BOB_SPEED) * UNLOAD_HINT_BOB_AMPLITUDE;
+		poseStack.pushPose();
+		poseStack.translate(0.0F, entity.getBbHeight() + UNLOAD_HINT_HEIGHT_ABOVE_TOP + bob, 0.0F);
+		poseStack.mulPose(entityRenderDispatcher.cameraOrientation());
+		poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+		poseStack.scale(UNLOAD_HINT_SIZE, UNLOAD_HINT_SIZE, UNLOAD_HINT_SIZE);
+		PoseStack.Pose pose = poseStack.last();
+		VertexConsumer consumer = buffer.getBuffer(UNLOAD_HINT_RENDER_TYPE);
+		addUnloadHintVertex(consumer, pose, -0.5F, -0.5F, 0.0F, 1.0F);
+		addUnloadHintVertex(consumer, pose, 0.5F, -0.5F, 1.0F, 1.0F);
+		addUnloadHintVertex(consumer, pose, 0.5F, 0.5F, 1.0F, 0.0F);
+		addUnloadHintVertex(consumer, pose, -0.5F, 0.5F, 0.0F, 0.0F);
+		poseStack.popPose();
+	}
+
+	private static void addUnloadHintVertex(VertexConsumer consumer, PoseStack.Pose pose, float x, float y, float u, float v) {
+		consumer.vertex(pose.pose(), x, y, 0.0F)
+				.color(255, 255, 255, 255)
+				.uv(u, v)
+				.overlayCoords(OverlayTexture.NO_OVERLAY)
+				.uv2(LightTexture.FULL_BRIGHT)
+				.normal(pose.normal(), 0.0F, 1.0F, 0.0F)
+				.endVertex();
 	}
 
 	private void renderCable(SpaceElevatorEntity entity, float partialTick, PoseStack poseStack,

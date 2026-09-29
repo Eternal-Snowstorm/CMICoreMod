@@ -35,6 +35,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
@@ -252,10 +253,12 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 		if (elevator == null) {
 			elevator = SpaceElevatorConstructionHandler.getNearbyElevator(serverLevel, pos);
 		}
-		if (elevator != null) {
-			entity.pushInputsToElevatorCargo(serverLevel, elevator);
-		} else {
+		if (elevator == null) {
 			entity.broadcastConstructionMaterials(serverLevel);
+		} else if (!elevator.isAwaitingUnload()) {
+			entity.pushInputsToElevatorCargo(serverLevel, elevator);
+		} else if (elevator.isAutoUnload()) {
+			entity.unloadElevatorCargo(serverLevel, elevator);
 		}
 	}
 
@@ -268,46 +271,49 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 	}
 
 	private void pushInputsToElevatorCargo(ServerLevel level, SpaceElevatorEntity elevator) {
-		boolean[] changed = {false};
-		elevator.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(cargo -> {
-			if (transferItemsToCargo(cargo)) {
-				changed[0] = true;
-			}
-		});
-		elevator.getCapability(ForgeCapabilities.FLUID_HANDLER).ifPresent(cargo -> {
-			int moved = transferFluidToCargo(cargo);
-			if (moved > 0) {
-				changed[0] = true;
-			}
-		});
-		if (changed[0]) {
-			setChanged();
-			MinecraftForge.EVENT_BUS.post(new SpaceElevatorConsoleTransferEvent(level, worldPosition));
+		boolean itemsMoved = elevator.getCapability(ForgeCapabilities.ITEM_HANDLER)
+				.map(cargo -> transferItems(inputItems, cargo))
+				.orElse(false);
+		boolean fluidMoved = elevator.getCapability(ForgeCapabilities.FLUID_HANDLER)
+				.map(cargo -> transferFluidToCargo(cargo) > 0)
+				.orElse(false);
+		if (itemsMoved || fluidMoved) {
+			onCargoTransferred(level);
 		}
 	}
 
-	private boolean transferItemsToCargo(IItemHandler cargo) {
+	public void unloadElevatorCargo(ServerLevel level, SpaceElevatorEntity elevator) {
+		if (elevator.isCurrentlyTransporting()) {
+			return;
+		}
+		boolean itemsMoved = elevator.getCapability(ForgeCapabilities.ITEM_HANDLER)
+				.map(cargo -> transferItems(cargo, outputItems))
+				.orElse(false);
+		boolean fluidMoved = elevator.getCapability(ForgeCapabilities.FLUID_HANDLER)
+				.map(cargo -> transferFluidToOutputs(cargo) > 0)
+				.orElse(false);
+		if (itemsMoved || fluidMoved) {
+			onCargoTransferred(level);
+		}
+	}
+
+	private void onCargoTransferred(ServerLevel level) {
+		setChanged();
+		MinecraftForge.EVENT_BUS.post(new SpaceElevatorConsoleTransferEvent(level, worldPosition));
+	}
+
+	private static boolean transferItems(IItemHandler source, IItemHandler target) {
 		boolean movedAny = false;
-		for (int sourceSlot = 0; sourceSlot < inputItems.getSlots(); sourceSlot++) {
-			ItemStack stack = inputItems.getStackInSlot(sourceSlot);
+		for (int slot = 0; slot < source.getSlots(); slot++) {
+			ItemStack stack = source.getStackInSlot(slot);
 			if (stack.isEmpty()) {
 				continue;
 			}
-
-			int remaining = stack.getCount();
-			for (int targetSlot = 0; targetSlot < cargo.getSlots() && remaining > 0; targetSlot++) {
-				ItemStack attempt = stack.copyWithCount(remaining);
-				ItemStack leftover = cargo.insertItem(targetSlot, attempt, false);
-				int accepted = remaining - leftover.getCount();
-				if (accepted > 0) {
-					remaining -= accepted;
-					movedAny = true;
-				}
-			}
-
-			int moved = stack.getCount() - remaining;
+			ItemStack leftover = ItemHandlerHelper.insertItemStacked(target, stack.copy(), false);
+			int moved = stack.getCount() - leftover.getCount();
 			if (moved > 0) {
-				inputItems.extractItem(sourceSlot, moved, false);
+				source.extractItem(slot, moved, false);
+				movedAny = true;
 			}
 		}
 		return movedAny;
@@ -328,6 +334,32 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 			moved += accepted;
 		}
 		return moved;
+	}
+
+	private int transferFluidToOutputs(IFluidHandler cargoTank) {
+		FluidStack available = cargoTank.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+		if (available.isEmpty()) {
+			return 0;
+		}
+		FluidStack remaining = available.copy();
+		fillOutputTanks(remaining, false);
+		fillOutputTanks(remaining, true);
+		int accepted = available.getAmount() - remaining.getAmount();
+		if (accepted > 0) {
+			cargoTank.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
+		}
+		return accepted;
+	}
+
+	private void fillOutputTanks(FluidStack remaining, boolean emptyTanks) {
+		for (FluidTank tank : outputFluids) {
+			if (remaining.isEmpty()) {
+				return;
+			}
+			if (tank.isEmpty() == emptyTanks) {
+				remaining.shrink(tank.fill(remaining, IFluidHandler.FluidAction.EXECUTE));
+			}
+		}
 	}
 
 	private void broadcastStoredCounts(ServerLevel level, SpaceElevatorConstructionRecipe recipe) {

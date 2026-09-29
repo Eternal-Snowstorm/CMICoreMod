@@ -127,7 +127,7 @@ public final class SpaceElevatorConstructionHandler {
 	}
 
 	@Nullable
-	private static SpaceElevatorBaseConsoleBlockEntity getConsole(Level level, BlockPos anchorPos) {
+	public static SpaceElevatorBaseConsoleBlockEntity getConsole(Level level, BlockPos anchorPos) {
 		BlockEntity be = level.getBlockEntity(anchorPos);
 		return be instanceof SpaceElevatorBaseConsoleBlockEntity console ? console : null;
 	}
