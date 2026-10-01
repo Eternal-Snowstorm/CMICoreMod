@@ -21,11 +21,8 @@ public class SpaceElevatorTopRenderer extends GeoBlockRenderer<SpaceElevatorTopB
 	}
 
 	@Override
-	public void preRender(PoseStack poseStack, SpaceElevatorTopBlockEntity animatable, BakedGeoModel model,
-						   MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender,
-						   float partialTick, int packedLight, int packedOverlay,
-						   float red, float green, float blue, float alpha) {
-		poseStack.translate(0.0F, MODEL_OFFSET_Y, 0.0F);
-		super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+	public void preRender(PoseStack stack, SpaceElevatorTopBlockEntity animatable, BakedGeoModel model, MultiBufferSource source, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		stack.translate(0.0F, MODEL_OFFSET_Y, 0.0F);
+		super.preRender(stack, animatable, model, source, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 }

@@ -34,7 +34,6 @@ import java.util.function.Function;
  */
 public class GlacianTrunkPlacer extends TrunkPlacer {
 	public static final Codec<GlacianTrunkPlacer> CODEC = RecordCodecBuilder.create((instance) -> {
-		/* 前三个参数与其它树干放置器保持一致, 后面是这套树形自己的旋钮 */
 		return instance.group(
 				Codec.intRange(0, 32)
 						.fieldOf("base_height")

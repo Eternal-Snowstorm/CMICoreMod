@@ -70,7 +70,7 @@ public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlock
 	}
 
 	private void rebuildCaps() {
-		this.energyCap = LazyOptional.of(() -> energy);
+		energyCap = LazyOptional.of(() -> energy);
 	}
 
 	@Override
@@ -189,6 +189,6 @@ public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlock
 
 	@Override
 	public AnimatableInstanceCache getAnimatableInstanceCache() {
-		return this.cache;
+		return cache;
 	}
 }
