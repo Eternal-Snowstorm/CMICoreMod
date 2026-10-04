@@ -65,7 +65,12 @@ public class SolarBoilerItem extends BasicBlockItem {
 			));
 
 			tooltip.addAll(TooltipHelper.cutStringTextComponent(
-					CmiLang.translateDirect("tooltip.solar_boiler.condition.1").getString(),
+					CmiLang.translateDirect(
+							"tooltip.solar_boiler.condition.1",
+							SolarBoilerBlockEntity.getEfficiencyPercent(LightMode.SUNLIGHT),
+							SolarBoilerBlockEntity.getEfficiencyPercent(LightMode.RAIN),
+							SolarBoilerBlockEntity.getEfficiencyPercent(LightMode.THUNDER)
+					).getString(),
 					FontHelper.Palette.STANDARD_CREATE.primary(),
 					FontHelper.Palette.STANDARD_CREATE.highlight()
 			));
@@ -102,6 +107,24 @@ public class SolarBoilerItem extends BasicBlockItem {
 					CmiLang.translateDirect(
 							"tooltip.solar_boiler.efficiency",
 							efficiency
+					).withStyle(ChatFormatting.GRAY).getString(),
+					FontHelper.Palette.STANDARD_CREATE.primary(),
+					FontHelper.Palette.STANDARD_CREATE.highlight()
+			));
+
+			tooltip.addAll(TooltipHelper.cutStringTextComponent(
+					CmiLang.translateDirect(
+							"tooltip.solar_boiler.rain_efficiency",
+							SolarBoilerBlockEntity.getEfficiency(efficiency, LightMode.RAIN)
+					).withStyle(ChatFormatting.GRAY).getString(),
+					FontHelper.Palette.STANDARD_CREATE.primary(),
+					FontHelper.Palette.STANDARD_CREATE.highlight()
+			));
+
+			tooltip.addAll(TooltipHelper.cutStringTextComponent(
+					CmiLang.translateDirect(
+							"tooltip.solar_boiler.thunder_efficiency",
+							SolarBoilerBlockEntity.getEfficiency(efficiency, LightMode.THUNDER)
 					).withStyle(ChatFormatting.GRAY).getString(),
 					FontHelper.Palette.STANDARD_CREATE.primary(),
 					FontHelper.Palette.STANDARD_CREATE.highlight()

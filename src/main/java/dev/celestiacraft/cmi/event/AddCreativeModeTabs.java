@@ -49,7 +49,7 @@ public class AddCreativeModeTabs {
 			});
 		}
 
-		if (event.getTab().equals(CmiCreativeTabs.MECHANISMS.get())) {
+		if (key.equals(CmiCreativeTabs.MACHINES.getKey())) {
 			List.of(
 					WallBlocks.WATER_WELL,
 					WallBlocks.LAVA_WELL,
@@ -72,7 +72,7 @@ public class AddCreativeModeTabs {
 			});
 		}
 
-		if (event.getTab().equals(CmiCreativeTabs.MECHANISMS.get())) {
+		if (key.equals(CmiCreativeTabs.MECHANISMS.getKey())) {
 			event.accept(AllItems.PRECISION_MECHANISM.get());
 			event.accept(ModResources.RESSTONE_MODULE.getItem());
 		}
