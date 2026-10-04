@@ -157,6 +157,16 @@ public class TooltipLanguage extends LanguageGenerate {
 				" ● 效率: %s mB / Tick"
 		);
 		addTooltipLang(
+				"solar_boiler.rain_efficiency",
+				" ● Rain efficiency: %s mB / Tick",
+				" ● 雨天效率: %s mB / Tick"
+		);
+		addTooltipLang(
+				"solar_boiler.thunder_efficiency",
+				" ● Thunderstorm efficiency: %s mB / Tick",
+				" ● 雷暴效率: %s mB / Tick"
+		);
+		addTooltipLang(
 				"solar_boiler.artificial_efficiency",
 				" ● Artificial light efficiency: %s mB / Tick",
 				" ● 人造光照效率: %s mB / Tick"
@@ -183,13 +193,13 @@ public class TooltipLanguage extends LanguageGenerate {
 		);
 		addTooltipLang(
 				"solar_boiler.condition.1",
-				" ● _Natural light_ (no occlusion above, daytime, clear weather): _100%_ efficiency",
-				" ● _自然光照_(顶部无遮挡, 白天, 天气晴朗): _100%_ 效率"
+				" ● _Natural light_ (no occlusion above, daytime): _%1$s%%_ in clear weather, _%2$s%%_ in rain, _%3$s%%_ in a thunderstorm",
+				" ● _自然光照_(顶部无遮挡, 白天): 晴天 _%1$s%%_, 雨天 _%2$s%%_, 雷暴 _%3$s%%_"
 		);
 		addTooltipLang(
 				"solar_boiler.condition.2",
-				" ● _Artificial light_ (block light _%1$s_ or higher, e.g. indoors, at night, in rain/snow or when covered): _%2$s%%_ efficiency",
-				" ● _人造光照_(方块光照_%1$s_及以上, 如室内, 夜晚, 雨雪天或顶部有遮挡): 效率_%2$s%%_"
+				" ● _Artificial light_ (block light _%1$s_ or higher, e.g. indoors, at night or when covered): _%2$s%%_ efficiency",
+				" ● _人造光照_(方块光照_%1$s_及以上, 如室内, 夜晚或顶部有遮挡): 效率_%2$s%%_"
 		);
 		addTooltipLang(
 				"solar_boiler.condition.3",
@@ -200,6 +210,16 @@ public class TooltipLanguage extends LanguageGenerate {
 				"solar_boiler.natural_light",
 				"Light Source: Natural(100% Efficiency)",
 				"当前光源: 自然光(100%效率)"
+		);
+		addTooltipLang(
+				"solar_boiler.rain_light",
+				"Light Source: Natural \u00b7 Rain (%s%% Efficiency)",
+				"当前光源: 自然光\u00b7雨天(效率%s%%)"
+		);
+		addTooltipLang(
+				"solar_boiler.thunder_light",
+				"Light Source: Natural \u00b7 Thunderstorm (%s%% Efficiency)",
+				"当前光源: 自然光\u00b7雷暴(效率%s%%)"
 		);
 		addTooltipLang(
 				"solar_boiler.artificial_light",

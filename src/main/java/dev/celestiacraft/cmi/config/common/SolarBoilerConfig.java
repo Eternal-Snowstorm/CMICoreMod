@@ -27,6 +27,16 @@ public class SolarBoilerConfig extends ConfigModule {
 	 */
 	public static ForgeConfigSpec.DoubleValue ARTIFICIAL_LIGHT_EFFICIENCY_MULTIPLIER;
 
+	/**
+	 * 雨天效率倍率: 白天获得自然光照, 但当前位置正在下雨时的效率倍率
+	 */
+	public static ForgeConfigSpec.DoubleValue RAIN_EFFICIENCY_MULTIPLIER;
+
+	/**
+	 * 雷暴效率倍率: 白天获得自然光照, 但当前处于雷暴天气时的效率倍率
+	 */
+	public static ForgeConfigSpec.DoubleValue THUNDER_EFFICIENCY_MULTIPLIER;
+
 	@Override
 	protected void addConfigs() {
 		BRONZE_EFFICIENCY = builder.comment(CONSUM_COMMENT)
@@ -64,5 +74,17 @@ public class SolarBoilerConfig extends ConfigModule {
 				.comment("type: double")
 				.comment("default: 0.5")
 				.defineInRange("artificial_light_efficiency_multiplier", 0.5, 0.0, 1.0);
+
+		RAIN_EFFICIENCY_MULTIPLIER = builder.comment("Efficiency multiplier when the boiler runs under natural light while it is raining")
+				.comment("1.0 = same as clear weather, 0.5 = half efficiency. Set to 0.0 to disable running in rain.")
+				.comment("type: double")
+				.comment("default: 0.5")
+				.defineInRange("rain_efficiency_multiplier", 0.5, 0.0, 1.0);
+
+		THUNDER_EFFICIENCY_MULTIPLIER = builder.comment("Efficiency multiplier when the boiler runs under natural light during a thunderstorm")
+				.comment("1.0 = same as clear weather, 0.25 = quarter efficiency. Set to 0.0 to disable running in thunderstorms.")
+				.comment("type: double")
+				.comment("default: 0.25")
+				.defineInRange("thunder_efficiency_multiplier", 0.25, 0.0, 1.0);
 	}
 }
