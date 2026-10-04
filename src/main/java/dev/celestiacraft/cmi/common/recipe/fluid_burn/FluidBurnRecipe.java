@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import dev.celestiacraft.cmi.common.register.CmiRecipeSerializer;
 import dev.celestiacraft.cmi.common.register.CmiRecipeType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -18,18 +19,13 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
+@AllArgsConstructor
 public class FluidBurnRecipe implements Recipe<Container> {
 	private final ResourceLocation id;
 	@Getter
 	private final FluidIngredient fluid;
 	@Getter
 	private final int hu;
-
-	public FluidBurnRecipe(ResourceLocation id, FluidIngredient fluid, int hu) {
-		this.id = id;
-		this.fluid = fluid;
-		this.hu = hu;
-	}
 
 	@Override
 	public boolean matches(@NotNull Container container, @NotNull Level level) {
@@ -69,12 +65,12 @@ public class FluidBurnRecipe implements Recipe<Container> {
 	}
 
 	@Override
-	public @NotNull RecipeSerializer<?> getSerializer() {
+	public @NotNull RecipeSerializer<FluidBurnRecipe> getSerializer() {
 		return CmiRecipeSerializer.FLUID_BURN.get();
 	}
 
 	@Override
-	public @NotNull RecipeType<?> getType() {
+	public @NotNull RecipeType<FluidBurnRecipe> getType() {
 		return CmiRecipeType.FLUID_BURN.get();
 	}
 

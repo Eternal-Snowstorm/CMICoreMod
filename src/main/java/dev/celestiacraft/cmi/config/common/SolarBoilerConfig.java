@@ -13,6 +13,21 @@ public class SolarBoilerConfig extends ConfigModule {
 	private static final String EFFICIENCT_TEXT_COMMENT = "_pre_tick_consum_and_production";
 	private static final String CAPACITY_TEXT_COMMENT = "_boiler_capacity";
 
+	/**
+	 * 默认效率 (mB / Tick) 取"同级流体燃烧室的 150%":
+	 * <p>
+	 * 蒸汽锅炉每 Tick 可处理的 HU 上限为 青铜 125 / 铸铁 250 / 钢 500,
+	 * <p>
+	 * 按 10 HU = 1 mB 蒸汽 换算即 12.5 / 25 / 50 mB/Tick, 再乘 1.5 得:
+	 * <p>
+	 * 青铜 125 * 1.5 / 10 = 18.75 ≈ 19
+	 * <p>
+	 * 铸铁 250 * 1.5 / 10 = 37.5 ≈ 38
+	 * <p>
+	 * 钢 500 * 1.5 / 10 = 75
+	 * <p>
+	 * 该数值以熔岩 (fluid_burn 配方 hu = 134.6) 为参考燃料标定
+	 */
 	public static ForgeConfigSpec.IntValue BRONZE_EFFICIENCY;
 	public static ForgeConfigSpec.IntValue BRONZE_CAPACITY;
 
@@ -41,8 +56,8 @@ public class SolarBoilerConfig extends ConfigModule {
 	protected void addConfigs() {
 		BRONZE_EFFICIENCY = builder.comment(CONSUM_COMMENT)
 				.comment("type: int")
-				.comment("default: 2")
-				.defineInRange("bronze" + EFFICIENCT_TEXT_COMMENT, 2, 1, 1024);
+				.comment("default: 19")
+				.defineInRange("bronze" + EFFICIENCT_TEXT_COMMENT, 19, 1, 1024);
 
 		BRONZE_CAPACITY = builder.comment(CAPACITY_COMMENT)
 				.comment("type: int")
@@ -51,8 +66,8 @@ public class SolarBoilerConfig extends ConfigModule {
 
 		CAST_IRON_EFFICIENCY = builder.comment(CONSUM_COMMENT)
 				.comment("type: int")
-				.comment("default: 4")
-				.defineInRange("cast_iron" + EFFICIENCT_TEXT_COMMENT, 4, 1, 1024);
+				.comment("default: 38")
+				.defineInRange("cast_iron" + EFFICIENCT_TEXT_COMMENT, 38, 1, 1024);
 
 		CAST_IRON_CAPACITY = builder.comment(CAPACITY_COMMENT)
 				.comment("type: int")
@@ -61,8 +76,8 @@ public class SolarBoilerConfig extends ConfigModule {
 
 		STEEL_EFFICIENCY = builder.comment(CONSUM_COMMENT)
 				.comment("type: int")
-				.comment("default: 8")
-				.defineInRange("steel" + EFFICIENCT_TEXT_COMMENT, 8, 1, 1024);
+				.comment("default: 75")
+				.defineInRange("steel" + EFFICIENCT_TEXT_COMMENT, 75, 1, 1024);
 
 		STEEL_CAPACITY = builder.comment(CAPACITY_COMMENT)
 				.comment("type: int")
