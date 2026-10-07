@@ -4,7 +4,10 @@ import earth.terrarium.adastra.common.registry.ModSoundEvents;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundSource;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class SpaceElevatorTravelSoundInstance extends AbstractTickableSoundInstance {
 	private final SpaceElevatorEntity elevator;
 

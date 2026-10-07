@@ -2,7 +2,7 @@ package dev.celestiacraft.cmi.common.entity.space_elevator;
 
 import com.lowdragmc.lowdraglib.gui.modular.IUIHolder;
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
-import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.client.entity.SpaceElevatorClientEvents;
 import dev.celestiacraft.cmi.client.gui.SpaceElevatorCargoUI;
 import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
@@ -10,15 +10,11 @@ import dev.celestiacraft.cmi.common.register.CmiEntity;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraSpaceElevatorTravelCompat;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorLinkHandler;
-import dev.celestiacraft.cmi.network.CmiNetwork;
-import dev.celestiacraft.cmi.network.c2s.StartSpaceElevatorTransportPacket;
 import earth.terrarium.adastra.api.planets.Planet;
 import earth.terrarium.adastra.common.config.AdAstraConfig;
 import earth.terrarium.adastra.common.entities.vehicles.Rocket;
 import earth.terrarium.adastra.common.registry.ModSoundEvents;
 import lombok.Getter;
-import net.minecraft.client.CameraType;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -54,18 +50,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import org.jetbrains.annotations.NotNull;
@@ -80,7 +73,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = Cmi.MODID, value = Dist.CLIENT)
 public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder {
 	private static final EntityDataAccessor<BlockPos> ANCHOR_POS = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.BLOCK_POS);
 	private static final EntityDataAccessor<Boolean> HAS_ANCHOR = SynchedEntityData.defineId(SpaceElevatorEntity.class, EntityDataSerializers.BOOLEAN);
@@ -113,9 +105,6 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 	public static final int CARGO_ITEM_SLOTS = 60;
 	public static final int CARGO_FLUID_CAPACITY = 64_000;
 
-	private static @Nullable CameraType previousCameraType;
-	private static boolean jumpWasDown;
-
 	private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 	private boolean startedTravelSound;
 	private int lerpSteps;
@@ -147,52 +136,6 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		noCulling = true;
 		rebuildCargoCaps();
 		cargoItems.addListener(container -> onCargoChanged());
-	}
-
-	@SubscribeEvent
-	public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
-		if (event.getEntity().getVehicle() instanceof SpaceElevatorEntity) {
-			event.setCanceled(true);
-		}
-	}
-
-	@SubscribeEvent
-	public static void onClientTick(TickEvent.ClientTickEvent event) {
-		if (event.phase != TickEvent.Phase.END) {
-			return;
-		}
-
-		Minecraft mc = Minecraft.getInstance();
-		if (mc.player == null) {
-			jumpWasDown = false;
-			restoreCamera(mc);
-			return;
-		}
-
-		Entity vehicle = mc.player.getVehicle();
-		if (vehicle instanceof SpaceElevatorEntity elevator) {
-			if (previousCameraType == null) {
-				previousCameraType = mc.options.getCameraType();
-				mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
-			}
-
-			boolean jumpDown = mc.options.keyJump.isDown();
-			if (jumpDown && !jumpWasDown) {
-				CmiNetwork.CHANNEL.sendToServer(new StartSpaceElevatorTransportPacket(elevator.getId()));
-			}
-			jumpWasDown = jumpDown;
-			return;
-		}
-
-		jumpWasDown = false;
-		restoreCamera(mc);
-	}
-
-	private static void restoreCamera(Minecraft mc) {
-		if (previousCameraType != null) {
-			mc.options.setCameraType(previousCameraType);
-			previousCameraType = null;
-		}
 	}
 
 	public void setAnchor(BlockPos anchorPos) {
@@ -284,7 +227,11 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 				snapToAnchor();
 			}
 			spawnCableParticlesClient();
-			tickTravelSoundClient();
+			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> {
+				return () -> {
+					SpaceElevatorClientEvents.tickTravelSound(this);
+				};
+			});
 			return;
 		}
 
@@ -603,21 +550,20 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		}
 	}
 
-	private void tickTravelSoundClient() {
-		if (!isFlightSoundActive()) {
-			startedTravelSound = false;
-			return;
-		}
-		if (startedTravelSound) {
-			return;
-		}
-		Minecraft.getInstance().getSoundManager().play(new SpaceElevatorTravelSoundInstance(this));
-		startedTravelSound = true;
+	public boolean isTravelSoundStarted() {
+		return startedTravelSound;
 	}
 
-	boolean isFlightSoundActive() {
+	public void setTravelSoundStarted(boolean started) {
+		startedTravelSound = started;
+	}
+
+	public boolean isFlightSoundActive() {
 		int state = getTransportState();
-		return state == STATE_DEPART_UP || state == STATE_ARRIVE_ORBIT || state == STATE_DEPART_DOWN || state == STATE_ARRIVE_GROUND;
+		return state == STATE_DEPART_UP
+				|| state == STATE_ARRIVE_ORBIT
+				|| state == STATE_DEPART_DOWN
+				|| state == STATE_ARRIVE_GROUND;
 	}
 
 	public boolean shouldRenderLaunchHud() {

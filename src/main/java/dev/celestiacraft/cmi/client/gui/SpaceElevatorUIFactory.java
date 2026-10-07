@@ -4,7 +4,6 @@ import com.lowdragmc.lowdraglib.gui.factory.UIFactory;
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +28,7 @@ public class SpaceElevatorUIFactory extends UIFactory<SpaceElevatorEntity> {
 	@Override
 	protected @Nullable SpaceElevatorEntity readHolderFromSyncData(FriendlyByteBuf syncData) {
 		int entityId = syncData.readVarInt();
-		Level level = Minecraft.getInstance().level;
+		Level level = ClientLevelAccess.currentLevel();
 		if (level == null) {
 			return null;
 		}

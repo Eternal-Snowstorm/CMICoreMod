@@ -11,7 +11,6 @@ import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.client.gui.ProspectingRocketUIFactory;
 import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
-import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockItem;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.entity.coin_projectile.CoinProjectileTypes;
@@ -25,7 +24,6 @@ import dev.celestiacraft.cmi.datagen.worldgen.region.CmiOverworldRegion;
 import dev.celestiacraft.cmi.datagen.worldgen.surfacerule.CmiSurfaceRuleData;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import net.createmod.catnip.lang.FontHelper;
-import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -94,17 +92,17 @@ public class Cmi {
 
 		CmiCreativeTabs.register(bus);
 
-		CmiBlockPartialModel.init();
-		CmiSpriteShiftEntry.init();
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+			CmiBlockPartialModel.init();
+			CmiSpriteShiftEntry.init();
 
-		MetalCogWheelPartial.register();
+			MetalCogWheelPartial.register();
+		});
 
 		CmiNetwork.register();
 
 		// 硬币发射器: 数据包为各个 coin 物品定义发射速度/伤害/渲染姿态
 		MinecraftForge.EVENT_BUS.addListener(CoinProjectileTypes::onAddReloadListeners);
-
-		PonderIndex.addPlugin(new CmiPonderPlugin());
 
 		bus.addListener(this::onCommonSetup);
 		bus.addListener(this::onRegister);

@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.compat.adastra;
 
+import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlock;
 import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
 import dev.celestiacraft.cmi.event.PlaceBlockInWorld;
@@ -19,9 +20,6 @@ public class AdAstraSpaceElevatorCompat {
 	private static final String ROOT_TAG = "CmiAdAstraSpaceElevator";
 	private static final String LAST_LAUNCH_TAG = "LastLaunchOrigin";
 	private static final int BASE_RADIUS = 6;
-
-	private AdAstraSpaceElevatorCompat() {
-	}
 
 	public static void clearLastLaunchOrigin(ServerPlayer player) {
 		CompoundTag persistentData = player.getPersistentData();
@@ -111,7 +109,7 @@ public class AdAstraSpaceElevatorCompat {
 	}
 
 	private static void buildGroundBase(ServerLevel level, BlockPos centerPos) {
-		PlaceBlockInWorld.placeStructure(level, centerPos.getX() - BASE_RADIUS, centerPos.getY(), centerPos.getZ() - BASE_RADIUS, "space_elevator_base");
+		PlaceBlockInWorld.placeStructure(level, centerPos.getX() - BASE_RADIUS, centerPos.getY(), centerPos.getZ() - BASE_RADIUS, Cmi.loadResource("space_elevator_base"));
 		BlockPos consolePos = centerPos.offset(GROUND_CONSOLE_OFFSET);
 		level.setBlockAndUpdate(consolePos, SpaceElevatorBlocks.SPACE_ELEVATOR_BASE_CONSOLE.getDefaultState());
 		SpaceElevatorBaseConsoleBlock.deployStructure(level, consolePos);

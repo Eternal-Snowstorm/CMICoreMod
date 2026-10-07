@@ -1,6 +1,5 @@
 package dev.celestiacraft.cmi.event;
 
-import dev.celestiacraft.cmi.Cmi;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -14,9 +13,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import java.util.Optional;
 
 public class PlaceBlockInWorld {
-	public static void placeStructure(ServerLevel level, int x, int y, int z, String structureId) {
+	public static void placeStructure(ServerLevel level, int x, int y, int z, ResourceLocation structureId) {
 		StructureTemplateManager manager = level.getStructureManager();
-		ResourceLocation structureName = Cmi.loadResource(structureId);
+		ResourceLocation structureName = structureId;
 		Optional<StructureTemplate> template = manager.get(structureName);
 		template.ifPresent((temp) -> {
 			temp.placeInWorld(

@@ -4,6 +4,7 @@
 	"package": "dev.celestiacraft.cmi.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "cmi.refmap.json",
+	"plugin": "dev.celestiacraft.cmi.mixin.CmiMixinConfigPlugin",
 	"mixins": [
 		"AnimatedBlazeBurnerMixin",
 		"BasinBlockEntityMixin",
@@ -28,6 +29,7 @@
 		"ItemMixin",
 		"LayeredCauldronBlockMixin",
 		"LevelMixin",
+		"MBDKubeJSPluginMixin",
 		"MixerLogicMixin",
 		"MixerStateAccessor",
 		"NonMirrorableWithActiveBlockMixin",

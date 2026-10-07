@@ -51,6 +51,7 @@ import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.registry.RegistryInfo;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
+import dev.latvian.mods.kubejs.script.PlatformWrapper;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -88,14 +89,17 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		bindCmi(event);
 		bindCmiMBD(event);
 		bindMBD(event);
-		bindLDLib(event);
 		bindCmiLDLib(event);
+
+		if (PlatformWrapper.isClientEnvironment()) {
+			bindClientCmi(event);
+			bindClientMBD(event);
+			bindLDLib(event);
+		}
 	}
 
 	private void bindCmi(BindingsEvent event) {
 		event.add("Cmi", Cmi.class);
-		event.add("CmiLang", CmiLang.class);
-		event.add("CmiLang$JeiLang", CmiLang.JeiLang.class);
 		event.add("ClientSeedHandler", ClientSeedHandler.class);
 		event.add("CmiHeatLevel", CmiHeatLevel.class);
 		event.add("CmiGlobal", CmiGlobal.class);
@@ -106,11 +110,15 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		event.add("CmiMechanism", CmiMechanism.class);
 	}
 
+	private void bindClientCmi(BindingsEvent event) {
+		event.add("CmiLang", CmiLang.class);
+		event.add("CmiLang$JeiLang", CmiLang.JeiLang.class);
+	}
+
 	private void bindMBD(BindingsEvent event) {
 		List<Class<?>> mbdClasses = List.of(
 				MachineState.class,
 				MultiblockShapeInfo.class,
-				MultiblockShapeInfoPanel.class,
 				ConfigBlockProperties.class,
 				ConfigItemProperties.class,
 				ConfigMachineSettings.class,
@@ -141,8 +149,6 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				FactoryBlockPattern.class,
 				Predicates.class,
 				ToggleCreativeTab.class,
-				ToggleRenderer.class,
-				IModelRenderer.class,
 				ToggleMachineSound.class,
 				RelativeDirection.class,
 				PredicateTags.class,
@@ -151,6 +157,23 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				PredicateBlocks.class
 		);
 		mbdClasses.forEach((clazz) -> {
+			String name = clazz.getSimpleName();
+
+			if (clazz.getEnclosingClass() != null) {
+				name = clazz.getEnclosingClass().getSimpleName() + "$" + name;
+			}
+
+			event.add(name, clazz);
+		});
+	}
+
+	private void bindClientMBD(BindingsEvent event) {
+		List<Class<?>> clientClasses = List.of(
+				MultiblockShapeInfoPanel.class,
+				ToggleRenderer.class,
+				IModelRenderer.class
+		);
+		clientClasses.forEach((clazz) -> {
 			String name = clazz.getSimpleName();
 
 			if (clazz.getEnclosingClass() != null) {
