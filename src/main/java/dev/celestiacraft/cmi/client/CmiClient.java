@@ -74,6 +74,7 @@ public class CmiClient {
 		event.register(CmiKeyMapping.OPEN_RADIAL);
 	}
 
+	@SubscribeEvent
 	public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerBlockEntityRenderer(CmiBlockEntity.SPACE_ELEVATOR_BASE_CONSOLE.get(), (context) -> {
 			return new SpaceElevatorBaseConsoleRenderer();
