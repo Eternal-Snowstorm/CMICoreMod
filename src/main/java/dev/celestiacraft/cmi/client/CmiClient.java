@@ -71,7 +71,9 @@ public class CmiClient {
 
 	@SubscribeEvent
 	public static void onRegisterKeys(RegisterKeyMappingsEvent event) {
-		event.register(CmiKeyMapping.OPEN_RADIAL);
+		CmiKeyMapping.MAPPINGS.forEach((mapping) -> {
+			event.register(mapping);
+		});
 	}
 
 	@SubscribeEvent
