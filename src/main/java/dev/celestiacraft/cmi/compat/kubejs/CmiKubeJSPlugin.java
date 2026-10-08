@@ -54,6 +54,7 @@ import dev.latvian.mods.kubejs.script.BindingsEvent;
 import dev.latvian.mods.kubejs.script.PlatformWrapper;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -85,6 +86,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		event.add("IntStream", IntStream.class);
 		event.add("JavaArray", Array.class);
 		event.add("JavaArrays", Arrays.class);
+		event.add("ArrayList", ArrayList.class);
 
 		bindCmi(event);
 		bindCmiMBD(event);
