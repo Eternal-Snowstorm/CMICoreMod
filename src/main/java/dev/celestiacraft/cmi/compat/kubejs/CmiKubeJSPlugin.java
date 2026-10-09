@@ -42,6 +42,7 @@ import dev.celestiacraft.cmi.compat.kubejs.recipe.cdg.CdgRecipesSchema;
 import dev.celestiacraft.cmi.compat.ldlib.LDLibHelpers;
 import dev.celestiacraft.cmi.compat.mbd2.MBDFluidIngredient;
 import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;
+import dev.celestiacraft.cmi.compat.mekanism.MekanismIngredient;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.celestiacraft.cmi.utils.CmiGlobal;
 import dev.celestiacraft.cmi.utils.metal.CmiMetal;
@@ -90,6 +91,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 
 		bindCmi(event);
 		bindCmiMBD(event);
+		bindCmiMekanism(event);
 		bindMBD(event);
 		bindCmiLDLib(event);
 
@@ -204,6 +206,10 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 	private void bindCmiMBD(BindingsEvent event) {
 		event.add("MBDFluidIngredient", MBDFluidIngredient.class);
 		event.add("MBDHelpers", MBDHelpers.class);
+	}
+
+	private void bindCmiMekanism(BindingsEvent event) {
+		event.add("MekanismIngredient", MekanismIngredient.class);
 	}
 
 	private void bindCmiLDLib(BindingsEvent event) {

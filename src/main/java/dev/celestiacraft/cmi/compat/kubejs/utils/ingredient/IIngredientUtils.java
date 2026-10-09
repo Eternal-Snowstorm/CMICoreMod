@@ -64,8 +64,8 @@ public interface IIngredientUtils {
 		return outputId;
 	}
 
-	static ResourceLocation getFirstFluidId(String fluidTag) {
-		TagKey<Fluid> tag = FluidTags.create(ResourceLocation.parse(fluidTag));
+	static ResourceLocation getFirstFluidId(ResourceLocation fluidTag) {
+		TagKey<Fluid> tag = FluidTags.create(fluidTag);
 		Optional<HolderSet.Named<Fluid>> optional = BuiltInRegistries.FLUID.getTag(tag);
 
 		if (optional.isPresent()) {
@@ -84,7 +84,7 @@ public interface IIngredientUtils {
 		return null;
 	}
 
-	static String getFluidString(String fluidTag) {
+	static String getFluidString(ResourceLocation fluidTag) {
 		ResourceLocation id = getFirstFluidId(fluidTag);
 		return id != null ? id.toString() : null;
 	}
