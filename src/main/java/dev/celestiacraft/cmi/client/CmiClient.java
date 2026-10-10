@@ -5,13 +5,12 @@ import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.client.key.CmiKeyMapping;
 import dev.celestiacraft.cmi.client.menu.CmiRadialMenu;
-import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
 import dev.celestiacraft.cmi.client.overlay.DivingBacktankAirOverlay;
 import dev.celestiacraft.cmi.client.overlay.NetherBacktankAirOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorConstructionOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorFlightOverlay;
+import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
 import dev.celestiacraft.cmi.client.render.SpaceElevatorHudRenderer;
-import dev.celestiacraft.cmi.client.tip.CmiTips;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.render.SpaceElevatorBaseConsoleRenderer;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopRenderer;
@@ -63,7 +62,8 @@ public class CmiClient {
 				EntityRenderers.register(CmiEntity.prospectingRocket(tier).get(), ProspectingRocketRenderer::new);
 			}
 
-			CmiTips.register();
+			// 暂时取消注释(没时间维护)
+			// CmiTips.register();
 			CmiRadialMenu.register();
 			CmiRadialAction.register();
 		});
