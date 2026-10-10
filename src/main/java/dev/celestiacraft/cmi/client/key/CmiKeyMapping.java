@@ -10,15 +10,19 @@ import java.util.List;
 public class CmiKeyMapping {
 	public static final List<KeyMapping> MAPPINGS = new ArrayList<>();
 
-	public static final KeyMapping OPEN_RADIAL = addKeyMapping(
-			"key.cmi.open_radial",
-			InputConstants.Type.KEYSYM,
-			GLFW.GLFW_KEY_TAB,
-			"key.cmi.categories"
-	);
+	public static final KeyMapping OPEN_RADIAL;
 
-	private static KeyMapping addKeyMapping(String name, InputConstants.Type type, int code, String category) {
-		KeyMapping mapping = new KeyMapping(name, type, code, category);
+	static {
+		OPEN_RADIAL = addKeyMapping("open_radial", GLFW.GLFW_KEY_TAB);
+	}
+
+	private static KeyMapping addKeyMapping(String name, int key) {
+		KeyMapping mapping = new KeyMapping(
+				"key.cmi.%s".formatted(name),
+				InputConstants.Type.KEYSYM,
+				key,
+				"key.cmi.categories"
+		);
 		MAPPINGS.add(mapping);
 		return mapping;
 	}
