@@ -3,7 +3,7 @@ package dev.celestiacraft.cmi.event;
 import com.mojang.datafixers.util.Pair;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_base.SpaceElevatorBaseRecipe;
-import dev.celestiacraft.cmi.mixin.PlanetsScreenAccessor;
+import dev.celestiacraft.cmi.mixin.adastra.PlanetsScreenAccessor;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import dev.celestiacraft.cmi.network.c2s.BuildEarthSpaceElevatorBasePacket;
 import dev.celestiacraft.cmi.network.c2s.RequestSpaceElevatorBaseStatePacket;

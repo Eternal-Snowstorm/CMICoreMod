@@ -15,7 +15,7 @@ import java.util.Set;
  * 未安装时混入该目标类会直接 NoClassDefFoundError。其余 mixin 一律照常应用。
  */
 public class CmiMixinConfigPlugin implements IMixinConfigPlugin {
-	private static final String MBD_KUBEJS_MIXIN = "dev.celestiacraft.cmi.mixin.MBDKubeJSPluginMixin";
+	private static final String MBD_KUBEJS_MIXIN = "dev.celestiacraft.cmi.mixin.kubejs.MBDKubeJSPluginMixin";
 
 	@Override
 	public void onLoad(String mixinPackage) {
