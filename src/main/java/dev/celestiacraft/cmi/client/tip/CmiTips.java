@@ -8,6 +8,7 @@ import dev.celestiacraft.cmi.Cmi;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
 
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class CmiTips {
 							.pauseOnHover(true);
 				})
 				.page(0, (builder) -> {
-					builder.title(Component.literal("末影龙"))
+					builder.title(EntityType.ENDER_DRAGON.getDescription())
 							.content(Component.literal("狩猎完成"));
 				})
 				.build();

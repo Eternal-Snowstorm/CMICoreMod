@@ -12,7 +12,8 @@ public class CmiBlockTags {
 			COGWHEEL,
 			SMOKE_SOURCE,
 			LARGE_COGWHEEL,
-			COILS;
+			COILS,
+			PLAYER_PATH;
 
 	static {
 		GRILL_SOURCES = TagsBuilder.block("grill_sources").cmi();
@@ -22,5 +23,6 @@ public class CmiBlockTags {
 		SMOKE_SOURCE = TagsBuilder.block("smoke_source").cmi();
 		LARGE_COGWHEEL = TagsBuilder.block("large_cogwheel").create();
 		COILS = TagsBuilder.block("coils").cmi();
+		PLAYER_PATH = TagsBuilder.block("player_path").cmi();
 	}
 }

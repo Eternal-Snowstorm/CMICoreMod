@@ -63,8 +63,8 @@ public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGo
 
 		boolean canWork = energyStored >= 1000 &&
 				level.getBlockState(worldPosition.below()).is(ModResources.VOID_SPRING.getBlock()) &&
-				this.getBlockPos().getY() <= MAX_WORK_HEIGHT &&
-				this.getBlockPos().getY() >= MIN_WORK_HEIGHT &&
+				getBlockPos().getY() <= MAX_WORK_HEIGHT &&
+				getBlockPos().getY() >= MIN_WORK_HEIGHT &&
 				(stack.isEmpty() || stack.getCount() < stack.getMaxStackSize());
 
 		// 同步BlockState
@@ -117,7 +117,7 @@ public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGo
 	}
 
 	public void addEnergy(int amount) {
-		this.energyStored += amount;
+		energyStored += amount;
 		setChanged();
 
 		if (level != null) {
@@ -160,11 +160,11 @@ public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGo
 	public void reviveCaps() {
 		super.reviveCaps();
 
-		this.itemHandler = new VDCItmeCapability(this);
-		this.itemCap = LazyOptional.of(() -> new VDCItemHandler(itemHandler));
+		itemHandler = new VDCItmeCapability(this);
+		itemCap = LazyOptional.of(() -> new VDCItemHandler(itemHandler));
 
-		this.energyHandler = new VDCEnergyStorage(this);
-		this.energyCap = LazyOptional.of(() -> energyHandler);
+		energyHandler = new VDCEnergyStorage(this);
+		energyCap = LazyOptional.of(() -> energyHandler);
 	}
 
 	@Override
@@ -223,11 +223,11 @@ public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGo
 		super.onLoad();
 
 		// 物品
-		this.itemHandler = new VDCItmeCapability(this);
-		this.itemCap = LazyOptional.of(() -> new VDCItemHandler(itemHandler));
+		itemHandler = new VDCItmeCapability(this);
+		itemCap = LazyOptional.of(() -> new VDCItemHandler(itemHandler));
 
 		// 能量
-		this.energyHandler = new VDCEnergyStorage(this);
-		this.energyCap = LazyOptional.of(() -> energyHandler);
+		energyHandler = new VDCEnergyStorage(this);
+		energyCap = LazyOptional.of(() -> energyHandler);
 	}
 }
