@@ -34,8 +34,8 @@ public class PlayerPath {
 			return;
 		}
 
-		// 3s检测一次
-		if (entity.tickCount % 20 != 0) {
+		// 0.5s检测一次
+		if (entity.tickCount % 10 != 0) {
 			return;
 		}
 
