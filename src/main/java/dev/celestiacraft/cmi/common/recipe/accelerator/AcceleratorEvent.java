@@ -18,10 +18,14 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.security.SecureRandom;
+
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AcceleratorEvent {
 	@SubscribeEvent
 	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+		SecureRandom secureRandom = new SecureRandom();
+
 		Level level = event.getLevel();
 		Player player = event.getEntity();
 		ItemStack item = player.getItemInHand(event.getHand());
@@ -98,9 +102,9 @@ public class AcceleratorEvent {
 					);
 					// 申必粒子效果
 					for (int number = 0; number < 10; number++) {
-						double offsetX = (Math.random() - 0.5) * 0.5;
-						double offsetY = Math.random() * 0.5;
-						double offsetZ = (Math.random() - 0.5) * 0.5;
+						double offsetX = (secureRandom.nextDouble() - 0.5) * 0.5;
+						double offsetY = secureRandom.nextDouble() * 0.5;
+						double offsetZ = (secureRandom.nextDouble() - 0.5) * 0.5;
 
 						sl.sendParticles(
 								ParticleTypes.HAPPY_VILLAGER,

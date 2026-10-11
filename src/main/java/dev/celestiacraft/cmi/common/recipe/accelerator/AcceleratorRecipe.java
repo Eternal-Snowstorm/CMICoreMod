@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.common.recipe.accelerator;
 
 import com.google.gson.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -21,18 +22,12 @@ import dev.celestiacraft.cmi.Cmi;
 import java.util.*;
 
 @Getter
+@AllArgsConstructor
 public class AcceleratorRecipe implements Recipe<SimpleContainer> {
 	public final ResourceLocation id;
 	public final List<Ingredient> inputs;
 	public final Block targetBlock;
 	public final List<OutputEntry> outputs;
-
-	public AcceleratorRecipe(ResourceLocation id, List<Ingredient> inputs, Block targetBlock, List<OutputEntry> outputs) {
-		this.id = id;
-		this.inputs = inputs;
-		this.targetBlock = targetBlock;
-		this.outputs = outputs;
-	}
 
 	@Override
 	public boolean matches(@NotNull SimpleContainer container, @NotNull Level level) {
