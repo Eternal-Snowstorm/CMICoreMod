@@ -93,7 +93,7 @@ public class CmiStress extends ConfigBase {
 
 	private static void assertFromCreateD2D(BlockBuilder<?, ?> builder) {
 		if (!builder.getOwner().getModid().equals(Cmi.MODID)) {
-			throw new IllegalStateException("Non-Create Desires 2 Dreams blocks cannot be added to Create Desires 2 Dreams config.");
+			throw new IllegalStateException("Non-CMI blocks cannot be added to CMI config.");
 		}
 	}
 

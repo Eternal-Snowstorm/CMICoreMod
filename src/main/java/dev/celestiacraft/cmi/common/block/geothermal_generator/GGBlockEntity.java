@@ -143,4 +143,15 @@ public class GGBlockEntity extends SmartBlockEntity {
 		}
 		return super.getCapability(capability, direction);
 	}
+
+	@Override
+	public void invalidateCaps() {
+		super.invalidateCaps();
+		storage.invalidate();
+	}
+
+	@Override
+	public void reviveCaps() {
+		super.reviveCaps();
+	}
 }

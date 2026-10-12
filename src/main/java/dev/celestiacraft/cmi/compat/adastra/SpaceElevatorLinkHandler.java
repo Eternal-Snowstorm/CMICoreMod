@@ -95,25 +95,33 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 	}
 
 	public static void setOrbitAnchor(ServerLevel level, ChunkPos stationPos, BlockPos orbitAnchor) {
-		read(level).getOrCreate(stationPos).orbitAnchor = orbitAnchor.immutable();
+		SpaceElevatorLinkHandler handler = read(level);
+		handler.getOrCreate(stationPos).orbitAnchor = orbitAnchor.immutable();
+		handler.setDirty();
 	}
 
 	public static void setGroundBase(ServerLevel level, ChunkPos stationPos, ResourceKey<Level> groundDimension, BlockPos groundBase) {
-		SpaceElevatorLink link = read(level).getOrCreate(stationPos);
+		SpaceElevatorLinkHandler handler = read(level);
+		SpaceElevatorLink link = handler.getOrCreate(stationPos);
 		link.groundDimension = groundDimension;
 		link.groundBase = groundBase.immutable();
+		handler.setDirty();
 	}
 
 	public static void setGroundAnchor(ServerLevel level, ChunkPos stationPos, BlockPos groundAnchor) {
-		read(level).getOrCreate(stationPos).groundAnchor = groundAnchor.immutable();
+		SpaceElevatorLinkHandler handler = read(level);
+		handler.getOrCreate(stationPos).groundAnchor = groundAnchor.immutable();
+		handler.setDirty();
 	}
 
 	public static void setElevatorPresent(ServerLevel level, ChunkPos stationPos, boolean present) {
-		SpaceElevatorLink link = read(level).getOrCreate(stationPos);
+		SpaceElevatorLinkHandler handler = read(level);
+		SpaceElevatorLink link = handler.getOrCreate(stationPos);
 		link.elevatorPresent = present;
 		if (!present) {
 			link.elevatorDisplayState = SpaceElevatorConsoleDisplayState.READY;
 		}
+		handler.setDirty();
 	}
 
 	public static boolean isElevatorPresent(ServerLevel level, ChunkPos stationPos) {
@@ -160,7 +168,9 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 			link = findByGroundAnchor(orbitLevel, level.dimension(), anchorPos);
 		}
 		if (link != null) {
-			read(orbitLevel).getOrCreate(link.stationPos()).elevatorDisplayState = state;
+			SpaceElevatorLinkHandler handler = read(orbitLevel);
+			handler.getOrCreate(link.stationPos()).elevatorDisplayState = state;
+			handler.setDirty();
 		}
 	}
 
@@ -270,11 +280,6 @@ public class SpaceElevatorLinkHandler extends SaveHandler {
 		ResourceKey<Level> groundDimension;
 		public boolean elevatorPresent;
 		SpaceElevatorConsoleDisplayState elevatorDisplayState = SpaceElevatorConsoleDisplayState.READY;
-	}
-
-	@Override
-	public boolean isDirty() {
-		return true;
 	}
 
 	public record LinkTarget(ChunkPos stationPos, BlockPos orbitAnchor, @Nullable BlockPos groundBase, @Nullable BlockPos groundAnchor, @Nullable ResourceKey<Level> groundDimension) {

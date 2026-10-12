@@ -12,6 +12,7 @@ import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -143,5 +144,17 @@ public class SteamHammerBlockEntity extends MechanicalPressBlockEntity {
 	public void reviveCaps() {
 		super.reviveCaps();
 		fluidCapability = LazyOptional.of(() -> fluidHandler);
+	}
+
+	@Override
+	protected void write(CompoundTag tag, boolean clientPacket) {
+		super.write(tag, clientPacket);
+		tag.put("Steam", steam.writeToNBT(new CompoundTag()));
+	}
+
+	@Override
+	protected void read(CompoundTag tag, boolean clientPacket) {
+		super.read(tag, clientPacket);
+		steam = FluidStack.loadFluidStackFromNBT(tag.getCompound("Steam"));
 	}
 }

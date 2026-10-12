@@ -42,11 +42,8 @@ public class SpaceElevatorBaseHandler extends SaveHandler {
 	}
 
 	public static void markBaseBuilt(ServerLevel level, ChunkPos stationPos) {
-		read(level).builtStations.add(stationPos.toLong());
-	}
-
-	@Override
-	public boolean isDirty() {
-		return true;
+		SpaceElevatorBaseHandler handler = read(level);
+		handler.builtStations.add(stationPos.toLong());
+		handler.setDirty();
 	}
 }

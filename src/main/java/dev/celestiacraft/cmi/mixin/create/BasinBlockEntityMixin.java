@@ -17,6 +17,7 @@ public class BasinBlockEntityMixin {
 			cir.setReturnValue(BlazeBurnerBlock.HeatLevel.valueOf("GRILLED"));
 		}
 
+		// TODO: 此 if 会覆盖上面的 GRILLED 分支, 烈焰人燃烧室 (create:blaze_burner / create:lit_blaze_burner) 是否也该算 GRILLED 待主开发人员确认
 		if (state.hasProperty(BlazeBurnerBlock.HEAT_LEVEL)) {
 			cir.setReturnValue(state.getValue(BlazeBurnerBlock.HEAT_LEVEL));
 		}

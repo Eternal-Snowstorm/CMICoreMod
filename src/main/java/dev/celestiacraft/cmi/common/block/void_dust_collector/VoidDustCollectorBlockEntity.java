@@ -160,10 +160,14 @@ public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGo
 	public void reviveCaps() {
 		super.reviveCaps();
 
-		itemHandler = new VDCItmeCapability(this);
+		if (itemHandler == null) {
+			itemHandler = new VDCItmeCapability(this);
+		}
 		itemCap = LazyOptional.of(() -> new VDCItemHandler(itemHandler));
 
-		energyHandler = new VDCEnergyStorage(this);
+		if (energyHandler == null) {
+			energyHandler = new VDCEnergyStorage(this);
+		}
 		energyCap = LazyOptional.of(() -> energyHandler);
 	}
 
@@ -193,6 +197,18 @@ public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGo
 		energyStored = tag.getInt("Energy");
 		workTimer = tag.getInt("WorkTimer");
 		workTimeRequired = tag.getInt("WorkTimeRequired");
+
+		// load 早于 onLoad / reviveCaps, 首次从存档读取时处理器还没建
+		if (itemHandler == null) {
+			itemHandler = new VDCItmeCapability(this);
+			itemCap = LazyOptional.of(() -> new VDCItemHandler(itemHandler));
+		}
+
+		if (energyHandler == null) {
+			energyHandler = new VDCEnergyStorage(this);
+			energyCap = LazyOptional.of(() -> energyHandler);
+		}
+
 		itemHandler.deserializeNBT(tag.getCompound("Inventory"));
 	}
 
@@ -223,11 +239,16 @@ public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGo
 		super.onLoad();
 
 		// 物品
-		itemHandler = new VDCItmeCapability(this);
+		// onLoad 在 load 之后才跑, 这里不能重建, 否则会把刚读出来的物品栏冲掉
+		if (itemHandler == null) {
+			itemHandler = new VDCItmeCapability(this);
+		}
 		itemCap = LazyOptional.of(() -> new VDCItemHandler(itemHandler));
 
 		// 能量
-		energyHandler = new VDCEnergyStorage(this);
+		if (energyHandler == null) {
+			energyHandler = new VDCEnergyStorage(this);
+		}
 		energyCap = LazyOptional.of(() -> energyHandler);
 	}
 }

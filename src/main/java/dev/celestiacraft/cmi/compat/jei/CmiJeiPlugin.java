@@ -80,6 +80,11 @@ public class CmiJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
+		// JEI 可能在客户端未进入世界或已退出世界时重载配方, 此时 level 与 getConnection() 均为 null
+		if (Minecraft.getInstance().level == null) {
+			return;
+		}
+
 		RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
 
 		List<AcceleratorRecipe> acceleratorRecipe = manager.getAllRecipesFor(CmiRecipeType.ACCELERATOR.get());
