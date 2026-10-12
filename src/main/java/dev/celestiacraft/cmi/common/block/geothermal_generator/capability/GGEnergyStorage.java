@@ -63,4 +63,8 @@ public class GGEnergyStorage implements IEnergyStorage {
 	public LazyOptional<IEnergyStorage> get(Direction direction) {
 		return optional;
 	}
+
+	public void invalidate() {
+		optional.invalidate();
+	}
 }

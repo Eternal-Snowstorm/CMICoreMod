@@ -83,7 +83,7 @@ public class Cmi {
 		CmiRecipeType.register(bus);
 		CmiRecipeSerializer.register(bus);
 		CmiCreateRecipe.register(bus);
-		CmiAdvanmentTrigger.register();
+		CmiAdvancementTrigger.register();
 		CmiSound.register(bus);
 		CmiModifier.register(bus);
 		CmiTrunkPlacer.register(bus);

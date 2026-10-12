@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
-public class ElectronicBlastFurnaceTrigge extends SimpleCriterionTrigger<ElectronicBlastFurnaceTrigge.Instance> {
+public class ElectronicBlastFurnaceTrigger extends SimpleCriterionTrigger<ElectronicBlastFurnaceTrigger.Instance> {
 	public static final ResourceLocation ID = Cmi.loadResource("electronic_blast_furnace");
 
 	@Override

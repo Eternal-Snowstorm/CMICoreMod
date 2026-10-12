@@ -46,6 +46,11 @@ public class ParchmentRightClick {
 		SecureRandom random = new SecureRandom();
 
 		if (level.isClientSide()) {
+			// 图腾动画是纯客户端表现, 只能在客户端调用
+			Item parchment = getParchment();
+			if (parchment != null && item.is(parchment) && event.getHand().equals(InteractionHand.MAIN_HAND)) {
+				NebulaLibs.useTotemAnimation(parchment.getDefaultInstance());
+			}
 			return;
 		}
 
@@ -109,8 +114,6 @@ public class ParchmentRightClick {
 						0
 				);
 			}
-			// 调用动画
-			NebulaLibs.useTotemAnimation(parchment.getDefaultInstance());
 			// 挥手
 			player.swing(event.getHand());
 			// 消耗物品

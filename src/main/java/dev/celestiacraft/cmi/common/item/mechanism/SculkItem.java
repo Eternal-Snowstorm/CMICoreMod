@@ -47,11 +47,16 @@ public class SculkItem extends MechanismItem {
 		}
 	}
 
+	@SubscribeEvent
 	public static void onInteractEntity(PlayerInteractEvent.EntityInteractSpecific event) {
 		Level level = event.getLevel();
 		Player player = event.getEntity();
 
 		if (level.isClientSide()) {
+			return;
+		}
+
+		if (!event.getItemStack().is(CmiMechanism.SCULK.get())) {
 			return;
 		}
 

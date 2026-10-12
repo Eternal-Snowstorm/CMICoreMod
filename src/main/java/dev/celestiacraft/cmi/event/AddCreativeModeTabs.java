@@ -24,7 +24,7 @@ public class AddCreativeModeTabs {
 	public static void onCreativeModeTabContents(BuildCreativeModeTabContentsEvent event) {
 		ResourceKey<CreativeModeTab> key = event.getTabKey();
 
-		if (event.getTab().equals(KUBEJS_TAB)) {
+		if (key.equals(KUBEJS_TAB)) {
 			List.of(
 					VentBlocks.MARS_GEO,
 					VentBlocks.MERCURY_GEO,

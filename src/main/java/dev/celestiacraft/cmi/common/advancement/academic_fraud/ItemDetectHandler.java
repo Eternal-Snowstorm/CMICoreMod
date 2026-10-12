@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.common.advancement.academic_fraud;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.register.CmiAdvanmentTrigger;
+import dev.celestiacraft.cmi.common.register.CmiAdvancementTrigger;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -75,7 +75,7 @@ public class ItemDetectHandler {
 
 		if (hasIronIngot) {
 			// 满足条件触发一次
-			CmiAdvanmentTrigger.ACADEMIC_FRAUD.trigger(player);
+			CmiAdvancementTrigger.ACADEMIC_FRAUD.trigger(player);
 			// 触发后也停止tick(避免浪费性能)
 			data.putBoolean(CHECKED, true);
 		}

@@ -40,7 +40,7 @@ public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlock
 
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-	private final EnergyStorage energy = new EnergyStorage(ENERGY_CAPACITY, ENERGY_MAX_RECEIVE, 0, 0) {
+	private final EnergyStorage energy = new EnergyStorage(ENERGY_CAPACITY, ENERGY_MAX_RECEIVE, Integer.MAX_VALUE, 0) {
 		@Override
 		public int receiveEnergy(int maxReceive, boolean simulate) {
 			int received = super.receiveEnergy(maxReceive, simulate);
@@ -51,6 +51,42 @@ public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlock
 				}
 			}
 			return received;
+		}
+	};
+
+	/*
+	 * 内部消耗需要 extractEnergy 真正扣电, 所以上面放开了 maxExtract;
+	 * 这一层用于对外屏蔽抽取, 邻居依然抽不出能量
+	 */
+	private final IEnergyStorage externalEnergy = new IEnergyStorage() {
+		@Override
+		public int receiveEnergy(int maxReceive, boolean simulate) {
+			return energy.receiveEnergy(maxReceive, simulate);
+		}
+
+		@Override
+		public int extractEnergy(int maxExtract, boolean simulate) {
+			return 0;
+		}
+
+		@Override
+		public int getEnergyStored() {
+			return energy.getEnergyStored();
+		}
+
+		@Override
+		public int getMaxEnergyStored() {
+			return energy.getMaxEnergyStored();
+		}
+
+		@Override
+		public boolean canExtract() {
+			return false;
+		}
+
+		@Override
+		public boolean canReceive() {
+			return true;
 		}
 	};
 
@@ -70,7 +106,7 @@ public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlock
 	}
 
 	private void rebuildCaps() {
-		energyCap = LazyOptional.of(() -> energy);
+		energyCap = LazyOptional.of(() -> externalEnergy);
 	}
 
 	@Override
