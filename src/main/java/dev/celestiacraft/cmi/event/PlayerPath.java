@@ -40,7 +40,9 @@ public class PlayerPath {
 		}
 
 		BlockPos below = entity.blockPosition().below();
-		BlockState state = level.getBlockState(below);
+		BlockPos current = entity.blockPosition();
+		BlockState belowState = level.getBlockState(below);
+		BlockState currentState = level.getBlockState(current);
 
 		AttributeInstance attribute = entity.getAttribute(Attributes.MOVEMENT_SPEED);
 
@@ -48,7 +50,7 @@ public class PlayerPath {
 			return;
 		}
 
-		if (state.is(CmiBlockTags.PLAYER_PATH)) {
+		if (belowState.is(CmiBlockTags.PLAYER_PATH) || currentState.is(CmiBlockTags.PLAYER_PATH)) {
 			if (attribute.getModifier(PATH_SPEED_UUID) == null) {
 				double bonus = 0.5 + entity.getRandom().nextDouble() * 0.25;
 				// 调试用的, 别搞😡
