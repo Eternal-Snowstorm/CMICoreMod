@@ -42,6 +42,7 @@ import dev.celestiacraft.cmi.compat.kubejs.recipe.cdg.CdgRecipesSchema;
 import dev.celestiacraft.cmi.compat.ldlib.LDLibHelpers;
 import dev.celestiacraft.cmi.compat.mbd2.MBDFluidIngredient;
 import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;
+import dev.celestiacraft.cmi.compat.mbd2.BlockExistCondition;
 import dev.celestiacraft.cmi.compat.mekanism.MekanismIngredient;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.celestiacraft.cmi.utils.CmiGlobal;
@@ -206,6 +207,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 	private void bindCmiMBD(BindingsEvent event) {
 		event.add("MBDFluidIngredient", MBDFluidIngredient.class);
 		event.add("MBDHelpers", MBDHelpers.class);
+		event.add("BlockExistCondition", BlockExistCondition.class);
 	}
 
 	private void bindCmiMekanism(BindingsEvent event) {
