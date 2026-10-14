@@ -14,7 +14,10 @@ public class CmiFanProcessingTypes {
 	}
 
 	private static <T extends FanProcessingType> T registerType(String name, T type) {
-
-		return Registry.register(CreateBuiltInRegistries.FAN_PROCESSING_TYPE, Cmi.loadResource(name), type);
+		return Registry.register(
+				CreateBuiltInRegistries.FAN_PROCESSING_TYPE,
+				Cmi.loadResource(name),
+				type
+		);
 	}
 }

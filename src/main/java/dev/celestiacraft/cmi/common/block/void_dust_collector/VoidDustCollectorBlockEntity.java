@@ -30,13 +30,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGoggleInformation {
-	private static final int CAPACITY = VoidDustCollectorConfig.ENERGY_CAPACITY.get();
-	private static final int MAX_RECEIVE = VoidDustCollectorConfig.MAX_RECEIVE.get();
-	private static final int ENERGY_CONSUMPTION = VoidDustCollectorConfig.ENERGY_CONSUMPTION.get();
-	private static final int MAX_WORK_HEIGHT = VoidDustCollectorConfig.MAX_WORK_HEIGHT.get();
-	private static final int MIN_WORK_HEIGHT = VoidDustCollectorConfig.MIN_WORK_HEIGHT.get();
-	private static final int WORK_TIME = VoidDustCollectorConfig.WORK_TIME.get();
-
 	@Getter
 	private int energyStored = 0;
 	private int workTimer = 0;
@@ -63,8 +56,8 @@ public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGo
 
 		boolean canWork = energyStored >= 1000 &&
 				level.getBlockState(worldPosition.below()).is(ModResources.VOID_SPRING.getBlock()) &&
-				getBlockPos().getY() <= MAX_WORK_HEIGHT &&
-				getBlockPos().getY() >= MIN_WORK_HEIGHT &&
+				getBlockPos().getY() <= VoidDustCollectorConfig.MAX_WORK_HEIGHT.get() &&
+				getBlockPos().getY() >= VoidDustCollectorConfig.MIN_WORK_HEIGHT.get() &&
 				(stack.isEmpty() || stack.getCount() < stack.getMaxStackSize());
 
 		// 同步BlockState
@@ -87,12 +80,12 @@ public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGo
 
 		// 初始化随机工作时间
 		if (workTimeRequired <= 0) {
-			workTimeRequired = WORK_TIME;
+			workTimeRequired = VoidDustCollectorConfig.WORK_TIME.get();
 			workTimer = 0;
 		}
 
 		// 每 tick 消耗能量
-		energyStored -= ENERGY_CONSUMPTION;
+		energyStored -= VoidDustCollectorConfig.ENERGY_CONSUMPTION.get();
 		workTimer++;
 
 		setChanged();
@@ -109,11 +102,11 @@ public class VoidDustCollectorBlockEntity extends BlockEntity implements IHaveGo
 	}
 
 	public int getCapacity() {
-		return CAPACITY;
+		return VoidDustCollectorConfig.ENERGY_CAPACITY.get();
 	}
 
 	public int getMaxReceive() {
-		return MAX_RECEIVE;
+		return VoidDustCollectorConfig.MAX_RECEIVE.get();
 	}
 
 	public void addEnergy(int amount) {

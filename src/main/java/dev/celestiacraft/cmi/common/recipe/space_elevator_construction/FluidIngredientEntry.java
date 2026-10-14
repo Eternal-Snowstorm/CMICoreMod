@@ -11,7 +11,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
-public final class FluidIngredientEntry {
+public class FluidIngredientEntry {
 	@Nullable
 	private final ResourceLocation fluidId;
 	@Nullable

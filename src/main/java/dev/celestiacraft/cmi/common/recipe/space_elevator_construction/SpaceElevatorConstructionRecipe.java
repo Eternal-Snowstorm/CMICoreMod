@@ -7,6 +7,8 @@ import com.google.gson.JsonParseException;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.register.CmiRecipeSerializer;
 import dev.celestiacraft.cmi.common.register.CmiRecipeType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
@@ -26,18 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntUnaryOperator;
 
+@AllArgsConstructor
+@Getter
 public class SpaceElevatorConstructionRecipe implements Recipe<SimpleContainer> {
 	private final ResourceLocation id;
 	private final ResourceKey<Level> dimension;
 	private final List<IngredientEntry> ingredients;
 	private final List<FluidIngredientEntry> fluidIngredients;
-
-	public SpaceElevatorConstructionRecipe(ResourceLocation id, ResourceKey<Level> dimension, List<IngredientEntry> ingredients, List<FluidIngredientEntry> fluidIngredients) {
-		this.id = id;
-		this.dimension = dimension;
-		this.ingredients = ingredients;
-		this.fluidIngredients = fluidIngredients;
-	}
 
 	@Override
 	public boolean matches(@NotNull SimpleContainer container, @NotNull Level level) {

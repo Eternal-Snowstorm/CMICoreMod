@@ -8,6 +8,8 @@ import com.mojang.datafixers.util.Pair;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.register.CmiRecipeSerializer;
 import dev.celestiacraft.cmi.common.register.CmiRecipeType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,16 +30,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@Getter
 public class SpaceElevatorBaseRecipe implements Recipe<SimpleContainer> {
 	private final ResourceLocation id;
 	private final ResourceKey<Level> dimension;
 	private final List<IngredientEntry> ingredients;
-
-	public SpaceElevatorBaseRecipe(ResourceLocation id, ResourceKey<Level> dimension, List<IngredientEntry> ingredients) {
-		this.id = id;
-		this.dimension = dimension;
-		this.ingredients = ingredients;
-	}
 
 	@Override
 	public boolean matches(@NotNull SimpleContainer container, @NotNull Level level) {
