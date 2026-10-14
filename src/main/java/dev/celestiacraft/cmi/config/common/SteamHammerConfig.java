@@ -6,7 +6,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class SteamHammerConfig extends ConfigModule {
 	public static ForgeConfigSpec.IntValue STEAM_CONSUMPTION;
 	public static ForgeConfigSpec.IntValue STEAM_CAPACITY;
-	public static ForgeConfigSpec.DoubleValue STRESS_IMPACT;
 
 	public SteamHammerConfig(ForgeConfigSpec.Builder builder) {
 		super(builder, "steam_hammer", "Steam Hammer");
@@ -23,10 +22,5 @@ public class SteamHammerConfig extends ConfigModule {
 				.comment("type: int")
 				.comment("default: 10000")
 				.defineInRange("steam_capacity", 10000, 1000, 1000000);
-
-		STRESS_IMPACT = builder.comment("Stress impact of steam hammer (su)")
-				.comment("type: double")
-				.comment("default: 16.0")
-				.defineInRange("stress_impact", 16.0, 0.0, 64);
 	}
 }
