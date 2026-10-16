@@ -12,7 +12,7 @@ MBD2 的配方条件 ([`RecipeCondition`](https://github.com/Low-Drag-MC/Multibl
 
 这意味着：如果在一个配方里放几个[方块条件](https://github.com/Low-Drag-MC/Multiblocked2/blob/1.20.1/src/main/java/com/lowdragmc/mbd2/common/recipe/BlockCondition.java), 期望「有X方块 **且** 有Y方块 **且** 没有Z方块」, 实际会被解释为「有X方块 **或** 有Y方块 **或** 没有Z方块」, 与预期不符.
 
-`BlockCondition.isOr()` 默认返回 `true`, 这正是 OR 行为的来源. 
+`BlockCondition.isOr()` 继承了 `RecipeCondition.isOr()`,  返回 `true`, 这正是 OR 行为的来源. 
 
 `RecipeCondition` 中 [`isOr()`](https://github.com/Low-Drag-MC/Multiblocked2/blob/1.20.1/src/main/java/com/lowdragmc/mbd2/api/recipe/RecipeCondition.java#L62) 是 **非 `final` 的 `public` 方法**, 可以被继承并重写为 `false`, 从而让同类型条件之间也使用 AND 组合.
 
@@ -82,7 +82,7 @@ builder
 1. 打开任意配方类型, 选中内置配方
 2. 在上方中间 **条件** 面板点击添加
 3. 条件类型下拉选择 `block_exist`
-4. 参数面板只有一个字段 `blocks`，点击选择你需要的方块;
+4. 参数面板只有一个字段 `blocks`，点击选择你需要的方块
 5. 保存并测试
 
 如需多个「存在」条件同时满足, **添加多个 `block_exist` 条目**即可, 它们会自动 AND 组合.
