@@ -157,7 +157,7 @@ public class BlockLanguage extends LanguageGenerate {
 		addBlockLanguage(
 				"glacian_sapling",
 				"Glacian Sapling",
-				"冰川树苗"
+				"霜原树苗"
 		);
 	}
 

@@ -133,5 +133,15 @@ public class OtherLanguage extends LanguageGenerate {
 				"Spawns: %1$s",
 				"生成: %1$s"
 		);
+		addCustomLang(
+        	"recipe.condition.block_exist",
+        	"Block Exist",
+        	"方块存在"
+		);
+		addCustomLang(
+			"recipe.condition.block_exist.tooltip",
+			"Structure has at least 1 of [%s]",
+			"结构中至少存在 1 个 [%s] 方块"
+		);
 	}
 }

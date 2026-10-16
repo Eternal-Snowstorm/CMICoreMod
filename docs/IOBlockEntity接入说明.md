@@ -4,10 +4,10 @@
 
 ## 现在的写法
 
-- IO 方块继承 `IOBlockEntity`
-- 实现 `supportedControllers()`
-- 按需暴露 `ITEM_HANDLER`、`FLUID_HANDLER`、`ENERGY`
-- `recipe()` 里直接操作 `IItemHandler` / `IFluidHandler` / `IEnergyStorage`
+ - IO 方块继承 `IOBlockEntity`
+ - 实现 `supportedControllers()`
+ - 按需暴露 `ITEM_HANDLER`、`FLUID_HANDLER`、`ENERGY`
+ - `recipe()` 里直接操作 `IItemHandler` / `IFluidHandler` / `IEnergyStorage`
 
 不要再在配方里写死具体 IO 类，比如直接依赖 `TestCokeOvenIOBlockEntity` 的自定义方法。
 
@@ -15,23 +15,23 @@
 
 `IOBlockEntity`
 
-- `getItemHandler()`
-- `getFluidHandler()`
-- `getEnergyStorage()`
-- `hasItemHandler()`
-- `hasFluidHandler()`
-- `hasEnergyStorage()`
+ - `getItemHandler()`
+ - `getFluidHandler()`
+ - `getEnergyStorage()`
+ - `hasItemHandler()`
+ - `hasFluidHandler()`
+ - `hasEnergyStorage()`
 
 `MachineControllerBlockEntity`
 
-- `findMatchedIOBlockEntities()`
-- `findFirstMatchedIOBlockEntity()`
-- `countMatchedItemIOBlockEntities()`
-- `countMatchedFluidIOBlockEntities()`
-- `countMatchedEnergyIOBlockEntities()`
-- `findFirstMatchedItemHandler()`
-- `findFirstMatchedFluidHandler()`
-- `findFirstMatchedEnergyStorage()`
+ - `findMatchedIOBlockEntities()`
+ - `findFirstMatchedIOBlockEntity()`
+ - `countMatchedItemIOBlockEntities()`
+ - `countMatchedFluidIOBlockEntities()`
+ - `countMatchedEnergyIOBlockEntities()`
+ - `findFirstMatchedItemHandler()`
+ - `findFirstMatchedFluidHandler()`
+ - `findFirstMatchedEnergyStorage()`
 
 这些方法都会先检查 `supportedControllers()`，只会返回当前主控允许接入的 IO。
 
@@ -57,9 +57,9 @@ public void recipe(MultiblockContext<TestCokeOvenBlockEntity> context) {
 
 常见位置有：
 
-- `recipe()` 里直接取旧 IO 实例
-- `getActualItemIOCount()` / `getActualFluidIOCount()`
-- 只按某一个固定方块统计 IO 数量
+ - `recipe()` 里直接取旧 IO 实例
+ - `getActualItemIOCount()` / `getActualFluidIOCount()`
+ - 只按某一个固定方块统计 IO 数量
 
 ## 结论
 
@@ -67,6 +67,6 @@ public void recipe(MultiblockContext<TestCokeOvenBlockEntity> context) {
 
 如果代码已经改成走 capability 和主控 helper，那么新 IO 一般只需要：
 
-- 继承 `IOBlockEntity`
-- 实现 `supportedControllers()`
-- 暴露对应 capability
+ - 继承 `IOBlockEntity`
+ - 实现 `supportedControllers()`
+ - 暴露对应 capability

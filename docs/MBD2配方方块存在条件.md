@@ -24,9 +24,9 @@ public boolean isOr() {
 
 `BlockExistCondition` 就是基于这一机制实现的一个极简条件: 
 
-- 只需要一个方块列表字段
-- 多个 `BlockExistCondition` 之间通过 `isOr() = false` 变为 AND
-- 不需要 `minCount` / `maxCount` 字段，编辑器面板更干净
+ - 只需要一个方块列表字段
+ - 多个 `BlockExistCondition` 之间通过 `isOr() = false` 变为 AND
+ - 不需要 `minCount` / `maxCount` 字段，编辑器面板更干净
 
 ---
 
@@ -38,8 +38,8 @@ public boolean isOr() {
 new BlockExistCondition(Block A, Block B)
 ```
 
-- 结构中存在 A **或** B 任意一个 -> **满足**
-- A 和 B 都不存在 -> **失败**
+ - 结构中存在 A **或** B 任意一个 -> **满足**
+ - A 和 B 都不存在 -> **失败**
 
 ### 多个条件之间
 
@@ -49,8 +49,8 @@ builder
 	.addCondition(new BlockExistCondition(Block B))
 ```
 
-- A 存在 **且** B 存在 -> **满足**
-- 其余情况 -> **失败**
+ - A 存在 **且** B 存在 -> **满足**
+ - 其余情况 -> **失败**
 
 这正是解决「有X方块 且 有Y方块」这类需求的关键.
 
@@ -81,8 +81,8 @@ builder
 
 1. 打开任意配方类型, 选中内置配方
 2. 在上方中间 **条件** 面板点击添加
-3. 条件类型下拉选择 `block_exist`
-4. 参数面板只有一个字段 `blocks`，点击选择你需要的方块
+3. 条件类型下拉选择 **方块存在**
+4. 参数面板只有一个字段 **方块**，点击选择你需要的方块
 5. 保存并测试
 
 如需多个「存在」条件同时满足, **添加多个 `block_exist` 条目**即可, 它们会自动 AND 组合.
@@ -114,9 +114,9 @@ MBD2 会把编辑器配置导出为如下 JSON：
 ]
 ```
 
-- `blocks` 数组内部是 **OR**
-- 数组与数组之间是 **AND**
-- 不需要 `minCount` / `maxCount` / `reverse`，它们会使用 `RecipeCondition` 的默认值
+ - `blocks` 数组内部是 **OR**
+ - 数组与数组之间是 **AND**
+ - 不需要 `minCount` / `maxCount` / `reverse`，它们会使用 `RecipeCondition` 的默认值
 
 ---
 
