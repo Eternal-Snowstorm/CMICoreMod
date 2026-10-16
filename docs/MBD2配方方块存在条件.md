@@ -101,7 +101,7 @@ MBD2 会把编辑器配置导出为如下 JSON：
 				"cmi:xxx"
 			]
 		},
-	"type": "block_exist"
+		"type": "block_exist"
 	},
 	{
 		"data": {
