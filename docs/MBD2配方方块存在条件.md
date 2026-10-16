@@ -1,7 +1,5 @@
 # MBD2 `BlockExistCondition` 使用教程
 
----
-
 ## 一、背景与动机
 
 MBD2 的配方条件 ([`RecipeCondition`](github.com/Low-Drag-MC/Multiblocked2/blob/1.20.1/src/main/java/com/lowdragmc/mbd2/api/recipe/RecipeCondition.java)) 在组合时遵循如下规则:
