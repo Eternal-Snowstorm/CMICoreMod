@@ -2,7 +2,7 @@
 
 ## 一、背景与动机
 
-MBD2 的配方条件 ([`RecipeCondition`](github.com/Low-Drag-MC/Multiblocked2/blob/1.20.1/src/main/java/com/lowdragmc/mbd2/api/recipe/RecipeCondition.java)) 在组合时遵循如下规则:
+MBD2 的配方条件 ([`RecipeCondition`](https://github.com/Low-Drag-MC/Multiblocked2/blob/1.20.1/src/main/java/com/lowdragmc/mbd2/api/recipe/RecipeCondition.java)) 在组合时遵循如下规则:
 
 | 条件关系 | 逻辑 |
 | :---: | :---: |
@@ -10,11 +10,11 @@ MBD2 的配方条件 ([`RecipeCondition`](github.com/Low-Drag-MC/Multiblocked2/b
 | **不同注册类型**的条件 | **AND** |
 | `reverse` | 在分组前对单个条件取反 |
 
-这意味着：如果在一个配方里放几个[方块条件](github.com/Low-Drag-MC/Multiblocked2/blob/1.20.1/src/main/java/com/lowdragmc/mbd2/common/recipe/BlockCondition.java), 期望「有X方块 **且** 有Y方块 **且** 没有Z方块」, 实际会被解释为「有X方块 **或** 有Y方块 **或** 没有Z方块」, 与预期不符.
+这意味着：如果在一个配方里放几个[方块条件](https://github.com/Low-Drag-MC/Multiblocked2/blob/1.20.1/src/main/java/com/lowdragmc/mbd2/common/recipe/BlockCondition.java), 期望「有X方块 **且** 有Y方块 **且** 没有Z方块」, 实际会被解释为「有X方块 **或** 有Y方块 **或** 没有Z方块」, 与预期不符.
 
 `BlockCondition.isOr()` 默认返回 `true`, 这正是 OR 行为的来源. 
 
-`RecipeCondition` 中 [`isOr()`](github.com/Low-Drag-MC/Multiblocked2/blob/1.20.1/src/main/java/com/lowdragmc/mbd2/api/recipe/RecipeCondition.java#L62) 是 **非 `final` 的 `public` 方法**, 可以被继承并重写为 `false`, 从而让同类型条件之间也使用 AND 组合.
+`RecipeCondition` 中 [`isOr()`](https://github.com/Low-Drag-MC/Multiblocked2/blob/1.20.1/src/main/java/com/lowdragmc/mbd2/api/recipe/RecipeCondition.java#L62) 是 **非 `final` 的 `public` 方法**, 可以被继承并重写为 `false`, 从而让同类型条件之间也使用 AND 组合.
 
 ```java
 public boolean isOr() {
