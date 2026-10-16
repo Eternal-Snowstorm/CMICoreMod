@@ -2,18 +2,6 @@
 
 ---
 
-## 目录
-
-1. [背景与动机](#一背景与动机)
-2. [效果与语义](#二效果与语义)
-3. [Java 实现](#三java-实现)
-4. [在 MBD2 编辑器中使用](#四在-mbd2-编辑器中使用)
-5. [在配方 JSON 中使用](#五在配方-json-中使用)
-6. [KubeJS 绑定与脚本用法](#六kubejs-绑定与脚本用法)
-7. [设计要点与注意事项](#七设计要点与注意事项)
-
----
-
 ## 一、背景与动机
 
 MBD2 的配方条件 ([`RecipeCondition`](github.com/Low-Drag-MC/Multiblocked2/blob/1.20.1/src/main/java/com/lowdragmc/mbd2/api/recipe/RecipeCondition.java)) 在组合时遵循如下规则:
@@ -72,7 +60,7 @@ builder
 
 ## 三、Java 实现
 
-具体代码参考[`BlockExistCondition.java`](../main/src/main/java/dev/celestiacraft/cmi/compat/mbd2/BlockExistCondition.java)
+具体代码参考[`BlockExistCondition.java`](../src/main/java/dev/celestiacraft/cmi/compat/mbd2/BlockExistCondition.java)
 
 ### 关键点说明
 
