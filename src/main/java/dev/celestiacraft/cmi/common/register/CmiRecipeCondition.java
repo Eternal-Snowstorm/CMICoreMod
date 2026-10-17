@@ -11,8 +11,8 @@ public class CmiRecipeCondition {
 			return;
 		}
 
-		// RECIPE_CONDITIONS 是 MBDRegistry.String<Class<? extends RecipeCondition>>，
-		// key 必须是 String，且要与 BlockExistCondition#getType() 返回的 "cmi:block_exist" 完全一致。
+		// RECIPE_CONDITIONS 是 MBDRegistry.String<Class<? extends RecipeCondition>>
+		// key 必须是 String, 且要与 BlockExistCondition#getType() 返回的 "cmi:block_exist" 完全一致
 		MBDRegistries.RECIPE_CONDITIONS.register(
 				Cmi.loadResource("block_exist").toString(),
 				BlockExistCondition.class
