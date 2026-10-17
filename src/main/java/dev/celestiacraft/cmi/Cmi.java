@@ -138,6 +138,7 @@ public class Cmi {
 			UIFactory.register(ProspectingRocketUIFactory.INSTANCE);
 
 			Regions.register(new CmiOverworldRegion(5));
+			CmiRecipeCondition.register();
 
 			SurfaceRuleManager.addSurfaceRules(
 					SurfaceRuleManager.RuleCategory.OVERWORLD,
