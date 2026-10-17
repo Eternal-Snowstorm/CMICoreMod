@@ -18,6 +18,7 @@ public class CmiPonderScene {
 		cmi(helper);
 		mekanism(helper);
 		tconstruct(helper);
+		vanilla(helper);
 	}
 
 	private static void cmi(@NotNull PonderSceneRegistrationHelper<Item> helper) {
@@ -29,9 +30,6 @@ public class CmiPonderScene {
 
 		helper.forComponents(CmiPonderItem.Cmi.ACCELERATOR)
 				.addStoryBoard(cmi("accelerator"), AcceleratorScene::usage, CmiPonderTags.CMI);
-
-		helper.forComponents(CmiPonderItem.Cmi.INFINITE_LAVA)
-				.addStoryBoard(cmi("infinite_lava"), InfiniteLavaScene::usage, CmiPonderTags.CMI);
 	}
 
 	private static String cmi(String path) {
@@ -84,5 +82,14 @@ public class CmiPonderScene {
 
 	private static String tconstruct(String path) {
 		return String.format("tconstruct/%s", path);
+	}
+
+	private static void vanilla(@NotNull PonderSceneRegistrationHelper<Item> helper) {
+		helper.forComponents(CmiPonderItem.Vanilla.INFINITE_LAVA)
+				.addStoryBoard(vanilla("infinite_lava"), InfiniteLavaScene::usage, CmiPonderTags.VANILLA);
+	}
+
+	private static String vanilla(String path) {
+		return String.format("vanilla/%s", path);
 	}
 }

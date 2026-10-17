@@ -29,10 +29,6 @@ public class CmiPonderItem {
 		public static final Item[] ACCELERATOR = {
 				MachineBlocks.ACCELERATOR.asItem(),
 		};
-
-		public static final Item[] INFINITE_LAVA = {
-				Items.LAVA_BUCKET
-		};
 	}
 
 	public static class Mekanism {
@@ -94,6 +90,12 @@ public class CmiPonderItem {
 		public static final Item[] CANNONS = {
 				TinkerSmeltery.searedFluidCannon.get().asItem(),
 				TinkerSmeltery.scorchedFluidCannon.get().asItem()
+		};
+	}
+
+	public static class Vanilla {
+		public static final Item[] INFINITE_LAVA = {
+				Items.LAVA_BUCKET
 		};
 	}
 }

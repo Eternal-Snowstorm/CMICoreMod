@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.client.ponder.scene.cmi;
+package dev.celestiacraft.cmi.client.ponder.scene.vanilla;
 
 import dev.celestiacraft.libs.client.ponder.CreateNebulaSceneBuilder;
 import dev.celestiacraft.libs.client.ponder.INebulaSceneBuilder;
