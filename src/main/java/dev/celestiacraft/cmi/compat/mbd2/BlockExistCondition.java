@@ -1,11 +1,15 @@
 package dev.celestiacraft.cmi.compat.mbd2;
 
 import com.lowdragmc.lowdraglib.gui.editor.annotation.Configurable;
+import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
+import com.lowdragmc.lowdraglib.gui.texture.ResourceTexture;
 import com.lowdragmc.mbd2.api.machine.IMultiController;
 import com.lowdragmc.mbd2.api.recipe.MBDRecipe;
 import com.lowdragmc.mbd2.api.recipe.RecipeCondition;
 import com.lowdragmc.mbd2.api.recipe.RecipeLogic;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -26,7 +30,7 @@ public class BlockExistCondition extends RecipeCondition {
 		this(new Block[0]);
 	}
 
-	public BlockExistCondition(Block... blocks) {
+	public BlockExistCondition(Block ...blocks) {
 		this.blocks = blocks != null ? blocks : new Block[0];
 	}
 
@@ -38,7 +42,7 @@ public class BlockExistCondition extends RecipeCondition {
 
 	@Override
 	public Component getTooltips() {
-		var blockNames = Component.empty();
+		Component blockNames = Component.empty();
 		for (int i = 0; i < blocks.length; i++) {
 			blockNames.append(blocks[i].getName());
 			if (i < blocks.length - 1) {
@@ -46,14 +50,16 @@ public class BlockExistCondition extends RecipeCondition {
 			}
 		}
 		return Component.translatable(
-				"recipe.condition.block_exist.tooltip", blockNames);
+				"recipe.condition.block_exist.tooltip", 
+				blockNames
+		);
 	}
 
 	@Override
 	public boolean test(@Nonnull MBDRecipe recipe, @Nonnull RecipeLogic recipeLogic) {
 		if (recipeLogic.machine instanceof IMultiController controller) {
-			var level = controller.getLevel();
-			for (var pos : controller.getMultiblockState().getCache()) {
+			Level level = controller.getLevel();
+			for (BlockPos pos : controller.getMultiblockState().getCache()) {
 				if (ArrayUtils.contains(blocks, level.getBlockState(pos).getBlock())) {
 					return true;
 				}
@@ -65,5 +71,11 @@ public class BlockExistCondition extends RecipeCondition {
 	@Override
 	public boolean isOr() {
 		return false;
+	}
+
+	@Override
+	public IGuiTexture getIcon() {
+		// 借用原版方块条件的图标, 防止因 namespace 的冒号导致 ResourceLocation 崩溃
+		return new ResourceTexture("mbd2:textures/gui/condition/block.png"); 
 	}
 }
