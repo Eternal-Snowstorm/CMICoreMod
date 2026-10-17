@@ -7,6 +7,7 @@ import dev.celestiacraft.cmi.common.register.block.WallBlocks;
 import dev.celestiacraft.cmi.utils.ModResources;
 import mekanism.common.registries.MekanismBlocks;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
 public class CmiPonderItem {
@@ -27,6 +28,10 @@ public class CmiPonderItem {
 
 		public static final Item[] ACCELERATOR = {
 				MachineBlocks.ACCELERATOR.asItem(),
+		};
+
+		public static final Item[] INFINITE_LAVA = {
+				Items.LAVA_BUCKET
 		};
 	}
 
