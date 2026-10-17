@@ -9,6 +9,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
 import org.apache.commons.lang3.ArrayUtils;
 
+import dev.celestiacraft.cmi.Cmi;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -31,7 +33,7 @@ public class BlockExistCondition extends RecipeCondition {
 	@Override
 	public String getType() {
 		// 必须与 CmiRecipeCondition 注册时使用的 key 完全一致
-		return "cmi:block_exist";
+		return Cmi.loadResource("block_exist").toString();
 	}
 
 	@Override
