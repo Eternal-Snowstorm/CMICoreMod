@@ -6,6 +6,7 @@ import dev.celestiacraft.cmi.client.ponder.scene.cmi.WaterPumpScene;
 import dev.celestiacraft.cmi.client.ponder.scene.mekanism.CardboardBox;
 import dev.celestiacraft.cmi.client.ponder.scene.mekanism.SpsScene;
 import dev.celestiacraft.cmi.client.ponder.scene.tconstruct.*;
+import dev.celestiacraft.cmi.client.ponder.scene.vanilla.InfiniteLavaScene;
 import dev.celestiacraft.libs.NebulaLibs;
 import mekanism.common.registries.MekanismBlocks;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
@@ -17,6 +18,7 @@ public class CmiPonderScene {
 		cmi(helper);
 		mekanism(helper);
 		tconstruct(helper);
+		vanilla(helper);
 	}
 
 	private static void cmi(@NotNull PonderSceneRegistrationHelper<Item> helper) {
@@ -80,5 +82,14 @@ public class CmiPonderScene {
 
 	private static String tconstruct(String path) {
 		return String.format("tconstruct/%s", path);
+	}
+
+	private static void vanilla(@NotNull PonderSceneRegistrationHelper<Item> helper) {
+		helper.forComponents(CmiPonderItem.Vanilla.INFINITE_LAVA)
+				.addStoryBoard(vanilla("infinite_lava"), InfiniteLavaScene::usage, CmiPonderTags.VANILLA);
+	}
+
+	private static String vanilla(String path) {
+		return String.format("vanilla/%s", path);
 	}
 }
