@@ -12,10 +12,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
 
 import dev.celestiacraft.cmi.Cmi;
 
+import java.util.Arrays;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 
 /**
@@ -34,6 +38,15 @@ public class BlockExistCondition extends RecipeCondition {
 	public BlockExistCondition(Block ...blocks) {
 		this.blocks = blocks != null ? blocks : new Block[0];
 	}
+
+	public BlockExistCondition(String ...blockIds) {
+        this(Arrays.stream(blockIds)
+                .map(ResourceLocation::tryParse)
+                .filter(Objects::nonNull)
+                .map(ForgeRegistries.BLOCKS::getValue)
+                .filter(Objects::nonNull)
+                .toArray(Block[]::new));
+    }
 
 	@Override
 	public String getType() {

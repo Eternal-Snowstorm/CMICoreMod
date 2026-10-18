@@ -58,6 +58,21 @@ public class ItemLanguage extends LanguageGenerate {
 				"Simple Battery",
 				"简易电池"
 		);
+		addItemLanguage(
+				"paxel",
+				"Paxel",
+				"镐尖斧"
+		);
+		addItemLanguage(
+				"qi_month_spawn_egg",
+				"Qi Month Spawn Egg",
+				"柒月刷怪蛋"
+		);
+		addItemLanguage(
+				"test_brush",
+				"Test Brush",
+				"测试刷子"
+		);
 	}
 
 	private static @NotNull List<String> info(String id, String en, String zh) {

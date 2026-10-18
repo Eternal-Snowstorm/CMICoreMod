@@ -29,5 +29,10 @@ public class EntityLanguage extends LanguageGenerate {
 				"Tier 4 Prospecting Rocket",
 				"肆级勘探火箭"
 		);
+		addEntityLang(
+				"qi_month",
+				"Qi Month",
+				"柒月"
+		);
 	}
 }

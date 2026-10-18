@@ -159,6 +159,36 @@ public class BlockLanguage extends LanguageGenerate {
 				"Glacian Sapling",
 				"霜原树苗"
 		);
+		addBlockLanguage(
+				"gold_saping",
+				"Gold Saping",
+				"黄金树苗"
+		);
+		addBlockLanguage(
+				"geothermal_generator",
+				"Geothermal Generator",
+				"地热发电机"
+		);
+		addBlockLanguage(
+				"test_coke_oven",
+				"Test Coke Oven",
+				"测试焦炭炉"
+		);
+		addBlockLanguage(
+				"test_coke_oven_io",
+				"Test Coke Oven IO Port",
+				"测试焦炭炉IO端口"
+		);
+		addBlockLanguage(
+				"test_gravel",
+				"Test Gravel",
+				"测试砂砾"
+		);
+		addBlockLanguage(
+				"test_multiblock_controller",
+				"Test Multiblock Controller",
+				"测试多方块控制器"
+		);
 	}
 
 	private static void addCogWheelLang(String material, String english, String chinese) {

@@ -134,7 +134,7 @@ public class OtherLanguage extends LanguageGenerate {
 				"生成: %1$s"
 		);
 		addCustomLang(
-        		"recipe.condition.block_exist",
+        		"recipe.condition.cmi:block_exist",
         		"Block Exist",
         		"方块存在"
 		);
