@@ -9,6 +9,7 @@ import com.lowdragmc.mbd2.api.recipe.RecipeCondition;
 import com.lowdragmc.mbd2.api.recipe.RecipeLogic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import org.apache.commons.lang3.ArrayUtils;
@@ -42,7 +43,7 @@ public class BlockExistCondition extends RecipeCondition {
 
 	@Override
 	public Component getTooltips() {
-		Component blockNames = Component.empty();
+		MutableComponent blockNames = Component.empty();
 		for (int i = 0; i < blocks.length; i++) {
 			blockNames.append(blocks[i].getName());
 			if (i < blocks.length - 1) {
