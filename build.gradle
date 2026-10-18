@@ -79,7 +79,7 @@ def generatedRefmap = file("$buildDir/tmp/compileJava/compileJava-refmap.json")
 sourceSets.main.resources {
 	srcDir 'src/generated/resources'
 	// datagen 的哈希缓存目录，不能打进 jar
-+	exclude '.cache/**'
+	exclude '.cache/**'
 }
 
 idea {
