@@ -37,6 +37,10 @@ public boolean isOr() {
 ```java
 new BlockExistCondition(Block A, Block B);
 ```
+或
+```
+BlockExistCondition.of(Block A, Block B);
+```
 
  - 结构中存在 A **或** B 任意一个 -> **满足**
  - A 和 B 都不存在 -> **失败**
@@ -45,8 +49,8 @@ new BlockExistCondition(Block A, Block B);
 
 ```java
 builder
-	.addCondition(new BlockExistCondition(Block A))
-	.addCondition(new BlockExistCondition(Block B))
+	.addCondition(BlockExistCondition.of(Block A))
+	.addCondition(BlockExistCondition.of(Block B))
 ```
 
  - A 存在 **且** B 存在 -> **满足**
@@ -64,13 +68,14 @@ builder
 
 | 元素 | 作用 |
 | :---: | :--- |
-| `MBDRegistries.RECIPE_CONDITIONS.register("cmi:block_exist", BlockExistCondition.class)` | 注册到 MBD2 条件注册表, 注册 key 为 `cmi:block_exist` (见下文"为什么不用 `@LDLRegister`") |
-| `CmiRecipeCondition.register()` 在 `Cmi.onCommonSetup` 的 `enqueueWork` 中调用 | 在主线程串行执行, 与 `UIFactory.register(...)`、`Regions.register(...)` 同一时机, 确保 MBD2 注册表容器已就绪 |
+| `MBDRegistryEvent.RecipeCondition` 事件 | **注册入口**. MBD2 的注册表在初始化后会默认 `frozen = true`, 必须在此事件中注册, 否则会在 `FMLCommonSetupEvent` 触发 `has been frozen` 异常 |
 | `@Configurable(...)` | 让 `blocks` 出现在编辑器参数面板中 |
-| 无参构造器 | `RecipeCondition.create()` 通过 `newInstance()` 创建实例, **必须保留**；字段默认值写 `new Block[0]` 以避免反序列化时 NPE |
-| `getType()` | 返回 `"cmi:block_exist"`, **必须与注册 key 一字不差**, MBD2 按 `getType()` 字符串回查 `RECIPE_CONDITIONS` |
+| 无参构造器 | `RecipeCondition.create()` 通过 `newInstance()` 创建实例, **必须保留**; 字段默认值写 `new Block[0]` 以避免反序列化时 NPE |
+| `getType()` | 返回 `"cmi:block_exist"`，**必须与注册 key 一字不差**, MBD2 按 `getType()` 字符串回查 `RECIPE_CONDITIONS` |
 | `test()` | 遍历结构缓存方块, 命中任意一个目标立即返回 `true` |
 | `isOr() -> false` | **核心**, 将同类型条件之间的 OR 改为 AND |
+| **重写 `serialize`/`deserialize` 等** | **核心**, MBD2 底层 Gson 无法直接序列化 `Block[]`, 不重写会导致配方保存为 `[]` 空数组, JEI 显示异常 |
+| `of(String...)` / `of(Block...)` 工厂方法 | 为 KubeJS 传参提供安全的入口, 避免构造器重载歧义 |
 
 ### 为什么不用 `@LDLRegister(registry = ...)`
 
@@ -80,30 +85,32 @@ LDLib 1.0.52.a 的 `@LDLRegister` 只有 `name` / `group` / `modID` / `priority`
 @LDLRegister(name = "block_exist", registry = "mbd2:recipe_condition")
 ```
 
-会让 javac 在注解处理阶段直接报错, 进而中止后续 AP 轮次、Lombok 不生成任何成员, 引发全模块 79 个级联错误. 因此在本项目锁定的 LDLib 版本下, 改为**编程式注册**: 
+会让 javac 在注解处理阶段直接报错, 进而引发全模块大量级联错误. 因此在本项目锁定的 LDLib 版本下, 改为**编程式注册**: 
 
-- 注册入口: `com.lowdragmc.mbd2.api.registry.MBDRegistries.RECIPE_CONDITIONS`
-- 类型: `MBDRegistry.String<Class<? extends RecipeCondition>>` (注册的是**条件类**, 不是实例) 
-- 注册 key: `"cmi:block_exist"` (与 `getType()` 返回值保持一致) 
-- 注册时机: 模组初始化事件, 本项目放在 `Cmi.onCommonSetup` 的 `enqueueWork` 内
-
-配方 JSON 中条件写: 
-
-```json
-"type": "cmi:block_exist"
+```java
+@Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class CmiMBDRegistryEvents {
+	@SubscribeEvent
+	public static void onRecipeConditionRegister(MBDRegistryEvent.RecipeCondition event) {
+		event.register("cmi:block_exist", BlockExistCondition.class);
+	}
+}
 ```
+
+### 为什么要手动重写序列化? 
+MBD2 原版 `BlockCondition` 手动实现了 `serialize()` / `deserialize()` 等方法, 将 `Block[]` 转为字符串数组. 如果自定义条件不重写这些方法, 底层的 Gson 会直接忽略复杂的 `Block` 对象, 将其存为空数组 [].
+所以必须补全 `JsonObject`、`FriendlyByteBuf` 和 `CompoundTag` 的双向读写逻辑.
 
 ### 为什么不直接继承 `BlockCondition`?
 
 `BlockCondition` 有 `minCount` / `maxCount` 字段, 即使不需要也会出现在编辑器面板中, 容易误导使用者. 独立实现后, 编辑器里只有一个方块列表, 语义单一、无冗余.
-
 
 ## 四、在 MBD2 编辑器中使用
 
 1. 打开任意配方类型, 选中内置配方
 2. 在上方中间 **条件** 面板点击添加
 3. 条件类型下拉选择 **方块存在**
-4. 参数面板只有一个字段 **方块**, 点击选择你需要的方块
+4. 参数面板只有两个配置块 **反转** 和 **方块**, 点击 **方块** 后面的`＋`选择你需要的方块
 5. 保存并测试
 
 如需多个「存在」条件同时满足, **添加多个 `block_exist` 条目**即可, 它们会自动 AND 组合.
@@ -143,21 +150,22 @@ MBD2 会把编辑器配置导出为如下 JSON:
 
 ## 六、KubeJS 绑定与脚本用法
 
-在`kubejs/server_scripts/`下创建`MBD2RecipeConditionTest.js`
+在`kubejs/server_scripts/`下创建 `MBD2RecipeConditionTest.js`
 ```javascript
 ServerEvents.recipes((event) => {
 	let { cmi } = event.getRecipes()
 
-	cmi.some_recipe_type()
+	cmi.any_recipe_type()
 		.duration(10)
 		.outputItems("cmi:any_item")
-		.addCondition(new BlockExistCondition(Block.getBlock("cmi:xxx")))
-		.addCondition(new BlockExistCondition(Block.getBlock("cmi:yyy")))
+		// 显式指定调用接收 String[] 的 of 方法
+		.addCondition(BlockExistCondition["of(java.lang.String[])"](Cmi.loadResource("xxx").toString()))
+		.addCondition(BlockExistCondition["of(java.lang.String[])"](Cmi.loadResource("yyy").toString()))
 		.id("cmi:test")
 })
 ```
 
-`BlockExistCondition` 已在 KubeJS 中裸露, 直接`new BlockExistCondition(Block.getBlock())`.
+`BlockExistCondition` 已在 KubeJS 中裸露([`CmiKubeJSPlugin.java`](https://github.com/Eternal-Snowstorm/CMICoreMod/blob/main/src/main/java/dev/celestiacraft/cmi/compat/kubejs/CmiKubeJSPlugin.java#L210)), 直接 `new BlockExistCondition(Block.getBlock(blockID))` 或 `BlockExistCondition["of(java.lang.String[])"](blockId)`.
 
 ---
 
@@ -168,6 +176,9 @@ ServerEvents.recipes((event) => {
 | **同类型 AND** | `isOr()` 返回 `false` 是实现这一点的唯一开关 |
 | **类型内 OR** | `blocks` 数组内部多个方块之间是 OR, 符合直觉 |
 | **不做计数** | `test()` 一旦命中立即返回, 比 `BlockCondition` 的全量计数略省 |
+| **注册时机** | **绝对不要**在 `FMLCommonSetupEvent` 中注册, 必须监听 `MBDRegistryEvent.RecipeCondition` |
+| **序列化重写** | 不重写序列化方法会导致 KJS 或编辑器配置的方块变成空数组 `[]` |
+| **KJS 传参** | 传字符串 ID, 用 `["of(java.lang.String[])"](...)` |
 
 ### 与 MBD2 内置 `BlockCondition` 对比
 
