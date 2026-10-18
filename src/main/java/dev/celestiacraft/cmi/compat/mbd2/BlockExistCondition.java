@@ -1,5 +1,7 @@
 package dev.celestiacraft.cmi.compat.mbd2;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.lowdragmc.lowdraglib.gui.editor.annotation.Configurable;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.gui.texture.ResourceTexture;
@@ -8,19 +10,25 @@ import com.lowdragmc.mbd2.api.recipe.MBDRecipe;
 import com.lowdragmc.mbd2.api.recipe.RecipeCondition;
 import com.lowdragmc.mbd2.api.recipe.RecipeLogic;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
 
 import dev.celestiacraft.cmi.Cmi;
 
-import java.util.Arrays;
-import java.util.Objects;
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 /**
  * 当已成型结构中存在 >= 1 个指定方块时满足
@@ -55,7 +63,6 @@ public class BlockExistCondition extends RecipeCondition {
 
 	@Override
 	public String getType() {
-		// 必须与 CmiRecipeCondition 注册时使用的 key 完全一致
 		return Cmi.loadResource("block_exist").toString();
 	}
 
@@ -94,7 +101,85 @@ public class BlockExistCondition extends RecipeCondition {
 
 	@Override
 	public IGuiTexture getIcon() {
-		// 借用原版方块条件的图标, 防止因 namespace 的冒号导致 ResourceLocation 崩溃
 		return new ResourceTexture("mbd2:textures/gui/condition/block.png"); 
+	}
+
+	@Nonnull
+	@Override
+	public JsonObject serialize() {
+		JsonObject config = super.serialize();
+		JsonArray array = new JsonArray();
+		for (Block block : blocks) {
+			ResourceLocation key = ForgeRegistries.BLOCKS.getKey(block);
+			if (key != null) {
+				array.add(key.toString());
+			}
+		}
+		config.add("blocks", array);
+		return config;
+	}
+
+	@Override
+	public RecipeCondition deserialize(@Nonnull JsonObject config) {
+		super.deserialize(config);
+		JsonArray array = GsonHelper.getAsJsonArray(config, "blocks", new JsonArray());
+		blocks = new Block[array.size()];
+		for (int i = 0; i < array.size(); i++) {
+			String key = array.get(i).getAsString();
+			blocks[i] = ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse(key));
+			if (blocks[i] == null) {
+				blocks[i] = Blocks.AIR;
+			}
+		}
+		return this;
+	}
+
+	@Override
+	public void toNetwork(FriendlyByteBuf buf) {
+		super.toNetwork(buf);
+		buf.writeVarInt(blocks.length);
+		for (Block block : blocks) {
+			buf.writeResourceLocation(Optional.ofNullable(ForgeRegistries.BLOCKS.getKey(block)).orElse(new ResourceLocation("minecraft:air")));
+		}
+	}
+
+	@Override
+	public RecipeCondition fromNetwork(FriendlyByteBuf buf) {
+		super.fromNetwork(buf);
+		int size = buf.readVarInt();
+		blocks = new Block[size];
+		for (int i = 0; i < size; i++) {
+			blocks[i] = ForgeRegistries.BLOCKS.getValue(buf.readResourceLocation());
+		}
+		return this;
+	}
+
+	@Override
+	public CompoundTag toNBT() {
+		CompoundTag tag = super.toNBT();
+		ListTag array = new ListTag();
+		for (Block block : blocks) {
+			ResourceLocation key = ForgeRegistries.BLOCKS.getKey(block);
+			if (key != null) {
+				array.add(StringTag.valueOf(key.toString()));
+			}
+		}
+		tag.put("blocks", array);
+		return tag;
+	}
+
+	@Override
+	public RecipeCondition fromNBT(CompoundTag tag) {
+		super.fromNBT(tag);
+		ListTag array = tag.getList("blocks", Tag.TAG_STRING);
+		blocks = new Block[array.size()];
+		for (int i = 0; i < array.size(); i++) {
+			String key = array.getString(i);
+			blocks[i] = ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse(key));
+			if (blocks[i] == null) {
+				blocks[i] = Blocks.AIR;
+			}
+		}
+		return this;
 	}
 }
