@@ -12,7 +12,7 @@ buildscript {
 
 plugins {
 	id 'idea'
-	id 'net.minecraftforge.gradle' version '6.0.54'
+	id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
 	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 	id 'org.spongepowered.mixin' version '0.7.+'
 	id 'maven-publish'
@@ -78,6 +78,8 @@ def generatedRefmap = file("$buildDir/tmp/compileJava/compileJava-refmap.json")
 
 sourceSets.main.resources {
 	srcDir 'src/generated/resources'
+	// datagen 的哈希缓存目录，不能打进 jar
++	exclude '.cache/**'
 }
 
 idea {
