@@ -39,14 +39,19 @@ public class BlockExistCondition extends RecipeCondition {
 		this.blocks = blocks != null ? blocks : new Block[0];
 	}
 
-	public BlockExistCondition(String ...blockIds) {
-        this(Arrays.stream(blockIds)
-                .map(ResourceLocation::tryParse)
-                .filter(Objects::nonNull)
-                .map(ForgeRegistries.BLOCKS::getValue)
-                .filter(Objects::nonNull)
-                .toArray(Block[]::new));
-    }
+	public static BlockExistCondition of(Block... blocks) {
+		return new BlockExistCondition(blocks);
+	}
+
+	public static BlockExistCondition of(String... blockIds) {
+		Block[] parsedBlocks = java.util.Arrays.stream(blockIds)
+				.map(ResourceLocation::tryParse)
+				.filter(java.util.Objects::nonNull)
+				.map(ForgeRegistries.BLOCKS::getValue)
+				.filter(java.util.Objects::nonNull)
+				.toArray(Block[]::new);
+		return new BlockExistCondition(parsedBlocks);
+	}	
 
 	@Override
 	public String getType() {

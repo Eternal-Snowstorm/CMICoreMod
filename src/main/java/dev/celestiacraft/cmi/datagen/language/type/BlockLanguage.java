@@ -160,8 +160,8 @@ public class BlockLanguage extends LanguageGenerate {
 				"霜原树苗"
 		);
 		addBlockLanguage(
-				"gold_saping",
-				"Gold Saping",
+				"gold_sapling",
+				"Gold Sapling",
 				"黄金树苗"
 		);
 		addBlockLanguage(
