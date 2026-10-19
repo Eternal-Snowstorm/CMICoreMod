@@ -1,8 +1,6 @@
 package dev.celestiacraft.cmi.common.register;
 
 import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.block.solar_boiler.capability.SolarBoilerFluidCapability;
-import dev.celestiacraft.cmi.common.block.solar_boiler.capability.SolarBoilerFluidTank;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenFluidCapability;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenItemCapability;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.capability.CokeOvenItemHandler;
@@ -10,7 +8,6 @@ import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCEner
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCItemHandler;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.capability.VDCItmeCapability;
 import dev.celestiacraft.cmi.common.block.well.water.capability.WaterWellFluidCapability;
-import dev.celestiacraft.cmi.common.block.fluid_burner.capability.FluidBurnerFluidHandler;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -31,10 +28,5 @@ public class CmiCapability {
 		event.register(CokeOvenFluidCapability.class);
 		event.register(CokeOvenItemCapability.class);
 		event.register(CokeOvenItemHandler.class);
-		// FluidBurner
-		event.register(FluidBurnerFluidHandler.class);
-		// SolarBoiler
-		event.register(SolarBoilerFluidCapability.class);
-		event.register(SolarBoilerFluidTank.class);
 	}
 }

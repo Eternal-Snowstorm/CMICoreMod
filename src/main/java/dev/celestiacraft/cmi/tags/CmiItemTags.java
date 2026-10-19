@@ -10,7 +10,6 @@ public class CmiItemTags {
 			INCOMPLETE_MECHANISMS,
 			MECHANISM_FLASH_DRIVES,
 			WRENCHES,
-			BURNER,
 			COGWHEEL,
 			LARGE_COGWHEEL,
 			WORKBENCHES,
@@ -22,7 +21,6 @@ public class CmiItemTags {
 		INCOMPLETE_MECHANISMS = TagsBuilder.item("incomplete_mechanisms").create();
 		MECHANISM_FLASH_DRIVES = TagsBuilder.item("mechanism_flash_drives").cmi();
 		WRENCHES = TagsBuilder.item("wrenches").forge();
-		BURNER = TagsBuilder.item("burner").namespace("steampowered");
 		COGWHEEL = TagsBuilder.item("cogwheel").create();
 		LARGE_COGWHEEL = TagsBuilder.item("large_cogwheel").create();
 		WORKBENCHES = TagsBuilder.item("workbenches").forge();

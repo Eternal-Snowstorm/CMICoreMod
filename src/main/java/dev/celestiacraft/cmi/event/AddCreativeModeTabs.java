@@ -56,17 +56,9 @@ public class AddCreativeModeTabs {
 					WallBlocks.BLAZING_BLOOD_WELL,
 					MachineBlocks.ACCELERATOR,
 					MachineBlocks.ACCELERATOR_MOTOR,
-					MachineBlocks.STEAM_HAMMER,
-					MachineBlocks.ADVANCED_SPOUT,
 					MachineBlocks.VOID_DUST_COLLECTOR,
 					MachineBlocks.BELT_GRINDER,
-					MachineBlocks.GEOTHERMAL_GENERATOR,
-					FluidBurnerBlocks.BRONZE_FLUID_BURNER,
-					FluidBurnerBlocks.CAST_IRON_FLUID_BURNER,
-					FluidBurnerBlocks.STEEL_FLUID_BURNER,
-					SolarBoilerBlocks.BRONZE_SOLAR_BOILER,
-					SolarBoilerBlocks.CAST_IRON_SOLAR_BOILER,
-					SolarBoilerBlocks.STEEL_SOLAR_BOILER
+					MachineBlocks.GEOTHERMAL_GENERATOR
 			).forEach((block) -> {
 				event.accept(block.asItem());
 			});

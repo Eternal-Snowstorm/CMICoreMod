@@ -23,27 +23,6 @@ public class TooltipLanguage extends LanguageGenerate {
 				"Can only run in Nether, and needs to be in Nether Fortress",
 				"只能在下界运行, 且需要处于下界堡垒"
 		);
-		// Steam Hammer
-		addTooltipLang(
-				"steam_hammer.summary",
-				"Processes _whole stacks_ in a single working cycle, covering _Pressing_, _Compression Molding_, _Compacting_ and _Automated Packing_ recipes",
-				"一次工作可批量处理_一整组_物品, 支持_金属压片_, _铸模冲压_, _压块塑形_与_自动打包_配方"
-		);
-		addTooltipLang(
-				"steam_hammer.condition1",
-				"When working:",
-				"工作时:"
-		);
-		addTooltipLang(
-				"steam_hammer.behaviour1",
-				"Only functions when _%s mB_ of steam is in the device",
-				"内部蒸汽不足 _%s mB_ 时将停止工作"
-		);
-		addTooltipLang(
-				"steam_hammer.behaviour2",
-				"Consumes _%s mB_ of steam per operation",
-				"每次工作消耗 _%s mB_ 蒸汽"
-		);
 		// Accelerator Motor
 		addTooltipLang(
 				"accelerator_motor.behaviour1",
@@ -135,101 +114,6 @@ public class TooltipLanguage extends LanguageGenerate {
 				"holdForDescriptionCtrl",
 				"Hold [%1$s] for Info",
 				"按住 [%1$s] 可查看信息"
-		);
-		addTooltipLang(
-				"solar_boiler.satisfy",
-				"Working conditions have been met!",
-				"已满足工作条件!"
-		);
-		addTooltipLang(
-				"solar_boiler.not_satisfy",
-				"Working conditions not met!",
-				"未满足工作条件!"
-		);
-		addTooltipLang(
-				"solar_boiler.info",
-				"Solar Boiler Info:",
-				"太阳能锅炉信息:"
-		);
-		addTooltipLang(
-				"solar_boiler.efficiency",
-				" ● Efficiency: %s mB / Tick",
-				" ● 效率: %s mB / Tick"
-		);
-		addTooltipLang(
-				"solar_boiler.rain_efficiency",
-				" ● Rain efficiency: %s mB / Tick",
-				" ● 雨天效率: %s mB / Tick"
-		);
-		addTooltipLang(
-				"solar_boiler.thunder_efficiency",
-				" ● Thunderstorm efficiency: %s mB / Tick",
-				" ● 雷暴效率: %s mB / Tick"
-		);
-		addTooltipLang(
-				"solar_boiler.artificial_efficiency",
-				" ● Artificial light efficiency: %s mB / Tick",
-				" ● 人造光照效率: %s mB / Tick"
-		);
-		addTooltipLang(
-				"solar_boiler.capacity",
-				" ● Capacity: %s mB",
-				" ● 容量: %s mB"
-		);
-		addTooltipLang(
-				"solar_boiler.total_capacity",
-				" ● Total Capacity: %s mB",
-				" ● 总容量: %s mB"
-		);
-		addTooltipLang(
-				"solar_boiler.summary",
-				"A boiler that produces steam using _natural_ or _artificial light_",
-				"一种利用_自然光_或_人造光_生产蒸汽的锅炉"
-		);
-		addTooltipLang(
-				"solar_boiler.workCondition",
-				"The boiler runs on light, and efficiency depends on the light source:",
-				"锅炉依靠光照运行, 效率取决于光源:"
-		);
-		addTooltipLang(
-				"solar_boiler.condition.1",
-				" ● _Natural light_ (no occlusion above, daytime): _%1$s%%_ in clear weather, _%2$s%%_ in rain, _%3$s%%_ in a thunderstorm",
-				" ● _自然光照_(顶部无遮挡, 白天): 晴天 _%1$s%%_, 雨天 _%2$s%%_, 雷暴 _%3$s%%_"
-		);
-		addTooltipLang(
-				"solar_boiler.condition.2",
-				" ● _Artificial light_ (block light _%1$s_ or higher, e.g. indoors, at night or when covered): _%2$s%%_ efficiency",
-				" ● _人造光照_(方块光照_%1$s_及以上, 如室内, 夜晚或顶部有遮挡): 效率_%2$s%%_"
-		);
-		addTooltipLang(
-				"solar_boiler.condition.3",
-				" ● _In The End_, only the no-occlusion condition needs to be met (_100%_ efficiency)",
-				" ● 在_末地_只需满足_无遮挡_条件即可(_100%_ 效率)"
-		);
-		addTooltipLang(
-				"solar_boiler.natural_light",
-				"Light Source: Natural(100% Efficiency)",
-				"当前光源: 自然光(100%效率)"
-		);
-		addTooltipLang(
-				"solar_boiler.rain_light",
-				"Light Source: Natural \u00b7 Rain (%s%% Efficiency)",
-				"当前光源: 自然光\u00b7雨天(效率%s%%)"
-		);
-		addTooltipLang(
-				"solar_boiler.thunder_light",
-				"Light Source: Natural \u00b7 Thunderstorm (%s%% Efficiency)",
-				"当前光源: 自然光\u00b7雷暴(效率%s%%)"
-		);
-		addTooltipLang(
-				"solar_boiler.artificial_light",
-				"Light Source: Artificial (%s%% Efficiency)",
-				"当前光源: 人造光(效率%s%%)"
-		);
-		addTooltipLang(
-				"solar_boiler.no_light",
-				"Light Source: None(Cannot Work)",
-				"当前光源: 无(无法工作)"
 		);
 	}
 }

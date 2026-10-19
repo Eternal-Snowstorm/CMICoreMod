@@ -31,7 +31,7 @@ public class CmiCreativeTabs {
 		CMI = ResourceKey.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), KubeJS.id("tab"));
 
 		MECHANISMS = addCreativeModeTab("mechanisms", AllItems.PRECISION_MECHANISM::asStack);
-		MACHINES = addCreativeModeTab("machines", MachineBlocks.STEAM_HAMMER::asStack);
+		MACHINES = addCreativeModeTab("machines", MachineBlocks.ACCELERATOR::asStack);
 	}
 
 	private static RegistryObject<CreativeModeTab> addCreativeModeTab(String name, Supplier<ItemStack> icon) {

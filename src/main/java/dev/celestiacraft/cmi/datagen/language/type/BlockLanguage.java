@@ -35,19 +35,9 @@ public class BlockLanguage extends LanguageGenerate {
 				"赫尔墨斯地热通口"
 		);
 		addBlockLanguage(
-				"steam_hammer",
-				"Steam Forge Hammer",
-				"蒸汽锻锤"
-		);
-		addBlockLanguage(
 				"accelerator_motor",
 				"Accelerator Motor",
 				"变速马达"
-		);
-		addBlockLanguage(
-				"advanced_spout",
-				"Advanced Spout",
-				"高级注液器"
 		);
 		addBlockLanguage(
 				"void_dust_collector",
@@ -58,36 +48,6 @@ public class BlockLanguage extends LanguageGenerate {
 				"mechanical_belt_grinder",
 				"Mechanical Belt Grinder",
 				"动力磨砂机"
-		);
-		addBlockLanguage(
-				"bronze_fluid_burner",
-				"Bronze Fluid Burner",
-				"青铜流体燃烧室"
-		);
-		addBlockLanguage(
-				"cast_iron_fluid_burner",
-				"Cast Iron Fluid Burner",
-				"铸铁流体燃烧室"
-		);
-		addBlockLanguage(
-				"steel_fluid_burner",
-				"Steel Fluid Burner",
-				"钢制流体燃烧室"
-		);
-		addBlockLanguage(
-				"bronze_solar_boiler",
-				"Bronze Solar Boiler",
-				"青铜太阳能蒸汽锅炉"
-		);
-		addBlockLanguage(
-				"cast_iron_solar_boiler",
-				"Cast Iron Solar Boiler",
-				"铸铁太阳能蒸汽锅炉"
-		);
-		addBlockLanguage(
-				"steel_solar_boiler",
-				"Steel Solar Boiler",
-				"钢制太阳能蒸汽锅炉"
 		);
 		addBlockLanguage(
 				"nahuatl_scaffold",

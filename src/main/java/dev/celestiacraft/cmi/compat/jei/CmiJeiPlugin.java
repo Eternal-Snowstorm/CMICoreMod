@@ -2,7 +2,6 @@ package dev.celestiacraft.cmi.compat.jei;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.Create;
 import com.simibubi.create.compat.jei.CreateJEI;
 import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.EmptyBackground;
@@ -32,7 +31,6 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
@@ -49,7 +47,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -108,20 +105,6 @@ public class CmiJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-		IJeiHelpers helpers = registration.getJeiHelpers();
-
-		Map<String, ItemStack> createCatalysts = Map.of(
-				"pressing", MachineBlocks.STEAM_HAMMER.asStack(),
-				"spout_filling", MachineBlocks.ADVANCED_SPOUT.asStack()
-		);
-
-		createCatalysts.forEach((recipeId, stack) -> {
-			helpers.getRecipeType(Create.asResource(recipeId), Recipe.class)
-					.ifPresent((type) -> {
-						registration.addRecipeCatalyst(stack, type);
-					});
-		});
-
 		List<ItemStack> wellBlockList = List.of(
 				WallBlocks.WATER_WELL.asStack(),
 				WallBlocks.LAVA_WELL.asStack(),

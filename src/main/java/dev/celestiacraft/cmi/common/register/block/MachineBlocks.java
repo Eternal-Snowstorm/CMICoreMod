@@ -2,7 +2,6 @@ package dev.celestiacraft.cmi.common.register.block;
 
 import com.simibubi.create.AllTags;
 import com.simibubi.create.api.stress.BlockStressValues;
-import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
@@ -12,12 +11,9 @@ import dev.celestiacraft.cmi.common.block.accelerator.AcceleratorBlock;
 import dev.celestiacraft.cmi.common.block.accelerator.AcceleratorItem;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorBlock;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorItem;
-import dev.celestiacraft.cmi.common.block.advanced_spout.AdvancedSpoutBlock;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderBlock;
 import dev.celestiacraft.cmi.common.block.geothermal_generator.GGBlock;
 import dev.celestiacraft.cmi.common.block.geothermal_generator.GGItem;
-import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerBlock;
-import dev.celestiacraft.cmi.common.block.steam_hammer.SteamHammerItem;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorBlock;
 import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorItem;
 import dev.celestiacraft.cmi.compat.create.CmiStress;
@@ -25,9 +21,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.Tags;
 
 public class MachineBlocks {
-	public static final BlockEntry<SteamHammerBlock> STEAM_HAMMER;
 	public static final BlockEntry<AcceleratorMotorBlock> ACCELERATOR_MOTOR;
-	public static final BlockEntry<AdvancedSpoutBlock> ADVANCED_SPOUT;
 	public static final BlockEntry<VoidDustCollectorBlock> VOID_DUST_COLLECTOR;
 	public static final BlockEntry<BeltGrinderBlock> BELT_GRINDER;
 	public static final BlockEntry<AcceleratorBlock> ACCELERATOR;
@@ -44,18 +38,6 @@ public class MachineBlocks {
 				.blockstate(AcceleratorBlock.genBlockState())
 				.register();
 
-		STEAM_HAMMER = Cmi.REGISTRATE.block("steam_hammer", SteamHammerBlock::new)
-				.initialProperties(SharedProperties::stone)
-				.transform(CmiStress.setImpact(16.0))
-				.item(SteamHammerItem::new)
-				.model(ItemModelGen.withModel("block/steam_hammer/item"))
-				.build()
-				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-				.tag(BlockTags.NEEDS_STONE_TOOL)
-				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.blockstate(SteamHammerBlock.genBlockState())
-				.register();
-
 		ACCELERATOR_MOTOR = Cmi.REGISTRATE.block("accelerator_motor", AcceleratorMotorBlock::new)
 				.initialProperties(SharedProperties::stone)
 				.transform(CmiStress.setCapacity(0))
@@ -67,17 +49,6 @@ public class MachineBlocks {
 				.tag(Tags.Blocks.NEEDS_WOOD_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.blockstate(AcceleratorMotorBlock.genBlockState())
-				.register();
-
-		ADVANCED_SPOUT = Cmi.REGISTRATE.block("advanced_spout", AdvancedSpoutBlock::new)
-				.initialProperties(SharedProperties::copperMetal)
-				.item(AssemblyOperatorBlockItem::new)
-				.model(ItemModelGen.withModel("block/advanced_spout/item"))
-				.build()
-				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-				.tag(BlockTags.NEEDS_STONE_TOOL)
-				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.blockstate(AdvancedSpoutBlock.genBlockState())
 				.register();
 
 		VOID_DUST_COLLECTOR = Cmi.REGISTRATE.block("void_dust_collector", VoidDustCollectorBlock::new)

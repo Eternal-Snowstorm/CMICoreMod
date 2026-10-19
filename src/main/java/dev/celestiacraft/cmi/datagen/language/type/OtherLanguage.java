@@ -50,18 +50,6 @@ public class OtherLanguage extends LanguageGenerate {
 				"CMI"
 		);
 		addLanguage(
-				"jade.tip",
-				"powered.off",
-				"State: off",
-				"状态: 关"
-		);
-		addLanguage(
-				"jade.tip",
-				"powered.on",
-				"State: on",
-				"状态: 开"
-		);
-		addLanguage(
 				"info",
 				"metal_detector.not",
 				"No search for anything of value",
