@@ -104,7 +104,6 @@ public enum CardboardBoxProvider implements IBlockComponentProvider, IServerData
 					)
 			);
 		}
-
 	}
 
 	@Override

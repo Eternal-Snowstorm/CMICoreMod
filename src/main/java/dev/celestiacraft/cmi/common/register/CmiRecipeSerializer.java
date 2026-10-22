@@ -2,7 +2,6 @@ package dev.celestiacraft.cmi.common.register;
 
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
-import dev.celestiacraft.cmi.common.recipe.fluid_burn.FluidBurnRecipe;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_base.SpaceElevatorBaseRecipe;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
 import dev.celestiacraft.libs.common.recipe.machine.MachineRecipe;
@@ -19,7 +18,6 @@ public class CmiRecipeSerializer {
 	public static final RegistryObject<RecipeSerializer<AcceleratorRecipe>> ACCELERATOR;
 	public static final RegistryObject<RecipeSerializer<SpaceElevatorBaseRecipe>> SPACE_ELEVATOR_BASE;
 	public static final RegistryObject<RecipeSerializer<SpaceElevatorConstructionRecipe>> SPACE_ELEVATOR_CONSTRUCTION;
-	public static final RegistryObject<RecipeSerializer<FluidBurnRecipe>> FLUID_BURN;
 	public static final RegistryObject<RecipeSerializer<MachineRecipe>> TEST_COKE_OVEN;
 
 	static {
@@ -28,7 +26,6 @@ public class CmiRecipeSerializer {
 		ACCELERATOR = register("accelerator", AcceleratorRecipe.Serializer.INSTANCE);
 		SPACE_ELEVATOR_BASE = register("space_elevator_base", SpaceElevatorBaseRecipe.Serializer.INSTANCE);
 		SPACE_ELEVATOR_CONSTRUCTION = register("space_elevator_construction", SpaceElevatorConstructionRecipe.Serializer.INSTANCE);
-		FLUID_BURN = register("fluid_burn", FluidBurnRecipe.Serializer.INSTANCE);
 		TEST_COKE_OVEN = register("test_coke_oven", new MachineRecipeSerializer(Cmi.loadResource("test_coke_oven")));
 	}
 

@@ -1,0 +1,5 @@
+<root>
+    <item name='com.simibubi.create.content.fluids.spout.SpoutBlockEntity customProcess'>
+        <annotation name='org.jetbrains.annotations.Nullable'/>
+    </item>
+</root>

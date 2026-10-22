@@ -70,8 +70,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				.register("space_elevator_construction", SpaceElevatorConstructionSchema.SCHEMA)
 				.register("accelerator", AcceleratorSchema.SCHEMA)
 				.register("test_coke_oven", MachineRecipeSchema.SCHEMA)
-				.register("grinding", GrindingSchema.SCHEMA)
-				.register("fluid_burn", FluidBurnSchema.SCHEMA);
+				.register("grinding", GrindingSchema.SCHEMA);
 
 		event.namespace(CreateDieselGenerators.ID)
 				.register("basin_fermenting", CdgRecipesSchema.BASIN)

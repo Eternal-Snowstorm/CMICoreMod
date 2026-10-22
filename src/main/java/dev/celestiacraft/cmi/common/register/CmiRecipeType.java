@@ -1,16 +1,15 @@
 package dev.celestiacraft.cmi.common.register;
 
-import dev.celestiacraft.cmi.common.recipe.fluid_burn.FluidBurnRecipe;
+import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
+import dev.celestiacraft.cmi.common.recipe.space_elevator_base.SpaceElevatorBaseRecipe;
+import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
 import dev.celestiacraft.libs.common.recipe.machine.MachineRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
-import dev.celestiacraft.cmi.common.recipe.space_elevator_base.SpaceElevatorBaseRecipe;
-import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
@@ -20,7 +19,6 @@ public class CmiRecipeType {
 	public static final RegistryObject<RecipeType<AcceleratorRecipe>> ACCELERATOR;
 	public static final RegistryObject<RecipeType<SpaceElevatorBaseRecipe>> SPACE_ELEVATOR_BASE;
 	public static final RegistryObject<RecipeType<SpaceElevatorConstructionRecipe>> SPACE_ELEVATOR_CONSTRUCTION;
-	public static final RegistryObject<RecipeType<FluidBurnRecipe>> FLUID_BURN;
 	public static final RegistryObject<RecipeType<MachineRecipe>> TEST_COKE_OVEN;
 
 	static {
@@ -34,9 +32,6 @@ public class CmiRecipeType {
 		});
 		SPACE_ELEVATOR_CONSTRUCTION = register("space_elevator_construction", () -> {
 			return SpaceElevatorConstructionRecipe.Type.INSTANCE;
-		});
-		FLUID_BURN = register("fluid_burn", () -> {
-			return FluidBurnRecipe.Type.INSTANCE;
 		});
 		TEST_COKE_OVEN = register("test_coke_oven");
 	}

@@ -9,6 +9,7 @@ import com.lowdragmc.mbd2.api.machine.IMultiController;
 import com.lowdragmc.mbd2.api.recipe.MBDRecipe;
 import com.lowdragmc.mbd2.api.recipe.RecipeCondition;
 import com.lowdragmc.mbd2.api.recipe.RecipeLogic;
+import dev.celestiacraft.cmi.Cmi;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -25,9 +26,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
 
-import dev.celestiacraft.cmi.Cmi;
-
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -35,15 +36,14 @@ import java.util.Optional;
  * 同类型条件之间以 AND 组合 (isOr = false)
  */
 public class BlockExistCondition extends RecipeCondition {
-
 	@Configurable(name = "config.recipe.condition.block.blocks", collapse = false)
-	private Block[] blocks = new Block[0];
+	private Block[] blocks;
 
 	public BlockExistCondition() {
 		this(new Block[0]);
 	}
 
-	public BlockExistCondition(Block ...blocks) {
+	private BlockExistCondition(Block ...blocks) {
 		this.blocks = blocks != null ? blocks : new Block[0];
 	}
 
@@ -52,14 +52,14 @@ public class BlockExistCondition extends RecipeCondition {
 	}
 
 	public static BlockExistCondition of(String... blockIds) {
-		Block[] parsedBlocks = java.util.Arrays.stream(blockIds)
+		Block[] parsedBlocks = Arrays.stream(blockIds)
 				.map(ResourceLocation::tryParse)
-				.filter(java.util.Objects::nonNull)
+				.filter(Objects::nonNull)
 				.map(ForgeRegistries.BLOCKS::getValue)
-				.filter(java.util.Objects::nonNull)
+				.filter(Objects::nonNull)
 				.toArray(Block[]::new);
 		return new BlockExistCondition(parsedBlocks);
-	}	
+	}
 
 	@Override
 	public String getType() {
@@ -76,7 +76,7 @@ public class BlockExistCondition extends RecipeCondition {
 			}
 		}
 		return Component.translatable(
-				"recipe.condition.block_exist.tooltip", 
+				"recipe.condition.block_exist.tooltip",
 				blockNames
 		);
 	}
@@ -101,7 +101,7 @@ public class BlockExistCondition extends RecipeCondition {
 
 	@Override
 	public IGuiTexture getIcon() {
-		return new ResourceTexture("mbd2:textures/gui/condition/block.png"); 
+		return new ResourceTexture("mbd2:textures/gui/condition/block.png");
 	}
 
 	@Nonnull
@@ -139,7 +139,8 @@ public class BlockExistCondition extends RecipeCondition {
 		super.toNetwork(buf);
 		buf.writeVarInt(blocks.length);
 		for (Block block : blocks) {
-			buf.writeResourceLocation(Optional.ofNullable(ForgeRegistries.BLOCKS.getKey(block)).orElse(new ResourceLocation("minecraft:air")));
+			buf.writeResourceLocation(Optional.ofNullable(ForgeRegistries.BLOCKS.getKey(block))
+					.orElse(ResourceLocation.parse("minecraft:air")));
 		}
 	}
 
