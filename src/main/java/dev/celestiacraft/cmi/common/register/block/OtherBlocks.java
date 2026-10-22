@@ -91,14 +91,15 @@ public class OtherBlocks {
 				.register();
 
 		WIND_VANE = Cmi.REGISTRATE.block("wind_vane", WindVaneBlock::new)
+				.properties(BlockBehaviour.Properties::noOcclusion)
 				.initialProperties(SharedProperties::copperMetal)
 				.item(WindVaneBlockItem::new)
-				.model(NonNullBiConsumer.noop())
+				.model(ItemModelGen.withModel("block/wind_vane"))
 				.build()
 				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.tag(BlockTags.NEEDS_STONE_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.blockstate(NonNullBiConsumer.noop())
+				.blockstate(WindVaneBlock.genBlockState())
 				.register();
 
 		TEST_GRAVEL = Cmi.REGISTRATE.block("test_gravel", TestGravelBlock::new)

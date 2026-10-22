@@ -6,6 +6,7 @@
 		"0": "cmi:block/wind_vane",
 		"particle": "cmi:block/wind_vane"
 	},
+	"render_type": "cutout",
 	"elements": [
 		{
 			"from": [7, 0.001, 7],
