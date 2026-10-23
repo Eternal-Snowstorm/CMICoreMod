@@ -43,6 +43,7 @@
 	],
 	"client": [
 		"create.BulkFermenterRendererMixin",
+		"kubejs.GeneratedClientResourcePackMixin",
 		"ldlib.LDLibJEIIngredientRendererMixin",
 		"vanilla.LevelRendererMixin"
 	],
