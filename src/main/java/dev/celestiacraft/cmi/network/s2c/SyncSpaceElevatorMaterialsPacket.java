@@ -3,6 +3,8 @@ package dev.celestiacraft.cmi.network.s2c;
 import dev.celestiacraft.cmi.event.SpaceElevatorWrenchClientHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -54,7 +56,7 @@ public class SyncSpaceElevatorMaterialsPacket {
 
 	public static void handle(SyncSpaceElevatorMaterialsPacket msg, Supplier<NetworkEvent.Context> ctxSupplier) {
 		NetworkEvent.Context ctx = ctxSupplier.get();
-		ctx.enqueueWork(() -> SpaceElevatorWrenchClientHandler.syncStoredCounts(msg.anchorPos, msg.counts, msg.fluidAmounts, msg.orbitalCounterpartPresent));
+		ctx.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> SpaceElevatorWrenchClientHandler.syncStoredCounts(msg.anchorPos, msg.counts, msg.fluidAmounts, msg.orbitalCounterpartPresent)));
 		ctx.setPacketHandled(true);
 	}
 }

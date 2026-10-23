@@ -27,7 +27,6 @@ public class GGBlockEntity extends SmartBlockEntity {
 	private final GGEnergyStorage storage;
 	@Getter
 	private int storagedEnergy;
-	private static final int BASE_PRODUCTION = GeothermalGeneratorConfig.PRODUCTION_EFFICIENCY.get();
 
 	public GGBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -78,11 +77,11 @@ public class GGBlockEntity extends SmartBlockEntity {
 	 * <p>最终产能计算公式为:
 	 *
 	 * <pre>
-	 * BASE_PRODUCTION × 接触面数
+	 * 基础产能 × 接触面数
 	 * </pre>
 	 *
 	 * <p>
-	 * 因此理论上产量最高可以达到 ({@link #BASE_PRODUCTION} * 6) / Tick
+	 * 因此理论上产量最高可以达到 (基础产能 * 6) / Tick
 	 * <p>
 	 * 当没有任何有效流体接触时, 发电机停止工作并返回 0
 	 *
@@ -108,7 +107,7 @@ public class GGBlockEntity extends SmartBlockEntity {
 			return 0;
 		}
 
-		return BASE_PRODUCTION * contactSurface;
+		return GeothermalGeneratorConfig.PRODUCTION_EFFICIENCY.get() * contactSurface;
 	}
 
 	/**

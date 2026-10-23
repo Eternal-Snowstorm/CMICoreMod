@@ -42,10 +42,10 @@ public class CmiGlobal {
 		if (isHotfix) {
 			modPackMainVersion = String.format("§0CMI %s-%s-hf", modPackState, modpackNumberVersion);
 			ConsoleJS.STARTUP.info(String.format("CMI Version: %s-%s-hf", modPackState, modpackNumberVersion));
+		} else {
+			modPackMainVersion = String.format("§0CMI %s-%s", modPackState, modpackNumberVersion);
+			ConsoleJS.STARTUP.info(String.format("CMI Version: %s-%s", modPackState, modpackNumberVersion));
 		}
-
-		modPackMainVersion = String.format("§0CMI %s-%s", modPackState, modpackNumberVersion);
-		ConsoleJS.STARTUP.info(String.format("CMI Version: %s-%s", modPackState, modpackNumberVersion));
 	}
 
 	public static String getModPackMainVersion() {

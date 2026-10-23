@@ -132,6 +132,11 @@ public class EnderItem extends MechanismItem {
 			return;
 		}
 
+		// 只处理末影构件
+		if (!(mechanism.getItem() instanceof EnderItem)) {
+			return;
+		}
+
 		if (hasTag && state.is(MachineBlocks.ACCELERATOR.getDefaultState().getBlock())) {
 			CompoundTag tag = mechanism.getTag();
 

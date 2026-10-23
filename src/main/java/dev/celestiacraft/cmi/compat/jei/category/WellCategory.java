@@ -37,22 +37,22 @@ public class WellCategory {
 				.setIcon(WallBlocks.WATER_WELL.asStack())
 				.setBackground(0, 0)
 				.setRecipe((builder, recipe, group) -> {
-					if (recipe instanceof WaterWellRecipe water) {
+					if (recipe instanceof WaterWellRecipe) {
 						builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)
 								.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
 								.addFluidStack(Fluids.WATER, Integer.MAX_VALUE)
 								.addItemStack(Items.WATER_BUCKET.getDefaultInstance());
-					} else if (recipe instanceof SeaWaterWellRecipe seaWater) {
+					} else if (recipe instanceof SeaWaterWellRecipe) {
 						builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)
 								.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
 								.addFluidStack(ModResources.SEA_WATER.getFluid(), Integer.MAX_VALUE)
 								.addItemStack(ModResources.SEA_WATER.getBucketStack());
-					} else if (recipe instanceof LavaWellRecipe lava) {
+					} else if (recipe instanceof LavaWellRecipe) {
 						builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)
 								.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
 								.addFluidStack(Fluids.LAVA, Integer.MAX_VALUE)
 								.addItemStack(Items.LAVA_BUCKET.getDefaultInstance());
-					} else if (recipe instanceof BlazeWellRecipe blaze) {
+					} else if (recipe instanceof BlazeWellRecipe) {
 						builder.addSlot(RecipeIngredientRole.OUTPUT, 150, 30)
 								.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
 								.addFluidStack(TinkerFluids.blazingBlood.get(), Integer.MAX_VALUE)
@@ -60,11 +60,11 @@ public class WellCategory {
 					}
 				})
 				.setTooltips((recipe, view, mouseX, mouseY) -> {
-					if (recipe instanceof WaterWellRecipe water) {
+					if (recipe instanceof WaterWellRecipe) {
 						if (ClientRenderUtils.isCursorInsideBounds(102, 21, 14, 14, mouseX, mouseY)) {
 							return ImmutableList.of(Component.translatable("jei.category.cmi.water_pump.complete"));
 						}
-					} else if (recipe instanceof SeaWaterWellRecipe seaWater) {
+					} else if (recipe instanceof SeaWaterWellRecipe) {
 						if (ClientRenderUtils.isCursorInsideBounds(86, 21, 14, 14, mouseX, mouseY)) {
 							return ImmutableList.of(Component.translatable("jei.category.cmi.water_pump.complete"));
 						}
@@ -74,14 +74,14 @@ public class WellCategory {
 						if (ClientRenderUtils.isCursorInsideBounds(118, 21, 14, 14, mouseX, mouseY)) {
 							return ImmutableList.of(Component.translatable("jei.category.cmi.water_pump.pos"));
 						}
-					} else if (recipe instanceof LavaWellRecipe lava) {
+					} else if (recipe instanceof LavaWellRecipe) {
 						if (ClientRenderUtils.isCursorInsideBounds(94, 21, 14, 14, mouseX, mouseY)) {
 							return ImmutableList.of(Component.translatable("jei.category.cmi.water_pump.complete"));
 						}
 						if (ClientRenderUtils.isCursorInsideBounds(110, 21, 14, 14, mouseX, mouseY)) {
 							return ImmutableList.of(Component.translatable("jei.category.cmi.well.nether"));
 						}
-					} else if (recipe instanceof BlazeWellRecipe blaze) {
+					} else if (recipe instanceof BlazeWellRecipe) {
 						if (ClientRenderUtils.isCursorInsideBounds(86, 21, 14, 14, mouseX, mouseY)) {
 							return ImmutableList.of(Component.translatable("jei.category.cmi.water_pump.complete"));
 						}
@@ -95,13 +95,13 @@ public class WellCategory {
 					return Collections.emptyList();
 				})
 				.setDraw((recipe, view, graphics, mouseX, mouseY) -> {
-					if (recipe instanceof WaterWellRecipe water) {
+					if (recipe instanceof WaterWellRecipe) {
 						AllGuiTextures.JEI_LONG_ARROW.render(graphics, 75, 36);
 						CmiGuiTextures.STRUCTURE.render(graphics, 101, 20);
 						WATER_WELL.draw(graphics, 30, 5);
 						PoseStack pose = graphics.pose();
 						pose.popPose();
-					} else if (recipe instanceof SeaWaterWellRecipe seaWater) {
+					} else if (recipe instanceof SeaWaterWellRecipe) {
 						AllGuiTextures.JEI_LONG_ARROW.render(graphics, 75, 36);
 						CmiGuiTextures.STRUCTURE.render(graphics, 85, 20);
 						CmiGuiTextures.OCEAN.render(graphics, 101, 20);
@@ -109,14 +109,14 @@ public class WellCategory {
 						WATER_WELL.draw(graphics, 30, 5);
 						PoseStack pose = graphics.pose();
 						pose.popPose();
-					} else if (recipe instanceof LavaWellRecipe lava) {
+					} else if (recipe instanceof LavaWellRecipe) {
 						AllGuiTextures.JEI_LONG_ARROW.render(graphics, 75, 36);
 						CmiGuiTextures.STRUCTURE.render(graphics, 93, 20);
 						CmiGuiTextures.NETHER.render(graphics, 109, 20);
 						LAVA_WELL.draw(graphics, 30, 5);
 						PoseStack pose = graphics.pose();
 						pose.popPose();
-					} else if (recipe instanceof BlazeWellRecipe blaze) {
+					} else if (recipe instanceof BlazeWellRecipe) {
 						AllGuiTextures.JEI_LONG_ARROW.render(graphics, 75, 36);
 						CmiGuiTextures.STRUCTURE.render(graphics, 85, 20);
 						CmiGuiTextures.NETHER.render(graphics, 101, 20);

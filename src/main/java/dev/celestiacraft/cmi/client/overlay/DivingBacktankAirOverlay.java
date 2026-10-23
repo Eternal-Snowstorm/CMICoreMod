@@ -45,21 +45,20 @@ public class DivingBacktankAirOverlay implements IGuiOverlay {
 		}
 
 		Level level = player.level();
-		boolean inNether = level.dimension() == Level.NETHER;
 		boolean inWater = player.isEyeInFluidType(ForgeMod.WATER_TYPE.get());
-		if (!inNether && !inWater) {
+
+		// 下界由 NetherBacktankAirOverlay 负责, 这里只处理水下
+		if (!inWater) {
 			return;
 		}
 
-		if (!inNether) {
-			boolean isBubbleColumn = level.getBlockState(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ()))
-					.is(Blocks.BUBBLE_COLUMN);
-			boolean canBreathe = !player.canDrownInFluidType(player.getEyeInFluidType())
-					|| MobEffectUtil.hasWaterBreathing(player)
-					|| player.getAbilities().invulnerable;
-			if (isBubbleColumn || canBreathe) {
-				return;
-			}
+		boolean isBubbleColumn = level.getBlockState(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ()))
+				.is(Blocks.BUBBLE_COLUMN);
+		boolean canBreathe = !player.canDrownInFluidType(player.getEyeInFluidType())
+				|| MobEffectUtil.hasWaterBreathing(player)
+				|| player.getAbilities().invulnerable;
+		if (isBubbleColumn || canBreathe) {
+			return;
 		}
 
 		if (!DivingModifier.isActive(player)) {

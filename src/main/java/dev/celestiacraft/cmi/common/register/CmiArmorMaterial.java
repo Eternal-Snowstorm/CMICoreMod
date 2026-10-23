@@ -80,10 +80,10 @@ public class CmiArmorMaterial implements ArmorMaterial {
 
 	private static int[] armor(int helmet, int chestplate, int leggings, int boots) {
 		return new int[]{
-				boots,
-				leggings,
+				helmet,
 				chestplate,
-				helmet
+				leggings,
+				boots
 		};
 	}
 }
