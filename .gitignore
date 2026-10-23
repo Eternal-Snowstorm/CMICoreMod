@@ -1,8 +1,6 @@
 # Project exclude paths
 /.gradle/
-build
-!build/libs/Nebula-Utils-*.jar
-/build/classes/java/main/
+/build/
 .idea
 /run
 /run-data
