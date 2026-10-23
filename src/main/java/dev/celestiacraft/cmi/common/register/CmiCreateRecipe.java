@@ -62,10 +62,12 @@ public class CmiCreateRecipe {
 			this.type = type;
 		}
 
+		@SuppressWarnings("unchecked")
 		public <S extends RecipeSerializer<?>> S getSerializer() {
 			return (S) serializer.get();
 		}
 
+		@SuppressWarnings("unchecked")
 		public <R extends RecipeType<?>> R getType() {
 			return (R) type.get();
 		}

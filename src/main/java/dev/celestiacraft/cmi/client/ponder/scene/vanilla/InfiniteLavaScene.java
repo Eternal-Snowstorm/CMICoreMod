@@ -11,6 +11,7 @@ import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.api.scene.Selection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -52,6 +53,12 @@ public class InfiniteLavaScene {
 		scene.idle(15);
 
 		scene.world().destroyBlock(corner);
+		scene.effects().emitParticles(
+				util.vector().centerOf(2, 1, 2),
+				scene.effects().particleEmitterWithinBlockSpace(ParticleTypes.LAVA, util.vector().of(0, 0.1, 0)),
+				1,
+				5
+		);
 		ElementLink<EntityElement> lavaBucket = scene.world().createItemEntity(
 				util.vector().centerOf(2, 2, 2),
 				util.vector().of(0, 0.1, 0),
@@ -84,6 +91,12 @@ public class InfiniteLavaScene {
 		scene.idle(15);
 
 		scene.world().destroyBlock(opposite);
+		scene.effects().emitParticles(
+				util.vector().centerOf(3, 1, 3),
+				scene.effects().particleEmitterWithinBlockSpace(ParticleTypes.LAVA, util.vector().of(0, 0.1, 0)),
+				1,
+				5
+		);
 		scene.idle(25);
 		scene.world().setBlock(opposite, Blocks.LAVA.defaultBlockState(), true);
 		scene.idle(20);

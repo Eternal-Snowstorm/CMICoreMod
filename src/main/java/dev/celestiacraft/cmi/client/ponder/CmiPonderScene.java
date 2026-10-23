@@ -86,7 +86,7 @@ public class CmiPonderScene {
 
 	private static void vanilla(@NotNull PonderSceneRegistrationHelper<Item> helper) {
 		helper.forComponents(CmiPonderItem.Vanilla.INFINITE_LAVA)
-				.addStoryBoard(vanilla("infinite_lava"), InfiniteLavaScene::usage, CmiPonderTags.VANILLA);
+				.addStoryBoard(vanilla("infinite_lava"), InfiniteLavaScene::usage, CmiPonderTags.CMI);
 	}
 
 	private static String vanilla(String path) {

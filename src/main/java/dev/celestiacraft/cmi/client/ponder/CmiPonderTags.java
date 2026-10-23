@@ -6,7 +6,6 @@ import mekanism.common.Mekanism;
 import mekanism.common.registries.MekanismBlocks;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
@@ -15,14 +14,12 @@ public class CmiPonderTags {
 	public static final ResourceLocation
 			TCONSTRUCT,
 			CMI,
-			MEKANISM,
-			VANILLA;
+			MEKANISM;
 
 	static {
 		TCONSTRUCT = Cmi.loadResource(TConstruct.MOD_ID);
 		CMI = Cmi.loadResource(Cmi.MODID);
 		MEKANISM = Cmi.loadResource(Mekanism.MODID);
-		VANILLA = Cmi.loadResource("vanilla");
 	}
 
 	public static void register(@NotNull PonderTagRegistrationHelper<ResourceLocation> helper) {
@@ -45,13 +42,6 @@ public class CmiPonderTags {
 				.item(MekanismBlocks.CARDBOARD_BOX.asItem(), true, false)
 				.title("通用机械")
 				.description("通用机械思索")
-				.register();
-
-		helper.registerTag(VANILLA)
-				.addToIndex()
-				.item(Items.LAVA_BUCKET, true, false)
-				.title("原版")
-				.description("原版思索")
 				.register();
 	}
 
