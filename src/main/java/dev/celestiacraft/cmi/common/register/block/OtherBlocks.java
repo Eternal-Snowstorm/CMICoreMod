@@ -111,7 +111,7 @@ public class OtherBlocks {
 				.blockstate(NonNullBiConsumer.noop())
 				.tag(BlockTags.SAPLINGS)
 				.item()
-				.model(NonNullBiConsumer.noop())
+				.model(ItemModelGen.generated("block/sapling/gold"))
 				.build()
 				.register();
 
