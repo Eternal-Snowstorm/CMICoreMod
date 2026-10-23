@@ -75,9 +75,9 @@ public class MachineBlocks {
 
 		GEOTHERMAL_GENERATOR = Cmi.REGISTRATE.block("geothermal_generator", GGBlock::new)
 				.item(GGItem::new)
-				.model(NonNullBiConsumer.noop())
+				.model(ItemModelGen.withModel("block/geothermal_generator/off"))
 				.build()
-				.blockstate(NonNullBiConsumer.noop())
+				.blockstate(GGBlock.genBlockState())
 				.register();
 	}
 
