@@ -34,7 +34,7 @@ public class InfiniteLavaScene {
 
 		scene.overlay().showOutline(PonderPalette.BLUE, CreateNebulaSceneBuilder.OBJECT, pool, 70);
 		scene.overlay().showText(70)
-				.text("将四桶熔岩摆成 2×2 的池子")
+				.text("将四桶熔岩摆成 2x2 的池子")
 				.pointAt(util.vector().of(3, 1.5, 3))
 				.placeNearTarget();
 		scene.idle(80);
@@ -42,7 +42,7 @@ public class InfiniteLavaScene {
 		scene.addKeyframe();
 
 		scene.overlay().showText(45)
-				.text("像无限水一样，可以用桶从池中取走熔岩")
+				.text("像无限水一样, 可以用桶从池中取走熔岩")
 				.pointAt(util.vector().of(2.5, 2, 2.5))
 				.placeNearTarget();
 		scene.idle(15);
@@ -80,7 +80,7 @@ public class InfiniteLavaScene {
 		scene.addKeyframe();
 
 		scene.overlay().showText(45)
-				.text("从任意一格取走，池子都会补满")
+				.text("从任意一格取走, 池子都会补满")
 				.pointAt(util.vector().of(3.5, 2, 3.5))
 				.placeNearTarget();
 		scene.idle(15);
@@ -102,7 +102,7 @@ public class InfiniteLavaScene {
 		scene.idle(20);
 
 		scene.overlay().showText(55)
-				.text("只要保持 2×2，就能无限取用熔岩")
+				.text("只要保持 2x2, 就能无限取用熔岩")
 				.pointAt(util.vector().of(3, 1.5, 3))
 				.placeNearTarget();
 		scene.idle(70);
