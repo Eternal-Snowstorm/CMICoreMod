@@ -31,5 +31,6 @@ public class VoidDustCollectorStructure extends AnimatedKinetics {
 				.atLocal(0.0F, 2.0F, 0.0F)
 				.scale(scale)
 				.render(graphics);
+		matrixStack.popPose();
 	}
 }

@@ -126,5 +126,6 @@ public class LavaWellStructure extends AnimatedKinetics {
 				.atLocal(1.0F, 1.0F, 0.0F)
 				.scale(scale)
 				.render(graphics);
+		matrixStack.popPose();
 	}
 }

@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.event.radial;
 
 import cc.sighs.auratip.api.client.RadialMenuClientApi;
+import cc.sighs.auratip.client.render.RadialMenuOverlay;
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.key.CmiKeyMapping;
@@ -15,8 +16,6 @@ import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, value = Dist.CLIENT)
 public class OpenRadial {
-	private static boolean isMenuActive = false;
-
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.END) {
@@ -40,12 +39,14 @@ public class OpenRadial {
 				|| (selfKey != GLFW.GLFW_KEY_RIGHT_SHIFT && InputConstants.isKeyDown(window, GLFW.GLFW_KEY_RIGHT_SHIFT));
 
 		while (key.consumeClick()) {
-			if (isMenuActive && !hasOtherModifier) {
-				isMenuActive = false;
+			if (hasOtherModifier) {
+				continue;
 			}
-			if (!isMenuActive && !hasOtherModifier) {
+
+			if (RadialMenuOverlay.INSTANCE.isActive()) {
+				RadialMenuOverlay.INSTANCE.close();
+			} else {
 				RadialMenuClientApi.open(CmiRadialMenu.MENU);
-				isMenuActive = true;
 			}
 		}
 	}

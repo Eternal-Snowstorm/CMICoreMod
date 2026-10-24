@@ -1,7 +1,6 @@
 package dev.celestiacraft.cmi.compat.jei.category;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import dev.celestiacraft.cmi.api.client.CmiLang;
@@ -99,31 +98,23 @@ public class WellCategory {
 						AllGuiTextures.JEI_LONG_ARROW.render(graphics, 75, 36);
 						CmiGuiTextures.STRUCTURE.render(graphics, 101, 20);
 						WATER_WELL.draw(graphics, 30, 5);
-						PoseStack pose = graphics.pose();
-						pose.popPose();
 					} else if (recipe instanceof SeaWaterWellRecipe) {
 						AllGuiTextures.JEI_LONG_ARROW.render(graphics, 75, 36);
 						CmiGuiTextures.STRUCTURE.render(graphics, 85, 20);
 						CmiGuiTextures.OCEAN.render(graphics, 101, 20);
 						CmiGuiTextures.HEIGHT.render(graphics, 117, 20);
 						WATER_WELL.draw(graphics, 30, 5);
-						PoseStack pose = graphics.pose();
-						pose.popPose();
 					} else if (recipe instanceof LavaWellRecipe) {
 						AllGuiTextures.JEI_LONG_ARROW.render(graphics, 75, 36);
 						CmiGuiTextures.STRUCTURE.render(graphics, 93, 20);
 						CmiGuiTextures.NETHER.render(graphics, 109, 20);
 						LAVA_WELL.draw(graphics, 30, 5);
-						PoseStack pose = graphics.pose();
-						pose.popPose();
 					} else if (recipe instanceof BlazeWellRecipe) {
 						AllGuiTextures.JEI_LONG_ARROW.render(graphics, 75, 36);
 						CmiGuiTextures.STRUCTURE.render(graphics, 85, 20);
 						CmiGuiTextures.NETHER.render(graphics, 101, 20);
 						CmiGuiTextures.FORTRESS.render(graphics, 117, 20);
 						BLAZE_WELL.draw(graphics, 30, 5);
-						PoseStack pose = graphics.pose();
-						pose.popPose();
 					}
 				})
 				.build();

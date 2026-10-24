@@ -1,6 +1,5 @@
 package dev.celestiacraft.cmi.compat.jei.category;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
@@ -40,8 +39,6 @@ public class VoidDustCollectorCategory {
 					AllGuiTextures.JEI_SHADOW.render(graphics, 50, 50);
 					AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 94, 20);
 					VOID_MB.draw(graphics, 60, 10);
-					PoseStack pose = graphics.pose();
-					pose.popPose();
 				})
 				.build();
 	}

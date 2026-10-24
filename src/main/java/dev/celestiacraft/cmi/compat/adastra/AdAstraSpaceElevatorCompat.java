@@ -51,14 +51,13 @@ public class AdAstraSpaceElevatorCompat {
 	}
 
 	public static boolean hasValidEarthLaunchOrigin(ServerPlayer player) {
-		LaunchOrigin launchOrigin = getLastLaunchOrigin(player);
-		return launchOrigin != null && Level.OVERWORLD.equals(launchOrigin.dimension());
+		return getLastLaunchOrigin(player) != null;
 	}
 
 	@Nullable
 	public static BlockPos getLastEarthLaunchOrigin(ServerPlayer player) {
 		LaunchOrigin launchOrigin = getLastLaunchOrigin(player);
-		if (launchOrigin == null || !Level.OVERWORLD.equals(launchOrigin.dimension())) {
+		if (launchOrigin == null) {
 			return null;
 		}
 		return launchOrigin.pos();
@@ -70,11 +69,11 @@ public class AdAstraSpaceElevatorCompat {
 		}
 
 		LaunchOrigin launchOrigin = getLastLaunchOrigin(player);
-		if (launchOrigin == null || !Level.OVERWORLD.equals(launchOrigin.dimension())) {
+		if (launchOrigin == null) {
 			return false;
 		}
 
-		ServerLevel groundLevel = player.server.getLevel(launchOrigin.dimension());
+		ServerLevel groundLevel = player.server.getLevel(Level.OVERWORLD);
 		if (groundLevel == null) {
 			return false;
 		}
@@ -99,7 +98,6 @@ public class AdAstraSpaceElevatorCompat {
 		}
 
 		return new LaunchOrigin(
-				Level.OVERWORLD,
 				new BlockPos(
 						launchOriginTag.getInt("X"),
 						launchOriginTag.getInt("Y"),
@@ -117,6 +115,6 @@ public class AdAstraSpaceElevatorCompat {
 
 	private static final net.minecraft.core.Vec3i GROUND_CONSOLE_OFFSET = new net.minecraft.core.Vec3i(0, 2, 0);
 
-	private record LaunchOrigin(ResourceKey<Level> dimension, BlockPos pos) {
+	private record LaunchOrigin(BlockPos pos) {
 	}
 }

@@ -13,11 +13,12 @@ import dev.celestiacraft.cmi.tags.CmiBlockTags;
 public class BasinBlockEntityMixin {
 	@Inject(method = "getHeatLevelOf", at = @At("HEAD"), remap = false, cancellable = true)
 	private static void getHeatLevelOf(BlockState state, CallbackInfoReturnable<BlazeBurnerBlock.HeatLevel> cir) {
+		// 烈焰人燃烧室也算 GRILLED, 优先于下面按方块状态取值
 		if (state.is(CmiBlockTags.GRILL_SOURCES)) {
 			cir.setReturnValue(BlazeBurnerBlock.HeatLevel.valueOf("GRILLED"));
+			return;
 		}
 
-		// TODO: 此 if 会覆盖上面的 GRILLED 分支, 烈焰人燃烧室 (create:blaze_burner / create:lit_blaze_burner) 是否也该算 GRILLED 待主开发人员确认
 		if (state.hasProperty(BlazeBurnerBlock.HEAT_LEVEL)) {
 			cir.setReturnValue(state.getValue(BlazeBurnerBlock.HEAT_LEVEL));
 		}

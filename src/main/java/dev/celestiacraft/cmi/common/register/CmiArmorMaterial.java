@@ -38,6 +38,10 @@ public class CmiArmorMaterial implements ArmorMaterial {
 		this.material = material;
 	}
 
+	public static CmiArmorMaterial of(String name, int maxDamageFactor, int[] defense, int enchantability, Supplier<SoundEvent> sound, float toughness, float knockbackResistance, Supplier<Ingredient> material) {
+		return new CmiArmorMaterial(name, maxDamageFactor, defense, enchantability, sound, toughness, knockbackResistance, material);
+	}
+
 	@Override
 	public int getDurabilityForType(ArmorItem.@NotNull Type type) {
 		return BASE_DURABILITY[type.ordinal()] * maxDamageFactor;
