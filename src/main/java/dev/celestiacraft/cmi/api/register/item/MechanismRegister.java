@@ -63,6 +63,7 @@ public class MechanismRegister {
 		builder.model(ItemModelGen.generated(String.format("item/mechanism/incomplete/%s", name)));
 
 		builder.tag(CmiItemTags.INCOMPLETE_MECHANISMS);
+		builder.tag(CmiItemTags.INCOMPLETE_ITEMS);
 
 		return builder;
 	}

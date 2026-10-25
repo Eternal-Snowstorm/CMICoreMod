@@ -6,6 +6,7 @@ import net.minecraft.world.item.Item;
 
 public class CmiItemTags {
 	public static final TagKey<Item>
+			INCOMPLETE_ITEMS,
 			MECHANISMS,
 			INCOMPLETE_MECHANISMS,
 			MECHANISM_FLASH_DRIVES,
@@ -17,6 +18,7 @@ public class CmiItemTags {
 			COINS;
 
 	static {
+		INCOMPLETE_ITEMS = TagsBuilder.item("incomplete_items").cmi();
 		MECHANISMS = TagsBuilder.item("mechanisms").create();
 		INCOMPLETE_MECHANISMS = TagsBuilder.item("incomplete_mechanisms").create();
 		MECHANISM_FLASH_DRIVES = TagsBuilder.item("mechanism_flash_drives").cmi();
