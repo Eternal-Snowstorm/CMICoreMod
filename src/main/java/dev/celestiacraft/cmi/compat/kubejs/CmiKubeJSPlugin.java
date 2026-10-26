@@ -39,6 +39,8 @@ import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgCuttersItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgHammerItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.*;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.cdg.CdgRecipesSchema;
+import dev.celestiacraft.cmi.compat.kubejs.recipe.neoc.NecoCoolingSchema;
+import dev.celestiacraft.cmi.compat.kubejs.recipe.neoc.NecoIntegratedWorkingStationSchema;
 import dev.celestiacraft.cmi.compat.ldlib.LDLibHelpers;
 import dev.celestiacraft.cmi.compat.mbd2.MBDFluidIngredient;
 import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;

@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.compat.kubejs.recipe;
+package dev.celestiacraft.cmi.compat.kubejs.recipe.neoc;
 
 import dev.latvian.mods.kubejs.fluid.InputFluid;
 import dev.latvian.mods.kubejs.fluid.OutputFluid;

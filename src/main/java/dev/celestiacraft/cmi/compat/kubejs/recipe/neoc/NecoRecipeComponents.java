@@ -1,10 +1,9 @@
-package dev.celestiacraft.cmi.compat.kubejs.recipe;
+package dev.celestiacraft.cmi.compat.kubejs.recipe.neoc;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.latvian.mods.kubejs.fluid.EmptyFluidStackJS;
 import dev.latvian.mods.kubejs.fluid.FluidLike;
-import dev.latvian.mods.kubejs.fluid.FluidStackJS;
 import dev.latvian.mods.kubejs.fluid.InputFluid;
 import dev.latvian.mods.kubejs.fluid.OutputFluid;
 import dev.latvian.mods.kubejs.item.InputItem;
@@ -28,7 +27,7 @@ import net.minecraft.resources.ResourceLocation;
  * <p>因此这里单独实现对应的组件，写出时保持 Neo ECO AE 侧可读的 JSON 结构。</p>
  */
 interface NecoRecipeComponents {
-	RecipeComponent<InputFluid> ID_COMPAT_INPUT_FLUID = new RecipeComponent<InputFluid>() {
+	RecipeComponent<InputFluid> ID_COMPAT_INPUT_FLUID = new RecipeComponent<>() {
 		@Override
 		public ComponentRole role() {
 			return ComponentRole.INPUT;
@@ -84,7 +83,7 @@ interface NecoRecipeComponents {
 
 	RecipeComponent<OutputItem> ID_COMPAT_OUTPUT_ITEM = ItemComponents.OUTPUT.mapIn(from -> normalizeIdField(from, "item"));
 
-	RecipeComponent<OutputFluid> ID_COMPAT_OUTPUT_FLUID = new RecipeComponent<OutputFluid>() {
+	RecipeComponent<OutputFluid> ID_COMPAT_OUTPUT_FLUID = new RecipeComponent<>() {
 		@Override
 		public ComponentRole role() {
 			return ComponentRole.OUTPUT;
@@ -129,7 +128,7 @@ interface NecoRecipeComponents {
 		}
 	};
 
-	RecipeComponent<InputItem> SIZED_INPUT_ITEM = new RecipeComponent<InputItem>() {
+	RecipeComponent<InputItem> SIZED_INPUT_ITEM = new RecipeComponent<>() {
 		@Override
 		public ComponentRole role() {
 			return ComponentRole.INPUT;
@@ -177,27 +176,5 @@ interface NecoRecipeComponents {
 		}
 
 		return from;
-	}
-
-	record TagInputFluid(ResourceLocation tag, long amount) implements InputFluid {
-		@Override
-		public long kjs$getAmount() {
-			return amount;
-		}
-
-		@Override
-		public boolean kjs$isEmpty() {
-			return amount <= 0L || tag == null;
-		}
-
-		@Override
-		public FluidLike kjs$copy(long newAmount) {
-			return new TagInputFluid(tag, newAmount);
-		}
-
-		@Override
-		public boolean matches(FluidLike other) {
-			return other instanceof FluidStackJS stack && stack.hasTag(tag);
-		}
 	}
 }
