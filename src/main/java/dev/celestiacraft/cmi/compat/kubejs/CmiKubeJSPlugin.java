@@ -54,6 +54,8 @@ import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.registry.RegistryInfo;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
 import dev.latvian.mods.kubejs.script.PlatformWrapper;
+import dev.latvian.mods.kubejs.script.ScriptType;
+import dev.latvian.mods.kubejs.util.ClassFilter;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -80,6 +82,19 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				.register("compression_molding", CdgRecipesSchema.COMPRESSION)
 				.register("hammering", CdgRecipesSchema.HAMMERING)
 				.register("wire_cutting", CdgRecipesSchema.CUTTING);
+
+		// Neo ECO AE 在 20.5.0 移除了 KubeJS 适配，这里按其旧版 JSON 结构补回。
+		// large_integrated_working_station 与 extended_crystal_assembler 沿用集成加工台的字段（上游只是输入上限不同）。
+		event.namespace("neoecoae")
+				.register("cooling", NecoCoolingSchema.SCHEMA)
+				.register("integrated_working_station", NecoIntegratedWorkingStationSchema.SCHEMA)
+				.register("large_integrated_working_station", NecoIntegratedWorkingStationSchema.SCHEMA)
+				.register("extended_crystal_assembler", NecoIntegratedWorkingStationSchema.SCHEMA);
+	}
+
+	@Override
+	public void registerClasses(ScriptType type, ClassFilter filter) {
+		filter.allow("cn.dancingsnow.neoecoae");
 	}
 
 	@Override
