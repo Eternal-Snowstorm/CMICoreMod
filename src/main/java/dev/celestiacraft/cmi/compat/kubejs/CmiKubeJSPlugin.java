@@ -85,8 +85,6 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				.register("hammering", CdgRecipesSchema.HAMMERING)
 				.register("wire_cutting", CdgRecipesSchema.CUTTING);
 
-		// Neo ECO AE 在 20.5.0 移除了 KubeJS 适配，这里按其旧版 JSON 结构补回。
-		// large_integrated_working_station 与 extended_crystal_assembler 沿用集成加工台的字段（上游只是输入上限不同）。
 		event.namespace("neoecoae")
 				.register("cooling", NecoCoolingSchema.SCHEMA)
 				.register("integrated_working_station", NecoIntegratedWorkingStationSchema.SCHEMA)

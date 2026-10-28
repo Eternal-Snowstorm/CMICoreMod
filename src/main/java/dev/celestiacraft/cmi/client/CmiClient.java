@@ -19,6 +19,7 @@ import dev.celestiacraft.cmi.common.entity.dev.qi_month.QiMonthRenderer;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketRenderer;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorRenderer;
+import dev.celestiacraft.cmi.compat.thermal.ThermalDynamoRenderer;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
 import dev.celestiacraft.cmi.event.radial.CmiRadialAction;
@@ -84,5 +85,8 @@ public class CmiClient {
 		event.registerBlockEntityRenderer(CmiBlockEntity.SPACE_ELEVATOR_TOP.get(), (context) -> {
 			return new SpaceElevatorTopRenderer();
 		});
+
+		// Thermal 发电机的活塞臂
+		ThermalDynamoRenderer.registerRenderers(event);
 	}
 }

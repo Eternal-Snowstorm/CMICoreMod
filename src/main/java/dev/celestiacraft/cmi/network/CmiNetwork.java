@@ -3,6 +3,7 @@ package dev.celestiacraft.cmi.network;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.network.c2s.*;
 import dev.celestiacraft.cmi.network.s2c.SeedPacket;
+import dev.celestiacraft.cmi.network.s2c.SyncDynamoEnergyRatePacket;
 import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorBaseStatePacket;
 import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorConsoleConstructionPacket;
 import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorConsoleTransferPacket;
@@ -99,6 +100,13 @@ public class CmiNetwork {
 				RotateCarriedItemPacket::encode,
 				RotateCarriedItemPacket::decode,
 				RotateCarriedItemPacket::handle
+		);
+		CHANNEL.registerMessage(
+				id++,
+				SyncDynamoEnergyRatePacket.class,
+				SyncDynamoEnergyRatePacket::encode,
+				SyncDynamoEnergyRatePacket::decode,
+				SyncDynamoEnergyRatePacket::handle
 		);
 	}
 }
