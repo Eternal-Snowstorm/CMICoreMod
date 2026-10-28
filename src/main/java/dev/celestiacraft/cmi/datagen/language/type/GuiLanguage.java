@@ -253,6 +253,26 @@ public class GuiLanguage extends LanguageGenerate {
 				"燃料"
 		);
 		addCustomLang(
+				"jade.tip.cmi.coke_oven.heat",
+				"Heat: %1$s / %2$s",
+				"炉温: %1$s / %2$s 度"
+		);
+		addCustomLang(
+				"jade.tip.cmi.coke_oven.parallel",
+				"Parallel: %1$s / %2$s",
+				"并行: %1$s / %2$s"
+		);
+		addCustomLang(
+				"jade.tip.cmi.coke_oven.runs",
+				"Completed: %1$s",
+				"已完成: %1$s 次"
+		);
+		addCustomLang(
+				"jade.tip.cmi.coke_oven.time",
+				"Remaining: %1$s s",
+				"剩余时间: %1$s 秒"
+		);
+		addCustomLang(
 				"jade.tip.cmi.space_elevator.cargo_fluid",
 				"Cargo Fluid: %1$s %2$s / %3$s mB",
 				"货舱流体: %1$s %2$s / %3$s mB"

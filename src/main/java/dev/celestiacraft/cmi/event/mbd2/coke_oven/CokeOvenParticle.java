@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.event.mbd2;
+package dev.celestiacraft.cmi.event.mbd2.coke_oven;
 
 import com.lowdragmc.mbd2.api.recipe.MBDRecipeType;
 import com.lowdragmc.mbd2.common.machine.MBDMachine;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.security.SecureRandom;
 
 @Mod.EventBusSubscriber(modid = Cmi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class CokeOvenWorking {
+public class CokeOvenParticle {
 	private static final SecureRandom RANDOM = new SecureRandom();
 
 	@SubscribeEvent
