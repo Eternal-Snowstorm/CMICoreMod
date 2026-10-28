@@ -15,22 +15,22 @@ public class SyncDynamoEnergyRatePacket {
 	private final BlockPos pos;
 	private final int energyPerTick;
 
-	public static void encode(SyncDynamoEnergyRatePacket msg, FriendlyByteBuf buf) {
-		buf.writeBlockPos(msg.pos);
-		buf.writeVarInt(msg.energyPerTick);
+	public static void encode(SyncDynamoEnergyRatePacket packet, FriendlyByteBuf buf) {
+		buf.writeBlockPos(packet.pos);
+		buf.writeVarInt(packet.energyPerTick);
 	}
 
 	public static SyncDynamoEnergyRatePacket decode(FriendlyByteBuf buf) {
 		return new SyncDynamoEnergyRatePacket(buf.readBlockPos(), buf.readVarInt());
 	}
 
-	public static void handle(SyncDynamoEnergyRatePacket message, Supplier<NetworkEvent.Context> supplier) {
+	public static void handle(SyncDynamoEnergyRatePacket packet, Supplier<NetworkEvent.Context> supplier) {
 		NetworkEvent.Context context = supplier.get();
 
 		context.enqueueWork(() -> {
 			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> {
 				return () -> {
-					ThermalDynamoClient.updateEnergyRate(message.pos, message.energyPerTick);
+					ThermalDynamoClient.updateEnergyRate(packet.pos, packet.energyPerTick);
 				};
 			});
 		});
