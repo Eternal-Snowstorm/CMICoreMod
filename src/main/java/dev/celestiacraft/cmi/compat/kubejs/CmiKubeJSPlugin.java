@@ -32,6 +32,7 @@ import com.lowdragmc.mbd2.common.trait.item.ItemSlotCapabilityTraitDefinition;
 import com.lowdragmc.mbd2.integration.mekanism.trait.chemical.ChemicalTankCapabilityTraitDefinition;
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.api.client.CmiLang;
+import dev.celestiacraft.cmi.common.grill.CmiGrillSources;
 import dev.celestiacraft.cmi.common.register.CmiMechanism;
 import dev.celestiacraft.cmi.compat.create.CmiHeatLevel;
 import dev.celestiacraft.cmi.compat.create.CreateFluidIngredient;
@@ -127,6 +128,7 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		event.add("CmiMiningLevel", CmiMiningLevel.class);
 		event.add("CreateFluidIngredient", CreateFluidIngredient.class);
 		event.add("CmiMechanism", CmiMechanism.class);
+		event.add("CmiGrillSources", CmiGrillSources.class);
 	}
 
 	private void bindClientCmi(BindingsEvent event) {

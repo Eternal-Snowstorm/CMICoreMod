@@ -1,13 +1,9 @@
 {
 	"values": [
 		"minecraft:fire",
-		"minecraft:campfire",
+		"minecraft:soul_fire",
 		"minecraft:magma_block",
 		"minecraft:lava",
-		"create:lit_blaze_burner",
-		"create:blaze_burner",
-		"kaleidoscope_cookery:stove",
-		"farmersdelight:stove",
-		"mynethersdelight:nether_stove"
+		"create:lit_blaze_burner"
 	]
 }

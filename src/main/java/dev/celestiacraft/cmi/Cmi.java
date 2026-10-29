@@ -15,6 +15,7 @@ import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockItem;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.entity.coin_projectile.CoinProjectileTypes;
 import dev.celestiacraft.cmi.common.feature.cargogrid.CargoGridRules;
+import dev.celestiacraft.cmi.common.grill.CmiGrillSources;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.CmiFanProcessingTypes;
 import dev.celestiacraft.cmi.common.register.*;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraOxygenCompat;
@@ -103,6 +104,10 @@ public class Cmi {
 
 		// 硬币发射器: 数据包为各个 coin 物品定义发射速度/伤害/渲染姿态
 		MinecraftForge.EVENT_BUS.addListener(CoinProjectileTypes::onAddReloadListeners);
+
+		// 炙烤热源: 数据包声明 "哪个方块的哪个状态算 GRILLED 热源", 并在重载后同步给客户端
+		MinecraftForge.EVENT_BUS.addListener(CmiGrillSources::onAddReloadListeners);
+		MinecraftForge.EVENT_BUS.addListener(CmiGrillSources::onDatapackSync);
 
 		bus.addListener(this::onCommonSetup);
 		bus.addListener(this::onRegister);

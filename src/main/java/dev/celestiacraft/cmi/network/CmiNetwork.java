@@ -103,5 +103,12 @@ public class CmiNetwork {
 				SyncDynamoEnergyRatePacket::decode,
 				SyncDynamoEnergyRatePacket::handle
 		);
+		CHANNEL.registerMessage(
+				id++,
+				SyncGrillSourcesPacket.class,
+				SyncGrillSourcesPacket::encode,
+				SyncGrillSourcesPacket::decode,
+				SyncGrillSourcesPacket::handle
+		);
 	}
 }
