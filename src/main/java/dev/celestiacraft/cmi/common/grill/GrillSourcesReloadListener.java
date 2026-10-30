@@ -33,7 +33,7 @@ public class GrillSourcesReloadListener extends SimpleJsonResourceReloadListener
 	}
 
 	@Override
-	protected void apply(@NotNull Map<ResourceLocation, JsonElement> objects, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller profiler) {
+	protected void apply(@NotNull Map<ResourceLocation, JsonElement> objects, @NotNull ResourceManager manager, @NotNull ProfilerFiller filler) {
 		CmiGrillSources.apply(objects);
 	}
 }
