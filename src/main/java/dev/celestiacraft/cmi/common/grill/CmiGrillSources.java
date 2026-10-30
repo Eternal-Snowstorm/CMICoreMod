@@ -328,7 +328,7 @@ public class CmiGrillSources {
 
 		JsonObject json = new JsonObject();
 
-		if (text.startsWith("#")) {
+		if (!text.isEmpty() && text.charAt(0) == '#') {
 			json.addProperty("tag", text.substring(1));
 		} else {
 			json.addProperty("block", text);

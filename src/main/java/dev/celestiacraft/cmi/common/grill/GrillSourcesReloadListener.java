@@ -24,7 +24,9 @@ import java.util.Map;
  * </p>
  */
 public class GrillSourcesReloadListener extends SimpleJsonResourceReloadListener {
-	private static final Gson GSON = new GsonBuilder().setLenient().create();
+	private static final Gson GSON = new GsonBuilder()
+			.setLenient()
+			.create();
 
 	public GrillSourcesReloadListener() {
 		super(GSON, CmiGrillSources.DIRECTORY);
