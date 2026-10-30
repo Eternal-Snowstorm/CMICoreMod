@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public final class GrillSource {
+public class GrillSource {
 	private static final Logger LOGGER = LogUtils.getLogger();
 
 	private final @Nullable ResourceLocation blockId;
@@ -88,7 +88,7 @@ public final class GrillSource {
 			throw new JsonParseException(String.format("%s: 出现空的声明", fileId));
 		}
 
-		boolean isTag = text.startsWith("#");
+		boolean isTag = !text.isEmpty() && text.charAt(0) == '#';
 		ResourceLocation id = parseId(fileId, isTag ? text.substring(1) : text);
 
 		return new GrillSource(isTag ? null : id, isTag ? id : null, Map.of(), true);
@@ -198,8 +198,6 @@ public final class GrillSource {
 		return true;
 	}
 
-	// 按属性名取值并与字符串忽略大小写比较
-	@SuppressWarnings({"rawtypes", "unchecked"})
 	private static boolean matchesProperty(@NotNull BlockState state, @NotNull String name, @NotNull String value) {
 		for (Property property : state.getProperties()) {
 			if (!property.getName().equals(name)) {
