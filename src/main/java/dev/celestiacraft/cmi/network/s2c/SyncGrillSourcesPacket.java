@@ -9,28 +9,23 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-/**
- * 服务端 -> 客户端: 同步 grill_sources 配置
- *
- * <p>
- * 客户端 JEI 动画与客户端侧的 {@code BasinBlockEntity.getHeatLevelOf} 都要用同一份配置,
- * 所以数据包重载完成后把整张表发下来(体积很小, 几十条声明)
- * </p>
- */
 @AllArgsConstructor
 public class SyncGrillSourcesPacket {
 	private static final int MAX_LENGTH = 262144;
 
 	private final String json;
 
+	// 写出整张表的 JSON 文本
 	public static void encode(SyncGrillSourcesPacket packet, FriendlyByteBuf buf) {
 		buf.writeUtf(packet.json, MAX_LENGTH);
 	}
 
+	// 读回整张表的 JSON 文本
 	public static SyncGrillSourcesPacket decode(FriendlyByteBuf buf) {
 		return new SyncGrillSourcesPacket(buf.readUtf(MAX_LENGTH));
 	}
 
+	// 客户端在主线程应用配置
 	public static void handle(SyncGrillSourcesPacket packet, Supplier<NetworkEvent.Context> supplier) {
 		NetworkEvent.Context context = supplier.get();
 

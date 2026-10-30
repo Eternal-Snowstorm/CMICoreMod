@@ -31,49 +31,13 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/**
- * GRILLED(炙烤) 热源注册表.
- *
- * <p>
- * 数据包目录: {@code data/<namespace>/cmi/grill_sources/<name>.json}, 每个文件形如
- * </p>
- *
- * <pre>
- * {
- *   "priority": 0,          // 可选, 数值越小越先应用(默认 0)
- *   "replace": false,       // 可选, true 表示应用本文件前先清空已累积的声明
- *   "entries": [
- *     "minecraft:fire",
- *     "#cmi:grill_sources",
- *     {"block": "minecraft:campfire", "properties": {"lit": "true"}}
- *   ]
- * }
- * </pre>
- *
- * <p>
- * 文件按 (priority, id) 升序应用, 因此高 priority 的外部数据包可以整表覆盖内置默认值
- * (写法: {@code "replace": true}).
- * </p>
- *
- * <p>
- * 除数据包之外还可以走 Java/KubeJS 运行时注册: {@link #register(String)},
- * {@link #register(String, Map)}, {@link #registerBlock(Block)}. 运行时注册不会被数据包重载清掉.
- * </p>
- *
- * <p>
- * 本类同时是服务端与客户端的数据源: 服务端在数据包重载后解析, 再由 {@link #onDatapackSync}
- * 同步给客户端(JEI 动画与客户端侧的 {@code getHeatLevelOf} 需要同一份配置).
- * </p>
- */
 public class CmiGrillSources {
 	public static final String DIRECTORY = "cmi/grill_sources";
 
 	private static final Logger LOGGER = LogUtils.getLogger();
 	private static final Gson GSON = new GsonBuilder().setLenient().create();
 
-	/**
-	 * 内置默认值(仅在数据包与运行时注册都为空时兜底)
-	 */
+	// 数据包与运行时都为空时的兜底配置
 	private static final String BUILTIN_DEFAULT_JSON = """
 			{
 			  "entries": [
@@ -89,36 +53,20 @@ public class CmiGrillSources {
 
 	private static final ResourceLocation BUILTIN_ID = Cmi.loadResource("builtin_grill_sources");
 
-	/**
-	 * 数据包(含 jar 内置 default.json)解析出来的声明
-	 */
 	private static volatile List<GrillSource> datapack = List.of();
 
-	/**
-	 * Java/KubeJS 运行时注册的声明, 不随数据包重载清空
-	 */
 	private static final List<GrillSource> runtime = new CopyOnWriteArrayList<>();
 
-	/**
-	 * 实际生效的声明(datapack + runtime)
-	 */
 	private static volatile List<GrillSource> effective = List.of();
 
-	/**
-	 * 方块状态 -> 是否炙烤热源. 方块状态是单例, 缓存命中率极高
-	 */
 	private static final Map<BlockState, Boolean> CACHE = new ConcurrentHashMap<>();
 
-	/**
-	 * 在 mod 事件总线上注册数据包监听器
-	 */
+	// 在 mod 事件总线注册数据包加载器
 	public static void onAddReloadListeners(AddReloadListenerEvent event) {
 		event.addListener(new GrillSourcesReloadListener());
 	}
 
-	/**
-	 * 数据包重新加载完成(玩家登录 / {@code /reload} 之后), 把配置同步给客户端
-	 */
+	// 数据包重载后把整张表同步给客户端
 	public static void onDatapackSync(OnDatapackSyncEvent event) {
 		SyncGrillSourcesPacket packet = new SyncGrillSourcesPacket(serializeForSync());
 		ServerPlayer player = event.getPlayer();
@@ -130,9 +78,7 @@ public class CmiGrillSources {
 		}
 	}
 
-	/**
-	 * 判定一个方块状态是否算 GRILLED 热源
-	 */
+	// 判定方块状态是否为炙烤热源, 带缓存
 	public static boolean isGrillSource(@NotNull BlockState state) {
 		if (state.isAir()) {
 			return false;
@@ -158,9 +104,7 @@ public class CmiGrillSources {
 		return result;
 	}
 
-	/**
-	 * 给 JEI 动画用的展示方块: 取第一条能拿到方块实例的声明, 尽量避开火焰/流体这类不适合方块渲染的
-	 */
+	// 取 JEI 动画用展示方块, 跳过火焰与流体
 	public static @NotNull Optional<Block> displayBlock() {
 		Block fallback = null;
 
@@ -185,13 +129,12 @@ public class CmiGrillSources {
 		return Optional.ofNullable(fallback);
 	}
 
+	// 当前生效的声明快照
 	public static @NotNull List<GrillSource> all() {
 		return effective;
 	}
 
-	/**
-	 * 数据包重载时重建注册表
-	 */
+	// 数据包重载: 解析文件并重建注册表
 	public static void apply(@NotNull Map<ResourceLocation, JsonElement> objects) {
 		List<FileEntry> files = new ArrayList<>();
 
@@ -228,9 +171,7 @@ public class CmiGrillSources {
 		Cmi.LOGGER.info("Loaded {} grill source(s) from {} file(s)", result.size(), files.size());
 	}
 
-	/**
-	 * 客户端收到同步包后重建注册表
-	 */
+	// 客户端收到同步包后重建注册表
 	public static void applyClient(@NotNull String json) {
 		try {
 			List<GrillSource> parsed = parseEntries(Cmi.loadResource("synced_grill_sources"), GSON.fromJson(json, JsonElement.class));
@@ -245,15 +186,12 @@ public class CmiGrillSources {
 		}
 	}
 
-	/**
-	 * 运行时注册一条声明(供 KubeJS / 其它 mod 调用)
-	 *
-	 * @param blockOrTag {@code "ns:block"} 或 {@code "#ns:tag"}
-	 */
+	// 运行时按方块或标签 id 注册
 	public static void register(@NotNull String blockOrTag) {
 		register(blockOrTag, Map.of());
 	}
 
+	// 运行时注册并附加属性谓词
 	public static void register(@NotNull String blockOrTag, @NotNull Map<String, String> properties) {
 		GrillSource source = buildRuntimeSource(Cmi.loadResource("runtime"), blockOrTag, properties);
 
@@ -267,10 +205,12 @@ public class CmiGrillSources {
 		LOGGER.info("Registered grill source at runtime: {}", source.describe());
 	}
 
+	// 运行时按方块实例注册
 	public static void registerBlock(@NotNull Block block) {
 		registerBlock(block, Map.of());
 	}
 
+	// 运行时按方块实例注册并附加属性谓词
 	public static void registerBlock(@NotNull Block block, @NotNull Map<String, String> properties) {
 		ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
 
@@ -282,9 +222,7 @@ public class CmiGrillSources {
 		register(id.toString(), properties);
 	}
 
-	/**
-	 * 反注册一条运行时声明(只影响 {@link #register} 注册的, 数据包声明不受影响)
-	 */
+	// 运行时反向移除已注册条目
 	public static boolean unregister(@NotNull String blockOrTag) {
 		String normalized = blockOrTag.trim();
 		boolean removed = runtime.removeIf(source -> source.describe().startsWith(normalized));
@@ -297,14 +235,13 @@ public class CmiGrillSources {
 		return removed;
 	}
 
+	// 清空运行时注册, 不动数据包声明
 	public static void clearRuntime() {
 		runtime.clear();
 		rebuild();
 	}
 
-	/**
-	 * 序列化成同步用的 JSON
-	 */
+	// 序列化整张表供同步
 	public static @NotNull String serializeForSync() {
 		JsonObject root = new JsonObject();
 		JsonArray entries = new JsonArray();
@@ -318,6 +255,7 @@ public class CmiGrillSources {
 		return GSON.toJson(root);
 	}
 
+	// 由运行时入参构造一条声明
 	private static GrillSource buildRuntimeSource(ResourceLocation fileId, String blockOrTag, Map<String, String> properties) {
 		String text = blockOrTag.trim();
 
@@ -348,6 +286,7 @@ public class CmiGrillSources {
 		}
 	}
 
+	// 解析条目数组, 单条失败即跳过
 	private static List<GrillSource> parseEntries(ResourceLocation fileId, JsonElement element) {
 		if (element == null) {
 			return List.of();
@@ -381,6 +320,7 @@ public class CmiGrillSources {
 		return list;
 	}
 
+	// 合并数据包与运行时声明并清空缓存
 	private static void rebuild() {
 		List<GrillSource> list = new ArrayList<>(datapack.size() + runtime.size());
 		list.addAll(datapack);
@@ -389,10 +329,8 @@ public class CmiGrillSources {
 		CACHE.clear();
 	}
 
-	/**
-	 * 一个数据包文件
-	 */
 	private record FileEntry(ResourceLocation id, int priority, boolean replace, List<GrillSource> entries) {
+		// 解析单个数据包文件
 		static FileEntry fromJson(ResourceLocation id, JsonElement element) {
 			int priority = 0;
 			boolean replace = false;

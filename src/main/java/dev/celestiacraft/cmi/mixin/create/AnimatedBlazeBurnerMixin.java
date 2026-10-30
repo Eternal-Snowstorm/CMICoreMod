@@ -5,15 +5,15 @@ import com.mojang.math.Axis;
 import com.simibubi.create.compat.jei.category.animations.AnimatedBlazeBurner;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
+import dev.celestiacraft.cmi.common.grill.CmiGrillSources;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import dev.celestiacraft.cmi.common.grill.CmiGrillSources;
-import net.minecraft.world.level.block.Blocks;
 
 @Mixin(value = AnimatedBlazeBurner.class, remap = false)
 public abstract class AnimatedBlazeBurnerMixin extends AnimatedKinetics {
@@ -31,7 +31,8 @@ public abstract class AnimatedBlazeBurnerMixin extends AnimatedKinetics {
 			stack.mulPose(Axis.YP.rotationDegrees(22.5F));
 
 			int scale = 23;
-			// 展示方块改为从炙烤热源注册表里取, 与工作盆的实际判定共用同一份配置
+
+			// 展示方块取自炙烤热源注册表
 			Block block = CmiGrillSources.displayBlock().orElse(Blocks.FIRE);
 
 			blockElement(block.defaultBlockState())

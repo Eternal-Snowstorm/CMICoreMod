@@ -24,33 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * 一条 "GRILLED(炙烤) 热源" 声明.
- *
- * <p>
- * 一条声明只干一件事: 判定 "某个方块状态是否算炙烤热源". 支持三种形态
- * </p>
- *
- * <pre>
- * 1. 字符串 {@code "ns:block"}                     —— 该方块的任意状态都算
- * 2. 字符串 {@code "#ns:tag"}                       —— 该方块标签里的任意方块、任意状态都算
- * 3. 对象 {@code {"block": "ns:block", "properties": {"lit": "true"}}}
- *                                                     —— 方块 + 状态属性子集匹配
- *                                                     (tag 同样可以配 properties)
- * </pre>
- *
- * <p>
- * 属性是 "子集" 语义: 只校验写出来的属性, 没写的一律不管. 值按字符串比较(不区分大小写),
- * 所以 {@code true} 与 {@code "true"} 等价.
- * </p>
- *
- * <p>
- * {@code lenient}(默认 true)决定 "方块没有该属性时怎么办": true 表示忽略这条属性限制并记一条
- * warn, false 表示整条声明作废. 这条规则是为了让同一份配置能跨 mod 版本使用 —— 某些灶台有
- * {@code lit}, 某些没有.
- * </p>
- */
-public class GrillSource {
+public final class GrillSource {
 	private static final Logger LOGGER = LogUtils.getLogger();
 
 	private final @Nullable ResourceLocation blockId;
@@ -65,16 +39,14 @@ public class GrillSource {
 		this.lenient = lenient;
 	}
 
-	/**
-	 * 解析一条声明
-	 */
+	// 解析一条声明: 字符串或带属性谓词的对象
 	public static @NotNull GrillSource fromJson(@NotNull ResourceLocation fileId, @NotNull JsonElement element) {
 		if (element.isJsonPrimitive()) {
 			return fromString(fileId, element.getAsString());
 		}
 
 		if (!element.isJsonObject()) {
-			throw new JsonParseException(String.format("%s: 每条 grill_sources 声明必须是字符串或 JSON 对象, 实际是 %s", fileId, element));
+			throw new JsonParseException(String.format("%s: 每条声明必须是字符串或 JSON 对象, 实际是 %s", fileId, element));
 		}
 
 		JsonObject json = element.getAsJsonObject();
@@ -88,7 +60,7 @@ public class GrillSource {
 			isTag = true;
 			target = GsonHelper.getAsString(json, "tag");
 		} else {
-			throw new JsonParseException(String.format("%s: 声明 %s 缺少 \"block\" 或 \"tag\" 字段", fileId, json));
+			throw new JsonParseException(String.format("%s: 声明 %s 缺少 block 或 tag 字段", fileId, json));
 		}
 
 		ResourceLocation id = parseId(fileId, target);
@@ -108,37 +80,32 @@ public class GrillSource {
 		return new GrillSource(isTag ? null : id, isTag ? id : null, Map.copyOf(properties), lenient);
 	}
 
+	// 解析 ns:block 与 #ns:tag 两种字符串形态
 	private static @NotNull GrillSource fromString(@NotNull ResourceLocation fileId, @NotNull String raw) {
 		String text = raw.trim();
 
 		if (text.isEmpty()) {
-			throw new JsonParseException(String.format("%s: 出现空的 grill_sources 声明", fileId));
+			throw new JsonParseException(String.format("%s: 出现空的声明", fileId));
 		}
 
-		boolean isTag = !text.isEmpty() && text.charAt(0) == '#';
+		boolean isTag = text.startsWith("#");
 		ResourceLocation id = parseId(fileId, isTag ? text.substring(1) : text);
 
 		return new GrillSource(isTag ? null : id, isTag ? id : null, Map.of(), true);
 	}
 
+	// 解析资源位置, 非法时抛解析异常
 	private static @NotNull ResourceLocation parseId(@NotNull ResourceLocation fileId, @NotNull String raw) {
 		ResourceLocation id = ResourceLocation.tryParse(raw.trim());
 
 		if (id == null) {
-			throw new JsonParseException(String.format("%s: \"%s\" 不是合法的资源位置", fileId, raw));
+			throw new JsonParseException(String.format("%s: %s 不是合法的资源位置", fileId, raw));
 		}
 
 		return id;
 	}
 
-	/**
-	 * 加载期校验: 方块是否注册、属性是否真的存在
-	 *
-	 * <p>
-	 * 只对 "具体方块 + 属性谓词" 的声明生效; 标签在加载期无法枚举成员, 直接放行.
-	 * 返回 empty 表示这条声明应该被丢弃.
-	 * </p>
-	 */
+	// 校验方块已注册与属性存在, empty 表示丢弃
 	public @NotNull Optional<GrillSource> validate(@NotNull ResourceLocation fileId) {
 		if (blockId == null) {
 			return Optional.of(this);
@@ -174,6 +141,7 @@ public class GrillSource {
 		return Optional.of(new GrillSource(blockId, tagId, Map.copyOf(kept), lenient));
 	}
 
+	// 列出该方块上不存在的属性名
 	private @NotNull List<String> missingProperties(@NotNull Block block) {
 		Collection<Property<?>> defined = block.getStateDefinition().getProperties();
 		List<String> missing = new ArrayList<>();
@@ -196,9 +164,7 @@ public class GrillSource {
 		return missing;
 	}
 
-	/**
-	 * 判定一个方块状态是否命中本条声明
-	 */
+	// 判定方块状态是否命中本条声明
 	public boolean matches(@NotNull BlockState state) {
 		if (blockId != null) {
 			Block block = ForgeRegistries.BLOCKS.getValue(blockId);
@@ -217,6 +183,7 @@ public class GrillSource {
 		return matchesProperties(state);
 	}
 
+	// 属性子集匹配, 未写出的属性不参与判定
 	private boolean matchesProperties(@NotNull BlockState state) {
 		if (properties.isEmpty()) {
 			return true;
@@ -231,7 +198,8 @@ public class GrillSource {
 		return true;
 	}
 
-	@SuppressWarnings("rawtypes")
+	// 按属性名取值并与字符串忽略大小写比较
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	private static boolean matchesProperty(@NotNull BlockState state, @NotNull String name, @NotNull String value) {
 		for (Property property : state.getProperties()) {
 			if (!property.getName().equals(name)) {
@@ -246,9 +214,7 @@ public class GrillSource {
 		return false;
 	}
 
-	/**
-	 * 本条声明对应的方块(标签声明返回 empty)
-	 */
+	// 取对应方块, 标签声明返回 empty
 	public @NotNull Optional<Block> resolvedBlock() {
 		if (blockId == null) {
 			return Optional.empty();
@@ -263,9 +229,7 @@ public class GrillSource {
 		return Optional.of(block);
 	}
 
-	/**
-	 * 序列化回 {@link #fromJson} 能接受的形态(供客户端同步使用)
-	 */
+	// 序列化为同步用 JSON
 	public @NotNull JsonObject serialize() {
 		JsonObject json = new JsonObject();
 
@@ -288,9 +252,7 @@ public class GrillSource {
 		return json;
 	}
 
-	/**
-	 * 人类可读的标识, 用于日志与运行时反注册
-	 */
+	// 人类可读标识, 供日志与反注册使用
 	public @NotNull String describe() {
 		StringBuilder builder = new StringBuilder();
 

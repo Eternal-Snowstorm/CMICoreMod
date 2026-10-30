@@ -35,21 +35,7 @@ public abstract class HeatLevelMixin {
 		return heatLevel;
 	}
 
-	/**
-	 * 修掉 "追加枚举常量" 带来的循环错位
-	 *
-	 * <p>
-	 * 原版实现是 {@code byIndex(ordinal() % (values().length - 1) + 1)}, 把 GRILLED 追加到末尾后
-	 * {@code values().length} 从 5 变成 6, 于是 SEETHING(4) 会算到 {@code byIndex(5) = GRILLED},
-	 * 本该循环回 SMOULDERING 的 "满火 -> 熄火" 断了. 触发点在
-	 * {@code BlazeBurnerBlockEntity.applyCreativeFuel()} (创造模式喂烈焰蛋糕时).
-	 * </p>
-	 *
-	 * <p>
-	 * 这里把参与循环的档位数钉死为原版的 4 档(SMOULDERING / FADING / KINDLED / SEETHING);
-	 * 追加出来的常量(GRILLED)不参与循环, 直接回到最弱燃烧档.
-	 * </p>
-	 */
+	// 钉死原版 4 档循环, 追加的 GRILLED 不参与
 	@Inject(method = "nextActiveLevel", at = @At("HEAD"), remap = false, cancellable = true)
 	private void cmi$nextActiveLevel(CallbackInfoReturnable<BlazeBurnerBlock.HeatLevel> cir) {
 		BlazeBurnerBlock.HeatLevel self = (BlazeBurnerBlock.HeatLevel) (Object) this;
