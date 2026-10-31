@@ -40,12 +40,10 @@ import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgCuttersItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.custom.item.CdgHammerItemBuilder;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.*;
 import dev.celestiacraft.cmi.compat.kubejs.recipe.cdg.CdgRecipesSchema;
-import dev.celestiacraft.cmi.compat.kubejs.recipe.neoc.NecoCoolingSchema;
-import dev.celestiacraft.cmi.compat.kubejs.recipe.neoc.NecoIntegratedWorkingStationSchema;
 import dev.celestiacraft.cmi.compat.ldlib.LDLibHelpers;
+import dev.celestiacraft.cmi.compat.mbd2.BlockExistCondition;
 import dev.celestiacraft.cmi.compat.mbd2.MBDFluidIngredient;
 import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;
-import dev.celestiacraft.cmi.compat.mbd2.BlockExistCondition;
 import dev.celestiacraft.cmi.compat.mekanism.MekanismIngredient;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.celestiacraft.cmi.utils.CmiGlobal;
@@ -85,12 +83,6 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				.register("compression_molding", CdgRecipesSchema.COMPRESSION)
 				.register("hammering", CdgRecipesSchema.HAMMERING)
 				.register("wire_cutting", CdgRecipesSchema.CUTTING);
-
-		event.namespace("neoecoae")
-				.register("cooling", NecoCoolingSchema.SCHEMA)
-				.register("integrated_working_station", NecoIntegratedWorkingStationSchema.SCHEMA)
-				.register("large_integrated_working_station", NecoIntegratedWorkingStationSchema.SCHEMA)
-				.register("extended_crystal_assembler", NecoIntegratedWorkingStationSchema.SCHEMA);
 	}
 
 	@Override
