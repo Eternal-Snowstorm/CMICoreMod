@@ -55,8 +55,6 @@ import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.registry.RegistryInfo;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
 import dev.latvian.mods.kubejs.script.PlatformWrapper;
-import dev.latvian.mods.kubejs.script.ScriptType;
-import dev.latvian.mods.kubejs.util.ClassFilter;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -83,11 +81,6 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 				.register("compression_molding", CdgRecipesSchema.COMPRESSION)
 				.register("hammering", CdgRecipesSchema.HAMMERING)
 				.register("wire_cutting", CdgRecipesSchema.CUTTING);
-	}
-
-	@Override
-	public void registerClasses(ScriptType type, ClassFilter filter) {
-		filter.allow("cn.dancingsnow.neoecoae");
 	}
 
 	@Override
