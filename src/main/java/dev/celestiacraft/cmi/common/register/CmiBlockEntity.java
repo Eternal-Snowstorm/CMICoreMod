@@ -12,9 +12,6 @@ import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderBlockEntity;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderInstance;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderRenderer;
 import dev.celestiacraft.cmi.common.block.geothermal_generator.GGBlockEntity;
-import dev.celestiacraft.cmi.common.block.geothermal_generator.mars_geothermal_vent.MarsGeothermalVentBlockEntity;
-import dev.celestiacraft.cmi.common.block.mercury_geothermal_vent.MercuryGeothermalVentBlockEntity;
-import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlockEntity;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockEntity;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelRenderer;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelVisual;
@@ -29,12 +26,11 @@ import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorB
 import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlockEntity;
 import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlockEntity;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlockEntity;
+import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlockEntity;
 import dev.celestiacraft.cmi.common.register.block.*;
 
 public class CmiBlockEntity {
 	public static final BlockEntityEntry<TestGravelBlockEntity> TEST_GRAVEL;
-	public static final BlockEntityEntry<MarsGeothermalVentBlockEntity> MARS_GEO;
-	public static final BlockEntityEntry<MercuryGeothermalVentBlockEntity> MERCURY_GEO;
 	public static final BlockEntityEntry<WaterWellBlockEntity> WATER_WELL;
 	public static final BlockEntityEntry<BlazingBloodWellBlockEntity> BLAZING_BLOOD_WELL;
 	public static final BlockEntityEntry<LavaWellBlockEntity> LAVA_WELL;
@@ -54,14 +50,6 @@ public class CmiBlockEntity {
 	static {
 		TEST_GRAVEL = Cmi.REGISTRATE.blockEntity("test_gravel", TestGravelBlockEntity::new)
 				.validBlock(OtherBlocks.TEST_GRAVEL)
-				.register();
-
-		MARS_GEO = Cmi.REGISTRATE.blockEntity("mars_geothermal_vent", MarsGeothermalVentBlockEntity::new)
-				.validBlock(VentBlocks.MARS_GEO)
-				.register();
-
-		MERCURY_GEO = Cmi.REGISTRATE.blockEntity("mercury_geothermal_vent", MercuryGeothermalVentBlockEntity::new)
-				.validBlock(VentBlocks.MERCURY_GEO)
 				.register();
 
 		WATER_WELL = Cmi.REGISTRATE.blockEntity("water_well", WaterWellBlockEntity::new)

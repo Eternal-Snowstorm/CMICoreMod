@@ -92,20 +92,6 @@ idea {
 repositories {
 	mavenCentral()
 	maven {
-		url "https://maven.sighs.cc/repository/maven-releases/"
-		content {
-			includeGroup "cc.sighs.auratip"
-			includeGroup "cc.sighs.oelib"
-		}
-	}
-	maven {
-		url "https://maven.sighs.cc/repository/maven-snapshots/"
-		content {
-			includeGroup "cc.sighs.auratip"
-			includeGroup "cc.sighs.oelib"
-		}
-	}
-	maven {
 		name 'Tterrag Maven'
 		url 'https://maven.tterrag.com/'
 	}
@@ -196,8 +182,6 @@ dependencies {
 	// Mixin
 	compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
 	implementation("io.github.llamalad7:mixinextras-forge:0.4.1")
-	// AuraTip
-	compileOnly fg.deobf("cc.sighs.auratip:auratip-forge-1.20.1:1.1.1-beta")
 	// Geckolib
 	implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
 	implementation("com.eliotlash.mclib:mclib:20")

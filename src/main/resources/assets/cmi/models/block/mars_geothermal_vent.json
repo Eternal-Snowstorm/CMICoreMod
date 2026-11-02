@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "cmi:block/mars_geothermal_vent_top",
-    "side": "cmi:block/mars_geothermal_vent"
-  }
-}

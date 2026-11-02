@@ -4,7 +4,9 @@ import com.simibubi.create.AllItems;
 import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
 import dev.celestiacraft.cmi.common.register.CmiCreativeTabs;
 import dev.celestiacraft.cmi.common.register.CmiItem;
-import dev.celestiacraft.cmi.common.register.block.*;
+import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
+import dev.celestiacraft.cmi.common.register.block.OtherBlocks;
+import dev.celestiacraft.cmi.common.register.block.WallBlocks;
 import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.utils.TabUtils;
 import dev.latvian.mods.kubejs.KubeJS;
@@ -26,8 +28,6 @@ public class AddCreativeModeTabs {
 
 		if (key.equals(KUBEJS_TAB)) {
 			List.of(
-					VentBlocks.MARS_GEO,
-					VentBlocks.MERCURY_GEO,
 					OtherBlocks.WIND_VANE,
 					OtherBlocks.NAHUATL_SCAFFOLD,
 					OtherBlocks.BLAZEWOOD_SCAFFOLD

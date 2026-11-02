@@ -10,7 +10,6 @@ public class CmiBlock {
 		MultiblockBlocks.register();
 		OtherBlocks.register();
 		SpaceElevatorBlocks.register();
-		VentBlocks.register();
 		WallBlocks.register();
 
 		Cmi.LOGGER.info("{} Blocks Registered!", Cmi.NAME);

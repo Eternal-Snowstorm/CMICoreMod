@@ -27,7 +27,6 @@
 		"immersiveindustry.ChemicalLogicAccessor",
 		"immersiveindustry.ChemicalStateAccessor",
 		"immersiveindustry.ChemicalStateMixin",
-		"jei.IngredientListOverlayMixin",
 		"kubejs.ClassFilterMixin",
 		"kubejs.FluidStackJSMixin",
 		"kubejs.FluidWrapperMixin",

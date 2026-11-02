@@ -71,16 +71,6 @@ public class OtherLanguage extends LanguageGenerate {
 				"Grinding",
 				"打磨"
 		);
-		addKeyLang(
-				"categories",
-				"CMI",
-				"机械动力: 构件与革新"
-		);
-		addKeyLang(
-				"open_radial",
-				"Open Radial",
-				"打开轮盘"
-		);
 		addRadialLang(
 				"open_quest",
 				"Open Quests",
@@ -122,9 +112,9 @@ public class OtherLanguage extends LanguageGenerate {
 				"生成: %1$s"
 		);
 		addCustomLang(
-        		"recipe.condition.cmi:block_exist",
-        		"Block Exist",
-        		"方块存在"
+				"recipe.condition.cmi:block_exist",
+				"Block Exist",
+				"方块存在"
 		);
 		addCustomLang(
 				"recipe.condition.block_exist.tooltip",
