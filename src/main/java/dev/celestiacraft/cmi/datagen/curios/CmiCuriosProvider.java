@@ -16,7 +16,7 @@ public class CmiCuriosProvider extends CuriosDataProvider {
 
 	@Override
 	public void generate(HolderLookup.Provider provider, ExistingFileHelper helper) {
-		addPlayerGenerate("mechanisms", Cmi.loadResource("gui/curios/mechanisms"));
+		addPlayerGenerate("mechanisms", Cmi.loadResource("slot/mechanisms"));
 	}
 
 	private void addPlayerGenerate(String slot, ResourceLocation icon) {
