@@ -34,17 +34,17 @@ public class AcceleratorCategory {
 				.setRecipe((builder, recipe, group) -> {
 					builder.addSlot(RecipeIngredientRole.INPUT, 51, 5)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
-							.addIngredients(Ingredient.merge(recipe.inputs));
+							.addIngredients(Ingredient.merge(recipe.getInputs()));
 
 					builder.addSlot(RecipeIngredientRole.INPUT, 27, 38)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
-							.addItemStacks(recipe.target.displayStacks());
+							.addItemStacks(recipe.getTarget().displayStacks());
 
 					int xStart = 120;
 					int yStart = 5;
 					int id = 0;
 
-					for (AcceleratorRecipe.OutputEntry out : recipe.outputs) {
+					for (AcceleratorRecipe.OutputEntry out : recipe.getOutputs()) {
 						final int OUTPUT_SLOT_SIZE = 18;
 						final int OUTPUT_SLOT_GAP = 1;
 

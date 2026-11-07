@@ -1,12 +1,15 @@
 package dev.celestiacraft.cmi.common.recipe.accelerator;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import dev.celestiacraft.cmi.Cmi;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
@@ -21,17 +24,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import dev.celestiacraft.cmi.Cmi;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
 public class AcceleratorRecipe implements Recipe<SimpleContainer> {
-	public final ResourceLocation id;
-	public final List<Ingredient> inputs;
-	public final Target target;
-	public final List<OutputEntry> outputs;
+	private final ResourceLocation id;
+	private final List<Ingredient> inputs;
+	private final Target target;
+	private final List<OutputEntry> outputs;
 
 	@Override
 	public boolean matches(@NotNull SimpleContainer container, @NotNull Level level) {
@@ -175,18 +179,16 @@ public class AcceleratorRecipe implements Recipe<SimpleContainer> {
 		 */
 		private static Target readTarget(String value) {
 			if (!value.isEmpty() && value.charAt(0) == '#') {
-				return Target.ofTag(TagKey.create(Registries.BLOCK, ResourceLocation.parse(value.substring(1))));
+				return Target.ofTag(BlockTags.create(ResourceLocation.parse(value.substring(1))));
 			}
 
 			Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(value));
-			Objects.requireNonNull(block, "Unknown target block: " + value);
 			return Target.ofBlock(block);
 		}
 
 		private static OutputEntry readOutput(JsonObject obj) {
 			String id = obj.get("id").getAsString();
 			Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(id));
-			Objects.requireNonNull(block, "Unknown output block: " + id);
 
 			float chance = obj.get("chance").getAsFloat();
 			return new OutputEntry(block, chance);
@@ -195,6 +197,7 @@ public class AcceleratorRecipe implements Recipe<SimpleContainer> {
 		@Override
 		public @Nullable AcceleratorRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
 			int inSize = buf.readInt();
+
 			List<Ingredient> inputs = new ArrayList<>();
 			for (int i = 0; i < inSize; i++) {
 				inputs.add(Ingredient.fromNetwork(buf));
@@ -202,10 +205,10 @@ public class AcceleratorRecipe implements Recipe<SimpleContainer> {
 
 			Target target;
 			if (buf.readBoolean()) {
-				target = Target.ofTag(TagKey.create(Registries.BLOCK, buf.readResourceLocation()));
+				target = Target.ofTag(BlockTags.create(buf.readResourceLocation()));
 			} else {
 				Block targetBlock = ForgeRegistries.BLOCKS.getValue(buf.readResourceLocation());
-				target = Target.ofBlock(Objects.requireNonNull(targetBlock, "Unknown target block"));
+				target = Target.ofBlock(targetBlock);
 			}
 
 			int outSize = buf.readInt();
@@ -230,12 +233,12 @@ public class AcceleratorRecipe implements Recipe<SimpleContainer> {
 			if (recipe.target.isTag()) {
 				buf.writeResourceLocation(recipe.target.tag().location());
 			} else {
-				buf.writeResourceLocation(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(recipe.target.block())));
+				buf.writeResourceLocation(ForgeRegistries.BLOCKS.getKey(recipe.target.block()));
 			}
 
 			buf.writeInt(recipe.outputs.size());
 			for (OutputEntry o : recipe.outputs) {
-				buf.writeResourceLocation(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(o.block)));
+				buf.writeResourceLocation(ForgeRegistries.BLOCKS.getKey(o.block));
 				buf.writeFloat(o.chance);
 			}
 		}
