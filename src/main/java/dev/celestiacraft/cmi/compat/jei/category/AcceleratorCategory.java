@@ -38,7 +38,7 @@ public class AcceleratorCategory {
 
 					builder.addSlot(RecipeIngredientRole.INPUT, 27, 38)
 							.setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
-							.addItemStack(recipe.targetBlock.asItem().getDefaultInstance());
+							.addItemStacks(recipe.target.displayStacks());
 
 					int xStart = 120;
 					int yStart = 5;

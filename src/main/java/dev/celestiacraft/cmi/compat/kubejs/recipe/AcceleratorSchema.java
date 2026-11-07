@@ -4,12 +4,12 @@ import dev.latvian.mods.kubejs.item.InputItem;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
-import net.minecraft.world.level.block.Block;
+import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 
 public interface AcceleratorSchema {
 	RecipeKey<RecipeComponentBuilderMap[]> OUTPUT = output().key("output");
 	RecipeKey<InputItem[]> INPUT = ItemComponents.INPUT_ARRAY.key("input").defaultOptional();
-	RecipeKey<Block> TARGET = BlockComponent.OUTPUT.key("target").defaultOptional();
+	RecipeKey<AcceleratorRecipe.Target> TARGET = BlockOrTagComponent.INSTANCE.key("target").defaultOptional();
 
 	RecipeSchema SCHEMA = new RecipeSchema(OUTPUT, INPUT, TARGET);
 

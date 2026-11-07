@@ -59,7 +59,7 @@ public class AcceleratorEvent {
 							}
 
 							BlockPos checkPos = pos.offset(dx, 0, dz);
-							if (level.getBlockState(checkPos).is(recipe.targetBlock)) {
+							if (recipe.target.matches(level.getBlockState(checkPos))) {
 								matched++;
 							}
 						}
@@ -74,7 +74,7 @@ public class AcceleratorEvent {
 						for (int dz = -2; dz <= 2; dz++) {
 							BlockPos targetPos = pos.offset(dx, 0, dz);
 
-							if (level.getBlockState(targetPos).is(recipe.targetBlock)) {
+							if (recipe.target.matches(level.getBlockState(targetPos))) {
 								for (AcceleratorRecipe.OutputEntry out : recipe.outputs) {
 									BlockState outputBlock = out.block.defaultBlockState();
 

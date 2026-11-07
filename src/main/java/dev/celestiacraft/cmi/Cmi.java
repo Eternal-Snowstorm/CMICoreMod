@@ -11,7 +11,6 @@ import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.client.gui.ProspectingRocketUIFactory;
 import dev.celestiacraft.cmi.client.gui.SpaceElevatorUIFactory;
-import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockItem;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.entity.coin_projectile.CoinProjectileTypes;
 import dev.celestiacraft.cmi.common.feature.cargogrid.CargoGridRules;
@@ -52,18 +51,8 @@ public class Cmi {
 	private static ForgeConfigSpec STRESS_VALUES_SPEC;
 	public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
 			.setTooltipModifierFactory((item) -> {
-				TooltipModifier modifier = new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE);
-
-				/*
-				 * 金属齿轮不挂 Create 的应力 tooltip:
-				 * Create: Steam Powered 的 SPStress 会按方块 id 前缀(bronze_ / cast_ / steel_)把它们
-				 * 当成自己的飞轮, 于是凭空多出一行"应力量: 512x RPM"(cast_iron 1024, steel 2048)
-				 */
-				if (!(item instanceof MetalCogWheelBlockItem)) {
-					modifier = modifier.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
-				}
-
-				return modifier;
+				return new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
+						.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
 			});
 
 	public static ResourceLocation loadResource(String path) {
