@@ -29,12 +29,18 @@ public class SyncSpaceElevatorBaseStatePacket {
 	}
 
 	public static SyncSpaceElevatorBaseStatePacket decode(FriendlyByteBuf buf) {
-		return new SyncSpaceElevatorBaseStatePacket(buf.readResourceKey(net.minecraft.core.registries.Registries.DIMENSION), buf.readChunkPos(), buf.readBoolean());
+		return new SyncSpaceElevatorBaseStatePacket(buf.readResourceKey(Registries.DIMENSION), buf.readChunkPos(), buf.readBoolean());
 	}
 
-	public static void handle(SyncSpaceElevatorBaseStatePacket msg, Supplier<NetworkEvent.Context> ctxSupplier) {
-		NetworkEvent.Context ctx = ctxSupplier.get();
-		ctx.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> PlanetsScreenBaseBuildClientHandler.updateBuiltState(msg.dimension, msg.spaceStationPos, msg.built)));
-		ctx.setPacketHandled(true);
+	public static void handle(SyncSpaceElevatorBaseStatePacket packet, Supplier<NetworkEvent.Context> supplier) {
+		NetworkEvent.Context context = supplier.get();
+		context.enqueueWork(() -> {
+			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> {
+				return () -> {
+					return PlanetsScreenBaseBuildClientHandler.updateBuiltState(packet.dimension, packet.spaceStationPos, packet.built);
+				};
+			});
+		});
+		context.setPacketHandled(true);
 	}
 }

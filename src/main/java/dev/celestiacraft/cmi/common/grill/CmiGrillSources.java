@@ -40,14 +40,39 @@ public class CmiGrillSources {
 	// 数据包与运行时都为空时的兜底配置
 	private static final String BUILTIN_DEFAULT_JSON = """
 			{
-			  "entries": [
-			    "#cmi:grill_sources",
-			    {"block": "minecraft:campfire", "properties": {"lit": "true"}},
-			    {"block": "minecraft:soul_campfire", "properties": {"lit": "true"}},
-			    {"block": "farmersdelight:stove", "properties": {"lit": "true"}},
-			    {"block": "mynethersdelight:nether_stove", "properties": {"lit": "true"}},
-			    {"block": "kaleidoscope_cookery:stove", "properties": {"lit": "true"}}
-			  ]
+				"entries": [
+					"#cmi:grill_sources",
+					{
+						"block": "minecraft:campfire",
+						"properties": {
+							"lit": "true"
+						}
+					},
+					{
+						"block": "minecraft:soul_campfire",
+						"properties": {
+							"lit": "true"
+						}
+					},
+					{
+						"block": "farmersdelight:stove",
+						"properties": {
+							"lit": "true"
+						}
+					},
+					{
+						"block": "mynethersdelight:nether_stove",
+						"properties": {
+							"lit": "true"
+						}
+					},
+					{
+						"block": "kaleidoscope_cookery:stove",
+						"properties": {
+							"lit": "true"
+						}
+					}
+				]
 			}
 			""";
 

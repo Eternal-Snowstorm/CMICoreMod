@@ -82,11 +82,13 @@ public class Cmi {
 
 		CmiCreativeTabs.register(bus);
 
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-			CmiBlockPartialModel.init();
-			CmiSpriteShiftEntry.init();
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> {
+			return () -> {
+				CmiBlockPartialModel.init();
+				CmiSpriteShiftEntry.init();
 
-			MetalCogWheelPartial.register();
+				MetalCogWheelPartial.register();
+			};
 		});
 
 		CmiNetwork.register();

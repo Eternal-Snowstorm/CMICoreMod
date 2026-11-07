@@ -237,9 +237,9 @@ public class AcceleratorRecipe implements Recipe<SimpleContainer> {
 			}
 
 			buf.writeInt(recipe.outputs.size());
-			for (OutputEntry o : recipe.outputs) {
-				buf.writeResourceLocation(ForgeRegistries.BLOCKS.getKey(o.block));
-				buf.writeFloat(o.chance);
+			for (OutputEntry output : recipe.outputs) {
+				buf.writeResourceLocation(ForgeRegistries.BLOCKS.getKey(output.block));
+				buf.writeFloat(output.chance);
 			}
 		}
 	}

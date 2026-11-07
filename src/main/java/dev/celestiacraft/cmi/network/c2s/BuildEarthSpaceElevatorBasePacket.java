@@ -1,5 +1,6 @@
 package dev.celestiacraft.cmi.network.c2s;
 
+import com.mojang.authlib.GameProfile;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_base.SpaceElevatorBaseRecipe;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraSpaceElevatorCompat;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraSpaceElevatorStationCompat;
@@ -35,28 +36,28 @@ public class BuildEarthSpaceElevatorBasePacket {
 		this.spaceStationPos = spaceStationPos;
 	}
 
-	public static void encode(BuildEarthSpaceElevatorBasePacket msg, FriendlyByteBuf buf) {
-		buf.writeResourceKey(msg.dimension);
-		buf.writeChunkPos(msg.spaceStationPos);
+	public static void encode(BuildEarthSpaceElevatorBasePacket packet, FriendlyByteBuf buf) {
+		buf.writeResourceKey(packet.dimension);
+		buf.writeChunkPos(packet.spaceStationPos);
 	}
 
 	public static BuildEarthSpaceElevatorBasePacket decode(FriendlyByteBuf buf) {
 		return new BuildEarthSpaceElevatorBasePacket(buf.readResourceKey(net.minecraft.core.registries.Registries.DIMENSION), buf.readChunkPos());
 	}
 
-	public static void handle(BuildEarthSpaceElevatorBasePacket msg, Supplier<NetworkEvent.Context> ctxSupplier) {
-		NetworkEvent.Context ctx = ctxSupplier.get();
-		ctx.enqueueWork(() -> {
-			ServerPlayer player = ctx.getSender();
+	public static void handle(BuildEarthSpaceElevatorBasePacket packet, Supplier<NetworkEvent.Context> supplier) {
+		NetworkEvent.Context context = supplier.get();
+		context.enqueueWork(() -> {
+			ServerPlayer player = context.getSender();
 			if (player == null) {
 				return;
 			}
 
-			if (!Planet.EARTH_ORBIT.equals(msg.dimension)) {
+			if (!Planet.EARTH_ORBIT.equals(packet.dimension)) {
 				return;
 			}
 
-			ServerLevel orbitLevel = player.server.getLevel(msg.dimension);
+			ServerLevel orbitLevel = player.server.getLevel(packet.dimension);
 			if (orbitLevel == null) {
 				return;
 			}
@@ -66,17 +67,17 @@ public class BuildEarthSpaceElevatorBasePacket {
 				return;
 			}
 
-			if (!isAllowed(player, orbitLevel, msg.spaceStationPos)) {
+			if (!isAllowed(player, orbitLevel, packet.spaceStationPos)) {
 				return;
 			}
 
-			if (SpaceElevatorBaseHandler.hasBuiltStructure(orbitLevel, msg.spaceStationPos)) {
-				CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorBaseStatePacket(msg.dimension, msg.spaceStationPos, true));
+			if (SpaceElevatorBaseHandler.hasBuiltStructure(orbitLevel, packet.spaceStationPos)) {
+				CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorBaseStatePacket(packet.dimension, packet.spaceStationPos, true));
 				notifyPlayer(player, "text.cmi.space_elevator_base.already_built");
 				return;
 			}
 
-			SpaceElevatorBaseRecipe recipe = SpaceElevatorBaseRecipe.getRecipe(orbitLevel, msg.dimension);
+			SpaceElevatorBaseRecipe recipe = SpaceElevatorBaseRecipe.getRecipe(orbitLevel, packet.dimension);
 			if (recipe == null) {
 				return;
 			}
@@ -98,15 +99,15 @@ public class BuildEarthSpaceElevatorBasePacket {
 			}
 
 			SpaceElevatorBaseRecipe.consumeIngredients(player, recipe);
-			SpaceElevatorBaseHandler.markBaseBuilt(orbitLevel, msg.spaceStationPos);
-			AdAstraSpaceElevatorStationCompat.decorateEarthOrbitStation(orbitLevel, msg.spaceStationPos);
+			SpaceElevatorBaseHandler.markBaseBuilt(orbitLevel, packet.spaceStationPos);
+			AdAstraSpaceElevatorStationCompat.decorateEarthOrbitStation(orbitLevel, packet.spaceStationPos);
 			if (groundBasePos != null) {
-				SpaceElevatorLinkHandler.setGroundBase(orbitLevel, msg.spaceStationPos, Level.OVERWORLD, groundBasePos);
+				SpaceElevatorLinkHandler.setGroundBase(orbitLevel, packet.spaceStationPos, Level.OVERWORLD, groundBasePos);
 			}
-			CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorBaseStatePacket(msg.dimension, msg.spaceStationPos, true));
+			CmiNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncSpaceElevatorBaseStatePacket(packet.dimension, packet.spaceStationPos, true));
 			notifyPlayer(player, "text.cmi.space_elevator_base.success");
 		});
-		ctx.setPacketHandled(true);
+		context.setPacketHandled(true);
 	}
 
 	private static void notifyPlayer(ServerPlayer player, String translationKey) {
@@ -121,13 +122,15 @@ public class BuildEarthSpaceElevatorBasePacket {
 			return stations.stream().anyMatch(station -> station.position().equals(targetPos));
 		}
 
-		for (var member : ArgonautsIntegration.getClientPartyMembers(player.getUUID())) {
+		for (GameProfile member : ArgonautsIntegration.getClientPartyMembers(player.getUUID())) {
 			stations.addAll(SpaceStationHandler.getOwnedSpaceStations(member.getId(), level));
 		}
-		for (var member : ArgonautsIntegration.getClientGuildMembers(player.getUUID())) {
+		for (GameProfile member : ArgonautsIntegration.getClientGuildMembers(player.getUUID())) {
 			stations.addAll(SpaceStationHandler.getOwnedSpaceStations(member.getId(), level));
 		}
 
-		return stations.stream().anyMatch(station -> station.position().equals(targetPos));
+		return stations.stream().anyMatch((station) -> {
+			return station.position().equals(targetPos);
+		});
 	}
 }

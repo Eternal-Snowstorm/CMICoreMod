@@ -24,9 +24,15 @@ public class SyncSpaceElevatorConsoleConstructionPacket {
 		return new SyncSpaceElevatorConsoleConstructionPacket(buf.readBlockPos());
 	}
 
-	public static void handle(SyncSpaceElevatorConsoleConstructionPacket msg, Supplier<NetworkEvent.Context> ctxSupplier) {
-		NetworkEvent.Context ctx = ctxSupplier.get();
-		ctx.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> SpaceElevatorConsoleScreenState.markConstruction(msg.consolePos)));
-		ctx.setPacketHandled(true);
+	public static void handle(SyncSpaceElevatorConsoleConstructionPacket packet, Supplier<NetworkEvent.Context> supplier) {
+		NetworkEvent.Context context = supplier.get();
+		context.enqueueWork(() -> {
+			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> {
+				return () -> {
+					SpaceElevatorConsoleScreenState.markConstruction(packet.consolePos);
+				};
+			});
+		});
+		context.setPacketHandled(true);
 	}
 }

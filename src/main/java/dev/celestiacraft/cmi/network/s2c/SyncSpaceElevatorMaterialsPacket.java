@@ -26,17 +26,17 @@ public class SyncSpaceElevatorMaterialsPacket {
 		this.orbitalCounterpartPresent = orbitalCounterpartPresent;
 	}
 
-	public static void encode(SyncSpaceElevatorMaterialsPacket msg, FriendlyByteBuf buf) {
-		buf.writeBlockPos(msg.anchorPos);
-		buf.writeVarInt(msg.counts.length);
-		for (int count : msg.counts) {
+	public static void encode(SyncSpaceElevatorMaterialsPacket packet, FriendlyByteBuf buf) {
+		buf.writeBlockPos(packet.anchorPos);
+		buf.writeVarInt(packet.counts.length);
+		for (int count : packet.counts) {
 			buf.writeVarInt(count);
 		}
-		buf.writeVarInt(msg.fluidAmounts.length);
-		for (int amount : msg.fluidAmounts) {
+		buf.writeVarInt(packet.fluidAmounts.length);
+		for (int amount : packet.fluidAmounts) {
 			buf.writeVarInt(amount);
 		}
-		buf.writeBoolean(msg.orbitalCounterpartPresent);
+		buf.writeBoolean(packet.orbitalCounterpartPresent);
 	}
 
 	public static SyncSpaceElevatorMaterialsPacket decode(FriendlyByteBuf buf) {
@@ -54,9 +54,15 @@ public class SyncSpaceElevatorMaterialsPacket {
 		return new SyncSpaceElevatorMaterialsPacket(anchorPos, counts, fluidAmounts, buf.readBoolean());
 	}
 
-	public static void handle(SyncSpaceElevatorMaterialsPacket msg, Supplier<NetworkEvent.Context> ctxSupplier) {
-		NetworkEvent.Context ctx = ctxSupplier.get();
-		ctx.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> SpaceElevatorWrenchClientHandler.syncStoredCounts(msg.anchorPos, msg.counts, msg.fluidAmounts, msg.orbitalCounterpartPresent)));
-		ctx.setPacketHandled(true);
+	public static void handle(SyncSpaceElevatorMaterialsPacket packet, Supplier<NetworkEvent.Context> supplier) {
+		NetworkEvent.Context context = supplier.get();
+		context.enqueueWork(() -> {
+			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> {
+				return () -> {
+					SpaceElevatorWrenchClientHandler.syncStoredCounts(packet.anchorPos, packet.counts, packet.fluidAmounts, packet.orbitalCounterpartPresent);
+				};
+			});
+		});
+		context.setPacketHandled(true);
 	}
 }

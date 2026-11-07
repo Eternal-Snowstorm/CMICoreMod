@@ -16,17 +16,23 @@ public class SyncSpaceElevatorConsoleTransferPacket {
 		this.consolePos = consolePos.immutable();
 	}
 
-	public static void encode(SyncSpaceElevatorConsoleTransferPacket msg, FriendlyByteBuf buf) {
-		buf.writeBlockPos(msg.consolePos);
+	public static void encode(SyncSpaceElevatorConsoleTransferPacket packet, FriendlyByteBuf buf) {
+		buf.writeBlockPos(packet.consolePos);
 	}
 
 	public static SyncSpaceElevatorConsoleTransferPacket decode(FriendlyByteBuf buf) {
 		return new SyncSpaceElevatorConsoleTransferPacket(buf.readBlockPos());
 	}
 
-	public static void handle(SyncSpaceElevatorConsoleTransferPacket msg, Supplier<NetworkEvent.Context> ctxSupplier) {
-		NetworkEvent.Context ctx = ctxSupplier.get();
-		ctx.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> SpaceElevatorConsoleScreenState.markTransfer(msg.consolePos)));
-		ctx.setPacketHandled(true);
+	public static void handle(SyncSpaceElevatorConsoleTransferPacket packet, Supplier<NetworkEvent.Context> supplier) {
+		NetworkEvent.Context context = supplier.get();
+		context.enqueueWork(() -> {
+			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> {
+				return () -> {
+					return SpaceElevatorConsoleScreenState.markTransfer(packet.consolePos);
+				};
+			});
+		});
+		context.setPacketHandled(true);
 	}
 }
