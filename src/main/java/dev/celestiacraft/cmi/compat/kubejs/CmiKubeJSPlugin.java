@@ -45,6 +45,7 @@ import dev.celestiacraft.cmi.compat.mbd2.BlockExistCondition;
 import dev.celestiacraft.cmi.compat.mbd2.MBDFluidIngredient;
 import dev.celestiacraft.cmi.compat.mbd2.MBDHelpers;
 import dev.celestiacraft.cmi.compat.mekanism.MekanismIngredient;
+import dev.celestiacraft.cmi.compat.thermal.ThermalFluidIngredient;
 import dev.celestiacraft.cmi.network.ClientSeedHandler;
 import dev.celestiacraft.cmi.utils.CmiGlobal;
 import dev.celestiacraft.cmi.utils.metal.CmiMetal;
@@ -89,6 +90,8 @@ public class CmiKubeJSPlugin extends KubeJSPlugin {
 		event.add("JavaArray", Array.class);
 		event.add("JavaArrays", Arrays.class);
 		event.add("ArrayList", ArrayList.class);
+
+		event.add("ThermalFluidIngredient", ThermalFluidIngredient.class);
 
 		bindCmi(event);
 		bindCmiMBD(event);

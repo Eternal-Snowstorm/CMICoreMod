@@ -1,6 +1,6 @@
 package dev.celestiacraft.cmi.network.s2c;
 
-import dev.celestiacraft.cmi.compat.thermal.ThermalDynamoClient;
+import dev.celestiacraft.cmi.compat.thermal.render.ThermalDynamoClient;
 import lombok.AllArgsConstructor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.compat.thermal;
+package dev.celestiacraft.cmi.compat.thermal.render;
 
 import cofh.lib.util.constants.BlockStatePropertiesCoFH;
 import cofh.thermal.lib.common.block.DynamoBlock;

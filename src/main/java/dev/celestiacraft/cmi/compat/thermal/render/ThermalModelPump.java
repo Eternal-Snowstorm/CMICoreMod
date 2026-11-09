@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.compat.thermal;
+package dev.celestiacraft.cmi.compat.thermal.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

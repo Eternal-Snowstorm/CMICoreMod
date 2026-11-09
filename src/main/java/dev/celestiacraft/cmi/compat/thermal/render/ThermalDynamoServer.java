@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.compat.thermal;
+package dev.celestiacraft.cmi.compat.thermal.render;
 
 import cofh.thermal.lib.common.block.entity.DynamoBlockEntity;
 import dev.celestiacraft.cmi.Cmi;

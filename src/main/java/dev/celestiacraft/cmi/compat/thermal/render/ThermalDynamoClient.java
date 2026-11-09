@@ -1,4 +1,4 @@
-package dev.celestiacraft.cmi.compat.thermal;
+package dev.celestiacraft.cmi.compat.thermal.render;
 
 import dev.celestiacraft.cmi.Cmi;
 import net.minecraft.client.Minecraft;

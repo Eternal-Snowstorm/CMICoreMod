@@ -1,6 +1,7 @@
 package dev.celestiacraft.cmi.network.s2c;
 
 import dev.celestiacraft.cmi.event.PlanetsScreenBaseBuildClientHandler;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.ChunkPos;
@@ -37,7 +38,7 @@ public class SyncSpaceElevatorBaseStatePacket {
 		context.enqueueWork(() -> {
 			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> {
 				return () -> {
-					return PlanetsScreenBaseBuildClientHandler.updateBuiltState(packet.dimension, packet.spaceStationPos, packet.built);
+					PlanetsScreenBaseBuildClientHandler.updateBuiltState(packet.dimension, packet.spaceStationPos, packet.built);
 				};
 			});
 		});

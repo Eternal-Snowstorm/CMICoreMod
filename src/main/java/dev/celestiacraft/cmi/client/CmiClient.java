@@ -19,7 +19,7 @@ import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketT
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorRenderer;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
-import dev.celestiacraft.cmi.compat.thermal.ThermalDynamoRenderer;
+import dev.celestiacraft.cmi.compat.thermal.render.ThermalDynamoRenderer;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;

@@ -29,7 +29,7 @@ public class SyncSpaceElevatorConsoleTransferPacket {
 		context.enqueueWork(() -> {
 			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> {
 				return () -> {
-					return SpaceElevatorConsoleScreenState.markTransfer(packet.consolePos);
+					SpaceElevatorConsoleScreenState.markTransfer(packet.consolePos);
 				};
 			});
 		});
