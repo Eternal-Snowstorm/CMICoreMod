@@ -288,7 +288,7 @@ public class IoDebugBlocks {
 					String blockName = context.getName();
 					provider.simpleBlock(
 							context.get(),
-							provider.models().cubeAll(blockName, provider.modLoc("block/io_debug/" + blockName))
+							provider.models().cubeAll(blockName, provider.modLoc("block/ponder/" + blockName))
 					);
 				})
 				.simpleItem()
