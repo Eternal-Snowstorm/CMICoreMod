@@ -4,6 +4,7 @@ import com.simibubi.create.AllItems;
 import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
 import dev.celestiacraft.cmi.common.register.CmiCreativeTabs;
 import dev.celestiacraft.cmi.common.register.CmiItem;
+import dev.celestiacraft.cmi.common.register.block.IoDebugBlocks;
 import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
 import dev.celestiacraft.cmi.common.register.block.OtherBlocks;
 import dev.celestiacraft.cmi.common.register.block.WallBlocks;
@@ -67,6 +68,12 @@ public class AddCreativeModeTabs {
 		if (key.equals(CmiCreativeTabs.MECHANISMS.getKey())) {
 			event.accept(AllItems.PRECISION_MECHANISM.get());
 			event.accept(ModResources.RESSTONE_MODULE.getItem());
+		}
+
+		if (key.equals(CmiCreativeTabs.PONDER_IO_BLOCK.getKey())) {
+			IoDebugBlocks.all().forEach((block) -> {
+				event.accept(block.asItem());
+			});
 		}
 	}
 }
