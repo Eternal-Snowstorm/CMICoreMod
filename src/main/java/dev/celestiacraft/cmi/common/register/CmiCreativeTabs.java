@@ -2,6 +2,7 @@ package dev.celestiacraft.cmi.common.register;
 
 import com.simibubi.create.AllItems;
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.register.block.IoDebugBlocks;
 import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
 import dev.latvian.mods.kubejs.KubeJS;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,7 +24,8 @@ public class CmiCreativeTabs {
 
 	public static final RegistryObject<CreativeModeTab>
 			MECHANISMS,
-			MACHINES;
+			MACHINES,
+			PONDER_IO_BLOCK;
 
 	static {
 		TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Cmi.MODID);
@@ -32,6 +34,7 @@ public class CmiCreativeTabs {
 
 		MECHANISMS = addCreativeModeTab("mechanisms", AllItems.PRECISION_MECHANISM::asStack);
 		MACHINES = addCreativeModeTab("machines", MachineBlocks.ACCELERATOR::asStack);
+		PONDER_IO_BLOCK = addCreativeModeTab("ponder_io_block", IoDebugBlocks::icon);
 	}
 
 	private static RegistryObject<CreativeModeTab> addCreativeModeTab(String name, Supplier<ItemStack> icon) {
