@@ -1,9 +1,10 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console.capability;
 
-import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.fluids.FluidStack;
 
 public class ConsoleOutputFluidHandler implements IFluidHandler {
 	private final FluidTank[] tanks;
@@ -22,7 +23,7 @@ public class ConsoleOutputFluidHandler implements IFluidHandler {
 		if (tank < 0 || tank >= tanks.length) {
 			return FluidStack.EMPTY;
 		}
-		return tanks[tank].getFluid();
+		return tanks[tank].getFluid().copy();
 	}
 
 	@Override
@@ -48,16 +49,27 @@ public class ConsoleOutputFluidHandler implements IFluidHandler {
 		if (resource.isEmpty()) {
 			return FluidStack.EMPTY;
 		}
+		FluidStack result = FluidStack.EMPTY;
 		for (FluidTank tank : tanks) {
+			if (result.getAmount() >= resource.getAmount()) {
+				break;
+			}
 			FluidStack existing = tank.getFluid();
-			if (!existing.isEmpty() && existing.isFluidEqual(resource)) {
-				FluidStack drained = tank.drain(resource, action);
-				if (!drained.isEmpty()) {
-					return drained;
-				}
+			if (existing.isEmpty() || !existing.isFluidEqual(resource)) {
+				continue;
+			}
+			int request = resource.getAmount() - result.getAmount();
+			FluidStack drained = tank.drain(request, action);
+			if (drained.isEmpty()) {
+				continue;
+			}
+			if (result.isEmpty()) {
+				result = drained.copy();
+			} else {
+				result.grow(drained.getAmount());
 			}
 		}
-		return FluidStack.EMPTY;
+		return result;
 	}
 
 	@Override
