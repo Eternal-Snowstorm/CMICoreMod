@@ -44,6 +44,7 @@ public class CmiBlockEntity {
 	public static final BlockEntityEntry<TestCokeOvenIOBlockEntity> TEST_COKE_OVEN_IO;
 	public static final BlockEntityEntry<SpaceElevatorBaseConsoleBlockEntity> SPACE_ELEVATOR_BASE_CONSOLE;
 	public static final BlockEntityEntry<SpaceElevatorIoPortBlockEntity> SPACE_ELEVATOR_IO_PORT;
+	public static final BlockEntityEntry<SpaceElevatorIoPortBlockEntity> ASTRONAUTIC_PLATFORM_IO_PORT;
 	public static final BlockEntityEntry<SpaceElevatorTopBlockEntity> SPACE_ELEVATOR_TOP;
 	public static final BlockEntityEntry<GeneralAstronauticPlatformBlockEntity> GENERAL_ASTRONAUTIC_PLATFORM;
 	public static final BlockEntityEntry<MetalCogWheelBlockEntity> COGWHEEL;
@@ -109,6 +110,10 @@ public class CmiBlockEntity {
 
 		GENERAL_ASTRONAUTIC_PLATFORM = Cmi.REGISTRATE.blockEntity("general_astronautic_platform", GeneralAstronauticPlatformBlockEntity::new)
 				.validBlock(SpaceElevatorBlocks.GENERAL_ASTRONAUTIC_PLATFORM)
+				.register();
+
+		ASTRONAUTIC_PLATFORM_IO_PORT = Cmi.REGISTRATE.blockEntity("astronautic_platform_io_port", SpaceElevatorIoPortBlockEntity::new)
+				.validBlock(SpaceElevatorBlocks.ASTRONAUTIC_PLATFORM_IO_PORT)
 				.register();
 
 		WIND_VANE = Cmi.REGISTRATE.blockEntity("wind_vane", WindVaneBlockEntity::new)

@@ -69,7 +69,7 @@ public class GeneralAstronauticPlatformBlockItem extends BlockItem implements Ge
 					.transform(ItemDisplayContext.FIXED)
 					.rotation(0.0F, 0.0F, 0.0F)
 					.translation(0.0F, 0.0F, 0.0F)
-					.scale(0.25F)
+					.scale(0.1F)
 					.end()
 					.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
 					.rotation(75.0F, 45.0F, 0.0F)
@@ -84,12 +84,12 @@ public class GeneralAstronauticPlatformBlockItem extends BlockItem implements Ge
 					.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
 					.rotation(0.0F, 45.0F, 0.0F)
 					.translation(0.0F, 4.0F, 2.0F)
-					.scale(0.25F)
+					.scale(0.1F)
 					.end()
 					.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
 					.rotation(0.0F, 225.0F, 0.0F)
 					.translation(0.0F, 4.0F, 2.0F)
-					.scale(0.25F)
+					.scale(0.1F)
 					.end()
 					.end();
 		};

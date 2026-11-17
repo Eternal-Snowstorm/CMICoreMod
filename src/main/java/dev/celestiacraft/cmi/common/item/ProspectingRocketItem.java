@@ -74,7 +74,7 @@ public class ProspectingRocketItem extends BasicItem implements GeoItem {
 			return InteractionResult.PASS;
 		}
 
-		double surfaceY = clickedPos.getY() + SpaceElevatorConstructionHandler.PLATFORM_SURFACE_OFFSET;
+		double surfaceY = anchor.getY() + SpaceElevatorConstructionHandler.PLATFORM_SURFACE_OFFSET;
 		rocket.setPos(anchor.getX() + 0.5D, surfaceY, anchor.getZ() + 0.5D);
 		rocket.setYRot(context.getHorizontalDirection().getOpposite().toYRot());
 		level.addFreshEntity(rocket);

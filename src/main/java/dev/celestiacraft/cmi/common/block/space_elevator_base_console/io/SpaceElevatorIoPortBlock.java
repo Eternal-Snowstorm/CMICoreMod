@@ -8,11 +8,14 @@ import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 
+import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlock;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -65,6 +69,17 @@ public class SpaceElevatorIoPortBlock extends BasicBlock implements IBE<SpaceEle
 		return level.getBlockState(controller).getDestroyProgress(player, level, controller);
 	}
 
+	// 右键端口时把交互转发给控制器方块
+	@Override
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		BlockPos controller = getControllerPos(level, pos);
+		if (controller == null) {
+			return InteractionResult.PASS;
+		}
+		BlockState controllerState = level.getBlockState(controller);
+		return controllerState.getBlock().use(controllerState, level, controller, player, hand, hit);
+	}
+
 	@Override
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
 		return state.getValue(SHAPE).shape();
@@ -103,8 +118,13 @@ public class SpaceElevatorIoPortBlock extends BasicBlock implements IBE<SpaceEle
 		if (!level.isClientSide() && !state.is(newState.getBlock())) {
 			if (level.getBlockEntity(pos) instanceof SpaceElevatorIoPortBlockEntity portBe) {
 				BlockPos controllerPos = portBe.getControllerPos();
-				if (controllerPos != null && level.getBlockState(controllerPos).getBlock() instanceof SpaceElevatorBaseConsoleBlock) {
-					SpaceElevatorBaseConsoleBlock.dismantleStructure(level, controllerPos);
+				if (controllerPos != null) {
+					Block controllerBlock = level.getBlockState(controllerPos).getBlock();
+					if (controllerBlock instanceof SpaceElevatorBaseConsoleBlock) {
+						SpaceElevatorBaseConsoleBlock.dismantleStructure(level, controllerPos);
+					} else if (controllerBlock instanceof GeneralAstronauticPlatformBlock) {
+						GeneralAstronauticPlatformBlock.dismantleStructure(level, controllerPos);
+					}
 				}
 			}
 		}

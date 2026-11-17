@@ -75,6 +75,11 @@ public class BlockLanguage extends LanguageGenerate {
 				"太空电梯接口"
 		);
 		addBlockLanguage(
+				"astronautic_platform_io_port",
+				"Astronautic Platform IO Port",
+				"航天平台接口"
+		);
+		addBlockLanguage(
 				"space_elevator_top",
 				"Space Elevator Top Receiver",
 				"太空电梯顶部接收器"
