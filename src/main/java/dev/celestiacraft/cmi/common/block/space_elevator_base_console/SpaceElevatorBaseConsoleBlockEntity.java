@@ -4,7 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.capability.*;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortType;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.transfer.SpaceElevatorConsoleTransferEvent;
+import dev.celestiacraft.cmi.common.block.space_elevator_io.SpaceElevatorIoHost;
 import dev.celestiacraft.cmi.common.entity.space_elevator.ElevatorEnergyAnchor;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorConsoleDisplayState;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
@@ -49,7 +51,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements GeoBlockEntity, ElevatorEnergyAnchor {
+public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements GeoBlockEntity, ElevatorEnergyAnchor, SpaceElevatorIoHost {
 	public static final int ENERGY_CAPACITY = 10_000_000;
 	public static final int ENERGY_MAX_RECEIVE = 50_000;
 	public static final int LAUNCH_ENERGY_COST = 1_000_000;
@@ -153,6 +155,28 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 			return;
 		}
 		rebuildCaps();
+	}
+
+	// 按端口类型向端口方块暴露对应能力
+	@Override
+	public @NotNull LazyOptional<?> getIoCapability(@NotNull IoPortType type) {
+		ensureCaps();
+		if (type == IoPortType.ENERGY_IN) {
+			return this.energyCap;
+		}
+		if (type == IoPortType.INPUT_ITEM) {
+			return this.inputItemCap;
+		}
+		if (type == IoPortType.OUTPUT_ITEM) {
+			return this.outputItemCap;
+		}
+		if (type == IoPortType.INPUT_FLUID) {
+			return this.inputFluidCap;
+		}
+		if (type == IoPortType.OUTPUT_FLUID) {
+			return this.outputFluidCap;
+		}
+		return LazyOptional.empty();
 	}
 
 	@Override

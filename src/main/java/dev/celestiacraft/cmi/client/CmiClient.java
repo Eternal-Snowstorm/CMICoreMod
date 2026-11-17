@@ -1,6 +1,5 @@
 package dev.celestiacraft.cmi.client;
 
-import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
 import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
 import dev.celestiacraft.cmi.client.overlay.DivingBacktankAirOverlay;
@@ -9,6 +8,8 @@ import dev.celestiacraft.cmi.client.overlay.SpaceElevatorConstructionOverlay;
 import dev.celestiacraft.cmi.client.overlay.SpaceElevatorFlightOverlay;
 import dev.celestiacraft.cmi.client.ponder.CmiPonderPlugin;
 import dev.celestiacraft.cmi.client.render.SpaceElevatorHudRenderer;
+import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.block.general_astronautic_platform.render.GeneralAstronauticPlatformRenderer;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelPartial;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.render.SpaceElevatorBaseConsoleRenderer;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopRenderer;
@@ -68,6 +69,9 @@ public class CmiClient {
 		});
 		event.registerBlockEntityRenderer(CmiBlockEntity.SPACE_ELEVATOR_TOP.get(), (context) -> {
 			return new SpaceElevatorTopRenderer();
+		});
+		event.registerBlockEntityRenderer(CmiBlockEntity.GENERAL_ASTRONAUTIC_PLATFORM.get(), (context) -> {
+			return new GeneralAstronauticPlatformRenderer();
 		});
 
 		// Thermal 发电机的活塞臂

@@ -80,6 +80,11 @@ public class BlockLanguage extends LanguageGenerate {
 				"太空电梯顶部接收器"
 		);
 		addBlockLanguage(
+				"general_astronautic_platform",
+				"General Astronautic Platform",
+				"通用航天平台"
+		);
+		addBlockLanguage(
 				"wind_vane",
 				"Wind Vane",
 				"风向标"
