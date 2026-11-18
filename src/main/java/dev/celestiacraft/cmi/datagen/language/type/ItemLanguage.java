@@ -1,9 +1,10 @@
 package dev.celestiacraft.cmi.datagen.language.type;
 
-import dev.celestiacraft.cmi.datagen.language.LanguageGenerate;
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import dev.celestiacraft.cmi.datagen.language.LanguageGenerate;
 
 public class ItemLanguage extends LanguageGenerate {
 	public static void addLang() {
@@ -17,6 +18,11 @@ public class ItemLanguage extends LanguageGenerate {
 				"metal_detector",
 				"Metal Detector",
 				"金属探测仪"
+		);
+		addItemLanguage(
+				"digital_locator",
+				"Digital Locator",
+				"数字定位仪"
 		);
 		addItemLanguage(
 				"initial_item_kit",

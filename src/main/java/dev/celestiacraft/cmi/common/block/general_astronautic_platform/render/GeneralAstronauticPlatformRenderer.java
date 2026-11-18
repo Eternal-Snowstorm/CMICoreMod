@@ -7,6 +7,7 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 public class GeneralAstronauticPlatformRenderer extends GeoBlockRenderer<GeneralAstronauticPlatformBlockEntity> {
 	public GeneralAstronauticPlatformRenderer() {
 		super(new GeneralAstronauticPlatformModel());
+		addRenderLayer(new GeneralAstronauticPlatformScreenLayer(this));
 	}
 
 	@Override

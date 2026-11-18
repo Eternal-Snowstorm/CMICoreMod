@@ -1,13 +1,18 @@
 package dev.celestiacraft.cmi.event;
 
+import java.util.List;
+
 import com.simibubi.create.AllItems;
+
 import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
-import dev.celestiacraft.cmi.common.register.CmiCreativeTabs;
-import dev.celestiacraft.cmi.common.register.CmiItem;
+import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import dev.celestiacraft.cmi.common.register.block.IoDebugBlocks;
 import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
 import dev.celestiacraft.cmi.common.register.block.OtherBlocks;
+import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
 import dev.celestiacraft.cmi.common.register.block.WallBlocks;
+import dev.celestiacraft.cmi.common.register.CmiCreativeTabs;
+import dev.celestiacraft.cmi.common.register.CmiItem;
 import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.utils.TabUtils;
 import dev.latvian.mods.kubejs.KubeJS;
@@ -16,8 +21,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.List;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AddCreativeModeTabs {
@@ -31,7 +34,8 @@ public class AddCreativeModeTabs {
 			List.of(
 					OtherBlocks.WIND_VANE,
 					OtherBlocks.NAHUATL_SCAFFOLD,
-					OtherBlocks.BLAZEWOOD_SCAFFOLD
+					OtherBlocks.BLAZEWOOD_SCAFFOLD,
+					SpaceElevatorBlocks.GENERAL_ASTRONAUTIC_PLATFORM
 			).forEach((block) -> {
 				event.accept(block.asItem());
 			});
@@ -40,7 +44,8 @@ public class AddCreativeModeTabs {
 					CmiItem.INITIAL_ITEM_KIT,
 					CmiItem.HANDHELE_CRAFTING_TABLE,
 					CmiItem.SIMPLE_BATTERY,
-					CmiItem.METAL_DETECTOR
+					CmiItem.METAL_DETECTOR,
+					CmiItem.DIGITAL_LOCATOR
 			).forEach((item) -> {
 				event.accept(item.asItem());
 			});
@@ -48,6 +53,10 @@ public class AddCreativeModeTabs {
 			MetalCogWheelRegister.COMMON_LIST.forEach((cogwheel) -> {
 				event.accept(cogwheel.asItem());
 			});
+
+			for (ProspectingRocketTier tier : ProspectingRocketTier.values()) {
+				event.accept(CmiItem.prospectingRocket(tier).asItem());
+			}
 		}
 
 		if (key.equals(CmiCreativeTabs.MACHINES.getKey())) {

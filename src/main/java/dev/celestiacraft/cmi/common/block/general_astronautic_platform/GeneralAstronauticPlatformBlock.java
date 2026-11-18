@@ -15,6 +15,7 @@ import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortT
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlockEntity;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.structure.SpaceElevatorBaseStructure;
+import dev.celestiacraft.cmi.common.item.tool.DigitalLocator;
 import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraPlatformRocket;
@@ -99,6 +100,9 @@ public class GeneralAstronauticPlatformBlock extends BasicBlock implements IBE<G
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack held = player.getItemInHand(hand);
+		if (held.getItem() instanceof DigitalLocator) {
+			return DigitalLocator.useOnPlatform(level, pos, player, held);
+		}
 		if (!AdAstraPlatformRocket.isRocketItem(held)) {
 			return super.use(state, level, pos, player, hand, hit);
 		}
@@ -136,9 +140,18 @@ public class GeneralAstronauticPlatformBlock extends BasicBlock implements IBE<G
 	@Override
 	public void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState newState, boolean moved) {
 		if (!level.isClientSide() && !state.is(newState.getBlock())) {
+			releaseBinding(level, pos);
 			dismantlePorts(level, pos);
 		}
 		super.onRemove(state, level, pos, newState, moved);
+	}
+
+	// 平台被破坏时解除双方绑定
+	private static void releaseBinding(@NotNull Level level, @NotNull BlockPos pos) {
+		if (level.getBlockEntity(pos) instanceof GeneralAstronauticPlatformBlockEntity platform) {
+			platform.releaseLandingLoad();
+			PlatformBindingHandler.release(platform);
+		}
 	}
 
 	@Nullable

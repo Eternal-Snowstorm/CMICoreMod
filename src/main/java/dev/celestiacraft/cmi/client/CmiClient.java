@@ -18,11 +18,14 @@ import dev.celestiacraft.cmi.common.entity.dev.qi_month.QiMonthRenderer;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketRenderer;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorRenderer;
+import dev.celestiacraft.cmi.common.item.tool.DigitalLocator;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
+import dev.celestiacraft.cmi.common.register.CmiItem;
 import dev.celestiacraft.cmi.compat.thermal.render.ThermalDynamoRenderer;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -51,6 +54,11 @@ public class CmiClient {
 			CmiSpriteShiftEntry.init();
 
 			MetalCogWheelPartial.register();
+
+			ItemProperties.register(CmiItem.DIGITAL_LOCATOR.get(), Cmi.loadResource("bound"),
+					(stack, level, entity, seed) -> {
+						return DigitalLocator.isRecorded(stack) ? 1.0F : 0.0F;
+					});
 
 			EntityRenderers.register(CmiEntity.COIN_PROJECTILE.get(), CoinProjectileRenderer::new);
 			EntityRenderers.register(CmiEntity.QI_MONTH.get(), QiMonthRenderer::new);

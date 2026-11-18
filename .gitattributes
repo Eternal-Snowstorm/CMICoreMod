@@ -1,0 +1,7 @@
+# 统一使用 LF 行尾, 避免跨平台改动产生整篇 diff
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ogg binary
+*.jar binary

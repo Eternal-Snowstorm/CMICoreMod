@@ -1,0 +1,14 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "cmi:item/tool/digital_locator"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"cmi:bound": 1.0
+			},
+			"model": "cmi:item/tool/digital_locator_on"
+		}
+	]
+}

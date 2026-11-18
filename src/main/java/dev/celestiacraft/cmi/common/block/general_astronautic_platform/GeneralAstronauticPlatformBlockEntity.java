@@ -1,8 +1,11 @@
 package dev.celestiacraft.cmi.common.block.general_astronautic_platform;
 
+import java.util.Comparator;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.io.PlatformInputFluidHandler;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.io.PlatformInputItemHandler;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.io.PlatformOutputItemHandler;
@@ -10,6 +13,7 @@ import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortT
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.structure.SpaceElevatorBaseStructure;
 import dev.celestiacraft.cmi.common.block.space_elevator_io.SpaceElevatorIoHost;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketEntity;
+import dev.celestiacraft.cmi.common.entity.prospecting_rocket.RocketLaunchResult;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraPlatformRocket;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraRocketFluidHandler;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraRocketItemHandler;
@@ -17,12 +21,20 @@ import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
 import earth.terrarium.adastra.common.entities.vehicles.Rocket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.TicketType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -34,6 +46,16 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class GeneralAstronauticPlatformBlockEntity extends BlockEntity implements GeoBlockEntity, SpaceElevatorIoHost {
+	private static final String TAG_BOUND_PLATFORM = "BoundPlatform";
+	private static final String TAG_DISPLAY_STATE = "DisplayState";
+	private static final double NOTIFY_RADIUS = 32.0D;
+	private static final int FAILURE_DISPLAY_TICKS = 100;
+	private static final int DISPLAY_REFRESH_INTERVAL = 10;
+	private static final int LANDING_LOAD_TICKS = 100;
+	private static final int LANDING_LOAD_CENTER_DISTANCE = 1;
+	private static final int LANDING_LOAD_NEIGHBOR_DISTANCE = 0;
+	private static final TicketType<ChunkPos> LANDING_LOAD_TICKET = TicketType.create("cmi_landing_load", Comparator.comparingLong(ChunkPos::toLong), 400);
+
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
 	private LazyOptional<IItemHandler> inputItemCap = LazyOptional.empty();
@@ -41,6 +63,16 @@ public class GeneralAstronauticPlatformBlockEntity extends BlockEntity implement
 	private LazyOptional<IFluidHandler> inputFluidCap = LazyOptional.empty();
 
 	private boolean lastPowered;
+	private int displayRefreshCounter;
+	private int displayOverrideTicks;
+	private int landingLoadTicks;
+	private AstronauticPlatformDisplayState displayState = AstronauticPlatformDisplayState.NONE;
+
+	@Nullable
+	private AstronauticPlatformDisplayState displayOverride;
+
+	@Nullable
+	private GlobalPos boundPlatform;
 
 	public GeneralAstronauticPlatformBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -59,6 +91,8 @@ public class GeneralAstronauticPlatformBlockEntity extends BlockEntity implement
 	public void onLoad() {
 		super.onLoad();
 		rebuildCaps();
+		PlatformBindingHandler.validate(this);
+		refreshDisplay();
 	}
 
 	// 重建三个对外能力
@@ -66,6 +100,12 @@ public class GeneralAstronauticPlatformBlockEntity extends BlockEntity implement
 		inputItemCap = LazyOptional.of(() -> new PlatformInputItemHandler(this));
 		outputItemCap = LazyOptional.of(() -> new PlatformOutputItemHandler(this));
 		inputFluidCap = LazyOptional.of(() -> new PlatformInputFluidHandler(this));
+	}
+
+	// 火箭停靠后重装配对外能力, 使端口重新解析到平台上的火箭
+	public void refreshStorageProxy() {
+		rebuildCaps();
+		setChanged();
 	}
 
 	@Override
@@ -181,6 +221,8 @@ public class GeneralAstronauticPlatformBlockEntity extends BlockEntity implement
 			return;
 		}
 		be.tickRedstone();
+		be.tickDisplay();
+		be.tickLandingLoad();
 	}
 
 	// 红石上升沿触发一次发射尝试
@@ -205,8 +247,20 @@ public class GeneralAstronauticPlatformBlockEntity extends BlockEntity implement
 		return false;
 	}
 
-	// 仅当火箭上有玩家乘客且燃料充足时进入倒计时
+	// 货用火箭直接发往绑定平台, 客运火箭需玩家与燃料
 	private void launchRocket() {
+		ProspectingRocketEntity prospecting = findRocket();
+		if (prospecting != null) {
+			GlobalPos target = boundPlatform;
+			if (target == null) {
+				notifyLaunchFailure(RocketLaunchResult.NO_BINDING);
+				return;
+			}
+			RocketLaunchResult result = prospecting.launch(target);
+			notifyLaunchFailure(result);
+			showLaunchResult(result);
+			return;
+		}
 		Rocket rocket = findAdAstraRocket();
 		if (rocket == null) {
 			return;
@@ -221,5 +275,185 @@ public class GeneralAstronauticPlatformBlockEntity extends BlockEntity implement
 			return;
 		}
 		rocket.initiateLaunchSequence();
+	}
+
+	// 把发射结果映射为屏幕图标, 目标被占用单独区分
+	private void showLaunchResult(RocketLaunchResult result) {
+		if (result == RocketLaunchResult.SUCCESS || result == RocketLaunchResult.NO_BINDING
+				|| result == RocketLaunchResult.BUSY || result == RocketLaunchResult.NOT_SERVER) {
+			return;
+		}
+		if (result == RocketLaunchResult.OCCUPIED) {
+			showDisplayEvent(AstronauticPlatformDisplayState.TARGET_OCCUPIED, FAILURE_DISPLAY_TICKS);
+			return;
+		}
+		showDisplayEvent(AstronauticPlatformDisplayState.LAUNCH_FAILED, FAILURE_DISPLAY_TICKS);
+	}
+
+	// 发射失败时向平台附近玩家提示原因
+	private void notifyLaunchFailure(RocketLaunchResult result) {
+		if (level == null || result == RocketLaunchResult.SUCCESS || !result.shouldNotify()) {
+			return;
+		}
+		Component message = CmiLang.textDirect(result.messageKey());
+		AABB area = new AABB(worldPosition).inflate(NOTIFY_RADIUS);
+		for (Player player : level.getEntitiesOfClass(Player.class, area)) {
+			player.displayClientMessage(message, true);
+		}
+	}
+
+	// 客户端读取的屏幕显示状态
+	@NotNull
+	public AstronauticPlatformDisplayState getDisplayState() {
+		return displayState;
+	}
+
+	// 按绑定与火箭状态刷新常驻图标
+	public void refreshDisplay() {
+		if (level != null && level.isClientSide()) {
+			return;
+		}
+		setDisplayState(resolveBaseDisplayState());
+	}
+
+	// 显示一次限时事件图标, 覆盖常驻图标
+	public void showDisplayEvent(AstronauticPlatformDisplayState state, int ticks) {
+		displayOverride = state;
+		displayOverrideTicks = ticks;
+		setDisplayState(state);
+	}
+
+	private void tickDisplay() {
+		if (displayOverrideTicks > 0) {
+			displayOverrideTicks--;
+			if (displayOverrideTicks <= 0) {
+				displayOverride = null;
+				setDisplayState(resolveBaseDisplayState());
+			}
+			return;
+		}
+		if (displayRefreshCounter > 0) {
+			displayRefreshCounter--;
+			return;
+		}
+		displayRefreshCounter = DISPLAY_REFRESH_INTERVAL;
+		setDisplayState(resolveBaseDisplayState());
+	}
+
+	private AstronauticPlatformDisplayState resolveBaseDisplayState() {
+		if (boundPlatform == null) {
+			return AstronauticPlatformDisplayState.NONE;
+		}
+		if (hasAnyRocket()) {
+			return AstronauticPlatformDisplayState.BOUND_ROCKET;
+		}
+		return AstronauticPlatformDisplayState.BOUND_EMPTY;
+	}
+
+	private void setDisplayState(AstronauticPlatformDisplayState state) {
+		if (displayState == state) {
+			return;
+		}
+		displayState = state;
+		syncDisplay();
+	}
+
+	private void syncDisplay() {
+		if (level == null) {
+			return;
+		}
+		BlockState state = getBlockState();
+		level.sendBlockUpdated(worldPosition, state, state, 3);
+	}
+
+	// 火箭落地后保持平台区块加载五分钟并弱加载周边八区块
+	public void beginLandingLoad() {
+		if (!(level instanceof ServerLevel serverLevel)) {
+			return;
+		}
+		landingLoadTicks = LANDING_LOAD_TICKS;
+		ChunkPos center = new ChunkPos(worldPosition);
+		for (int offsetX = -1; offsetX <= 1; offsetX++) {
+			for (int offsetZ = -1; offsetZ <= 1; offsetZ++) {
+				ChunkPos chunkPos = new ChunkPos(center.x + offsetX, center.z + offsetZ);
+				int distance = chunkPos.equals(center) ? LANDING_LOAD_CENTER_DISTANCE : LANDING_LOAD_NEIGHBOR_DISTANCE;
+				serverLevel.getChunkSource().addRegionTicket(LANDING_LOAD_TICKET, chunkPos, distance, chunkPos);
+			}
+		}
+	}
+
+	private void tickLandingLoad() {
+		if (landingLoadTicks <= 0) {
+			return;
+		}
+		landingLoadTicks--;
+		if (landingLoadTicks <= 0) {
+			releaseLandingLoad();
+		}
+	}
+
+	// 释放落地后的加载票据
+	public void releaseLandingLoad() {
+		landingLoadTicks = 0;
+		if (!(level instanceof ServerLevel serverLevel)) {
+			return;
+		}
+		ChunkPos center = new ChunkPos(worldPosition);
+		for (int offsetX = -1; offsetX <= 1; offsetX++) {
+			for (int offsetZ = -1; offsetZ <= 1; offsetZ++) {
+				ChunkPos chunkPos = new ChunkPos(center.x + offsetX, center.z + offsetZ);
+				int distance = chunkPos.equals(center) ? LANDING_LOAD_CENTER_DISTANCE : LANDING_LOAD_NEIGHBOR_DISTANCE;
+				serverLevel.getChunkSource().removeRegionTicket(LANDING_LOAD_TICKET, chunkPos, distance, chunkPos);
+			}
+		}
+	}
+
+	@Override
+	protected void saveAdditional(@NotNull CompoundTag tag) {
+		super.saveAdditional(tag);
+		if (boundPlatform != null) {
+			PlatformBindingHandler.write(tag, TAG_BOUND_PLATFORM, boundPlatform);
+		}
+		tag.putString(TAG_DISPLAY_STATE, displayState.name());
+	}
+
+	@Override
+	public void load(@NotNull CompoundTag tag) {
+		super.load(tag);
+		boundPlatform = PlatformBindingHandler.read(tag, TAG_BOUND_PLATFORM);
+		displayState = AstronauticPlatformDisplayState.fromName(tag.contains(TAG_DISPLAY_STATE) ? tag.getString(TAG_DISPLAY_STATE) : null);
+	}
+
+	@Override
+	public @NotNull CompoundTag getUpdateTag() {
+		return saveWithoutMetadata();
+	}
+
+	@Override
+	public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
+	}
+
+	// 取已绑定的对端平台坐标
+	@Nullable
+	public GlobalPos getBoundPlatform() {
+		return boundPlatform;
+	}
+
+	// 记录对端平台坐标, 不写入对端
+	public void setBoundPlatform(@Nullable GlobalPos pos) {
+		boundPlatform = pos;
+		setChanged();
+		refreshDisplay();
+	}
+
+	// 清除绑定记录
+	public void clearBoundPlatform() {
+		if (boundPlatform == null) {
+			return;
+		}
+		boundPlatform = null;
+		setChanged();
+		refreshDisplay();
 	}
 }

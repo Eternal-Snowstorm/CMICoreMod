@@ -1,14 +1,19 @@
 package dev.celestiacraft.cmi.common.register;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import dev.celestiacraft.cmi.Cmi;
+
 import dev.celestiacraft.cmi.api.client.ItemModelGen;
+import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import dev.celestiacraft.cmi.common.item.*;
-import dev.celestiacraft.cmi.common.item.tool.MetalDetector;
 import dev.celestiacraft.cmi.common.item.tool.crafting_table.HandheleCraftingTableItem;
+import dev.celestiacraft.cmi.common.item.tool.DigitalLocator;
+import dev.celestiacraft.cmi.common.item.tool.MetalDetector;
 import dev.celestiacraft.cmi.common.register.item.TConTools;
 import dev.celestiacraft.cmi.tags.CmiItemTags;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -17,9 +22,6 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.Tags;
-
-import java.util.EnumMap;
-import java.util.Map;
 
 public class CmiItem {
 	private static final Map<ProspectingRocketTier, ItemEntry<ProspectingRocketItem>> PROSPECTING_ROCKETS =
@@ -33,6 +35,7 @@ public class CmiItem {
 	public static final ItemEntry<HandheleCraftingTableItem> HANDHELE_CRAFTING_TABLE;
 	public static final ItemEntry<NutritionSyringeItem> NUTRITION_SYRINGE;
 	public static final ItemEntry<MetalDetector> METAL_DETECTOR;
+	public static final ItemEntry<DigitalLocator> DIGITAL_LOCATOR;
 
 	public static ItemEntry<ProspectingRocketItem> prospectingRocket(ProspectingRocketTier tier) {
 		return PROSPECTING_ROCKETS.get(tier);
@@ -63,6 +66,9 @@ public class CmiItem {
 							.unlockedBy("diamond", RegistrateRecipeProvider.has(Tags.Items.GEMS_DIAMOND))
 							.save(provider, Cmi.loadResource("minecraft/crafting/shaped/" + context.getName()));
 				})
+				.register();
+		DIGITAL_LOCATOR = Cmi.REGISTRATE.item("digital_locator", DigitalLocator::new)
+				.model(NonNullBiConsumer.noop())
 				.register();
 		TEST_BRUSH = Cmi.REGISTRATE.item("test_brush", TestBrushItem::new)
 				.register();

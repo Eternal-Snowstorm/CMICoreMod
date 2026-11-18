@@ -50,14 +50,14 @@ public final class AdAstraPlatformRocket {
 		if (!(entity instanceof Rocket rocket)) {
 			return null;
 		}
-		double surfaceY = platformPos.getY() + SpaceElevatorConstructionHandler.PLATFORM_SURFACE_OFFSET;
+		double surfaceY = SpaceElevatorConstructionHandler.platformSurfaceY(platformPos);
 		rocket.setPos(platformPos.getX() + 0.5D, surfaceY, platformPos.getZ() + 0.5D);
 		rocket.setYRot(facing.getOpposite().toYRot());
 		return rocket;
 	}
 
 	private static AABB areaOf(@NotNull BlockPos platformPos) {
-		double surfaceY = platformPos.getY() + SpaceElevatorConstructionHandler.PLATFORM_SURFACE_OFFSET;
+		double surfaceY = SpaceElevatorConstructionHandler.platformSurfaceY(platformPos);
 		return new AABB(
 				platformPos.getX() + 0.5D - DETECTION_HALF_WIDTH,
 				surfaceY,

@@ -88,10 +88,15 @@ public final class SpaceElevatorConstructionHandler {
 		return findRocketOnPlatform(level, platformPos) != null;
 	}
 
+	// 平台顶面高度, 放置与停靠共用同一计算
+	public static double platformSurfaceY(BlockPos platformPos) {
+		return platformPos.getY() + PLATFORM_SURFACE_OFFSET;
+	}
+
 	// 查找停放在平台顶面的火箭实体
 	@Nullable
 	public static ProspectingRocketEntity findRocketOnPlatform(Level level, BlockPos platformPos) {
-		double surfaceY = platformPos.getY() + PLATFORM_SURFACE_OFFSET;
+		double surfaceY = platformSurfaceY(platformPos);
 		AABB bounds = new AABB(
 				platformPos.getX() + 0.5D - ROCKET_DETECTION_HALF_WIDTH,
 				surfaceY,

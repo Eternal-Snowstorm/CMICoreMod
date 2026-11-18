@@ -1,6 +1,5 @@
 package dev.celestiacraft.cmi.datagen.language.type;
 
-
 import dev.celestiacraft.cmi.datagen.language.LanguageGenerate;
 
 public class TooltipLanguage extends LanguageGenerate {
@@ -109,6 +108,11 @@ public class TooltipLanguage extends LanguageGenerate {
 				"metal_detector",
 				"Can search for buried ore",
 				"可以搜寻埋藏在地下的矿石"
+		);
+		addTooltipLang(
+				"digital_locator",
+				"Right-click a platform to record it, then right-click another to bind. Sneak-use to clear.",
+				"右键航天平台录入坐标, 再右键另一个航天平台完成绑定。潜行使用可清除。"
 		);
 		addTooltipLang(
 				"holdForDescriptionCtrl",

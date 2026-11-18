@@ -218,6 +218,66 @@ public class GuiLanguage extends LanguageGenerate {
 				"该平台上已经停放了一枚火箭。"
 		);
 		addCustomLang(
+				"text.cmi.digital_locator.recorded",
+				"Platform recorded.",
+				"已录入航天平台坐标。"
+		);
+		addCustomLang(
+				"text.cmi.digital_locator.same_platform",
+				"This platform is already recorded.",
+				"该平台已经录入过了。"
+		);
+		addCustomLang(
+				"text.cmi.digital_locator.bound",
+				"Platforms bound.",
+				"已绑定航天平台。"
+		);
+		addCustomLang(
+				"text.cmi.digital_locator.source_missing",
+				"The recorded platform no longer exists.",
+				"录入的航天平台已不存在。"
+		);
+		addCustomLang(
+				"text.cmi.digital_locator.cleared",
+				"Recorded platform cleared.",
+				"已清除录入的航天平台坐标。"
+		);
+		addCustomLang(
+				"text.cmi.prospecting_rocket.no_binding",
+				"This platform is not bound to another platform.",
+				"该航天平台尚未绑定其他航天平台。"
+		);
+		addCustomLang(
+				"text.cmi.prospecting_rocket.no_dimension",
+				"The bound dimension is no longer available.",
+				"绑定的目标维度已不存在。"
+		);
+		addCustomLang(
+				"text.cmi.prospecting_rocket.no_platform",
+				"The bound platform no longer exists.",
+				"绑定的航天平台已不存在。"
+		);
+		addCustomLang(
+				"text.cmi.prospecting_rocket.occupied",
+				"The bound platform already has a rocket on it.",
+				"绑定的航天平台上已停有火箭。"
+		);
+		addCustomLang(
+				"text.cmi.prospecting_rocket.no_fuel",
+				"Not enough fuel to launch.",
+				"燃料不足, 无法发射。"
+		);
+		addCustomLang(
+				"text.cmi.prospecting_rocket.too_low_tier",
+				"This rocket tier cannot reach the bound platform.",
+				"该火箭等级无法到达绑定的航天平台。"
+		);
+		addCustomLang(
+				"text.cmi.prospecting_rocket.spawn_failed",
+				"Failed to deliver the rocket to the bound platform.",
+				"无法将火箭投送至绑定的航天平台。"
+		);
+		addCustomLang(
 				"entity.cmi.space_elevator.cargo",
 				"Space Elevator Cargo",
 				"太空电梯货舱"

@@ -6,3 +6,5 @@
 /run-data
 /src/generated/*
 /bin/
+/.tmp-aa
+

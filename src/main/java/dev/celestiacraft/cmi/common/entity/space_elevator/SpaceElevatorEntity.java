@@ -13,17 +13,14 @@ import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorLinkHandler;
 import earth.terrarium.adastra.api.planets.Planet;
 import earth.terrarium.adastra.common.config.AdAstraConfig;
 import earth.terrarium.adastra.common.entities.vehicles.Rocket;
-import earth.terrarium.adastra.common.registry.ModSoundEvents;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -31,7 +28,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -208,7 +204,7 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 		if (isOrbitSide()) {
 			SpaceElevatorAnchors.onElevatorDeparting(serverLevel, getAnchor());
 		}
-		beginState(isOrbitSide() ? STATE_COUNTDOWN_DOWN : STATE_COUNTDOWN_UP);
+		beginState(isOrbitSide() ? STATE_DEPART_DOWN : STATE_DEPART_UP);
 		return true;
 	}
 
@@ -272,8 +268,6 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 
 	private void tickTransport(boolean clientSide) {
 		switch (getTransportState()) {
-			case STATE_COUNTDOWN_UP -> tickCountdown(clientSide, STATE_DEPART_UP);
-			case STATE_COUNTDOWN_DOWN -> tickCountdown(clientSide, STATE_DEPART_DOWN);
 			case STATE_DEPART_UP ->
 					tickDeparture(clientSide, getDockY(), getGroundTransferY(), getGroundDepartureTicks());
 			case STATE_ARRIVE_ORBIT ->
@@ -284,26 +278,6 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 					tickArrival(clientSide, getGroundTransferY(), getDockY(), getGroundArrivalTicks());
 			default -> {
 			}
-		}
-	}
-
-	private void tickCountdown(boolean clientSide, int nextState) {
-		if (!clientSide && getFirstPassenger() == null) {
-			stopLaunchAudio((ServerLevel) level());
-			resetToAnchor();
-			return;
-		}
-
-		snapToAnchor();
-		if (!clientSide && getTransportTicks() == 0) {
-			level().playSound(null, blockPosition(), ModSoundEvents.ROCKET_LAUNCH.get(), SoundSource.AMBIENT, 10.0F, 1.0F);
-		}
-
-		if (!clientSide) {
-			setTransportTicks(getTransportTicks() + 1);
-		}
-		if (!clientSide && getTransportTicks() >= COUNTDOWN_TICKS) {
-			beginState(nextState);
 		}
 	}
 
@@ -600,18 +574,6 @@ public class SpaceElevatorEntity extends Entity implements GeoEntity, IUIHolder 
 			return 0.0F;
 		}
 		return (float) ((Mth.clamp(currentY, minY, maxY) - minY) / (maxY - minY));
-	}
-
-	private void stopLaunchAudio(ServerLevel level) {
-		ClientboundStopSoundPacket launchStop = new ClientboundStopSoundPacket(BuiltInRegistries.SOUND_EVENT.getKey(ModSoundEvents.ROCKET_LAUNCH.get()), SoundSource.AMBIENT);
-		ClientboundStopSoundPacket travelStop = new ClientboundStopSoundPacket(BuiltInRegistries.SOUND_EVENT.getKey(ModSoundEvents.ROCKET.get()), SoundSource.AMBIENT);
-		for (ServerPlayer serverPlayer : level.players()) {
-			if (serverPlayer.distanceToSqr(this) > 256.0D * 256.0D) {
-				continue;
-			}
-			serverPlayer.connection.send(launchStop);
-			serverPlayer.connection.send(travelStop);
-		}
 	}
 
 	private void beginState(int state) {
