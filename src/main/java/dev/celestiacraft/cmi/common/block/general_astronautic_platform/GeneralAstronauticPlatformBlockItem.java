@@ -1,11 +1,8 @@
 package dev.celestiacraft.cmi.common.block.general_astronautic_platform;
 
-import java.util.function.Consumer;
-
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.render.GeneralAstronauticPlatformItemModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;
@@ -19,6 +16,8 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
+
+import java.util.function.Consumer;
 
 public class GeneralAstronauticPlatformBlockItem extends BlockItem implements GeoItem {
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
