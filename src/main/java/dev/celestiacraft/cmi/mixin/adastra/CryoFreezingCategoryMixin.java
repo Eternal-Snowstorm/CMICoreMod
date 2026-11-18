@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(CryoFreezingCategory.class)
 public class CryoFreezingCategoryMixin {
 	@Inject(
-			method = "setRecipe*",
+			method = "setRecipe(Lmezz/jei/api/gui/builder/IRecipeLayoutBuilder;Learth/terrarium/adastra/common/recipes/machines/CryoFreezingRecipe;Lmezz/jei/api/recipe/IFocusGroup;)V",
 			at = @At("TAIL"),
 			remap = false
 	)
