@@ -3,10 +3,14 @@ package dev.celestiacraft.cmi.common.register.block;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
+
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlock;
+import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlockItem;
+import dev.celestiacraft.cmi.common.block.general_astronautic_platform.io.AstronauticPlatformIoPortBlock;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockItem;
-import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopBlockItem;
 import net.minecraft.tags.BlockTags;
@@ -16,6 +20,8 @@ public class SpaceElevatorBlocks {
 	public static final BlockEntry<SpaceElevatorBaseConsoleBlock> SPACE_ELEVATOR_BASE_CONSOLE;
 	public static final BlockEntry<SpaceElevatorIoPortBlock> SPACE_ELEVATOR_IO_PORT;
 	public static final BlockEntry<SpaceElevatorTopBlock> SPACE_ELEVATOR_TOP;
+	public static final BlockEntry<GeneralAstronauticPlatformBlock> GENERAL_ASTRONAUTIC_PLATFORM;
+	public static final BlockEntry<AstronauticPlatformIoPortBlock> ASTRONAUTIC_PLATFORM_IO_PORT;
 
 	static {
 		SPACE_ELEVATOR_BASE_CONSOLE = Cmi.REGISTRATE.block("space_elevator_base_console", SpaceElevatorBaseConsoleBlock::new)
@@ -45,6 +51,23 @@ public class SpaceElevatorBlocks {
 				.tag(BlockTags.NEEDS_IRON_TOOL)
 				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
 				.blockstate(SpaceElevatorTopBlock.genBlockState())
+				.register();
+
+		GENERAL_ASTRONAUTIC_PLATFORM = Cmi.REGISTRATE.block("general_astronautic_platform", GeneralAstronauticPlatformBlock::new)
+				.initialProperties(SharedProperties::stone)
+				.properties(BlockBehaviour.Properties::noOcclusion)
+				.item(GeneralAstronauticPlatformBlockItem::new)
+				.model(GeneralAstronauticPlatformBlockItem.genItemModel())
+				.build()
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.tag(BlockTags.NEEDS_IRON_TOOL)
+				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+				.blockstate(GeneralAstronauticPlatformBlock.genBlockState())
+				.register();
+
+		ASTRONAUTIC_PLATFORM_IO_PORT = Cmi.REGISTRATE.block("astronautic_platform_io_port", AstronauticPlatformIoPortBlock::new)
+				.initialProperties(SharedProperties::stone)
+				.blockstate(SpaceElevatorIoPortBlock.genBlockState())
 				.register();
 	}
 

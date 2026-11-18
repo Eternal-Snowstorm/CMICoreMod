@@ -1,6 +1,11 @@
 package dev.celestiacraft.cmi.common.item;
 
-import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortShape;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketEntity;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
@@ -12,24 +17,19 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
-
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class ProspectingRocketItem extends BasicItem implements GeoItem {
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -64,7 +64,7 @@ public class ProspectingRocketItem extends BasicItem implements GeoItem {
 			notify(player, "text.cmi.prospecting_rocket.base_has_elevator");
 			return InteractionResult.PASS;
 		}
-		if (SpaceElevatorConstructionHandler.hasRocketOnBase(level, anchor)) {
+		if (SpaceElevatorConstructionHandler.hasRocketOnPlatform(level, anchor)) {
 			notify(player, "text.cmi.prospecting_rocket.base_has_rocket");
 			return InteractionResult.PASS;
 		}
@@ -74,7 +74,7 @@ public class ProspectingRocketItem extends BasicItem implements GeoItem {
 			return InteractionResult.PASS;
 		}
 
-		double surfaceY = clickedPos.getY() + IoPortShape.TOP_CENTER.solidShape().max(Direction.Axis.Y);
+		double surfaceY = anchor.getY() + SpaceElevatorConstructionHandler.PLATFORM_SURFACE_OFFSET;
 		rocket.setPos(anchor.getX() + 0.5D, surfaceY, anchor.getZ() + 0.5D);
 		rocket.setYRot(context.getHorizontalDirection().getOpposite().toYRot());
 		level.addFreshEntity(rocket);

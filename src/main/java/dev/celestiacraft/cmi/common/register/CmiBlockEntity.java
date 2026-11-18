@@ -4,19 +4,21 @@ import com.simibubi.create.content.kinetics.base.ShaftVisual;
 import com.simibubi.create.foundation.data.CreateBlockEntityBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import dev.celestiacraft.cmi.Cmi;
+
 import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
+import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorBlockEntity;
 import dev.celestiacraft.cmi.common.block.accelerator_motor.AcceleratorMotorRenderer;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderBlockEntity;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderInstance;
 import dev.celestiacraft.cmi.common.block.belt_grinder.BeltGrinderRenderer;
+import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlockEntity;
 import dev.celestiacraft.cmi.common.block.geothermal_generator.GGBlockEntity;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelBlockEntity;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelRenderer;
 import dev.celestiacraft.cmi.common.block.metal_cogwheel.MetalCogWheelVisual;
-import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlockEntity;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenBlockEntity;
 import dev.celestiacraft.cmi.common.block.test_coke_oven.TestCokeOvenIOBlockEntity;
@@ -42,7 +44,9 @@ public class CmiBlockEntity {
 	public static final BlockEntityEntry<TestCokeOvenIOBlockEntity> TEST_COKE_OVEN_IO;
 	public static final BlockEntityEntry<SpaceElevatorBaseConsoleBlockEntity> SPACE_ELEVATOR_BASE_CONSOLE;
 	public static final BlockEntityEntry<SpaceElevatorIoPortBlockEntity> SPACE_ELEVATOR_IO_PORT;
+	public static final BlockEntityEntry<SpaceElevatorIoPortBlockEntity> ASTRONAUTIC_PLATFORM_IO_PORT;
 	public static final BlockEntityEntry<SpaceElevatorTopBlockEntity> SPACE_ELEVATOR_TOP;
+	public static final BlockEntityEntry<GeneralAstronauticPlatformBlockEntity> GENERAL_ASTRONAUTIC_PLATFORM;
 	public static final BlockEntityEntry<MetalCogWheelBlockEntity> COGWHEEL;
 	public static final BlockEntityEntry<WindVaneBlockEntity> WIND_VANE;
 	public static final BlockEntityEntry<GGBlockEntity> GEOTHERMAL_GENERATOR;
@@ -102,6 +106,14 @@ public class CmiBlockEntity {
 
 		SPACE_ELEVATOR_TOP = Cmi.REGISTRATE.blockEntity("space_elevator_top", SpaceElevatorTopBlockEntity::new)
 				.validBlock(SpaceElevatorBlocks.SPACE_ELEVATOR_TOP)
+				.register();
+
+		GENERAL_ASTRONAUTIC_PLATFORM = Cmi.REGISTRATE.blockEntity("general_astronautic_platform", GeneralAstronauticPlatformBlockEntity::new)
+				.validBlock(SpaceElevatorBlocks.GENERAL_ASTRONAUTIC_PLATFORM)
+				.register();
+
+		ASTRONAUTIC_PLATFORM_IO_PORT = Cmi.REGISTRATE.blockEntity("astronautic_platform_io_port", SpaceElevatorIoPortBlockEntity::new)
+				.validBlock(SpaceElevatorBlocks.ASTRONAUTIC_PLATFORM_IO_PORT)
 				.register();
 
 		WIND_VANE = Cmi.REGISTRATE.blockEntity("wind_vane", WindVaneBlockEntity::new)

@@ -318,7 +318,21 @@ tasks.named('jarJar') {
 		archiveFileName.set(String.format("CMI Core-%s-%s-all.jar", mod_version, minecraft_version))
 	}
 
-	finalizedBy 'reobfJar'
+	// 注意: 不能只写 finalizedBy 'reobfJar'。
+	// ForgeGradle 的 reobfJar 只作用于 tasks.jar 的产物；jarJar 生成的 -all 包
+	// （内置 nebula_libs / ldlib / TerraBlender / lunar 等 jarJar 依赖）不会被它处理，
+	// 于是 -all 包里仍保留开发期名称（如 BooleanProperty.create），
+	// 在正式环境运行会抛 NoSuchMethodError。
+	//
+	// 具体的 reobfJarJar 任务在文件末尾的 afterEvaluate 中通过 reobf 容器创建。
+	finalizedBy 'reobfJarJar'
+}
+
+// sourcesJar 会打包 sourceSets.main.allSource，其中同时包含 src/main/resources 和
+// src/generated/resources（datagen 产物）。两者出现同名路径时，sourcesJar 默认没有
+// 重复处理策略会直接让 build 失败，这里显式排除重复项。
+tasks.named('sourcesJar', Jar).configure {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -329,5 +343,13 @@ tasks.withType(JavaCompile).configureEach {
 afterEvaluate {
 	minecraft.runs.data.jvmArgs.removeIf {
 		it.contains('mixin.config')
+	}
+
+	// 为 jarJar 的 -all 产物也创建 reobf 任务 (reobfJarJar)。
+	// reobf 容器是 ForgeGradle 提供的 NamedDomainObjectContainer<RenameJarInPlace>,
+	// 条目的 key 必须是已有的 Jar 型任务名，它会自动把该任务的归档文件接到
+	// reobf 任务的 input 上，并把任务挂到 assemble 生命周期。
+	reobf {
+		jarJar {}
 	}
 }

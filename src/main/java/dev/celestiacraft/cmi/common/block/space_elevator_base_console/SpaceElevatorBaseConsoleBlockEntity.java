@@ -1,7 +1,12 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.capability.*;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortType;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.transfer.SpaceElevatorConsoleTransferEvent;
+import dev.celestiacraft.cmi.common.block.space_elevator_io.SpaceElevatorIoHost;
 import dev.celestiacraft.cmi.common.entity.space_elevator.ElevatorEnergyAnchor;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorConsoleDisplayState;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
@@ -20,10 +25,10 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
@@ -31,15 +36,13 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -48,7 +51,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements GeoBlockEntity, ElevatorEnergyAnchor {
+public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements GeoBlockEntity, ElevatorEnergyAnchor, SpaceElevatorIoHost {
 	public static final int ENERGY_CAPACITY = 10_000_000;
 	public static final int ENERGY_MAX_RECEIVE = 50_000;
 	public static final int LAUNCH_ENERGY_COST = 1_000_000;
@@ -56,9 +59,9 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 	public static final int FLUID_TANK_COUNT = 4;
 	public static final int ITEM_SLOT_COUNT = 128;
 
-	public static final Direction INPUT_SIDE = Direction.EAST;
-	public static final Direction OUTPUT_SIDE = Direction.WEST;
-	public static final Direction ENERGY_SIDE = Direction.SOUTH;
+	public static final Direction INPUT_SIDE = Direction.WEST;
+	public static final Direction OUTPUT_SIDE = Direction.EAST;
+	public static final Direction ENERGY_SIDE = Direction.NORTH;
 
 	private static final int INPUT_PULL_INTERVAL_TICKS = 20;
 	private static final int ELEVATOR_CHECK_INTERVAL_TICKS = 10;
@@ -146,14 +149,49 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 		this.outputFluidCap = LazyOptional.of(() -> new ConsoleOutputFluidHandler(outputFluids));
 	}
 
+	// 能力缓存为空时重建，供端口方块在任意时机查询
+	public void ensureCaps() {
+		if (this.energyCap.isPresent()) {
+			return;
+		}
+		rebuildCaps();
+	}
+
+	// 按端口类型向端口方块暴露对应能力
+	@Override
+	public @NotNull LazyOptional<?> getIoCapability(@NotNull IoPortType type) {
+		ensureCaps();
+		if (type == IoPortType.ENERGY_IN) {
+			return this.energyCap;
+		}
+		if (type == IoPortType.INPUT_ITEM) {
+			return this.inputItemCap;
+		}
+		if (type == IoPortType.OUTPUT_ITEM) {
+			return this.outputItemCap;
+		}
+		if (type == IoPortType.INPUT_FLUID) {
+			return this.inputFluidCap;
+		}
+		if (type == IoPortType.OUTPUT_FLUID) {
+			return this.outputFluidCap;
+		}
+		return LazyOptional.empty();
+	}
+
 	@Override
 	public void invalidateCaps() {
 		super.invalidateCaps();
-		energyCap.invalidate();
-		inputItemCap.invalidate();
-		outputItemCap.invalidate();
-		inputFluidCap.invalidate();
-		outputFluidCap.invalidate();
+		this.energyCap.invalidate();
+		this.inputItemCap.invalidate();
+		this.outputItemCap.invalidate();
+		this.inputFluidCap.invalidate();
+		this.outputFluidCap.invalidate();
+		this.energyCap = LazyOptional.empty();
+		this.inputItemCap = LazyOptional.empty();
+		this.outputItemCap = LazyOptional.empty();
+		this.inputFluidCap = LazyOptional.empty();
+		this.outputFluidCap = LazyOptional.empty();
 	}
 
 	@Override
@@ -234,7 +272,7 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 			return;
 		}
 		SpaceElevatorEntity elevator = null;
-		if ((serverLevel.getGameTime() + pos.asLong()) % ELEVATOR_CHECK_INTERVAL_TICKS == 0) {
+		if (Math.floorMod(serverLevel.getGameTime() + pos.asLong(), ELEVATOR_CHECK_INTERVAL_TICKS) == 0) {
 			elevator = SpaceElevatorConstructionHandler.getNearbyElevator(serverLevel, pos);
 			boolean nowPresent = elevator != null || SpaceElevatorConstructionHandler.hasOrbitalCounterpart(serverLevel, pos);
 			SpaceElevatorConsoleDisplayState displayState = elevator != null
@@ -247,7 +285,7 @@ public class SpaceElevatorBaseConsoleBlockEntity extends BlockEntity implements 
 				serverLevel.sendBlockUpdated(pos, state, state, 3);
 			}
 		}
-		if ((serverLevel.getGameTime() + pos.asLong()) % INPUT_PULL_INTERVAL_TICKS != 0) {
+		if (Math.floorMod(serverLevel.getGameTime() + pos.asLong(), INPUT_PULL_INTERVAL_TICKS) != 0) {
 			return;
 		}
 		if (elevator == null) {

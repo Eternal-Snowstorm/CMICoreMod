@@ -1,6 +1,17 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_top;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortType;
+import dev.celestiacraft.cmi.common.block.space_elevator_io.SpaceElevatorIoHost;
+import dev.celestiacraft.cmi.common.block.space_elevator_top.io.TopInputFluidHandler;
+import dev.celestiacraft.cmi.common.block.space_elevator_top.io.TopInputItemHandler;
+import dev.celestiacraft.cmi.common.block.space_elevator_top.io.TopOutputFluidHandler;
+import dev.celestiacraft.cmi.common.block.space_elevator_top.io.TopOutputItemHandler;
 import dev.celestiacraft.cmi.common.entity.space_elevator.ElevatorEnergyAnchor;
+import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
+import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,8 +26,8 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -25,7 +36,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlockEntity, ElevatorEnergyAnchor {
+public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlockEntity, ElevatorEnergyAnchor, SpaceElevatorIoHost {
 	public static final int ENERGY_CAPACITY = 10_000_000;
 	public static final int ENERGY_MAX_RECEIVE = 50_000;
 	public static final int LAUNCH_ENERGY_COST = 1_000_000;
@@ -93,6 +104,11 @@ public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlock
 	@Getter
 	private LazyOptional<IEnergyStorage> energyCap = LazyOptional.empty();
 
+	private LazyOptional<IItemHandler> inputItemCap = LazyOptional.empty();
+	private LazyOptional<IItemHandler> outputItemCap = LazyOptional.empty();
+	private LazyOptional<IFluidHandler> inputFluidCap = LazyOptional.empty();
+	private LazyOptional<IFluidHandler> outputFluidCap = LazyOptional.empty();
+
 	private boolean doorClosed = false;
 
 	public SpaceElevatorTopBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -107,12 +123,25 @@ public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlock
 
 	private void rebuildCaps() {
 		energyCap = LazyOptional.of(() -> externalEnergy);
+		inputItemCap = LazyOptional.of(() -> new TopInputItemHandler(this));
+		outputItemCap = LazyOptional.of(() -> new TopOutputItemHandler(this));
+		inputFluidCap = LazyOptional.of(() -> new TopInputFluidHandler(this));
+		outputFluidCap = LazyOptional.of(() -> new TopOutputFluidHandler(this));
 	}
 
 	@Override
 	public void invalidateCaps() {
 		super.invalidateCaps();
 		energyCap.invalidate();
+		inputItemCap.invalidate();
+		outputItemCap.invalidate();
+		inputFluidCap.invalidate();
+		outputFluidCap.invalidate();
+		energyCap = LazyOptional.empty();
+		inputItemCap = LazyOptional.empty();
+		outputItemCap = LazyOptional.empty();
+		inputFluidCap = LazyOptional.empty();
+		outputFluidCap = LazyOptional.empty();
 	}
 
 	@Override
@@ -121,10 +150,53 @@ public class SpaceElevatorTopBlockEntity extends BlockEntity implements GeoBlock
 		rebuildCaps();
 	}
 
+	// 能力缓存为空时重建，供端口方块在任意时机查询
+	public void ensureCaps() {
+		if (energyCap.isPresent()) {
+			return;
+		}
+		rebuildCaps();
+	}
+
+	// 查找锚定在当前设备上的太空电梯实体
+	@Nullable
+	public SpaceElevatorEntity findElevator() {
+		if (level == null) {
+			return null;
+		}
+		return SpaceElevatorConstructionHandler.getNearbyElevator(level, worldPosition);
+	}
+
+	// 按端口类型向端口方块暴露对应能力
+	@Override
+	public @NotNull LazyOptional<?> getIoCapability(@NotNull IoPortType type) {
+		ensureCaps();
+		if (type == IoPortType.INPUT_ITEM) {
+			return inputItemCap;
+		}
+		if (type == IoPortType.OUTPUT_ITEM) {
+			return outputItemCap;
+		}
+		if (type == IoPortType.INPUT_FLUID) {
+			return inputFluidCap;
+		}
+		if (type == IoPortType.OUTPUT_FLUID) {
+			return outputFluidCap;
+		}
+		return LazyOptional.empty();
+	}
+
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction direction) {
+		ensureCaps();
 		if (capability == ForgeCapabilities.ENERGY) {
 			return energyCap.cast();
+		}
+		if (capability == ForgeCapabilities.ITEM_HANDLER) {
+			return inputItemCap.cast();
+		}
+		if (capability == ForgeCapabilities.FLUID_HANDLER) {
+			return inputFluidCap.cast();
 		}
 		return super.getCapability(capability, direction);
 	}

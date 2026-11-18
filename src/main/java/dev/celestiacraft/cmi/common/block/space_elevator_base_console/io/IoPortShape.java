@@ -1,9 +1,10 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console.io;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
 public enum IoPortShape implements StringRepresentable {
 	FULL(
@@ -35,6 +36,10 @@ public enum IoPortShape implements StringRepresentable {
 	SCREEN_CENTER(
 			"screen_center",
 			Shapes.box(1.0D / 16.0D, 1.0D / 16.0D, 13.0D / 16.0D, 15.0D / 16.0D, 11.0D / 16.0D, 15.0D / 16.0D),
+			Shapes.block()
+	),
+	INVISIBLE(
+			"invisible",
 			Shapes.block()
 	);
 

@@ -1,15 +1,20 @@
 package dev.celestiacraft.cmi.compat.adastra;
 
-import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
+import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortShape;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlock;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.structure.SpaceElevatorBaseStructure;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketEntity;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.FluidIngredientEntry;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
-import dev.celestiacraft.cmi.common.register.CmiEntity;
 import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
+import dev.celestiacraft.cmi.common.register.CmiEntity;
 import earth.terrarium.adastra.api.planets.Planet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -22,25 +27,24 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
 
 public final class SpaceElevatorConstructionHandler {
 	private static final ResourceLocation WRENCH_ID = ResourceLocation.fromNamespaceAndPath("ad_astra", "wrench");
 	private static final double MAX_USE_DISTANCE_SQR = 64.0D;
 	private static final double EXISTING_ELEVATOR_RADIUS = 4.0D;
 	private static final double GROUND_BASE_LINK_RADIUS = 16.0D;
-	private static final double LAUNCH_PAD_SURFACE_OFFSET = 2.0D;
+	public static final double PLATFORM_SURFACE_OFFSET = 2.0D + 1.0D / 16.0D;
 	private static final double ROCKET_DETECTION_HALF_WIDTH = 2.5D;
 	private static final double ROCKET_DETECTION_HEIGHT = 8.0D;
 
@@ -77,26 +81,30 @@ public final class SpaceElevatorConstructionHandler {
 
 	@Nullable
 	public static BlockPos resolveLaunchPadAnchor(Level level, BlockPos clickedPos) {
-		BlockState state = level.getBlockState(clickedPos);
-		if (!(state.getBlock() instanceof SpaceElevatorIoPortBlock)
-				|| state.getValue(SpaceElevatorIoPortBlock.SHAPE) != IoPortShape.TOP_CENTER) {
-			return null;
-		}
-		BlockPos controller = SpaceElevatorIoPortBlock.getControllerPos(level, clickedPos);
-		return controller != null && isAnchorBlock(level, controller) ? controller : null;
+		return GeneralAstronauticPlatformBlock.findPlatform(level, clickedPos);
 	}
 
-	public static boolean hasRocketOnBase(Level level, BlockPos anchorPos) {
-		double surfaceY = anchorPos.getY() + LAUNCH_PAD_SURFACE_OFFSET;
+	public static boolean hasRocketOnPlatform(Level level, BlockPos platformPos) {
+		return findRocketOnPlatform(level, platformPos) != null;
+	}
+
+	// 查找停放在平台顶面的火箭实体
+	@Nullable
+	public static ProspectingRocketEntity findRocketOnPlatform(Level level, BlockPos platformPos) {
+		double surfaceY = platformPos.getY() + PLATFORM_SURFACE_OFFSET;
 		AABB bounds = new AABB(
-				anchorPos.getX() + 0.5D - ROCKET_DETECTION_HALF_WIDTH,
+				platformPos.getX() + 0.5D - ROCKET_DETECTION_HALF_WIDTH,
 				surfaceY,
-				anchorPos.getZ() + 0.5D - ROCKET_DETECTION_HALF_WIDTH,
-				anchorPos.getX() + 0.5D + ROCKET_DETECTION_HALF_WIDTH,
+				platformPos.getZ() + 0.5D - ROCKET_DETECTION_HALF_WIDTH,
+				platformPos.getX() + 0.5D + ROCKET_DETECTION_HALF_WIDTH,
 				surfaceY + ROCKET_DETECTION_HEIGHT,
-				anchorPos.getZ() + 0.5D + ROCKET_DETECTION_HALF_WIDTH
+				platformPos.getZ() + 0.5D + ROCKET_DETECTION_HALF_WIDTH
 		);
-		return !level.getEntitiesOfClass(ProspectingRocketEntity.class, bounds, ProspectingRocketEntity::isAlive).isEmpty();
+		List<ProspectingRocketEntity> rockets = level.getEntitiesOfClass(ProspectingRocketEntity.class, bounds, ProspectingRocketEntity::isAlive);
+		if (rockets.isEmpty()) {
+			return null;
+		}
+		return rockets.get(0);
 	}
 
 	public static boolean isWithinUseRange(Player player, BlockPos pos) {
@@ -284,9 +292,6 @@ public final class SpaceElevatorConstructionHandler {
 		if (hasNearbyElevator(level, anchorPos)) {
 			return ConstructResult.ALREADY_PRESENT;
 		}
-		if (hasRocketOnBase(level, anchorPos)) {
-			return ConstructResult.ROCKET_PRESENT;
-		}
 		if (hasOrbitalCounterpart(level, anchorPos)) {
 			return ConstructResult.ALREADY_IN_ORBIT;
 		}
@@ -332,7 +337,6 @@ public final class SpaceElevatorConstructionHandler {
 	public enum ConstructResult {
 		SUCCESS("text.cmi.space_elevator.success"),
 		ALREADY_PRESENT("text.cmi.space_elevator.already_present"),
-		ROCKET_PRESENT("text.cmi.space_elevator.rocket_present"),
 		ALREADY_IN_ORBIT("text.cmi.space_elevator.already_in_orbit"),
 		NOT_ENOUGH_MATERIALS("text.cmi.space_elevator.not_enough_materials"),
 		INVALID_ANCHOR("text.cmi.space_elevator.invalid_anchor"),

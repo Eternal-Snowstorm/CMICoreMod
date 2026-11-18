@@ -18,6 +18,7 @@ public class CmiPonderPlugin implements PonderPlugin {
 	@Override
 	public void registerScenes(@NotNull PonderSceneRegistrationHelper<ResourceLocation> helper) {
 		CmiPonderScene.register(helper(helper));
+		CmiPonderScene.registerByResourceLocation(helper);
 	}
 
 	@Override

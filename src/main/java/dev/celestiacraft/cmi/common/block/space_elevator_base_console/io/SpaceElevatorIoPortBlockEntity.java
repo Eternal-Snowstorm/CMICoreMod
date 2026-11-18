@@ -1,6 +1,9 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console.io;
 
-import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import dev.celestiacraft.cmi.common.block.space_elevator_io.SpaceElevatorIoHost;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -11,8 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class SpaceElevatorIoPortBlockEntity extends BlockEntity {
 	@Nullable
@@ -36,12 +37,12 @@ public class SpaceElevatorIoPortBlockEntity extends BlockEntity {
 	}
 
 	@Nullable
-	private SpaceElevatorBaseConsoleBlockEntity resolveController() {
+	private SpaceElevatorIoHost resolveHost() {
 		if (controllerPos == null || level == null) {
 			return null;
 		}
-		if (level.getBlockEntity(controllerPos) instanceof SpaceElevatorBaseConsoleBlockEntity console) {
-			return console;
+		if (level.getBlockEntity(controllerPos) instanceof SpaceElevatorIoHost host) {
+			return host;
 		}
 		return null;
 	}
@@ -52,34 +53,32 @@ public class SpaceElevatorIoPortBlockEntity extends BlockEntity {
 
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
-		SpaceElevatorBaseConsoleBlockEntity console = resolveController();
-		if (console == null) {
+		SpaceElevatorIoHost host = resolveHost();
+		if (host == null) {
 			return super.getCapability(capability, side);
 		}
 		IoPortType io = getIoType();
 		if (io == IoPortType.NONE) {
 			return LazyOptional.empty();
 		}
-		if (capability == ForgeCapabilities.ENERGY && io == IoPortType.ENERGY_IN) {
-			return console.getEnergyCap().cast();
+		if (!matchesCapability(capability, io)) {
+			return LazyOptional.empty();
+		}
+		return host.getIoCapability(io).cast();
+	}
+
+	// 判断端口类型是否与请求的能力类型匹配
+	private static boolean matchesCapability(Capability<?> capability, IoPortType io) {
+		if (capability == ForgeCapabilities.ENERGY) {
+			return io == IoPortType.ENERGY_IN;
 		}
 		if (capability == ForgeCapabilities.ITEM_HANDLER) {
-			if (io == IoPortType.INPUT_ITEM) {
-				return console.getInputItemCap().cast();
-			}
-			if (io == IoPortType.OUTPUT_ITEM) {
-				return console.getOutputItemCap().cast();
-			}
+			return io == IoPortType.INPUT_ITEM || io == IoPortType.OUTPUT_ITEM;
 		}
 		if (capability == ForgeCapabilities.FLUID_HANDLER) {
-			if (io == IoPortType.INPUT_FLUID) {
-				return console.getInputFluidCap().cast();
-			}
-			if (io == IoPortType.OUTPUT_FLUID) {
-				return console.getOutputFluidCap().cast();
-			}
+			return io == IoPortType.INPUT_FLUID || io == IoPortType.OUTPUT_FLUID;
 		}
-		return LazyOptional.empty();
+		return false;
 	}
 
 	@Override

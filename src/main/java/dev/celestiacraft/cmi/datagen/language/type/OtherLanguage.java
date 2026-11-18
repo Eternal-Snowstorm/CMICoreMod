@@ -21,6 +21,11 @@ public class OtherLanguage extends LanguageGenerate {
 				"Cmi: Machines",
 				"构件与革新: 机器"
 		);
+		addCreativeTabLang(
+				"ponder_io_block",
+				"Cmi: PonderIOBlock",
+				"构件与革新: 思索IO方块"
+		);
 		addCustomLang(
 				"curios.identifier.mechanisms",
 				"Mechanisms",
