@@ -273,6 +273,11 @@ public class GuiLanguage extends LanguageGenerate {
 				"该火箭等级无法到达绑定的航天平台。"
 		);
 		addCustomLang(
+				"text.cmi.prospecting_rocket.wrong_fuel",
+				"The fuel in the tank does not match this rocket tier.",
+				"燃料罐中的燃料与本火箭等级不匹配。"
+		);
+		addCustomLang(
 				"text.cmi.prospecting_rocket.spawn_failed",
 				"Failed to deliver the rocket to the bound platform.",
 				"无法将火箭投送至绑定的航天平台。"

@@ -91,6 +91,7 @@ public class GeneralAstronauticPlatformBlockEntity extends BlockEntity implement
 	public void onLoad() {
 		super.onLoad();
 		rebuildCaps();
+		PlatformBindingHandler.applyPending(this);
 		PlatformBindingHandler.validate(this);
 		refreshDisplay();
 	}

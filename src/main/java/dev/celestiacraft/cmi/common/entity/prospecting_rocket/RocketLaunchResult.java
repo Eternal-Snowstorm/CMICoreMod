@@ -10,6 +10,7 @@ public enum RocketLaunchResult {
 	NO_PLATFORM("prospecting_rocket.no_platform"),
 	OCCUPIED("prospecting_rocket.occupied"),
 	NO_FUEL("prospecting_rocket.no_fuel"),
+	WRONG_FUEL("prospecting_rocket.wrong_fuel"),
 	TOO_LOW_TIER("prospecting_rocket.too_low_tier"),
 	SPAWN_FAILED("prospecting_rocket.spawn_failed");
 
