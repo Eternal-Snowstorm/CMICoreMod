@@ -3,14 +3,13 @@ package dev.celestiacraft.cmi.common.register.block;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
-
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlock;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlockItem;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.io.AstronauticPlatformIoPortBlock;
-import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockItem;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopBlockItem;
 import net.minecraft.tags.BlockTags;

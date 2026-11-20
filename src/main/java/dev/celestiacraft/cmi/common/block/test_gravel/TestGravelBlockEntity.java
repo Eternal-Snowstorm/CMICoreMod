@@ -1,5 +1,7 @@
 package dev.celestiacraft.cmi.common.block.test_gravel;
 
+import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.register.CmiItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -9,8 +11,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.register.CmiItem;
 
 public class TestGravelBlockEntity extends BrushableBlockEntity {
 	public TestGravelBlockEntity(BlockEntityType<? extends TestGravelBlockEntity> type, BlockPos pos, BlockState state) {

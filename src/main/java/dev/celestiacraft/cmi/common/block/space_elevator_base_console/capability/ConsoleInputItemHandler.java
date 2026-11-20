@@ -1,10 +1,9 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console.capability;
 
-import org.jetbrains.annotations.NotNull;
-
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class ConsoleInputItemHandler implements IItemHandler {
 	private final ItemStackHandler backing;

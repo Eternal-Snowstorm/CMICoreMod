@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.network.c2s;
 
-import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
+import dev.celestiacraft.cmi.compat.adastra.SpaceElevatorConstructionHandler;
 import dev.celestiacraft.cmi.network.CmiNetwork;
 import dev.celestiacraft.cmi.network.s2c.SyncSpaceElevatorMaterialsPacket;
 import net.minecraft.core.BlockPos;

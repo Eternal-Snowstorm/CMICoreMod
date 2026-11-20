@@ -1,15 +1,14 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console.io;
 
-import java.util.EnumMap;
-import java.util.Map;
-
-import org.jetbrains.annotations.NotNull;
-
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public enum IoPortShape implements StringRepresentable {
 	FULL(

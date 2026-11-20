@@ -1,7 +1,7 @@
 package dev.celestiacraft.cmi.compat.jade;
 
-import net.minecraft.resources.ResourceLocation;
 import dev.celestiacraft.cmi.Cmi;
+import net.minecraft.resources.ResourceLocation;
 
 public class CmiType {
 	public static final ResourceLocation

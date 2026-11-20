@@ -1,10 +1,10 @@
 package dev.celestiacraft.cmi.compat.kubejs.recipe;
 
+import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 import dev.latvian.mods.kubejs.item.InputItem;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
-import dev.celestiacraft.cmi.common.recipe.accelerator.AcceleratorRecipe;
 
 public interface AcceleratorSchema {
 	RecipeKey<RecipeComponentBuilderMap[]> OUTPUT = output().key("output");

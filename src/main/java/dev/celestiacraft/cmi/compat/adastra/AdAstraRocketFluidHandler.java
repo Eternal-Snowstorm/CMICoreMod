@@ -1,12 +1,11 @@
 package dev.celestiacraft.cmi.compat.adastra;
 
-import org.jetbrains.annotations.NotNull;
-
 import earth.terrarium.adastra.common.entities.vehicles.Rocket;
 import earth.terrarium.botarium.common.fluid.base.FluidContainer;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class AdAstraRocketFluidHandler implements IFluidHandler {
 	private final Rocket rocket;

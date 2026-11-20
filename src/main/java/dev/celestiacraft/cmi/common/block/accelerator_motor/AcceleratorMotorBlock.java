@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -23,7 +24,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import org.jetbrains.annotations.NotNull;
-import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 
 public class AcceleratorMotorBlock extends DirectionalKineticBlock implements IBE<AcceleratorMotorBlockEntity> {
 	public AcceleratorMotorBlock(Properties properties) {

@@ -1,11 +1,10 @@
 package dev.celestiacraft.cmi.mixin.immersiveindustry;
 
+import blusunrize.immersiveengineering.api.multiblocks.blocks.env.IInitialMultiblockContext;
+import blusunrize.immersiveengineering.common.fluids.ArrayFluidHandler;
 import com.teammoeg.immersiveindustry.content.chemical_reactor.ChemicalState;
 import com.teammoeg.immersiveindustry.util.CapabilityFacing;
 import com.teammoeg.immersiveindustry.util.CapabilityProcessor;
-
-import blusunrize.immersiveengineering.api.multiblocks.blocks.env.IInitialMultiblockContext;
-import blusunrize.immersiveengineering.common.fluids.ArrayFluidHandler;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.spongepowered.asm.mixin.Mixin;

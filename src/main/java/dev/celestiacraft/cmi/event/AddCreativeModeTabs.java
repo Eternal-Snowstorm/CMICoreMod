@@ -1,18 +1,15 @@
 package dev.celestiacraft.cmi.event;
 
-import java.util.List;
-
 import com.simibubi.create.AllItems;
-
 import dev.celestiacraft.cmi.api.register.block.MetalCogWheelRegister;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
+import dev.celestiacraft.cmi.common.register.CmiCreativeTabs;
+import dev.celestiacraft.cmi.common.register.CmiItem;
 import dev.celestiacraft.cmi.common.register.block.IoDebugBlocks;
 import dev.celestiacraft.cmi.common.register.block.MachineBlocks;
 import dev.celestiacraft.cmi.common.register.block.OtherBlocks;
 import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
 import dev.celestiacraft.cmi.common.register.block.WallBlocks;
-import dev.celestiacraft.cmi.common.register.CmiCreativeTabs;
-import dev.celestiacraft.cmi.common.register.CmiItem;
 import dev.celestiacraft.cmi.utils.ModResources;
 import dev.celestiacraft.libs.utils.TabUtils;
 import dev.latvian.mods.kubejs.KubeJS;
@@ -21,6 +18,8 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AddCreativeModeTabs {

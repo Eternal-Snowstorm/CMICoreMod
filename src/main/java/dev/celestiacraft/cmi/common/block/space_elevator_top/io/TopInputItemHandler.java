@@ -1,12 +1,11 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_top.io;
 
-import org.jetbrains.annotations.NotNull;
-
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopBlockEntity;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class TopInputItemHandler implements IItemHandler {
 	private final SpaceElevatorTopBlockEntity owner;

@@ -1,19 +1,15 @@
 package dev.celestiacraft.cmi.common.register;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-
-import dev.celestiacraft.cmi.api.client.ItemModelGen;
 import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.api.client.ItemModelGen;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import dev.celestiacraft.cmi.common.item.*;
-import dev.celestiacraft.cmi.common.item.tool.crafting_table.HandheleCraftingTableItem;
 import dev.celestiacraft.cmi.common.item.tool.DigitalLocator;
 import dev.celestiacraft.cmi.common.item.tool.MetalDetector;
+import dev.celestiacraft.cmi.common.item.tool.crafting_table.HandheleCraftingTableItem;
 import dev.celestiacraft.cmi.common.register.item.TConTools;
 import dev.celestiacraft.cmi.tags.CmiItemTags;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -22,6 +18,9 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.Tags;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class CmiItem {
 	private static final Map<ProspectingRocketTier, ItemEntry<ProspectingRocketItem>> PROSPECTING_ROCKETS =

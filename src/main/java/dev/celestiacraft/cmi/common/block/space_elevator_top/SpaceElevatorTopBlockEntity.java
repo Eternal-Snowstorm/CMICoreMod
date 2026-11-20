@@ -1,8 +1,5 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_top;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortType;
 import dev.celestiacraft.cmi.common.block.space_elevator_io.SpaceElevatorIoHost;
 import dev.celestiacraft.cmi.common.block.space_elevator_top.io.TopInputFluidHandler;
@@ -28,6 +25,8 @@ import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;

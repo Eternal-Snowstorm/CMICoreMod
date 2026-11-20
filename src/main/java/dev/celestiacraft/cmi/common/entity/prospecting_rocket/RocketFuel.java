@@ -1,13 +1,12 @@
 package dev.celestiacraft.cmi.common.entity.prospecting_rocket;
 
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-
 import earth.terrarium.adastra.common.tags.ModFluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public final class RocketFuel {
 	// Ad Astra 四个等级的火箭燃料标签, 整合包扩充标签即可注册自定义燃料

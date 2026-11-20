@@ -1,10 +1,9 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console.capability;
 
-import org.jetbrains.annotations.NotNull;
-
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.NotNull;
 
 public class ConsoleOutputFluidHandler implements IFluidHandler {
 	private final FluidTank[] tanks;

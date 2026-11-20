@@ -1,17 +1,16 @@
 package dev.celestiacraft.cmi.common.block.general_astronautic_platform;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.saveddata.SavedData;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 // 未加载平台的绑定变更缓存, 待其加载时写入
 public class PlatformBindingCache extends SavedData {

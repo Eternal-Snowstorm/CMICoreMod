@@ -2,10 +2,10 @@ package dev.celestiacraft.cmi.common.block.accelerator_motor;
 
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
+import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.state.BlockState;
-import net.createmod.catnip.render.CachedBuffers;
 
 public class AcceleratorMotorRenderer extends KineticBlockEntityRenderer<AcceleratorMotorBlockEntity> {
 	public AcceleratorMotorRenderer(BlockEntityRendererProvider.Context context) {

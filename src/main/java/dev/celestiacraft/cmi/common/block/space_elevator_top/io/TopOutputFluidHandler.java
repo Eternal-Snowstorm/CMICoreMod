@@ -1,12 +1,11 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_top.io;
 
-import org.jetbrains.annotations.NotNull;
-
 import dev.celestiacraft.cmi.common.block.space_elevator_top.SpaceElevatorTopBlockEntity;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class TopOutputFluidHandler implements IFluidHandler {
 	private static final int TANK_COUNT = 1;

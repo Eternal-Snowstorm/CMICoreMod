@@ -1,11 +1,10 @@
 package dev.celestiacraft.cmi.compat.adastra;
 
-import org.jetbrains.annotations.NotNull;
-
 import earth.terrarium.adastra.common.entities.vehicles.Rocket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.NotNull;
 
 public class AdAstraRocketItemHandler implements IItemHandler {
 	private final IItemHandler backing;

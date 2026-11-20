@@ -1,11 +1,10 @@
 package dev.celestiacraft.cmi.common.block.general_astronautic_platform.io;
 
-import org.jetbrains.annotations.NotNull;
-
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlockEntity;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class PlatformOutputItemHandler implements IItemHandler {
 	private static final int MAX_SLOTS = ProspectingRocketTier.TIER_4.cargoSlots();
