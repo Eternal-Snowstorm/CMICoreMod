@@ -100,7 +100,6 @@ public class ItemLanguage extends LanguageGenerate {
 				info("ender", "Ender", "末影"),
 				info("copper", "Fluid", "流体"),
 				info("andesite", "Kinetic", "动能"),
-				info("bronze", "Steam", "蒸汽"),
 				info("railway", "Railway", "铁路"),
 				info("precision", "Precision", "精密"),
 				info("light_engineering", "Light Engineering", "轻型工程"),

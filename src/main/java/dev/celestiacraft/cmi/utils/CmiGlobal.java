@@ -138,7 +138,8 @@ public class CmiGlobal {
 
 	public static final Map<String, String> SPECIAL_MECHANISMS = Map.of(
 			"precision", "create:precision_mechanism",
-			"redstone", "vintageimprovements:redstone_module"
+			"redstone", "vintageimprovements:redstone_module",
+			"bronze", "steam_letters:steam_mechanism"
 	);
 
 	public static String getMechanism(String name) {

@@ -19,7 +19,6 @@ public class CmiMechanism extends MechanismRegister {
 	public static final ItemEntry<EnderItem> ENDER;
 	public static final ItemEntry<CopperItem> COPPER;
 	public static final ItemEntry<AndesiteItem> ANDESITE;
-	public static final ItemEntry<BronzeItem> BRONZE;
 	public static final ItemEntry<RailwayItem> RAILWAY;
 	public static final ItemEntry<CoilItem> COIL;
 	public static final ItemEntry<LightEngineeringItem> LIGHT_ENGINEERING;
@@ -68,8 +67,6 @@ public class CmiMechanism extends MechanismRegister {
 		COPPER = registerMechanism("copper", CopperItem::new)
 				.register();
 		ANDESITE = registerMechanism("andesite", AndesiteItem::new)
-				.register();
-		BRONZE = registerMechanism("bronze", BronzeItem::new)
 				.register();
 		RAILWAY = registerMechanism("railway", RailwayItem::new)
 				.register();
