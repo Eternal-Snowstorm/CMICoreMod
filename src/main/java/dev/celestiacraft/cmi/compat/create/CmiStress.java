@@ -77,7 +77,7 @@ public class CmiStress extends ConfigBase {
 
 	public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setImpact(double value) {
 		return (builder) -> {
-			assertFromCreateD2D(builder);
+			assertFromCmi(builder);
 			DEFAULT_IMPACTS.put(Cmi.loadResource(builder.getName()), value);
 			return builder;
 		};
@@ -85,13 +85,13 @@ public class CmiStress extends ConfigBase {
 
 	public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setCapacity(double value) {
 		return (builder) -> {
-			assertFromCreateD2D(builder);
+			assertFromCmi(builder);
 			DEFAULT_CAPACITIES.put(Cmi.loadResource(builder.getName()), value);
 			return builder;
 		};
 	}
 
-	private static void assertFromCreateD2D(BlockBuilder<?, ?> builder) {
+	private static void assertFromCmi(BlockBuilder<?, ?> builder) {
 		if (!builder.getOwner().getModid().equals(Cmi.MODID)) {
 			throw new IllegalStateException("Non-CMI blocks cannot be added to CMI config.");
 		}
