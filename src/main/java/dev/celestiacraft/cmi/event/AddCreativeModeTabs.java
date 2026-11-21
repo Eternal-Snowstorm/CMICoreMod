@@ -31,7 +31,6 @@ public class AddCreativeModeTabs {
 
 		if (key.equals(KUBEJS_TAB)) {
 			List.of(
-					OtherBlocks.WIND_VANE,
 					OtherBlocks.NAHUATL_SCAFFOLD,
 					OtherBlocks.BLAZEWOOD_SCAFFOLD,
 					SpaceElevatorBlocks.GENERAL_ASTRONAUTIC_PLATFORM

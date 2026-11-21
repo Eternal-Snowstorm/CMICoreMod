@@ -27,7 +27,6 @@ import dev.celestiacraft.cmi.common.block.void_dust_collector.VoidDustCollectorB
 import dev.celestiacraft.cmi.common.block.well.blazing_blood.BlazingBloodWellBlockEntity;
 import dev.celestiacraft.cmi.common.block.well.lava.LavaWellBlockEntity;
 import dev.celestiacraft.cmi.common.block.well.water.WaterWellBlockEntity;
-import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlockEntity;
 import dev.celestiacraft.cmi.common.register.block.*;
 
 public class CmiBlockEntity {
@@ -47,7 +46,6 @@ public class CmiBlockEntity {
 	public static final BlockEntityEntry<SpaceElevatorTopBlockEntity> SPACE_ELEVATOR_TOP;
 	public static final BlockEntityEntry<GeneralAstronauticPlatformBlockEntity> GENERAL_ASTRONAUTIC_PLATFORM;
 	public static final BlockEntityEntry<MetalCogWheelBlockEntity> COGWHEEL;
-	public static final BlockEntityEntry<WindVaneBlockEntity> WIND_VANE;
 	public static final BlockEntityEntry<GGBlockEntity> GEOTHERMAL_GENERATOR;
 
 	static {
@@ -113,10 +111,6 @@ public class CmiBlockEntity {
 
 		ASTRONAUTIC_PLATFORM_IO_PORT = Cmi.REGISTRATE.blockEntity("astronautic_platform_io_port", SpaceElevatorIoPortBlockEntity::new)
 				.validBlock(SpaceElevatorBlocks.ASTRONAUTIC_PLATFORM_IO_PORT)
-				.register();
-
-		WIND_VANE = Cmi.REGISTRATE.blockEntity("wind_vane", WindVaneBlockEntity::new)
-				.validBlock(OtherBlocks.WIND_VANE)
 				.register();
 
 		GEOTHERMAL_GENERATOR = Cmi.REGISTRATE.blockEntity("geothermal_generator", GGBlockEntity::new)

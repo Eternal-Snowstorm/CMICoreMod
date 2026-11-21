@@ -89,11 +89,6 @@ public class BlockLanguage extends LanguageGenerate {
 				"General Astronautic Platform",
 				"通用航天平台"
 		);
-		addBlockLanguage(
-				"wind_vane",
-				"Wind Vane",
-				"风向标"
-		);
 		addCogWheelLang(
 				"bronze",
 				"Bronze",

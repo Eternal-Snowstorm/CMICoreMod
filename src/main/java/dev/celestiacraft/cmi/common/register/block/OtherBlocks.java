@@ -1,7 +1,6 @@
 package dev.celestiacraft.cmi.common.register.block;
 
 import blusunrize.immersiveengineering.common.blocks.generic.ScaffoldingBlock;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -11,8 +10,6 @@ import dev.celestiacraft.cmi.api.client.ItemModelGen;
 import dev.celestiacraft.cmi.common.block.sapling.glacian.GlacianSaplingBlock;
 import dev.celestiacraft.cmi.common.block.sapling.golden.GoldenSaplingBlock;
 import dev.celestiacraft.cmi.common.block.test_gravel.TestGravelBlock;
-import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlock;
-import dev.celestiacraft.cmi.common.block.wind_vane.WindVaneBlockItem;
 import dev.celestiacraft.cmi.common.register.CmiCreativeTabs;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -27,7 +24,6 @@ public class OtherBlocks {
 	public static final BlockEntry<ScaffoldingBlock> NAHUATL_SCAFFOLD;
 	public static final BlockEntry<ScaffoldingBlock> BLAZEWOOD_SCAFFOLD;
 	public static final BlockEntry<ScaffoldingBlock> IRON_SCAFFOLD;
-	public static final BlockEntry<WindVaneBlock> WIND_VANE;
 
 	static {
 		NAHUATL_SCAFFOLD = Cmi.REGISTRATE.block("nahuatl_scaffold", ScaffoldingBlock::new)
@@ -88,18 +84,6 @@ public class OtherBlocks {
 				.item()
 				.model(ItemModelGen.withModel("block/scaffold/iron"))
 				.build()
-				.register();
-
-		WIND_VANE = Cmi.REGISTRATE.block("wind_vane", WindVaneBlock::new)
-				.properties(BlockBehaviour.Properties::noOcclusion)
-				.initialProperties(SharedProperties::copperMetal)
-				.item(WindVaneBlockItem::new)
-				.model(ItemModelGen.withModel("block/wind_vane"))
-				.build()
-				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-				.tag(BlockTags.NEEDS_STONE_TOOL)
-				.tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-				.blockstate(WindVaneBlock.genBlockState())
 				.register();
 
 		TEST_GRAVEL = Cmi.REGISTRATE.block("test_gravel", TestGravelBlock::new)

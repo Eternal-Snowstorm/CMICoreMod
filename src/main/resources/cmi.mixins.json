@@ -33,17 +33,12 @@
 		"kubejs.IngredientWrapperMixin",
 		"kubejs.LangEventJSMixin",
 		"kubejs.MBDKubeJSPluginMixin",
-		"vanilla.BiomeMixin",
-		"vanilla.CauldronBlockMixin",
-		"vanilla.LayeredCauldronBlockMixin",
-		"vanilla.LevelMixin",
 		"vanilla.PackCompatibilityMixin"
 	],
 	"client": [
 		"create.BulkFermenterRendererMixin",
 		"kubejs.GeneratedClientResourcePackMixin",
-		"ldlib.LDLibJEIIngredientRendererMixin",
-		"vanilla.LevelRendererMixin"
+		"ldlib.LDLibJEIIngredientRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
