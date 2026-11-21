@@ -1,13 +1,7 @@
 package dev.celestiacraft.cmi.common.entity.prospecting_rocket;
 
-import java.util.UUID;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import com.lowdragmc.lowdraglib.gui.modular.IUIHolder;
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
-
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.client.entity.ProspectingRocketClientHandler;
 import dev.celestiacraft.cmi.client.gui.ProspectingRocketCargoUI;
@@ -21,50 +15,47 @@ import earth.terrarium.adastra.api.planets.PlanetApi;
 import earth.terrarium.adastra.common.config.AdAstraConfig;
 import earth.terrarium.adastra.common.registry.ModDamageSources;
 import earth.terrarium.adastra.common.registry.ModSoundEvents;
-import earth.terrarium.adastra.common.tags.ModFluidTags;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.SimpleContainer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -74,8 +65,9 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
+import java.util.UUID;
+
 public class ProspectingRocketEntity extends Entity implements GeoEntity, IUIHolder {
-	private static final TagKey<Fluid> FUEL_TAG = TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath("forge", "fuel"));
 	private static final String TAG_CARGO = "CargoItems";
 	private static final String TAG_FUEL = "FuelTank";
 	private static final String TAG_DESTINATION = "Destination";
@@ -121,7 +113,7 @@ public class ProspectingRocketEntity extends Entity implements GeoEntity, IUIHol
 		super(type, level);
 		this.tier = tier;
 		cargoItems = new SimpleContainer(tier.cargoSlots());
-		fuelTank = new FluidTank(tier.fuelCapacity(), stack -> stack.getFluid().is(FUEL_TAG));
+		fuelTank = new FluidTank(tier.fuelCapacity(), stack -> RocketFuel.isRocketFuel(stack, tier.level()));
 		noCulling = true;
 		rebuildCaps();
 	}
@@ -140,6 +132,9 @@ public class ProspectingRocketEntity extends Entity implements GeoEntity, IUIHol
 		}
 		if (!canReach(target)) {
 			return RocketLaunchResult.TOO_LOW_TIER;
+		}
+		if (!hasTierFuel()) {
+			return RocketLaunchResult.WRONG_FUEL;
 		}
 		RocketLaunchResult targetState = prepareTarget(target);
 		if (targetState != RocketLaunchResult.SUCCESS) {
@@ -496,13 +491,18 @@ public class ProspectingRocketEntity extends Entity implements GeoEntity, IUIHol
 		}
 	}
 
+	// 罐内燃料必须属于自身等级
+	private boolean hasTierFuel() {
+		return RocketFuel.isRocketFuel(fuelTank.getFluid(), tier.level());
+	}
+
 	// 燃料达到 3000 mB 普通或 1000 mB 高效才可发射
 	private boolean consumeLaunchFuel() {
 		FluidStack fuel = fuelTank.getFluid();
 		if (fuel.isEmpty()) {
 			return false;
 		}
-		int required = fuel.getFluid().is(ModFluidTags.EFFICIENT_FUEL) ? EFFICIENT_LAUNCH_FUEL : NORMAL_LAUNCH_FUEL;
+		int required = RocketFuel.isEfficientFuel(fuel.getFluid()) ? EFFICIENT_LAUNCH_FUEL : NORMAL_LAUNCH_FUEL;
 		if (fuel.getAmount() < required) {
 			return false;
 		}

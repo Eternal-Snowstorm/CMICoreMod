@@ -4,6 +4,8 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
+import dev.celestiacraft.cmi.Cmi;
+import dev.celestiacraft.cmi.common.block.belt_grinder.GrindingRecipe;
 import dev.celestiacraft.cmi.common.recipe.fan_processig.freezing.FreezingRecipe;
 import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
@@ -15,8 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.celestiacraft.cmi.Cmi;
-import dev.celestiacraft.cmi.common.block.belt_grinder.GrindingRecipe;
 
 import java.util.Optional;
 import java.util.function.Supplier;

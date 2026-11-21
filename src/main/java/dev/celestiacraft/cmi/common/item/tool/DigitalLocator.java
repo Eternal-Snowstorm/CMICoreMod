@@ -1,8 +1,5 @@
 package dev.celestiacraft.cmi.common.item.tool;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlock;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.PlatformBindingHandler;
@@ -13,12 +10,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class DigitalLocator extends BasicItem {
 	private static final String TAG_RECORDED = "RecordedPlatform";

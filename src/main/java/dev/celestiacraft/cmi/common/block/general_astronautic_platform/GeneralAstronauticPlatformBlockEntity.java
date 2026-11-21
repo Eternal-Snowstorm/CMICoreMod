@@ -1,10 +1,5 @@
 package dev.celestiacraft.cmi.common.block.general_astronautic_platform;
 
-import java.util.Comparator;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import dev.celestiacraft.cmi.api.client.CmiLang;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.io.PlatformInputFluidHandler;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.io.PlatformInputItemHandler;
@@ -29,21 +24,25 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
+
+import java.util.Comparator;
 
 public class GeneralAstronauticPlatformBlockEntity extends BlockEntity implements GeoBlockEntity, SpaceElevatorIoHost {
 	private static final String TAG_BOUND_PLATFORM = "BoundPlatform";
@@ -91,6 +90,7 @@ public class GeneralAstronauticPlatformBlockEntity extends BlockEntity implement
 	public void onLoad() {
 		super.onLoad();
 		rebuildCaps();
+		PlatformBindingHandler.applyPending(this);
 		PlatformBindingHandler.validate(this);
 		refreshDisplay();
 	}

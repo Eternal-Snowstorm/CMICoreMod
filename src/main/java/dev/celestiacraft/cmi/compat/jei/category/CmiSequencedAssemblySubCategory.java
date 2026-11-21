@@ -3,8 +3,8 @@ package dev.celestiacraft.cmi.compat.jei.category;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.category.sequencedAssembly.SequencedAssemblySubCategory;
 import com.simibubi.create.content.processing.sequenced.SequencedRecipe;
-import net.minecraft.client.gui.GuiGraphics;
 import dev.celestiacraft.cmi.compat.jei.category.animations.AnimatedBeltGrinder;
+import net.minecraft.client.gui.GuiGraphics;
 
 public abstract class CmiSequencedAssemblySubCategory extends SequencedAssemblySubCategory {
 	public CmiSequencedAssemblySubCategory(int width) {

@@ -1,34 +1,33 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console.io;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlock;
 import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class SpaceElevatorIoPortBlock extends BasicBlock implements IBE<SpaceElevatorIoPortBlockEntity> {
 	public static final EnumProperty<IoPortType> IO_TYPE = EnumProperty.create("io_type", IoPortType.class);
@@ -82,27 +81,36 @@ public class SpaceElevatorIoPortBlock extends BasicBlock implements IBE<SpaceEle
 
 	@Override
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-		return state.getValue(SHAPE).shape();
+		return state.getValue(SHAPE).shape(facing(level, pos));
 	}
 
 	@Override
 	public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-		return state.getValue(SHAPE).solidShape();
+		return state.getValue(SHAPE).solidShape(facing(level, pos));
 	}
 
 	@Override
 	public @NotNull VoxelShape getInteractionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
-		return state.getValue(SHAPE).shape();
+		return state.getValue(SHAPE).shape(facing(level, pos));
 	}
 
 	@Override
 	public @NotNull VoxelShape getVisualShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-		return state.getValue(SHAPE).solidShape();
+		return state.getValue(SHAPE).solidShape(facing(level, pos));
 	}
 
 	@Override
 	public @NotNull VoxelShape getOcclusionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
 		return Shapes.empty();
+	}
+
+	// 端口形状跟随控制器朝向, 无朝向的控制器按朝南处理
+	private static Direction facing(@NotNull BlockGetter level, @NotNull BlockPos pos) {
+		BlockPos controller = getControllerPos(level, pos);
+		if (controller == null) {
+			return Direction.SOUTH;
+		}
+		return GeneralAstronauticPlatformBlock.getPlatformFacing(level, controller);
 	}
 
 	@Nullable

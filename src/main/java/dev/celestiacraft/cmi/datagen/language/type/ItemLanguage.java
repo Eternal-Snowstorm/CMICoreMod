@@ -1,10 +1,9 @@
 package dev.celestiacraft.cmi.datagen.language.type;
 
-import java.util.List;
-
+import dev.celestiacraft.cmi.datagen.language.LanguageGenerate;
 import org.jetbrains.annotations.NotNull;
 
-import dev.celestiacraft.cmi.datagen.language.LanguageGenerate;
+import java.util.List;
 
 public class ItemLanguage extends LanguageGenerate {
 	public static void addLang() {

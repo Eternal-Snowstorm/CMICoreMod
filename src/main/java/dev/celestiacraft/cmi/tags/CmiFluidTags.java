@@ -1,8 +1,8 @@
 package dev.celestiacraft.cmi.tags;
 
+import dev.celestiacraft.libs.tags.TagsBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
-import dev.celestiacraft.libs.tags.TagsBuilder;
 
 public class CmiFluidTags {
 	public static final TagKey<Fluid>

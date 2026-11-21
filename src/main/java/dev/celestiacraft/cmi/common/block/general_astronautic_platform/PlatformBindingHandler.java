@@ -1,17 +1,16 @@
 package dev.celestiacraft.cmi.common.block.general_astronautic_platform;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class PlatformBindingHandler {
 	private static final String TAG_DIMENSION = "Dimension";
@@ -68,25 +67,46 @@ public class PlatformBindingHandler {
 		return null;
 	}
 
-	// 按记录坐标与目标平台建立双向绑定, 并取消双方原有绑定
+	// 与目标平台建立双向绑定, 对端未加载时把写入延后到其加载
 	public static boolean bind(@NotNull ServerLevel targetLevel, @NotNull BlockPos targetPos, @NotNull GlobalPos sourcePos) {
 		GeneralAstronauticPlatformBlockEntity target = platformAt(targetLevel, targetPos);
 		if (target == null) {
 			return false;
 		}
+		GlobalPos targetGlobal = GlobalPos.of(targetLevel.dimension(), targetPos);
 		GeneralAstronauticPlatformBlockEntity source = resolve(targetLevel, sourcePos);
-		if (source == null) {
-			return false;
-		}
-		Level sourceLevel = source.getLevel();
-		if (sourceLevel == null) {
-			return false;
-		}
-		release(source);
 		release(target);
-		source.setBoundPlatform(GlobalPos.of(targetLevel.dimension(), targetPos));
-		target.setBoundPlatform(GlobalPos.of(sourceLevel.dimension(), source.getBlockPos()));
+		if (source != null) {
+			release(source);
+			source.setBoundPlatform(targetGlobal);
+		} else {
+			queueBind(targetLevel, sourcePos, targetGlobal);
+		}
+		target.setBoundPlatform(sourcePos);
 		return true;
+	}
+
+	// 平台加载时写入缓存的绑定变更, 需在 validate 之前调用
+	public static void applyPending(@NotNull GeneralAstronauticPlatformBlockEntity platform) {
+		Level level = platform.getLevel();
+		PlatformBindingCache cache = cache(level);
+		if (level == null || cache == null) {
+			return;
+		}
+		GlobalPos self = GlobalPos.of(level.dimension(), platform.getBlockPos());
+		PlatformBindingCache.Entry entry = cache.take(self);
+		if (entry == null) {
+			return;
+		}
+		GlobalPos peer = entry.peer();
+		if (peer == null) {
+			release(platform);
+			return;
+		}
+		if (!peer.equals(platform.getBoundPlatform())) {
+			release(platform);
+		}
+		platform.setBoundPlatform(peer);
 	}
 
 	// 区块加载时校验绑定是否成对, 对端已消失或不再指回自己时清除
@@ -98,6 +118,11 @@ public class PlatformBindingHandler {
 		}
 		MinecraftServer server = level.getServer();
 		if (server == null) {
+			return;
+		}
+		// 对端有待写入的绑定变更时先不判定, 等对端加载后自行写入
+		PlatformBindingCache cache = cache(level);
+		if (cache != null && cache.hasPending(peer)) {
 			return;
 		}
 		ServerLevel peerLevel = server.getLevel(peer.dimension());
@@ -126,7 +151,7 @@ public class PlatformBindingHandler {
 		return null;
 	}
 
-	// 取消平台的绑定, 同时清掉对端记录, 绑定替换与平台破坏共用
+	// 取消平台的绑定, 对端未加载时把清除延后到其加载
 	public static void release(@NotNull GeneralAstronauticPlatformBlockEntity platform) {
 		GlobalPos peer = platform.getBoundPlatform();
 		if (peer == null) {
@@ -135,7 +160,40 @@ public class PlatformBindingHandler {
 		GeneralAstronauticPlatformBlockEntity peerPlatform = resolve(platform.getLevel(), peer);
 		if (peerPlatform != null) {
 			peerPlatform.clearBoundPlatform();
+		} else {
+			queueClear(platform.getLevel(), peer);
 		}
 		platform.clearBoundPlatform();
+	}
+
+	// 写入一条待应用的绑定
+	private static void queueBind(@Nullable Level level, @NotNull GlobalPos platform, @NotNull GlobalPos peer) {
+		PlatformBindingCache cache = cache(level);
+		if (cache == null) {
+			return;
+		}
+		cache.queueBind(platform, peer);
+	}
+
+	// 写入一条待应用的清除
+	private static void queueClear(@Nullable Level level, @NotNull GlobalPos platform) {
+		PlatformBindingCache cache = cache(level);
+		if (cache == null) {
+			return;
+		}
+		cache.queueClear(platform);
+	}
+
+	// 取服务端的绑定缓存, 客户端取不到
+	@Nullable
+	private static PlatformBindingCache cache(@Nullable Level level) {
+		if (level == null || level.isClientSide()) {
+			return null;
+		}
+		MinecraftServer server = level.getServer();
+		if (server == null) {
+			return null;
+		}
+		return PlatformBindingCache.get(server);
 	}
 }

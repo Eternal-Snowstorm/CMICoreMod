@@ -7,6 +7,8 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringRenderer;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
+import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
+import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
 import net.createmod.catnip.animation.AnimationTickHolder;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SpriteShiftEntry;
@@ -23,8 +25,6 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import dev.celestiacraft.cmi.client.block.CmiBlockPartialModel;
-import dev.celestiacraft.cmi.client.block.CmiSpriteShiftEntry;
 
 public class BeltGrinderRenderer extends SafeBlockEntityRenderer<BeltGrinderBlockEntity> {
 	public BeltGrinderRenderer(BlockEntityRendererProvider.Context context) {

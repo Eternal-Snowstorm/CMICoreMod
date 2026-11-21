@@ -1,13 +1,7 @@
 package dev.celestiacraft.cmi.common.block.general_astronautic_platform.render;
 
-import java.util.EnumMap;
-import java.util.Map;
-
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import dev.celestiacraft.cmi.Cmi;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.AstronauticPlatformDisplayState;
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlockEntity;
@@ -18,9 +12,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeRenderTypes;
+import org.joml.Matrix4f;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 // 在 displays 骨骼的三块显示器外壳上叠加状态图标
 @OnlyIn(Dist.CLIENT)

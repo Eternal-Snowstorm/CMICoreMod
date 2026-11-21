@@ -1,11 +1,10 @@
 package dev.celestiacraft.cmi.common.block.general_astronautic_platform.io;
 
-import org.jetbrains.annotations.NotNull;
-
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlockEntity;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketTier;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class PlatformInputFluidHandler implements IFluidHandler {
 	private static final int TANK_COUNT = 1;

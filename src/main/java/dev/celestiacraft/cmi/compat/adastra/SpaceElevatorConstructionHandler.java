@@ -1,20 +1,16 @@
 package dev.celestiacraft.cmi.compat.adastra;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import dev.celestiacraft.cmi.common.block.general_astronautic_platform.GeneralAstronauticPlatformBlock;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortShape;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlock;
-import dev.celestiacraft.cmi.common.block.space_elevator_base_console.SpaceElevatorBaseConsoleBlockEntity;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.structure.SpaceElevatorBaseStructure;
 import dev.celestiacraft.cmi.common.entity.prospecting_rocket.ProspectingRocketEntity;
 import dev.celestiacraft.cmi.common.entity.space_elevator.SpaceElevatorEntity;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.FluidIngredientEntry;
 import dev.celestiacraft.cmi.common.recipe.space_elevator_construction.SpaceElevatorConstructionRecipe;
-import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
 import dev.celestiacraft.cmi.common.register.CmiEntity;
+import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
 import earth.terrarium.adastra.api.planets.Planet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -27,17 +23,20 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public final class SpaceElevatorConstructionHandler {
 	private static final ResourceLocation WRENCH_ID = ResourceLocation.fromNamespaceAndPath("ad_astra", "wrench");

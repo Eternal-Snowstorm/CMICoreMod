@@ -1,10 +1,5 @@
 package dev.celestiacraft.cmi.compat.adastra;
 
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import earth.terrarium.adastra.common.entities.vehicles.Rocket;
 import earth.terrarium.adastra.common.items.vehicles.RocketItem;
 import net.minecraft.core.BlockPos;
@@ -13,6 +8,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public final class AdAstraPlatformRocket {
 	private static final double DETECTION_HALF_WIDTH = 2.5D;
