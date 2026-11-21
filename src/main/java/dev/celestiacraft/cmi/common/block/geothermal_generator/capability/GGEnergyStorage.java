@@ -7,7 +7,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class GGEnergyStorage implements IEnergyStorage {
 	private final GGBlockEntity entity;
-	private final LazyOptional<IEnergyStorage> optional;
+	private LazyOptional<IEnergyStorage> optional;
 
 	public GGEnergyStorage(GGBlockEntity entity) {
 		this.entity = entity;
@@ -66,5 +66,12 @@ public class GGEnergyStorage implements IEnergyStorage {
 
 	public void invalidate() {
 		optional.invalidate();
+	}
+
+	// LazyOptional 失效后无法恢复, 重新挂载时重建
+	public void revive() {
+		if (!optional.isPresent()) {
+			optional = LazyOptional.of(() -> this);
+		}
 	}
 }

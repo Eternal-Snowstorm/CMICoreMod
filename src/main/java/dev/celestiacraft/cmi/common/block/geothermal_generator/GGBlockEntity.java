@@ -152,5 +152,6 @@ public class GGBlockEntity extends SmartBlockEntity {
 	@Override
 	public void reviveCaps() {
 		super.reviveCaps();
+		storage.revive();
 	}
 }
