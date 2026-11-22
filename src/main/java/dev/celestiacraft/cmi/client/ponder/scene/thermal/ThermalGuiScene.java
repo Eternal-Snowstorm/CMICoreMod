@@ -48,25 +48,25 @@ public class ThermalGuiScene {
 				.builder()
 				.rightClick();
 
-		scene.world().setBlocks(util.select().fromTo(13, 1, 13, 7, 4, 13), cmi("ponder_thermal_gui"), false);
+		scene.world().setBlocks(util.select().fromTo(13, 1, 13, 7, 4, 13), cmi("ponder_thermal_background"), false);
 		scene.world().showSection(util.select().fromTo(13, 1, 13, 7, 4, 13), Direction.DOWN);
-		scene.world().setBlock(util.grid().at(12, 1, 13), cmi("ponder_thermal_slot_energy"), false);
-		scene.world().setBlock(util.grid().at(10, 2, 13), cmi("ponder_thermal_slot"), false);
-		scene.world().setBlock(util.grid().at(8, 2, 13), cmi("ponder_thermal_slot"), false);
-		scene.world().setBlock(util.grid().at(10, 1, 13), cmi("ponder_thermal_fire"), false);
+		scene.world().setBlock(util.grid().at(12, 1, 13), cmi("ponder_thermal_energy_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 2, 13), cmi("ponder_thermal_empty_slot"), false);
+		scene.world().setBlock(util.grid().at(8, 2, 13), cmi("ponder_thermal_empty_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 1, 13), cmi("ponder_thermal_flame_empty"), false);
 
-		scene.world().setBlock(util.grid().at(12, 2, 13), cmi("ponder_thermal_energy"), false);
-		scene.world().setBlock(util.grid().at(12, 3, 13), cmi("ponder_thermal_energy"), false);
+		scene.world().setBlock(util.grid().at(12, 2, 13), cmi("ponder_thermal_energy_full"), false);
+		scene.world().setBlock(util.grid().at(12, 3, 13), cmi("ponder_thermal_energy_full"), false);
 
-		scene.world().setBlock(util.grid().at(9, 2, 13), cmi("ponder_thermal_arrow"), false);
+		scene.world().setBlock(util.grid().at(9, 2, 13), cmi("ponder_thermal_arrow_empty"), false);
 
-		scene.world().setBlock(util.grid().at(6, 4, 13), cmi("ponder_thermal_gui_green_icon"), false);
-		scene.world().setBlock(util.grid().at(6, 3, 13), cmi("ponder_thermal_gui_red_icon"), false);
-		scene.world().setBlock(util.grid().at(6, 2, 13), cmi("ponder_thermal_gui_blue_icon"), false);
+		scene.world().setBlock(util.grid().at(6, 4, 13), cmi("ponder_thermal_augment_button"), false);
+		scene.world().setBlock(util.grid().at(6, 3, 13), cmi("ponder_thermal_redstone_button"), false);
+		scene.world().setBlock(util.grid().at(6, 2, 13), cmi("ponder_thermal_config_button"), false);
 		scene.world().showSection(util.select().fromTo(6, 1, 13, 6, 4, 13), Direction.EAST);
 
-		scene.world().setBlock(util.grid().at(14, 4, 13), cmi("ponder_thermal_gui_gray_icon"), false);
-		scene.world().setBlock(util.grid().at(14, 3, 13), cmi("ponder_thermal_gui_lightblue_icon"), false);
+		scene.world().setBlock(util.grid().at(14, 4, 13), cmi("ponder_thermal_information_button"), false);
+		scene.world().setBlock(util.grid().at(14, 3, 13), cmi("ponder_thermal_energy_button"), false);
 		scene.world().showSection(util.select().fromTo(14, 1, 13, 13, 4, 13), Direction.WEST);
 
 		scene.addKeyframe();
@@ -122,8 +122,8 @@ public class ThermalGuiScene {
 		);
 		scene.text(30, "Put items here", util.vector().of(10, 2, 13));
 		scene.idle(40);
-		scene.world().setBlock(util.grid().at(10, 2, 13), cmi("ponder_thermal_sand"), false);
-		scene.world().setBlock(util.grid().at(10, 1, 13), cmi("ponder_thermal_fire_active"), false);
+		scene.world().setBlock(util.grid().at(10, 2, 13), cmi("ponder_thermal_sand_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 1, 13), cmi("ponder_thermal_flame_full"), false);
 		scene.idle(40);
 
 		scene.overlay().showOutline(
@@ -134,7 +134,7 @@ public class ThermalGuiScene {
 		);
 		scene.text(30, "When the progress bar is completed, the input items will be consumed and then output", util.vector().of(9, 2, 13));
 		scene.idle(40);
-		scene.world().setBlock(util.grid().at(9, 2, 13), cmi("ponder_thermal_arrow_active"), false);
+		scene.world().setBlock(util.grid().at(9, 2, 13), cmi("ponder_thermal_arrow_full"), false);
 
 		scene.idle(40);
 		scene.overlay().showOutline(
@@ -143,11 +143,11 @@ public class ThermalGuiScene {
 				util.select().position(8, 2, 13),
 				30
 		);
-		scene.world().setBlock(util.grid().at(8, 2, 13), cmi("ponder_thermal_glass"), false);
-		scene.world().setBlock(util.grid().at(10, 2, 13), cmi("ponder_thermal_slot"), false);
-		scene.world().setBlock(util.grid().at(10, 1, 13), cmi("ponder_thermal_fire"), false);
+		scene.world().setBlock(util.grid().at(8, 2, 13), cmi("ponder_thermal_glass_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 2, 13), cmi("ponder_thermal_empty_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 1, 13), cmi("ponder_thermal_flame_empty"), false);
 		scene.world().setBlock(util.grid().at(12, 3, 13), cmi("ponder_thermal_energy_empty"), false);
-		scene.world().setBlock(util.grid().at(9, 2, 13), cmi("ponder_thermal_arrow"), false);
+		scene.world().setBlock(util.grid().at(9, 2, 13), cmi("ponder_thermal_arrow_empty"), false);
 		scene.addKeyframe();
 
 		scene.idle(40);
@@ -174,25 +174,25 @@ public class ThermalGuiScene {
 		scene.text(40, "This is a thermal machine with a trough of items only.", util.vector().of(7.5, 1.5, 7));
 
 		scene.idle(40);
-		scene.world().setBlocks(util.select().fromTo(13, 4, 13, 7, 7, 13), cmi("ponder_thermal_gui"), false);
+		scene.world().setBlocks(util.select().fromTo(13, 4, 13, 7, 7, 13), cmi("ponder_thermal_background"), false);
 		scene.world().showSection(util.select().fromTo(13, 4, 13, 7, 7, 13), Direction.DOWN);
-		scene.world().setBlock(util.grid().at(12, 4, 13), cmi("ponder_thermal_slot_energy"), false);
-		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_slot"), false);
-		scene.world().setBlock(util.grid().at(10, 4, 13), cmi("ponder_thermal_fire"), false);
-		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_slot"), false);
+		scene.world().setBlock(util.grid().at(12, 4, 13), cmi("ponder_thermal_energy_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_empty_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 4, 13), cmi("ponder_thermal_flame_empty"), false);
+		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_empty_slot"), false);
 
 		scene.world().setBlock(util.grid().at(12, 5, 13), cmi("ponder_thermal_energy_empty"), false);
 		scene.world().setBlock(util.grid().at(12, 6, 13), cmi("ponder_thermal_energy_empty"), false);
 
-		scene.world().setBlock(util.grid().at(9, 5, 13), cmi("ponder_thermal_arrow"), false);
+		scene.world().setBlock(util.grid().at(9, 5, 13), cmi("ponder_thermal_arrow_empty"), false);
 
-		scene.world().setBlock(util.grid().at(6, 7, 13), cmi("ponder_thermal_gui_green_icon"), false);
-		scene.world().setBlock(util.grid().at(6, 6, 13), cmi("ponder_thermal_gui_red_icon"), false);
-		scene.world().setBlock(util.grid().at(6, 5, 13), cmi("ponder_thermal_gui_blue_icon"), false);
+		scene.world().setBlock(util.grid().at(6, 7, 13), cmi("ponder_thermal_augment_button"), false);
+		scene.world().setBlock(util.grid().at(6, 6, 13), cmi("ponder_thermal_redstone_button"), false);
+		scene.world().setBlock(util.grid().at(6, 5, 13), cmi("ponder_thermal_config_button"), false);
 		scene.world().showSection(util.select().fromTo(6, 4, 13, 6, 7, 13), Direction.EAST);
 
-		scene.world().setBlock(util.grid().at(14, 7, 13), cmi("ponder_thermal_gui_gray_icon"), false);
-		scene.world().setBlock(util.grid().at(14, 6, 13), cmi("ponder_thermal_gui_lightblue_icon"), false);
+		scene.world().setBlock(util.grid().at(14, 7, 13), cmi("ponder_thermal_information_button"), false);
+		scene.world().setBlock(util.grid().at(14, 6, 13), cmi("ponder_thermal_energy_button"), false);
 		scene.world().showSection(util.select().fromTo(14, 1, 13, 13, 4, 13), Direction.WEST);
 		scene.addKeyframe();
 		scene.idle(40);
@@ -211,11 +211,11 @@ public class ThermalGuiScene {
 		scene.idle(40);
 		scene.world().hideSection(util.select().position(6, 5, 13), Direction.WEST);
 		scene.idle(20);
-		scene.world().setBlocks(util.select().fromTo(6, 5, 13, 1, 2, 13), cmi("ponder_thermal_gui_blue"), false);
+		scene.world().setBlocks(util.select().fromTo(6, 5, 13, 1, 2, 13), cmi("ponder_thermal_config_panel"), false);
 		scene.world().showSection(util.select().fromTo(6, 5, 13, 1, 2, 13), Direction.UP);
-		scene.world().setBlock(util.grid().at(6, 5, 13), cmi("ponder_thermal_gui_blue_icon"), false);
-		scene.world().setBlock(util.grid().at(6, 4, 13), cmi("ponder_thermal_input"), false);
-		scene.world().setBlock(util.grid().at(6, 3, 13), cmi("ponder_thermal_output"), false);
+		scene.world().setBlock(util.grid().at(6, 5, 13), cmi("ponder_thermal_config_button"), false);
+		scene.world().setBlock(util.grid().at(6, 4, 13), cmi("ponder_thermal_auto_input_button_off"), false);
+		scene.world().setBlock(util.grid().at(6, 3, 13), cmi("ponder_thermal_auto_output_button_off"), false);
 		scene.world().setBlock(util.grid().at(3, 4, 13), cmi("ponder_thermal_machine_top"), false);
 		scene.world().setBlock(util.grid().at(3, 2, 13), cmi("ponder_thermal_machine_bottom"), false);
 		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side"), false);
@@ -233,9 +233,9 @@ public class ThermalGuiScene {
 		scene.world().showSection(util.select().position(6, 2, 7), Direction.UP);
 		scene.world().showSection(util.select().position(6, 1, 7), Direction.UP);
 		scene.idle(40);
-		scene.world().setBlock(util.grid().at(12, 5, 13), cmi("ponder_thermal_energy"), false);
+		scene.world().setBlock(util.grid().at(12, 5, 13), cmi("ponder_thermal_energy_full"), false);
 		scene.idle(20);
-		scene.world().setBlock(util.grid().at(12, 6, 13), cmi("ponder_thermal_energy"), false);
+		scene.world().setBlock(util.grid().at(12, 6, 13), cmi("ponder_thermal_energy_full"), false);
 		scene.idle(20);
 		scene.world().hideSection(util.select().position(8, 1, 7), Direction.UP);
 		scene.world().hideSection(util.select().position(8, 2, 7), Direction.UP);
@@ -253,33 +253,33 @@ public class ThermalGuiScene {
 		);
 		scene.text(40, "Turn on automatic input and output here.", util.vector().of(6, 3.5, 13));
 		scene.idle(40);
-		scene.world().setBlock(util.grid().at(6, 4, 13), cmi("ponder_thermal_input_on"), false);
-		scene.world().setBlock(util.grid().at(6, 3, 13), cmi("ponder_thermal_output_on"), false);
+		scene.world().setBlock(util.grid().at(6, 4, 13), cmi("ponder_thermal_auto_input_button_on"), false);
+		scene.world().setBlock(util.grid().at(6, 3, 13), cmi("ponder_thermal_auto_output_button_on"), false);
 
 		scene.idle(40);
 		scene.text(40, "and set the input and output of each face");
 		scene.idle(50);
 
 		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_blue"), false);
-		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_slot_blue"), false);
+		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_input_slot"), false);
 		scene.text(40, "Normally, blue represents input", util.vector().of(4, 3, 13));
 		scene.idle(50);
 
 		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_orange"), false);
-		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_slot"), false);
-		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_slot_orange"), false);
+		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_empty_slot"), false);
+		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_output_slot"), false);
 		scene.text(40, "Orange represents output", util.vector().of(4, 3, 13));
 		scene.idle(50);
 
 		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_mix"), false);
-		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_slot_blue"), false);
-		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_slot_orange"), false);
+		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_input_slot"), false);
+		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_output_slot"), false);
 		scene.text(40, "The hybrid represents both input and output", util.vector().of(4, 3, 13));
 		scene.idle(50);
 
 		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_disabled"), false);
-		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_slot"), false);
-		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_empty_slot"), false);
+		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_empty_slot"), false);
 		scene.text(40, "Black represents disabled", util.vector().of(4, 3, 13));
 		scene.idle(50);
 
@@ -289,8 +289,8 @@ public class ThermalGuiScene {
 		scene.addKeyframe();
 		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_blue"), false);
 		scene.world().setBlock(util.grid().at(2, 3, 13), cmi("ponder_thermal_machine_side_orange"), false);
-		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_slot_blue"), false);
-		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_slot_orange"), false);
+		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_input_slot"), false);
+		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_output_slot"), false);
 		scene.world().setBlock(util.grid().at(8, 1, 7), block("minecraft", "chest"), false);
 		scene.world().setBlock(util.grid().at(6, 1, 7), block("create", "depot"), false);
 		scene.world().showSection(util.select().position(8, 1, 7), Direction.DOWN);
@@ -301,21 +301,21 @@ public class ThermalGuiScene {
 		scene.idle(60);
 
 		scene.text(40, "The machine will automatically extract items", util.vector().of(10, 5, 13));
-		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_sand"), false);
-		scene.world().setBlock(util.grid().at(10, 4, 13), cmi("ponder_thermal_fire_active"), false);
+		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_sand_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 4, 13), cmi("ponder_thermal_flame_full"), false);
 
 		scene.idle(40);
-		scene.world().setBlock(util.grid().at(9, 5, 13), cmi("ponder_thermal_arrow_active"), false);
+		scene.world().setBlock(util.grid().at(9, 5, 13), cmi("ponder_thermal_arrow_full"), false);
 		scene.idle(40);
-		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_glass"), false);
-		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_slot_blue"), false);
-		scene.world().setBlock(util.grid().at(9, 5, 13), cmi("ponder_thermal_arrow"), false);
+		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_glass_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_input_slot"), false);
+		scene.world().setBlock(util.grid().at(9, 5, 13), cmi("ponder_thermal_arrow_empty"), false);
 		scene.world().setBlock(util.grid().at(12, 6, 13), cmi("ponder_thermal_energy_empty"), false);
 		scene.idle(40);
 
 		scene.text(40, "Automatically output after completion", util.vector().of(8, 5, 13));
-		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_slot_orange"), false);
-		scene.world().setBlock(util.grid().at(10, 4, 13), cmi("ponder_thermal_fire"), false);
+		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_output_slot"), false);
+		scene.world().setBlock(util.grid().at(10, 4, 13), cmi("ponder_thermal_flame_empty"), false);
 		scene.showControls(40, util.vector().of(6.5, 2, 7.5), Pointing.DOWN)
 				.builder()
 				.withItem(new ItemStack(Items.GLASS));
@@ -325,11 +325,11 @@ public class ThermalGuiScene {
 		scene.text(40, "Fluid is the same");
 		scene.world().setBlock(util.grid().at(8, 1, 7), block("create", "fluid_tank"), false);
 		scene.world().setBlock(util.grid().at(6, 1, 7), block("create", "fluid_tank"), false);
-		scene.world().setBlock(util.grid().at(10, 4, 13), cmi("ponder_thermal_gui"), false);
-		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_lava"), false);
-		scene.world().setBlock(util.grid().at(10, 6, 13), cmi("ponder_thermal_fluid"), false);
-		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_water"), false);
-		scene.world().setBlock(util.grid().at(8, 6, 13), cmi("ponder_thermal_fluid"), false);
+		scene.world().setBlock(util.grid().at(10, 4, 13), cmi("ponder_thermal_background"), false);
+		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_fluid_lava"), false);
+		scene.world().setBlock(util.grid().at(10, 6, 13), cmi("ponder_thermal_fluid_empty"), false);
+		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_fluid_water"), false);
+		scene.world().setBlock(util.grid().at(8, 6, 13), cmi("ponder_thermal_fluid_empty"), false);
 
 		scene.addKeyframe();
 		scene.idle(50);

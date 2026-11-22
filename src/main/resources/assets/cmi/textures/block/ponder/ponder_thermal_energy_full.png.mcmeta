@@ -4,7 +4,7 @@
         "type": "ctm",
         "layer": "SOLID",
         "textures": [
-            "cmi:block/ponder/ctm/ponder_thermal_lava"
+            "cmi:block/ponder/ctm/ponder_thermal_energy_full"
         ]
     }
 }

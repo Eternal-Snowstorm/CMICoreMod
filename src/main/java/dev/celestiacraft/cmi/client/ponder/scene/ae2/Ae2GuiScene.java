@@ -19,15 +19,15 @@ import net.minecraft.world.level.block.state.BlockState;
  * 其余为原版 / Create / Mekanism 方块。
  */
 public class Ae2GuiScene {
-	private static final BlockState PATTEN_SLOT = state("patten_slot");
-	private static final BlockState PATTEN_BLANK = state("patten_blank");
-	private static final BlockState PICKAXE = state("pickaxe");
-	private static final BlockState COOKED = state("cooked");
-	private static final BlockState DIAMOND = state("diamond");
-	private static final BlockState STICK = state("stick");
-	private static final BlockState SLOT1 = state("slot1");
-	private static final BlockState SLOT2 = state("slot2");
-	private static final BlockState COAL = state("coal");
+	private static final BlockState PONDER_AE2_EMPTY_PATTERN_SLOT_DARK = state("ponder_ae2_empty_pattern_slot_dark");
+	private static final BlockState PONDER_AE2_BLANK_PATTERN_SLOT_DARK = state("ponder_ae2_blank_pattern_slot_dark");
+	private static final BlockState PONDER_AE2_DIAMOND_PICKAXE_SLOT_DARK = state("ponder_ae2_diamond_pickaxe_slot_dark");
+	private static final BlockState PONDER_AE2_COOKED_CHICKEN_SLOT_DARK = state("ponder_ae2_cooked_chicken_slot_dark");
+	private static final BlockState PONDER_AE2_DIAMOND_SLOT_DARK = state("ponder_ae2_diamond_slot_dark");
+	private static final BlockState PONDER_AE2_STICK_SLOT_DARK = state("ponder_ae2_stick_slot_dark");
+	private static final BlockState PONDER_AE2_EMPTY_SLOT_LIGHT = state("ponder_ae2_empty_slot_light");
+	private static final BlockState PONDER_AE2_EMPTY_SLOT_DARK = state("ponder_ae2_empty_slot_dark");
+	private static final BlockState PONDER_AE2_COAL_SLOT_LIGHT = state("ponder_ae2_coal_slot_light");
 
 	private static BlockState state(String name) {
 		return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("cmi", name)).defaultBlockState();
@@ -53,9 +53,9 @@ public class Ae2GuiScene {
 		scene.world().showSection(util.select().fromTo(10, 2, 6, 5, 1, 6), Direction.UP);
 		scene.idle(20);
 
-		scene.world().setBlock(util.grid().at(4, 4, 10), PATTEN_SLOT, false);
-		scene.world().setBlock(util.grid().at(10, 4, 8), PICKAXE, false);
-		scene.world().setBlock(util.grid().at(10, 2, 8), COOKED, false);
+		scene.world().setBlock(util.grid().at(4, 4, 10), PONDER_AE2_EMPTY_PATTERN_SLOT_DARK, false);
+		scene.world().setBlock(util.grid().at(10, 4, 8), PONDER_AE2_DIAMOND_PICKAXE_SLOT_DARK, false);
+		scene.world().setBlock(util.grid().at(10, 2, 8), PONDER_AE2_COOKED_CHICKEN_SLOT_DARK, false);
 		scene.addKeyframe();
 
 		scene.overlay().showOutline(
@@ -81,7 +81,7 @@ public class Ae2GuiScene {
 				util.select().position(4, 4, 10),
 				40
 		);
-		scene.world().setBlock(util.grid().at(4, 4, 10), PATTEN_BLANK, false);
+		scene.world().setBlock(util.grid().at(4, 4, 10), PONDER_AE2_BLANK_PATTERN_SLOT_DARK, false);
 		scene.idle(60);
 		scene.addKeyframe();
 
@@ -98,17 +98,17 @@ public class Ae2GuiScene {
 		scene.idle(80);
 
 		scene.text(60, "摆出物品的合成", util.vector().of(6, 3.5, 10));
-		scene.world().setBlock(util.grid().at(11, 4, 10), DIAMOND, false);
+		scene.world().setBlock(util.grid().at(11, 4, 10), PONDER_AE2_DIAMOND_SLOT_DARK, false);
 		scene.idle(5);
-		scene.world().setBlock(util.grid().at(10, 4, 10), DIAMOND, false);
+		scene.world().setBlock(util.grid().at(10, 4, 10), PONDER_AE2_DIAMOND_SLOT_DARK, false);
 		scene.idle(5);
-		scene.world().setBlock(util.grid().at(9, 4, 10), DIAMOND, false);
+		scene.world().setBlock(util.grid().at(9, 4, 10), PONDER_AE2_DIAMOND_SLOT_DARK, false);
 		scene.idle(5);
-		scene.world().setBlock(util.grid().at(10, 3, 10), STICK, false);
+		scene.world().setBlock(util.grid().at(10, 3, 10), PONDER_AE2_STICK_SLOT_DARK, false);
 		scene.idle(5);
-		scene.world().setBlock(util.grid().at(10, 2, 10), STICK, false);
+		scene.world().setBlock(util.grid().at(10, 2, 10), PONDER_AE2_STICK_SLOT_DARK, false);
 		scene.idle(10);
-		scene.world().setBlock(util.grid().at(6, 3, 10), PICKAXE, false);
+		scene.world().setBlock(util.grid().at(6, 3, 10), PONDER_AE2_DIAMOND_PICKAXE_SLOT_DARK, false);
 		scene.idle(40);
 
 		scene.addKeyframe();
@@ -121,8 +121,8 @@ public class Ae2GuiScene {
 				40
 		);
 		scene.idle(30);
-		scene.world().setBlock(util.grid().at(4, 4, 10), PATTEN_SLOT, false);
-		scene.world().setBlock(util.grid().at(4, 2, 10), PICKAXE, false);
+		scene.world().setBlock(util.grid().at(4, 4, 10), PONDER_AE2_EMPTY_PATTERN_SLOT_DARK, false);
+		scene.world().setBlock(util.grid().at(4, 2, 10), PONDER_AE2_DIAMOND_PICKAXE_SLOT_DARK, false);
 
 		scene.addKeyframe();
 		scene.idle(30);
@@ -133,7 +133,7 @@ public class Ae2GuiScene {
 		scene.idle(60);
 		scene.text(60, "我们将其取走, 放入紧贴“分子装配室”的“ME样板供应器”", util.vector().of(6, 1.5, 6));
 
-		scene.world().setBlock(util.grid().at(4, 2, 10), SLOT2, false);
+		scene.world().setBlock(util.grid().at(4, 2, 10), PONDER_AE2_EMPTY_SLOT_DARK, false);
 		scene.idle(10);
 		scene.overlay().showOutline(
 				PonderPalette.BLUE,
@@ -142,7 +142,7 @@ public class Ae2GuiScene {
 				40
 		);
 
-		scene.world().setBlock(util.grid().at(12, 6, 10), PICKAXE, false);
+		scene.world().setBlock(util.grid().at(12, 6, 10), PONDER_AE2_DIAMOND_PICKAXE_SLOT_DARK, false);
 		scene.idle(40);
 
 		scene.overlay().showOutline(
@@ -254,7 +254,7 @@ public class Ae2GuiScene {
 		scene.idle(60);
 
 		scene.addKeyframe();
-		scene.world().setBlock(util.grid().at(9, 5, 7), COAL, false);
+		scene.world().setBlock(util.grid().at(9, 5, 7), PONDER_AE2_COAL_SLOT_LIGHT, false);
 		scene.text(50, "在此处标记 1 个煤炭", util.vector().of(9, 5.5, 7));
 		scene.idle(60);
 
@@ -264,14 +264,14 @@ public class Ae2GuiScene {
 		scene.idle(60);
 
 		scene.text(40, "ME接口将抽取 1 个煤炭", util.vector().of(10, 3, 6));
-		scene.world().setBlock(util.grid().at(9, 4, 7), COAL, false);
+		scene.world().setBlock(util.grid().at(9, 4, 7), PONDER_AE2_COAL_SLOT_LIGHT, false);
 
 		scene.idle(50);
 		scene.text(60, "随后, 漏斗会将煤炭抽取走, ME接口内煤炭耗尽", util.vector().of(10, 3, 6));
-		scene.world().setBlock(util.grid().at(9, 4, 7), SLOT1, false);
+		scene.world().setBlock(util.grid().at(9, 4, 7), PONDER_AE2_EMPTY_SLOT_LIGHT, false);
 		scene.idle(70);
 		scene.text(40, "ME接口将重新抽取 1 个煤炭", util.vector().of(10, 3, 6));
-		scene.world().setBlock(util.grid().at(9, 4, 7), COAL, false);
+		scene.world().setBlock(util.grid().at(9, 4, 7), PONDER_AE2_COAL_SLOT_LIGHT, false);
 		scene.idle(50);
 
 		scene.text(60, "如此循环往复, 直到熔炉、漏斗、ME接口中都被填满, ME接口将停止抽取新的物品", util.vector().of(10, 3, 6));
@@ -297,10 +297,10 @@ public class Ae2GuiScene {
 		scene.text(40, "没错我是燃烧的熔炉(", util.vector().of(11, 2.5, 6));
 		scene.idle(40);
 
-		scene.world().setBlock(util.grid().at(9, 4, 7), SLOT1, false);
+		scene.world().setBlock(util.grid().at(9, 4, 7), PONDER_AE2_EMPTY_SLOT_LIGHT, false);
 		scene.text(60, "煤炭被消耗, ME接口重新请求 1 个煤炭", util.vector().of(10, 3, 6));
 		scene.idle(70);
-		scene.world().setBlock(util.grid().at(9, 4, 7), COAL, false);
+		scene.world().setBlock(util.grid().at(9, 4, 7), PONDER_AE2_COAL_SLOT_LIGHT, false);
 		scene.idle(20);
 		scene.text(60, "此时网络剩余127-1=126个煤炭");
 		scene.idle(70);

@@ -33,30 +33,30 @@ public class IoDebugBlocks {
 	/** 迁移自 MachineIOBlock.js 的方块名列表，顺序与原脚本一致。 */
 	public static final List<String> NAMES = List.of(
 		"gui_block",
-		"ponder_thermal_input",
-		"ponder_thermal_output",
-		"ponder_thermal_output_on",
-		"ponder_thermal_input_on",
-		"ponder_thermal_fluid",
-		"ponder_thermal_fluid_blue",
-		"ponder_thermal_fluid_orange",
-		"ponder_thermal_slot",
-		"ponder_thermal_slot_blue",
-		"ponder_thermal_slot_orange",
-		"ponder_thermal_slot_energy",
-		"ponder_thermal_energy",
+		"ponder_thermal_auto_input_button_off",
+		"ponder_thermal_auto_output_button_off",
+		"ponder_thermal_auto_output_button_on",
+		"ponder_thermal_auto_input_button_on",
+		"ponder_thermal_fluid_empty",
+		"ponder_thermal_fluid_input",
+		"ponder_thermal_fluid_output",
+		"ponder_thermal_empty_slot",
+		"ponder_thermal_input_slot",
+		"ponder_thermal_output_slot",
+		"ponder_thermal_energy_slot",
+		"ponder_thermal_energy_full",
 		"ponder_thermal_energy_empty",
-		"ponder_thermal_gui",
-		"ponder_thermal_gui_blue",
-		"ponder_thermal_gui_blue_icon",
-		"ponder_thermal_gui_green",
-		"ponder_thermal_gui_green_icon",
-		"ponder_thermal_gui_red",
-		"ponder_thermal_gui_red_icon",
-		"ponder_thermal_gui_gray",
-		"ponder_thermal_gui_gray_icon",
-		"ponder_thermal_gui_lightblue",
-		"ponder_thermal_gui_lightblue_icon",
+		"ponder_thermal_background",
+		"ponder_thermal_config_panel",
+		"ponder_thermal_config_button",
+		"ponder_thermal_augment_panel",
+		"ponder_thermal_augment_button",
+		"ponder_thermal_redstone_panel",
+		"ponder_thermal_redstone_button",
+		"ponder_thermal_information_panel",
+		"ponder_thermal_information_button",
+		"ponder_thermal_energy_panel",
+		"ponder_thermal_energy_button",
 		"ponder_thermal_machine_front",
 		"ponder_thermal_machine_side",
 		"ponder_thermal_machine_side_blue",
@@ -65,76 +65,76 @@ public class IoDebugBlocks {
 		"ponder_thermal_machine_side_disabled",
 		"ponder_thermal_machine_top",
 		"ponder_thermal_machine_bottom",
-		"ponder_thermal_rs1_off",
-		"ponder_thermal_rs2_off",
-		"ponder_thermal_rs3_off",
-		"ponder_thermal_rs1_on",
-		"ponder_thermal_rs2_on",
-		"ponder_thermal_rs3_on",
-		"ponder_thermal_lava",
-		"ponder_thermal_water",
-		"ponder_thermal_arrow",
-		"ponder_thermal_arrow_active",
-		"ponder_thermal_fire",
-		"ponder_thermal_fire_active",
-		"ponder_thermal_sand",
-		"ponder_thermal_glass",
-		"slot1",
-		"arrow",
-		"slot2",
-		"patten_slot",
-		"gui",
-		"write",
-		"gui2",
-		"craft_on",
-		"craft_off",
-		"furnace_on",
-		"furnace_off",
-		"smith_on",
-		"smith_off",
-		"cut_on",
-		"cut_off",
-		"tab_on",
-		"tab_off",
-		"patten_blank",
-		"patten_filled",
-		"diamond",
-		"stick",
-		"pickaxe",
-		"pickaxe2",
-		"raw",
-		"cooked",
-		"cooked2",
-		"coal",
-		"iron",
-		"sheet"
+		"ponder_thermal_redstone_button_off",
+		"ponder_thermal_low_rs_touch_off",
+		"ponder_thermal_high_rs_touch_off",
+		"ponder_thermal_redstone_button_on",
+		"ponder_thermal_low_rs_touch_on",
+		"ponder_thermal_high_rs_touch_on",
+		"ponder_thermal_fluid_lava",
+		"ponder_thermal_fluid_water",
+		"ponder_thermal_arrow_empty",
+		"ponder_thermal_arrow_full",
+		"ponder_thermal_flame_empty",
+		"ponder_thermal_flame_full",
+		"ponder_thermal_sand_slot",
+		"ponder_thermal_glass_slot",
+		"ponder_ae2_empty_slot_light",
+		"ponder_ae2_arrow",
+		"ponder_ae2_empty_slot_dark",
+		"ponder_ae2_empty_pattern_slot_dark",
+		"ponder_ae2_background_light",
+		"ponder_ae2_write_button",
+		"ponder_ae2_background_dark",
+		"ponder_ae2_crafting_right_button_on",
+		"ponder_ae2_crafting_right_button_off",
+		"ponder_ae2_processing_right_button_on",
+		"ponder_ae2_processing_right_button_off",
+		"ponder_ae2_smithing_right_button_on",
+		"ponder_ae2_smithing_right_button_off",
+		"ponder_ae2_stonecutting_right_button_on",
+		"ponder_ae2_stonecutting_right_button_off",
+		"ponder_ae2_right_button_on",
+		"ponder_ae2_right_button_off",
+		"ponder_ae2_blank_pattern_slot_dark",
+		"ponder_ae2_encoded_pattern_slot_dark",
+		"ponder_ae2_diamond_slot_dark",
+		"ponder_ae2_stick_slot_dark",
+		"ponder_ae2_diamond_pickaxe_slot_dark",
+		"ponder_ae2_diamond_pickaxe_slot_light",
+		"ponder_ae2_chicken_slot_dark",
+		"ponder_ae2_cooked_chicken_slot_dark",
+		"ponder_ae2_cooked_chicken_slot_light",
+		"ponder_ae2_coal_slot_light",
+		"ponder_ae2_iron_ingot_slot_dark",
+		"ponder_ae2_iron_plate_slot_dark"
 	);
 
 	public static final BlockEntry<Block> GUI_BLOCK;
-	public static final BlockEntry<Block> PONDER_THERMAL_INPUT;
-	public static final BlockEntry<Block> PONDER_THERMAL_OUTPUT;
-	public static final BlockEntry<Block> PONDER_THERMAL_OUTPUT_ON;
-	public static final BlockEntry<Block> PONDER_THERMAL_INPUT_ON;
-	public static final BlockEntry<Block> PONDER_THERMAL_FLUID;
-	public static final BlockEntry<Block> PONDER_THERMAL_FLUID_BLUE;
-	public static final BlockEntry<Block> PONDER_THERMAL_FLUID_ORANGE;
-	public static final BlockEntry<Block> PONDER_THERMAL_SLOT;
-	public static final BlockEntry<Block> PONDER_THERMAL_SLOT_BLUE;
-	public static final BlockEntry<Block> PONDER_THERMAL_SLOT_ORANGE;
-	public static final BlockEntry<Block> PONDER_THERMAL_SLOT_ENERGY;
-	public static final BlockEntry<Block> PONDER_THERMAL_ENERGY;
+	public static final BlockEntry<Block> PONDER_THERMAL_AUTO_INPUT_BUTTON_OFF;
+	public static final BlockEntry<Block> PONDER_THERMAL_AUTO_OUTPUT_BUTTON_OFF;
+	public static final BlockEntry<Block> PONDER_THERMAL_AUTO_OUTPUT_BUTTON_ON;
+	public static final BlockEntry<Block> PONDER_THERMAL_AUTO_INPUT_BUTTON_ON;
+	public static final BlockEntry<Block> PONDER_THERMAL_FLUID_EMPTY;
+	public static final BlockEntry<Block> PONDER_THERMAL_FLUID_INPUT;
+	public static final BlockEntry<Block> PONDER_THERMAL_FLUID_OUTPUT;
+	public static final BlockEntry<Block> PONDER_THERMAL_EMPTY_SLOT;
+	public static final BlockEntry<Block> PONDER_THERMAL_INPUT_SLOT;
+	public static final BlockEntry<Block> PONDER_THERMAL_OUTPUT_SLOT;
+	public static final BlockEntry<Block> PONDER_THERMAL_ENERGY_SLOT;
+	public static final BlockEntry<Block> PONDER_THERMAL_ENERGY_FULL;
 	public static final BlockEntry<Block> PONDER_THERMAL_ENERGY_EMPTY;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI_BLUE;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI_BLUE_ICON;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI_GREEN;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI_GREEN_ICON;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI_RED;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI_RED_ICON;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI_GRAY;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI_GRAY_ICON;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI_LIGHTBLUE;
-	public static final BlockEntry<Block> PONDER_THERMAL_GUI_LIGHTBLUE_ICON;
+	public static final BlockEntry<Block> PONDER_THERMAL_BACKGROUND;
+	public static final BlockEntry<Block> PONDER_THERMAL_CONFIG_PANEL;
+	public static final BlockEntry<Block> PONDER_THERMAL_CONFIG_BUTTON;
+	public static final BlockEntry<Block> PONDER_THERMAL_AUGMENT_PANEL;
+	public static final BlockEntry<Block> PONDER_THERMAL_AUGMENT_BUTTON;
+	public static final BlockEntry<Block> PONDER_THERMAL_REDSTONE_PANEL;
+	public static final BlockEntry<Block> PONDER_THERMAL_REDSTONE_BUTTON;
+	public static final BlockEntry<Block> PONDER_THERMAL_INFORMATION_PANEL;
+	public static final BlockEntry<Block> PONDER_THERMAL_INFORMATION_BUTTON;
+	public static final BlockEntry<Block> PONDER_THERMAL_ENERGY_PANEL;
+	public static final BlockEntry<Block> PONDER_THERMAL_ENERGY_BUTTON;
 	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_FRONT;
 	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE;
 	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE_BLUE;
@@ -143,79 +143,79 @@ public class IoDebugBlocks {
 	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE_DISABLED;
 	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_TOP;
 	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_BOTTOM;
-	public static final BlockEntry<Block> PONDER_THERMAL_RS1_OFF;
-	public static final BlockEntry<Block> PONDER_THERMAL_RS2_OFF;
-	public static final BlockEntry<Block> PONDER_THERMAL_RS3_OFF;
-	public static final BlockEntry<Block> PONDER_THERMAL_RS1_ON;
-	public static final BlockEntry<Block> PONDER_THERMAL_RS2_ON;
-	public static final BlockEntry<Block> PONDER_THERMAL_RS3_ON;
-	public static final BlockEntry<Block> PONDER_THERMAL_LAVA;
-	public static final BlockEntry<Block> PONDER_THERMAL_WATER;
-	public static final BlockEntry<Block> PONDER_THERMAL_ARROW;
-	public static final BlockEntry<Block> PONDER_THERMAL_ARROW_ACTIVE;
-	public static final BlockEntry<Block> PONDER_THERMAL_FIRE;
-	public static final BlockEntry<Block> PONDER_THERMAL_FIRE_ACTIVE;
-	public static final BlockEntry<Block> PONDER_THERMAL_SAND;
-	public static final BlockEntry<Block> PONDER_THERMAL_GLASS;
-	public static final BlockEntry<Block> SLOT1;
-	public static final BlockEntry<Block> ARROW;
-	public static final BlockEntry<Block> SLOT2;
-	public static final BlockEntry<Block> PATTEN_SLOT;
-	public static final BlockEntry<Block> GUI;
-	public static final BlockEntry<Block> WRITE;
-	public static final BlockEntry<Block> GUI2;
-	public static final BlockEntry<Block> CRAFT_ON;
-	public static final BlockEntry<Block> CRAFT_OFF;
-	public static final BlockEntry<Block> FURNACE_ON;
-	public static final BlockEntry<Block> FURNACE_OFF;
-	public static final BlockEntry<Block> SMITH_ON;
-	public static final BlockEntry<Block> SMITH_OFF;
-	public static final BlockEntry<Block> CUT_ON;
-	public static final BlockEntry<Block> CUT_OFF;
-	public static final BlockEntry<Block> TAB_ON;
-	public static final BlockEntry<Block> TAB_OFF;
-	public static final BlockEntry<Block> PATTEN_BLANK;
-	public static final BlockEntry<Block> PATTEN_FILLED;
-	public static final BlockEntry<Block> DIAMOND;
-	public static final BlockEntry<Block> STICK;
-	public static final BlockEntry<Block> PICKAXE;
-	public static final BlockEntry<Block> PICKAXE2;
-	public static final BlockEntry<Block> RAW;
-	public static final BlockEntry<Block> COOKED;
-	public static final BlockEntry<Block> COOKED2;
-	public static final BlockEntry<Block> COAL;
-	public static final BlockEntry<Block> IRON;
-	public static final BlockEntry<Block> SHEET;
+	public static final BlockEntry<Block> PONDER_THERMAL_REDSTONE_BUTTON_OFF;
+	public static final BlockEntry<Block> PONDER_THERMAL_LOW_RS_TOUCH_OFF;
+	public static final BlockEntry<Block> PONDER_THERMAL_HIGH_RS_TOUCH_OFF;
+	public static final BlockEntry<Block> PONDER_THERMAL_REDSTONE_BUTTON_ON;
+	public static final BlockEntry<Block> PONDER_THERMAL_LOW_RS_TOUCH_ON;
+	public static final BlockEntry<Block> PONDER_THERMAL_HIGH_RS_TOUCH_ON;
+	public static final BlockEntry<Block> PONDER_THERMAL_FLUID_LAVA;
+	public static final BlockEntry<Block> PONDER_THERMAL_FLUID_WATER;
+	public static final BlockEntry<Block> PONDER_THERMAL_ARROW_EMPTY;
+	public static final BlockEntry<Block> PONDER_THERMAL_ARROW_FULL;
+	public static final BlockEntry<Block> PONDER_THERMAL_FLAME_EMPTY;
+	public static final BlockEntry<Block> PONDER_THERMAL_FLAME_FULL;
+	public static final BlockEntry<Block> PONDER_THERMAL_SAND_SLOT;
+	public static final BlockEntry<Block> PONDER_THERMAL_GLASS_SLOT;
+	public static final BlockEntry<Block> PONDER_AE2_EMPTY_SLOT_LIGHT;
+	public static final BlockEntry<Block> PONDER_AE2_ARROW;
+	public static final BlockEntry<Block> PONDER_AE2_EMPTY_SLOT_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_EMPTY_PATTERN_SLOT_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_BACKGROUND_LIGHT;
+	public static final BlockEntry<Block> PONDER_AE2_WRITE_BUTTON;
+	public static final BlockEntry<Block> PONDER_AE2_BACKGROUND_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_CRAFTING_RIGHT_BUTTON_ON;
+	public static final BlockEntry<Block> PONDER_AE2_CRAFTING_RIGHT_BUTTON_OFF;
+	public static final BlockEntry<Block> PONDER_AE2_PROCESSING_RIGHT_BUTTON_ON;
+	public static final BlockEntry<Block> PONDER_AE2_PROCESSING_RIGHT_BUTTON_OFF;
+	public static final BlockEntry<Block> PONDER_AE2_SMITHING_RIGHT_BUTTON_ON;
+	public static final BlockEntry<Block> PONDER_AE2_SMITHING_RIGHT_BUTTON_OFF;
+	public static final BlockEntry<Block> PONDER_AE2_STONECUTTING_RIGHT_BUTTON_ON;
+	public static final BlockEntry<Block> PONDER_AE2_STONECUTTING_RIGHT_BUTTON_OFF;
+	public static final BlockEntry<Block> PONDER_AE2_RIGHT_BUTTON_ON;
+	public static final BlockEntry<Block> PONDER_AE2_RIGHT_BUTTON_OFF;
+	public static final BlockEntry<Block> PONDER_AE2_BLANK_PATTERN_SLOT_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_ENCODED_PATTERN_SLOT_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_DIAMOND_SLOT_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_STICK_SLOT_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_DIAMOND_PICKAXE_SLOT_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_DIAMOND_PICKAXE_SLOT_LIGHT;
+	public static final BlockEntry<Block> PONDER_AE2_CHICKEN_SLOT_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_COOKED_CHICKEN_SLOT_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_COOKED_CHICKEN_SLOT_LIGHT;
+	public static final BlockEntry<Block> PONDER_AE2_COAL_SLOT_LIGHT;
+	public static final BlockEntry<Block> PONDER_AE2_IRON_INGOT_SLOT_DARK;
+	public static final BlockEntry<Block> PONDER_AE2_IRON_PLATE_SLOT_DARK;
 
 	/** 名称 -> 方块，顺序与 NAMES 一致。 */
 	private static final Map<String, BlockEntry<Block>> BY_NAME = new LinkedHashMap<>();
 
 	static {
 		GUI_BLOCK = register("gui_block");
-		PONDER_THERMAL_INPUT = register("ponder_thermal_input");
-		PONDER_THERMAL_OUTPUT = register("ponder_thermal_output");
-		PONDER_THERMAL_OUTPUT_ON = register("ponder_thermal_output_on");
-		PONDER_THERMAL_INPUT_ON = register("ponder_thermal_input_on");
-		PONDER_THERMAL_FLUID = register("ponder_thermal_fluid");
-		PONDER_THERMAL_FLUID_BLUE = register("ponder_thermal_fluid_blue");
-		PONDER_THERMAL_FLUID_ORANGE = register("ponder_thermal_fluid_orange");
-		PONDER_THERMAL_SLOT = register("ponder_thermal_slot");
-		PONDER_THERMAL_SLOT_BLUE = register("ponder_thermal_slot_blue");
-		PONDER_THERMAL_SLOT_ORANGE = register("ponder_thermal_slot_orange");
-		PONDER_THERMAL_SLOT_ENERGY = register("ponder_thermal_slot_energy");
-		PONDER_THERMAL_ENERGY = register("ponder_thermal_energy");
+		PONDER_THERMAL_AUTO_INPUT_BUTTON_OFF = register("ponder_thermal_auto_input_button_off");
+		PONDER_THERMAL_AUTO_OUTPUT_BUTTON_OFF = register("ponder_thermal_auto_output_button_off");
+		PONDER_THERMAL_AUTO_OUTPUT_BUTTON_ON = register("ponder_thermal_auto_output_button_on");
+		PONDER_THERMAL_AUTO_INPUT_BUTTON_ON = register("ponder_thermal_auto_input_button_on");
+		PONDER_THERMAL_FLUID_EMPTY = register("ponder_thermal_fluid_empty");
+		PONDER_THERMAL_FLUID_INPUT = register("ponder_thermal_fluid_input");
+		PONDER_THERMAL_FLUID_OUTPUT = register("ponder_thermal_fluid_output");
+		PONDER_THERMAL_EMPTY_SLOT = register("ponder_thermal_empty_slot");
+		PONDER_THERMAL_INPUT_SLOT = register("ponder_thermal_input_slot");
+		PONDER_THERMAL_OUTPUT_SLOT = register("ponder_thermal_output_slot");
+		PONDER_THERMAL_ENERGY_SLOT = register("ponder_thermal_energy_slot");
+		PONDER_THERMAL_ENERGY_FULL = register("ponder_thermal_energy_full");
 		PONDER_THERMAL_ENERGY_EMPTY = register("ponder_thermal_energy_empty");
-		PONDER_THERMAL_GUI = register("ponder_thermal_gui");
-		PONDER_THERMAL_GUI_BLUE = register("ponder_thermal_gui_blue");
-		PONDER_THERMAL_GUI_BLUE_ICON = register("ponder_thermal_gui_blue_icon");
-		PONDER_THERMAL_GUI_GREEN = register("ponder_thermal_gui_green");
-		PONDER_THERMAL_GUI_GREEN_ICON = register("ponder_thermal_gui_green_icon");
-		PONDER_THERMAL_GUI_RED = register("ponder_thermal_gui_red");
-		PONDER_THERMAL_GUI_RED_ICON = register("ponder_thermal_gui_red_icon");
-		PONDER_THERMAL_GUI_GRAY = register("ponder_thermal_gui_gray");
-		PONDER_THERMAL_GUI_GRAY_ICON = register("ponder_thermal_gui_gray_icon");
-		PONDER_THERMAL_GUI_LIGHTBLUE = register("ponder_thermal_gui_lightblue");
-		PONDER_THERMAL_GUI_LIGHTBLUE_ICON = register("ponder_thermal_gui_lightblue_icon");
+		PONDER_THERMAL_BACKGROUND = register("ponder_thermal_background");
+		PONDER_THERMAL_CONFIG_PANEL = register("ponder_thermal_config_panel");
+		PONDER_THERMAL_CONFIG_BUTTON = register("ponder_thermal_config_button");
+		PONDER_THERMAL_AUGMENT_PANEL = register("ponder_thermal_augment_panel");
+		PONDER_THERMAL_AUGMENT_BUTTON = register("ponder_thermal_augment_button");
+		PONDER_THERMAL_REDSTONE_PANEL = register("ponder_thermal_redstone_panel");
+		PONDER_THERMAL_REDSTONE_BUTTON = register("ponder_thermal_redstone_button");
+		PONDER_THERMAL_INFORMATION_PANEL = register("ponder_thermal_information_panel");
+		PONDER_THERMAL_INFORMATION_BUTTON = register("ponder_thermal_information_button");
+		PONDER_THERMAL_ENERGY_PANEL = register("ponder_thermal_energy_panel");
+		PONDER_THERMAL_ENERGY_BUTTON = register("ponder_thermal_energy_button");
 		PONDER_THERMAL_MACHINE_FRONT = register("ponder_thermal_machine_front");
 		PONDER_THERMAL_MACHINE_SIDE = register("ponder_thermal_machine_side");
 		PONDER_THERMAL_MACHINE_SIDE_BLUE = register("ponder_thermal_machine_side_blue");
@@ -224,49 +224,49 @@ public class IoDebugBlocks {
 		PONDER_THERMAL_MACHINE_SIDE_DISABLED = register("ponder_thermal_machine_side_disabled");
 		PONDER_THERMAL_MACHINE_TOP = register("ponder_thermal_machine_top");
 		PONDER_THERMAL_MACHINE_BOTTOM = register("ponder_thermal_machine_bottom");
-		PONDER_THERMAL_RS1_OFF = register("ponder_thermal_rs1_off");
-		PONDER_THERMAL_RS2_OFF = register("ponder_thermal_rs2_off");
-		PONDER_THERMAL_RS3_OFF = register("ponder_thermal_rs3_off");
-		PONDER_THERMAL_RS1_ON = register("ponder_thermal_rs1_on");
-		PONDER_THERMAL_RS2_ON = register("ponder_thermal_rs2_on");
-		PONDER_THERMAL_RS3_ON = register("ponder_thermal_rs3_on");
-		PONDER_THERMAL_LAVA = register("ponder_thermal_lava");
-		PONDER_THERMAL_WATER = register("ponder_thermal_water");
-		PONDER_THERMAL_ARROW = register("ponder_thermal_arrow");
-		PONDER_THERMAL_ARROW_ACTIVE = register("ponder_thermal_arrow_active");
-		PONDER_THERMAL_FIRE = register("ponder_thermal_fire");
-		PONDER_THERMAL_FIRE_ACTIVE = register("ponder_thermal_fire_active");
-		PONDER_THERMAL_SAND = register("ponder_thermal_sand");
-		PONDER_THERMAL_GLASS = register("ponder_thermal_glass");
-		SLOT1 = register("slot1");
-		ARROW = register("arrow");
-		SLOT2 = register("slot2");
-		PATTEN_SLOT = register("patten_slot");
-		GUI = register("gui");
-		WRITE = register("write");
-		GUI2 = register("gui2");
-		CRAFT_ON = register("craft_on");
-		CRAFT_OFF = register("craft_off");
-		FURNACE_ON = register("furnace_on");
-		FURNACE_OFF = register("furnace_off");
-		SMITH_ON = register("smith_on");
-		SMITH_OFF = register("smith_off");
-		CUT_ON = register("cut_on");
-		CUT_OFF = register("cut_off");
-		TAB_ON = register("tab_on");
-		TAB_OFF = register("tab_off");
-		PATTEN_BLANK = register("patten_blank");
-		PATTEN_FILLED = register("patten_filled");
-		DIAMOND = register("diamond");
-		STICK = register("stick");
-		PICKAXE = register("pickaxe");
-		PICKAXE2 = register("pickaxe2");
-		RAW = register("raw");
-		COOKED = register("cooked");
-		COOKED2 = register("cooked2");
-		COAL = register("coal");
-		IRON = register("iron");
-		SHEET = register("sheet");
+		PONDER_THERMAL_REDSTONE_BUTTON_OFF = register("ponder_thermal_redstone_button_off");
+		PONDER_THERMAL_LOW_RS_TOUCH_OFF = register("ponder_thermal_low_rs_touch_off");
+		PONDER_THERMAL_HIGH_RS_TOUCH_OFF = register("ponder_thermal_high_rs_touch_off");
+		PONDER_THERMAL_REDSTONE_BUTTON_ON = register("ponder_thermal_redstone_button_on");
+		PONDER_THERMAL_LOW_RS_TOUCH_ON = register("ponder_thermal_low_rs_touch_on");
+		PONDER_THERMAL_HIGH_RS_TOUCH_ON = register("ponder_thermal_high_rs_touch_on");
+		PONDER_THERMAL_FLUID_LAVA = register("ponder_thermal_fluid_lava");
+		PONDER_THERMAL_FLUID_WATER = register("ponder_thermal_fluid_water");
+		PONDER_THERMAL_ARROW_EMPTY = register("ponder_thermal_arrow_empty");
+		PONDER_THERMAL_ARROW_FULL = register("ponder_thermal_arrow_full");
+		PONDER_THERMAL_FLAME_EMPTY = register("ponder_thermal_flame_empty");
+		PONDER_THERMAL_FLAME_FULL = register("ponder_thermal_flame_full");
+		PONDER_THERMAL_SAND_SLOT = register("ponder_thermal_sand_slot");
+		PONDER_THERMAL_GLASS_SLOT = register("ponder_thermal_glass_slot");
+		PONDER_AE2_EMPTY_SLOT_LIGHT = register("ponder_ae2_empty_slot_light");
+		PONDER_AE2_ARROW = register("ponder_ae2_arrow");
+		PONDER_AE2_EMPTY_SLOT_DARK = register("ponder_ae2_empty_slot_dark");
+		PONDER_AE2_EMPTY_PATTERN_SLOT_DARK = register("ponder_ae2_empty_pattern_slot_dark");
+		PONDER_AE2_BACKGROUND_LIGHT = register("ponder_ae2_background_light");
+		PONDER_AE2_WRITE_BUTTON = register("ponder_ae2_write_button");
+		PONDER_AE2_BACKGROUND_DARK = register("ponder_ae2_background_dark");
+		PONDER_AE2_CRAFTING_RIGHT_BUTTON_ON = register("ponder_ae2_crafting_right_button_on");
+		PONDER_AE2_CRAFTING_RIGHT_BUTTON_OFF = register("ponder_ae2_crafting_right_button_off");
+		PONDER_AE2_PROCESSING_RIGHT_BUTTON_ON = register("ponder_ae2_processing_right_button_on");
+		PONDER_AE2_PROCESSING_RIGHT_BUTTON_OFF = register("ponder_ae2_processing_right_button_off");
+		PONDER_AE2_SMITHING_RIGHT_BUTTON_ON = register("ponder_ae2_smithing_right_button_on");
+		PONDER_AE2_SMITHING_RIGHT_BUTTON_OFF = register("ponder_ae2_smithing_right_button_off");
+		PONDER_AE2_STONECUTTING_RIGHT_BUTTON_ON = register("ponder_ae2_stonecutting_right_button_on");
+		PONDER_AE2_STONECUTTING_RIGHT_BUTTON_OFF = register("ponder_ae2_stonecutting_right_button_off");
+		PONDER_AE2_RIGHT_BUTTON_ON = register("ponder_ae2_right_button_on");
+		PONDER_AE2_RIGHT_BUTTON_OFF = register("ponder_ae2_right_button_off");
+		PONDER_AE2_BLANK_PATTERN_SLOT_DARK = register("ponder_ae2_blank_pattern_slot_dark");
+		PONDER_AE2_ENCODED_PATTERN_SLOT_DARK = register("ponder_ae2_encoded_pattern_slot_dark");
+		PONDER_AE2_DIAMOND_SLOT_DARK = register("ponder_ae2_diamond_slot_dark");
+		PONDER_AE2_STICK_SLOT_DARK = register("ponder_ae2_stick_slot_dark");
+		PONDER_AE2_DIAMOND_PICKAXE_SLOT_DARK = register("ponder_ae2_diamond_pickaxe_slot_dark");
+		PONDER_AE2_DIAMOND_PICKAXE_SLOT_LIGHT = register("ponder_ae2_diamond_pickaxe_slot_light");
+		PONDER_AE2_CHICKEN_SLOT_DARK = register("ponder_ae2_chicken_slot_dark");
+		PONDER_AE2_COOKED_CHICKEN_SLOT_DARK = register("ponder_ae2_cooked_chicken_slot_dark");
+		PONDER_AE2_COOKED_CHICKEN_SLOT_LIGHT = register("ponder_ae2_cooked_chicken_slot_light");
+		PONDER_AE2_COAL_SLOT_LIGHT = register("ponder_ae2_coal_slot_light");
+		PONDER_AE2_IRON_INGOT_SLOT_DARK = register("ponder_ae2_iron_ingot_slot_dark");
+		PONDER_AE2_IRON_PLATE_SLOT_DARK = register("ponder_ae2_iron_plate_slot_dark");
 	}
 
 	private static BlockEntry<Block> register(String name) {
@@ -303,7 +303,7 @@ public class IoDebugBlocks {
 
 	/** PONDER_IO_BLOCK 物品栏图标。 */
 	public static ItemStack icon() {
-		return PONDER_THERMAL_GUI.asStack();
+		return PONDER_THERMAL_BACKGROUND.asStack();
 	}
 
 	public static void register() {
