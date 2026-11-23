@@ -1,7 +1,7 @@
 {
 	"parent": "block/block",
 	"textures": {
-		"particle": "cmi:block/space_elevator_base"
+		"particle": "cmi:block/astronautic_particles"
 	},
 	"elements": []
 }

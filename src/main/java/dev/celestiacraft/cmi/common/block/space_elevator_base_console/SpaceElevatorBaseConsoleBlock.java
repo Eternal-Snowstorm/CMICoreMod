@@ -1,39 +1,43 @@
 package dev.celestiacraft.cmi.common.block.space_elevator_base_console;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortShape;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortType;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlockEntity;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.particle.AstronauticDestructionParticles;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.structure.SpaceElevatorBaseStructure;
-import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import dev.celestiacraft.libs.api.register.block.IEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SpaceElevatorBaseConsoleBlock extends BasicBlock implements IBE<SpaceElevatorBaseConsoleBlockEntity> {
 	public SpaceElevatorBaseConsoleBlock(Properties properties) {
@@ -124,6 +128,13 @@ public class SpaceElevatorBaseConsoleBlock extends BasicBlock implements IBE<Spa
 		}
 	}
 
+	// 玩家破坏基座时立即生成破坏粒子
+	@Override
+	public void playerWillDestroy(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
+		super.playerWillDestroy(level, pos, state, player);
+		AstronauticDestructionParticles.spawnDirect(level, pos, state);
+	}
+
 	@Override
 	public void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState newState, boolean moved) {
 		if (!level.isClientSide() && !state.is(newState.getBlock())) {
@@ -184,7 +195,9 @@ public class SpaceElevatorBaseConsoleBlock extends BasicBlock implements IBE<Spa
 
 	public static void dismantleStructure(@NotNull Level level, @NotNull BlockPos controllerPos) {
 		dismantlePorts(level, controllerPos);
-		if (level.getBlockState(controllerPos).getBlock() instanceof SpaceElevatorBaseConsoleBlock) {
+		BlockState controllerState = level.getBlockState(controllerPos);
+		if (controllerState.getBlock() instanceof SpaceElevatorBaseConsoleBlock) {
+			AstronauticDestructionParticles.spawnDirect(level, controllerPos, controllerState);
 			level.removeBlock(controllerPos, false);
 		}
 	}
@@ -202,6 +215,7 @@ public class SpaceElevatorBaseConsoleBlock extends BasicBlock implements IBE<Spa
 			if (!controllerPos.equals(SpaceElevatorIoPortBlock.getControllerPos(level, portPos))) {
 				continue;
 			}
+			AstronauticDestructionParticles.spawnLinked(level, portPos, portState);
 			level.removeBlock(portPos, false);
 		}
 	}

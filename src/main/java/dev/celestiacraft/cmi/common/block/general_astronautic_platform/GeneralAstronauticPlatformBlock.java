@@ -1,17 +1,24 @@
 package dev.celestiacraft.cmi.common.block.general_astronautic_platform;
 
+import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortShape;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.IoPortType;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlock;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.io.SpaceElevatorIoPortBlockEntity;
+import dev.celestiacraft.cmi.common.block.space_elevator_base_console.particle.AstronauticDestructionParticles;
 import dev.celestiacraft.cmi.common.block.space_elevator_base_console.structure.SpaceElevatorBaseStructure;
 import dev.celestiacraft.cmi.common.item.tool.DigitalLocator;
-import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.cmi.common.register.block.SpaceElevatorBlocks;
+import dev.celestiacraft.cmi.common.register.CmiBlockEntity;
 import dev.celestiacraft.cmi.compat.adastra.AdAstraPlatformRocket;
 import dev.celestiacraft.libs.api.register.block.BasicBlock;
 import dev.celestiacraft.libs.api.register.block.BlockFacing;
@@ -23,30 +30,26 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
 
 public class GeneralAstronauticPlatformBlock extends BasicBlock implements IBE<GeneralAstronauticPlatformBlockEntity> {
 	private static final Map<Vec3i, IoPortType> IO_TYPES = Map.of(
@@ -105,6 +108,13 @@ public class GeneralAstronauticPlatformBlock extends BasicBlock implements IBE<G
 		if (!level.isClientSide()) {
 			deployStructure(level, pos);
 		}
+	}
+
+	// 玩家破坏平台时立即生成破坏粒子
+	@Override
+	public void playerWillDestroy(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
+		super.playerWillDestroy(level, pos, state, player);
+		AstronauticDestructionParticles.spawnDirect(level, pos, state);
 	}
 
 	// 右键平台顶面放置 Ad Astra 火箭，平台上已有任意火箭时拒绝
@@ -230,7 +240,9 @@ public class GeneralAstronauticPlatformBlock extends BasicBlock implements IBE<G
 
 	public static void dismantleStructure(@NotNull Level level, @NotNull BlockPos controllerPos) {
 		dismantlePorts(level, controllerPos);
-		if (level.getBlockState(controllerPos).getBlock() instanceof GeneralAstronauticPlatformBlock) {
+		BlockState controllerState = level.getBlockState(controllerPos);
+		if (controllerState.getBlock() instanceof GeneralAstronauticPlatformBlock) {
+			AstronauticDestructionParticles.spawnDirect(level, controllerPos, controllerState);
 			level.removeBlock(controllerPos, false);
 		}
 	}
@@ -250,6 +262,7 @@ public class GeneralAstronauticPlatformBlock extends BasicBlock implements IBE<G
 				if (!controllerPos.equals(SpaceElevatorIoPortBlock.getControllerPos(level, portPos))) {
 					continue;
 				}
+				AstronauticDestructionParticles.spawnLinked(level, portPos, portState);
 				level.removeBlock(portPos, false);
 			}
 		}
