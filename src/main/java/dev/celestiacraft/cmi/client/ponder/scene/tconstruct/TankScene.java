@@ -20,7 +20,7 @@ import slimeknights.tconstruct.smeltery.block.entity.ProxyTankBlockEntity;
 public class TankScene {
 	public static void tank(SceneBuilder builder, SceneBuildingUtil util) {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
-		scene.title("tank", "使用流体容器");
+		scene.title("tank_usage", "使用流体容器");
 
 		INebulaSceneBuilder.init5x5(scene, util);
 

@@ -41,10 +41,10 @@ public class Ae2GuiScene {
 		return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath(namespace, name)).defaultBlockState();
 	}
 
-	public static void scene1(SceneBuilder builder, SceneBuildingUtil util) {
+	public static void patternManager(SceneBuilder builder, SceneBuildingUtil util) {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
-		scene.title("ae2_gui", "样板配置");
+		scene.title("me_pattern_manager", "样板配置");
 		scene.showStructure(0);
 		scene.idle(20);
 		scene.scaleSceneView(0.5f);
@@ -176,10 +176,10 @@ public class Ae2GuiScene {
 		scene.idle(60);
 	}
 
-	public static void scene2(SceneBuilder builder, SceneBuildingUtil util) {
+	public static void interfaceAutomation(SceneBuilder builder, SceneBuildingUtil util) {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
-		scene.title("ae2_gui2", "自动化配置案例——“燃料”类配方");
+		scene.title("me_interface_automation", "自动化配置案例——“燃料”类配方");
 		scene.showStructure(0);
 		scene.idle(20);
 		scene.scaleSceneView(0.5f);

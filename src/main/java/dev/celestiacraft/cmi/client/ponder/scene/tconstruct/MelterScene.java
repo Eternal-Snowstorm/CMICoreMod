@@ -119,7 +119,7 @@ public class MelterScene {
 	}
 
 	public static void using(SceneBuilder builder, SceneBuildingUtil util) {
-		builder.title("melter_using", "熔化与铸造");
+		builder.title("melter_usage", "熔化与铸造");
 
 		INebulaSceneBuilder.init5x5(builder, util);
 

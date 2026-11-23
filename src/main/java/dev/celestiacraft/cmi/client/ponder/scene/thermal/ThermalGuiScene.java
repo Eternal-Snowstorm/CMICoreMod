@@ -27,10 +27,10 @@ public class ThermalGuiScene {
 		return block("cmi", name);
 	}
 
-	public static void scene1(SceneBuilder builder, SceneBuildingUtil util) {
+	public static void basicMachineGuidance(SceneBuilder builder, SceneBuildingUtil util) {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
-		scene.title("thermal_gui", "Machine UI");
+		scene.title("basic_machine_guidance", "Machine UI");
 		scene.showBasePlate();
 		scene.idle(20);
 		scene.scaleSceneView(0.6f);
@@ -161,10 +161,10 @@ public class ThermalGuiScene {
 		scene.idle(50);
 	}
 
-	public static void scene2(SceneBuilder builder, SceneBuildingUtil util) {
+	public static void machineAutomation(SceneBuilder builder, SceneBuildingUtil util) {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
-		scene.title("thermal_gui2", "Machine Automation");
+		scene.title("machine_automation", "Machine Automation");
 		scene.showBasePlate();
 		scene.idle(20);
 		scene.scaleSceneView(0.5f);
@@ -193,7 +193,7 @@ public class ThermalGuiScene {
 
 		scene.world().setBlock(util.grid().at(14, 7, 13), cmi("ponder_thermal_information_button"), false);
 		scene.world().setBlock(util.grid().at(14, 6, 13), cmi("ponder_thermal_energy_button"), false);
-		scene.world().showSection(util.select().fromTo(14, 1, 13, 13, 4, 13), Direction.WEST);
+		scene.world().showSection(util.select().fromTo(14, 4, 13, 13, 7, 13), Direction.WEST);
 		scene.addKeyframe();
 		scene.idle(40);
 

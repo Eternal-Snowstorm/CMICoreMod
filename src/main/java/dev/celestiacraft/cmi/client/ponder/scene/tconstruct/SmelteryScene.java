@@ -200,7 +200,7 @@ public class SmelteryScene {
 	}
 
 	public static void using(SceneBuilder builder, SceneBuildingUtil util) {
-		builder.title("smeltery_using", "使用冶炼炉");
+		builder.title("smeltery_usage", "使用冶炼炉");
 
 		INebulaSceneBuilder.init9x9(builder, util);
 

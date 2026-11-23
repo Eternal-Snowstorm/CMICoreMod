@@ -15,7 +15,7 @@ public class AcceleratorScene {
 	public static void usage(SceneBuilder builder, SceneBuildingUtil util) {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
-		scene.title("accelerator", "如何使用催生器");
+		scene.title("accelerator_usage", "如何使用催生器");
 		scene.showBasePlate();
 		scene.idle(20);
 

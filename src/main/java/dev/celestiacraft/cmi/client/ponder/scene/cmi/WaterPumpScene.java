@@ -12,7 +12,7 @@ public class WaterPumpScene {
 	public static void getSeaWater(SceneBuilder builder, SceneBuildingUtil util) {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
 
-		scene.title("sea_water", "海水井");
+		scene.title("water_well_sea_water", "海水井");
 		scene.scaleSceneView(0.5f);
 		scene.idle(20);
 

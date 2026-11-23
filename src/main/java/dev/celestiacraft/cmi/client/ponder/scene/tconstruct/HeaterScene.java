@@ -15,7 +15,7 @@ import net.minecraft.world.item.Items;
 public class HeaterScene {
 	public static void using(SceneBuilder builder, SceneBuildingUtil util) {
 		CreateNebulaSceneBuilder scene = new CreateNebulaSceneBuilder(builder);
-		scene.title("heater_using", "使用加热器");
+		scene.title("heater_usage", "使用加热器");
 
 		INebulaSceneBuilder.init5x5(scene, util);
 

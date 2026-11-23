@@ -15,7 +15,7 @@ import slimeknights.tconstruct.smeltery.block.entity.FluidCannonBlockEntity;
 public class CannonScene {
 	public static void using(SceneBuilder scene, SceneBuildingUtil util) {
 		CreateNebulaSceneBuilder builder = new CreateNebulaSceneBuilder(scene);
-		scene.title("fluid_cannon_using", "使用流体加农炮");
+		scene.title("fluid_cannon_usage", "使用流体加农炮");
 
 		INebulaSceneBuilder.init5x5(scene, util);
 
