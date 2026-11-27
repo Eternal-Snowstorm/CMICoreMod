@@ -59,18 +59,18 @@ public class IoDebugBlocks {
 		"ponder_thermal_energy_button",
 		"ponder_thermal_machine_front",
 		"ponder_thermal_machine_side",
-		"ponder_thermal_machine_side_blue",
-		"ponder_thermal_machine_side_orange",
-		"ponder_thermal_machine_side_mix",
-		"ponder_thermal_machine_side_disabled",
+		"ponder_thermal_machine_side_input",
+		"ponder_thermal_machine_side_output",
+		"ponder_thermal_machine_side_io",
+		"ponder_thermal_machine_side_none",
 		"ponder_thermal_machine_top",
 		"ponder_thermal_machine_bottom",
 		"ponder_thermal_redstone_button_off",
-		"ponder_thermal_low_rs_touch_off",
-		"ponder_thermal_high_rs_touch_off",
+		"ponder_thermal_low_rs_touch_button_off",
+		"ponder_thermal_high_rs_touch_button_off",
 		"ponder_thermal_redstone_button_on",
-		"ponder_thermal_low_rs_touch_on",
-		"ponder_thermal_high_rs_touch_on",
+		"ponder_thermal_low_rs_touch_button_on",
+		"ponder_thermal_high_rs_touch_button_on",
 		"ponder_thermal_fluid_lava",
 		"ponder_thermal_fluid_water",
 		"ponder_thermal_arrow_empty",
@@ -137,18 +137,18 @@ public class IoDebugBlocks {
 	public static final BlockEntry<Block> PONDER_THERMAL_ENERGY_BUTTON;
 	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_FRONT;
 	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE;
-	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE_BLUE;
-	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE_ORANGE;
-	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE_MIX;
-	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE_DISABLED;
+	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE_INPUT;
+	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE_OUTPUT;
+	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE_IO;
+	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_SIDE_NONE;
 	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_TOP;
 	public static final BlockEntry<Block> PONDER_THERMAL_MACHINE_BOTTOM;
 	public static final BlockEntry<Block> PONDER_THERMAL_REDSTONE_BUTTON_OFF;
-	public static final BlockEntry<Block> PONDER_THERMAL_LOW_RS_TOUCH_OFF;
-	public static final BlockEntry<Block> PONDER_THERMAL_HIGH_RS_TOUCH_OFF;
+	public static final BlockEntry<Block> PONDER_THERMAL_LOW_RS_TOUCH_BUTTON_OFF;
+	public static final BlockEntry<Block> PONDER_THERMAL_HIGH_RS_TOUCH_BUTTON_OFF;
 	public static final BlockEntry<Block> PONDER_THERMAL_REDSTONE_BUTTON_ON;
-	public static final BlockEntry<Block> PONDER_THERMAL_LOW_RS_TOUCH_ON;
-	public static final BlockEntry<Block> PONDER_THERMAL_HIGH_RS_TOUCH_ON;
+	public static final BlockEntry<Block> PONDER_THERMAL_LOW_RS_TOUCH_BUTTON_ON;
+	public static final BlockEntry<Block> PONDER_THERMAL_HIGH_RS_TOUCH_BUTTON_ON;
 	public static final BlockEntry<Block> PONDER_THERMAL_FLUID_LAVA;
 	public static final BlockEntry<Block> PONDER_THERMAL_FLUID_WATER;
 	public static final BlockEntry<Block> PONDER_THERMAL_ARROW_EMPTY;
@@ -218,18 +218,18 @@ public class IoDebugBlocks {
 		PONDER_THERMAL_ENERGY_BUTTON = register("ponder_thermal_energy_button");
 		PONDER_THERMAL_MACHINE_FRONT = register("ponder_thermal_machine_front");
 		PONDER_THERMAL_MACHINE_SIDE = register("ponder_thermal_machine_side");
-		PONDER_THERMAL_MACHINE_SIDE_BLUE = register("ponder_thermal_machine_side_blue");
-		PONDER_THERMAL_MACHINE_SIDE_ORANGE = register("ponder_thermal_machine_side_orange");
-		PONDER_THERMAL_MACHINE_SIDE_MIX = register("ponder_thermal_machine_side_mix");
-		PONDER_THERMAL_MACHINE_SIDE_DISABLED = register("ponder_thermal_machine_side_disabled");
+		PONDER_THERMAL_MACHINE_SIDE_INPUT = register("ponder_thermal_machine_side_input");
+		PONDER_THERMAL_MACHINE_SIDE_OUTPUT = register("ponder_thermal_machine_side_output");
+		PONDER_THERMAL_MACHINE_SIDE_IO = register("ponder_thermal_machine_side_io");
+		PONDER_THERMAL_MACHINE_SIDE_NONE = register("ponder_thermal_machine_side_none");
 		PONDER_THERMAL_MACHINE_TOP = register("ponder_thermal_machine_top");
 		PONDER_THERMAL_MACHINE_BOTTOM = register("ponder_thermal_machine_bottom");
 		PONDER_THERMAL_REDSTONE_BUTTON_OFF = register("ponder_thermal_redstone_button_off");
-		PONDER_THERMAL_LOW_RS_TOUCH_OFF = register("ponder_thermal_low_rs_touch_off");
-		PONDER_THERMAL_HIGH_RS_TOUCH_OFF = register("ponder_thermal_high_rs_touch_off");
+		PONDER_THERMAL_LOW_RS_TOUCH_BUTTON_OFF = register("ponder_thermal_low_rs_touch_button_off");
+		PONDER_THERMAL_HIGH_RS_TOUCH_BUTTON_OFF = register("ponder_thermal_high_rs_touch_button_off");
 		PONDER_THERMAL_REDSTONE_BUTTON_ON = register("ponder_thermal_redstone_button_on");
-		PONDER_THERMAL_LOW_RS_TOUCH_ON = register("ponder_thermal_low_rs_touch_on");
-		PONDER_THERMAL_HIGH_RS_TOUCH_ON = register("ponder_thermal_high_rs_touch_on");
+		PONDER_THERMAL_LOW_RS_TOUCH_BUTTON_ON = register("ponder_thermal_low_rs_touch_button_on");
+		PONDER_THERMAL_HIGH_RS_TOUCH_BUTTON_ON = register("ponder_thermal_high_rs_touch_button_on");
 		PONDER_THERMAL_FLUID_LAVA = register("ponder_thermal_fluid_lava");
 		PONDER_THERMAL_FLUID_WATER = register("ponder_thermal_fluid_water");
 		PONDER_THERMAL_ARROW_EMPTY = register("ponder_thermal_arrow_empty");

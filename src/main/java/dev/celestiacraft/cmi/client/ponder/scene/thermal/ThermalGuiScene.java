@@ -260,24 +260,24 @@ public class ThermalGuiScene {
 		scene.text(40, "and set the input and output of each face");
 		scene.idle(50);
 
-		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_blue"), false);
+		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_input"), false);
 		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_input_slot"), false);
 		scene.text(40, "Normally, blue represents input", util.vector().of(4, 3, 13));
 		scene.idle(50);
 
-		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_orange"), false);
+		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_output"), false);
 		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_empty_slot"), false);
 		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_output_slot"), false);
 		scene.text(40, "Orange represents output", util.vector().of(4, 3, 13));
 		scene.idle(50);
 
-		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_mix"), false);
+		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_io"), false);
 		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_input_slot"), false);
 		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_output_slot"), false);
 		scene.text(40, "The hybrid represents both input and output", util.vector().of(4, 3, 13));
 		scene.idle(50);
 
-		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_disabled"), false);
+		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_none"), false);
 		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_empty_slot"), false);
 		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_empty_slot"), false);
 		scene.text(40, "Black represents disabled", util.vector().of(4, 3, 13));
@@ -287,8 +287,8 @@ public class ThermalGuiScene {
 
 		scene.idle(70);
 		scene.addKeyframe();
-		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_blue"), false);
-		scene.world().setBlock(util.grid().at(2, 3, 13), cmi("ponder_thermal_machine_side_orange"), false);
+		scene.world().setBlock(util.grid().at(4, 3, 13), cmi("ponder_thermal_machine_side_input"), false);
+		scene.world().setBlock(util.grid().at(2, 3, 13), cmi("ponder_thermal_machine_side_output"), false);
 		scene.world().setBlock(util.grid().at(10, 5, 13), cmi("ponder_thermal_input_slot"), false);
 		scene.world().setBlock(util.grid().at(8, 5, 13), cmi("ponder_thermal_output_slot"), false);
 		scene.world().setBlock(util.grid().at(8, 1, 7), block("minecraft", "chest"), false);
