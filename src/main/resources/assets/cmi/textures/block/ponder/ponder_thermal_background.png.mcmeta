@@ -1,10 +1,66 @@
 {
-    "ctm": {
-        "ctm_version": 1,
-        "type": "ctm",
-        "layer": "SOLID",
-        "textures": [
-            "cmi:block/ponder/ctm/ponder_thermal_background"
-        ]
-    }
+	"ctm": {
+		"ctm_version": 1,
+		"type": "ctm",
+		"layer": "SOLID",
+		"textures": [
+			"cmi:block/ponder/ctm/ponder_thermal_background"
+		],
+		"extra": {
+			"connect_inside": true,
+			"connect_to": [
+				{
+					"block": "cmi:ponder_thermal_background"
+				},
+				{
+					"block": "cmi:ponder_thermal_fluid_empty"
+				},
+				{
+					"block": "cmi:ponder_thermal_fluid_input"
+				},
+				{
+					"block": "cmi:ponder_thermal_fluid_output"
+				},
+				{
+					"block": "cmi:ponder_thermal_fluid_lava"
+				},
+				{
+					"block": "cmi:ponder_thermal_fluid_water"
+				},
+				{
+					"block": "cmi:ponder_thermal_flame_empty"
+				},
+				{
+					"block": "cmi:ponder_thermal_flame_full"
+				},
+				{
+					"block": "cmi:ponder_thermal_arrow_empty"
+				},
+				{
+					"block": "cmi:ponder_thermal_arrow_full"
+				},
+				{
+					"block": "cmi:ponder_thermal_energy_empty"
+				},
+				{
+					"block": "cmi:ponder_thermal_empty_full"
+				},
+				{
+					"block": "cmi:ponder_thermal_energy_slot"
+				},
+				{
+					"block": "ponder_thermal_glass_slot"
+				},
+				{
+					"block": "ponder_thermal_input_slot"
+				},
+				{
+					"block": "ponder_thermal_output_slot"
+				},
+				{
+					"block": "ponder_thermal_sand_slot"
+				}
+			]
+		}
+	}
 }

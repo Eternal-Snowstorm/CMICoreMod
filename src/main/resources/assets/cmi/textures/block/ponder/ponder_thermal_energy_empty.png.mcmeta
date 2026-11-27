@@ -1,10 +1,21 @@
 {
-    "ctm": {
-        "ctm_version": 1,
-        "type": "ctm",
-        "layer": "SOLID",
-        "textures": [
-            "cmi:block/ponder/ctm/ponder_thermal_energy_empty"
-        ]
-    }
+	"ctm": {
+		"ctm_version": 1,
+		"type": "ctm",
+		"layer": "SOLID",
+		"textures": [
+			"cmi:block/ponder/ctm/ponder_thermal_energy_empty"
+		],
+		"extra": {
+			"connect_inside": true,
+			"connect_to": [
+				{
+					"block": "cmi:ponder_thermal_energy_empty"
+				},
+				{
+					"block": "cmi:ponder_thermal_energy_full"
+				}
+			]
+		}
+	}
 }
