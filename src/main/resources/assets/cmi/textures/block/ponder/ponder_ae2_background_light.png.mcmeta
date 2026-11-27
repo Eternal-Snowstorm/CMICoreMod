@@ -1,0 +1,36 @@
+{
+	"ctm": {
+		"ctm_version": 1,
+		"type": "ctm",
+		"layer": "SOLID",
+		"textures": [
+			"cmi:block/ponder/ctm/ponder_ae2_background_light"
+		],
+		"extra": {
+			"connect_inside": true,
+			"connect_to": [
+				{
+					"block": "cmi:ponder_ae2_background_light"
+				},
+				{
+					"block": "cmi:ponder_ae2_background_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_write_button"
+				},
+				{
+					"block": "cmi:ponder_ae2_empty_slot_light"
+				},
+				{
+					"block": "cmi:ponder_ae2_coal_slot_light"
+				},
+				{
+					"block": "cmi:ponder_ae2_diamond_pickaxe_slot_light"
+				},
+				{
+					"block": "cmi:ponder_ae2_cooked_chicken_slot_light"
+				}
+			]
+		}
+	}
+}

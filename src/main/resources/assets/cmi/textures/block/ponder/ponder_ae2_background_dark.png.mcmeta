@@ -1,0 +1,54 @@
+{
+	"ctm": {
+		"ctm_version": 1,
+		"type": "ctm",
+		"layer": "SOLID",
+		"textures": [
+			"cmi:block/ponder/ctm/ponder_ae2_background_dark"
+		],
+		"extra": {
+			"connect_inside": true,
+			"connect_to": [
+				{
+					"block": "cmi:ponder_ae2_background_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_arrow"
+				},
+				{
+					"block": "cmi:ponder_ae2_empty_slot_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_empty_pattern_slot_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_diamond_slot_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_diamond_pickaxe_slot_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_iron_ingot_slot_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_iron_plate_slot_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_stick_slot_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_encoded_pattern_slot_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_blank_pattern_slot_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_chicken_slot_dark"
+				},
+				{
+					"block": "cmi:ponder_ae2_cooked_chicken_slot_dark"
+				}
+			]
+		}
+	}
+}
